@@ -17,6 +17,8 @@ repositories {
 
 val vertxVersion = "4.2.7"
 val junitJupiterVersion = "5.7.0"
+val exposedVersion="0.38.2"
+val koinVersion = "3.1.6"
 
 val mainVerticleName = "com.tumugin.aisu.MainVerticle"
 val launcherClassName = "io.vertx.core.Launcher"
@@ -37,12 +39,21 @@ dependencies {
   implementation("io.vertx:vertx-lang-kotlin-coroutines")
   implementation("io.vertx:vertx-shell")
   implementation("io.vertx:vertx-lang-kotlin")
+  // libs
+  implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+  implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
+  implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+  implementation("mysql:mysql-connector-java:8.0.29")
+  implementation("io.insert-koin:koin-core:$koinVersion")
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
   testImplementation("io.vertx:vertx-junit5")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
+  // test libs
+  testImplementation("io.mockk:mockk:1.12.3")
+  testImplementation("io.insert-koin:koin-test:$koinVersion")
 }
 
 val compileKotlin: KotlinCompile by tasks
