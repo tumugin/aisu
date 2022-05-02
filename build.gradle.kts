@@ -6,6 +6,7 @@ plugins {
   kotlin ("jvm") version "1.6.21"
   application
   id("com.github.johnrengelman.shadow") version "7.0.0"
+  id("org.flywaydb.flyway") version "8.5.10"
 }
 
 group = "com.tumugin"
