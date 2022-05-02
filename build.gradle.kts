@@ -3,7 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin ("jvm") version "1.6.10"
+  kotlin ("jvm") version "1.6.21"
   application
   id("com.github.johnrengelman.shadow") version "7.0.0"
 }
@@ -29,6 +29,7 @@ application {
 }
 
 dependencies {
+  // vert.x
   implementation(platform("io.vertx:vertx-stack-depchain:$vertxVersion"))
   implementation("io.vertx:vertx-web-validation")
   implementation("io.vertx:vertx-web")
@@ -36,7 +37,10 @@ dependencies {
   implementation("io.vertx:vertx-lang-kotlin-coroutines")
   implementation("io.vertx:vertx-shell")
   implementation("io.vertx:vertx-lang-kotlin")
+  // kotlin
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
   implementation(kotlin("stdlib-jdk8"))
+  // test(junit)
   testImplementation("io.vertx:vertx-junit5")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
 }
