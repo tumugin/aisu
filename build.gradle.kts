@@ -46,6 +46,7 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
   implementation("mysql:mysql-connector-java:8.0.29")
   implementation("io.insert-koin:koin-core:$koinVersion")
+  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.3")
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
   implementation(kotlin("stdlib-jdk8"))
