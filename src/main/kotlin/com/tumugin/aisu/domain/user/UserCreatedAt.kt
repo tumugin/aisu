@@ -1,7 +1,7 @@
 package com.tumugin.aisu.domain.user
 
-import java.time.ZonedDateTime
+import kotlinx.datetime.LocalDateTime
 
 @JvmInline
-value class UserCreatedAt(val value: ZonedDateTime) {
+value class UserCreatedAt(val value: LocalDateTime) {
 }
