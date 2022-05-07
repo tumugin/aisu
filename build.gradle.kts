@@ -44,9 +44,12 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+  implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
   implementation("mysql:mysql-connector-java:8.0.29")
+  implementation("com.zaxxer:HikariCP:5.0.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.3")
+  implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
   implementation(kotlin("stdlib-jdk8"))

@@ -1,7 +1,6 @@
 package com.tumugin.aisu.domain.user
 
-import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.Instant
 
 @JvmInline
-value class UserEmailVerifiedAt(val value: LocalDateTime) {
-}
+value class UserEmailVerifiedAt(val value: Instant)
