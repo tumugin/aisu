@@ -10,7 +10,7 @@ object Users : ExposedTimestampIdTable() {
   val name = varchar("name", 255)
   val email = varchar("email", 255)
   val password = varchar("password", 255)
-  val emailVerifiedAt = datetime("email_verifed_at")
+  val emailVerifiedAt = datetime("email_verified_at")
   val rememberToken = varchar("remember_token", 255)
 }
 
