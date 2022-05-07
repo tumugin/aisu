@@ -15,15 +15,12 @@ abstract class ExposedTimestampIdEntity(id: EntityID<Int>, table: ExposedTimesta
   var updatedAt by table.updatedAt
 }
 
-abstract class ExposedTimestampIdEntityClass<E : ExposedTimestampIdEntity>(table: ExposedTimestampIdTable) : IntEntityClass<E>(table) {
+abstract class ExposedTimestampIdEntityClass<E : ExposedTimestampIdEntity>(table: ExposedTimestampIdTable) :
+  IntEntityClass<E>(table) {
   init {
     EntityHook.subscribe { action ->
       if (action.changeType == EntityChangeType.Updated) {
-        try {
-          action.toEntity(this)?.updatedAt = Clock.System.now()
-        } catch (e: Exception) {
-          //nothing much to do here
-        }
+        action.toEntity(this)?.updatedAt = Clock.System.now()
       }
     }
   }
