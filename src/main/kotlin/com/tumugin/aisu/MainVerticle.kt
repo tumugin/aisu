@@ -1,10 +1,14 @@
 package com.tumugin.aisu
 
+import com.tumugin.aisu.di.AisuDIModule
+import com.tumugin.aisu.usecase.app.ApplicationBootstrap
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.Promise
 
 class MainVerticle : AbstractVerticle() {
   override fun start(startPromise: Promise<Void>) {
+    AisuDIModule.start()
+    ApplicationBootstrap.bootstrap()
     vertx
       .createHttpServer()
       .requestHandler { req ->
