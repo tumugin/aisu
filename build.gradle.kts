@@ -46,6 +46,8 @@ dependencies {
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.3")
   implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
+  implementation("de.svenkubiak:jBCrypt:0.4.3")
+  implementation("io.konform:konform:0.3.0")
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
   implementation(kotlin("stdlib-jdk8"))

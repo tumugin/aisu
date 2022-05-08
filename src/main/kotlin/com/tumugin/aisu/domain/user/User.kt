@@ -8,7 +8,7 @@ data class User(
   val userName: UserName,
   val userEmail: UserEmail,
   val userPassword: UserPassword,
-  val userEmailVerifiedAt: UserEmailVerifiedAt,
+  val userEmailVerifiedAt: UserEmailVerifiedAt?,
   val userForceLogoutGeneration: UserForceLogoutGeneration,
   val userCreatedAt: UserCreatedAt,
   val userUpdatedAt: UserUpdatedAt

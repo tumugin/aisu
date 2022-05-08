@@ -8,7 +8,7 @@ import io.ktor.server.netty.*
 
 fun main() {
   AisuDIModule.start()
-  ApplicationBootstrap.bootstrap()
+  ApplicationBootstrap().bootstrap()
   embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
     configureRouting()
     configureSerialization()
