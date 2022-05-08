@@ -1,24 +1,20 @@
 package com.tumugin.aisu.app.plugins
 
+import com.tumugin.aisu.app.plugins.security.KVSSessionStorage
+import com.tumugin.aisu.domain.user.User
 import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.server.auth.*
 import io.ktor.server.sessions.*
 
+data class UserAuthSession(val userId: Int, val validThroughTimestamp: String, val forceLogoutGeneration: Int)
+
+data class UserPrincipal(val user: User) : Principal
+
 fun Application.configureSecurity() {
-  data class MySession(val count: Int = 0)
   install(Sessions) {
-    cookie<MySession>("MY_SESSION") {
+    cookie<UserAuthSession>("USER_AUTH", KVSSessionStorage()) {
+      cookie.httpOnly = true
       cookie.extensions["SameSite"] = "lax"
-    }
-  }
-
-
-  routing {
-    get("/session/increment") {
-      val session = call.sessions.get<MySession>() ?: MySession()
-      call.sessions.set(session.copy(count = session.count + 1))
-      call.respondText("Counter is ${session.count}. Refresh to increment.")
     }
   }
 }

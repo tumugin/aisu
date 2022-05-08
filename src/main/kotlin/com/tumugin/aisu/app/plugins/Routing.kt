@@ -1,6 +1,8 @@
 package com.tumugin.aisu.app.plugins
 
+import com.tumugin.aisu.app.controller.api.LoginController
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.locations.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -10,6 +12,11 @@ fun Application.configureRouting() {
   }
 
   routing {
+    route("/api") {
+      post("login") {
+        LoginController().post(call)
+      }
+    }
     get("/") {
       call.respondText("Hello World!")
     }
@@ -23,6 +30,7 @@ fun Application.configureRouting() {
     get<Type.List> {
       call.respondText("Inside $it")
     }
+    authenticate("user_session") { }
   }
 }
 

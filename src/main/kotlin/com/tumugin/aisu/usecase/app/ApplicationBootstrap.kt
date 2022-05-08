@@ -1,7 +1,7 @@
 package com.tumugin.aisu.usecase.app
 
-object ApplicationBootstrap {
+class ApplicationBootstrap {
   fun bootstrap() {
-    Database.prepareDatabase()
+    Database().prepareDatabase()
   }
 }
