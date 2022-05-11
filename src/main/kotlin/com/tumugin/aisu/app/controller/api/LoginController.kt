@@ -10,17 +10,15 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.sessions.*
 import kotlinx.datetime.Clock
-import kotlin.time.ExperimentalTime
+import kotlin.time.Duration.Companion.days
 
 class LoginController {
   private val authUserUseCase = AuthUser()
 
-  @OptIn(ExperimentalTime::class)
   suspend fun post(call: ApplicationCall) {
     val loginRequest = call.receive<LoginRequest>()
     val user = authUserUseCase.authAndGetUser(
-      UserEmail(loginRequest.email),
-      UserRawPassword(loginRequest.password)
+      UserEmail(loginRequest.email), UserRawPassword(loginRequest.password)
     )
     if (user == null) {
       call.respond(403)
@@ -29,7 +27,7 @@ class LoginController {
     call.sessions.set(
       UserAuthSession(
         userId = user.userId.value,
-        validThroughTimestamp = Clock.System.now().plus(kotlin.time.Duration.days(30)).toString(),
+        validThroughTimestamp = Clock.System.now().plus(30.days).toString(),
         forceLogoutGeneration = user.userForceLogoutGeneration.value
       )
     )
