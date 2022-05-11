@@ -27,8 +27,8 @@ class UserRepositoryImpl : UserRepository {
     return User(
       UserId(rawModel.id.value),
       UserName(rawModel.name),
-      UserEmail(rawModel.email),
-      UserPassword(rawModel.password),
+      rawModel.email?.let { UserEmail(it) },
+      rawModel.password?.let { UserPassword(it) },
       rawModel.emailVerifiedAt?.let { UserEmailVerifiedAt(it) },
       UserForceLogoutGeneration(rawModel.userForceLogoutGeneration),
       UserCreatedAt(rawModel.createdAt),

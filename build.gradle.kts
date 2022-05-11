@@ -1,5 +1,14 @@
+import io.github.cdimascio.dotenv.dotenv
+import org.flywaydb.gradle.task.FlywayMigrateTask
+
+buildscript {
+  dependencies {
+    classpath("io.github.cdimascio:dotenv-kotlin:6.2.2")
+  }
+}
+
 plugins {
-  kotlin ("jvm") version "1.6.21"
+  kotlin("jvm") version "1.6.21"
   application
   id("org.flywaydb.flyway") version "8.5.10"
   id("org.jetbrains.kotlin.plugin.serialization") version "1.6.21"
@@ -13,7 +22,7 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
 }
 
-val exposedVersion="0.38.2"
+val exposedVersion = "0.38.2"
 val koinVersion = "3.1.6"
 val ktorVersion = "2.0.1"
 val logbackVersion = "1.2.3"
@@ -58,4 +67,23 @@ dependencies {
   // test libs
   testImplementation("io.mockk:mockk:1.12.3")
   testImplementation("io.insert-koin:koin-test:$koinVersion")
+}
+
+task<FlywayMigrateTask>("migrateDatabase") {
+  val dotEnvSetting = dotenv { ignoreIfMissing = true }
+  baselineVersion = "0"
+  url = dotEnvSetting["DB_JDBC_URL"]
+  user = dotEnvSetting["DB_USERNAME"]
+  password = dotEnvSetting["DB_PASSWORD"]
+}
+
+task<FlywayMigrateTask>("migrateTestingDatabase") {
+  val dotEnvSetting = dotenv {
+    ignoreIfMissing = true
+    filename = ".env.testing"
+  }
+  baselineVersion = "0"
+  url = dotEnvSetting["DB_JDBC_URL"]
+  user = dotEnvSetting["DB_USERNAME"]
+  password = dotEnvSetting["DB_PASSWORD"]
 }
