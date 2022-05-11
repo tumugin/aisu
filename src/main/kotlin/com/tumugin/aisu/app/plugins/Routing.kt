@@ -1,6 +1,7 @@
 package com.tumugin.aisu.app.plugins
 
 import com.tumugin.aisu.app.controller.api.LoginController
+import com.tumugin.aisu.app.controller.api.LogoutController
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.locations.*
@@ -15,6 +16,9 @@ fun Application.configureRouting() {
     route("/api") {
       post("login") {
         LoginController().post(call)
+      }
+      post("logout") {
+        LogoutController().post(call)
       }
     }
     get("/") {
