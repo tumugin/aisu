@@ -8,8 +8,8 @@ import org.jetbrains.exposed.dao.id.EntityID
 
 object Users : ExposedTimestampIdTable() {
   val name = varchar("name", 255)
-  val email = varchar("email", 255)
-  val password = varchar("password", 255)
+  val email = varchar("email", 255).nullable()
+  val password = varchar("password", 255).nullable()
   val emailVerifiedAt = datetimeWithTZ("email_verified_at").nullable()
   val userForceLogoutGeneration = integer("user_force_logout_generation").default(0)
 }

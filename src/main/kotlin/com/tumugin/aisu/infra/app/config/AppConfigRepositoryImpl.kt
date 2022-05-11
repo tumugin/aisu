@@ -16,7 +16,9 @@ class AppConfigRepositoryImpl(private val isTesting: Boolean = false) : AppConfi
     AppConfig(
       appConfigDatabaseJdbcUrl = AppConfigDatabaseJdbcUrl(env["DB_JDBC_URL"]),
       appConfigDatabaseUserName = AppConfigDatabaseUserName(env["DB_USERNAME"]),
-      appConfigDatabasePassword = AppConfigDatabasePassword(env["DB_PASSWORD"])
+      appConfigDatabasePassword = AppConfigDatabasePassword(env["DB_PASSWORD"]),
+      appConfigRedisHost = AppConfigRedisHost(env["REDIS_HOST"]),
+      appConfigRedisPort = AppConfigRedisPort(env["REDIS_PORT"].toInt())
     )
   }
 }

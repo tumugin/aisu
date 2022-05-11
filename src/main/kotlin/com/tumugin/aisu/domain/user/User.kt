@@ -6,8 +6,8 @@ import kotlinx.datetime.Instant
 data class User(
   val userId: UserId,
   val userName: UserName,
-  val userEmail: UserEmail,
-  val userPassword: UserPassword,
+  val userEmail: UserEmail?,
+  val userPassword: UserPassword?,
   val userEmailVerifiedAt: UserEmailVerifiedAt?,
   val userForceLogoutGeneration: UserForceLogoutGeneration,
   val userCreatedAt: UserCreatedAt,
