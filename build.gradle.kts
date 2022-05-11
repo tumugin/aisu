@@ -25,7 +25,7 @@ repositories {
 val exposedVersion = "0.38.2"
 val koinVersion = "3.1.6"
 val ktorVersion = "2.0.1"
-val logbackVersion = "1.2.3"
+val logbackVersion = "1.2.11"
 
 application {
   mainClass.set("com.tumugin.aisu.ApplicationKt")
