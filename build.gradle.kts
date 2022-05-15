@@ -4,6 +4,8 @@ import org.flywaydb.gradle.task.FlywayMigrateTask
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.2.2")
+    classpath("mysql:mysql-connector-java:8.0.29")
+    classpath("org.flywaydb:flyway-mysql:8.5.10")
   }
 }
 
@@ -69,7 +71,7 @@ dependencies {
   testImplementation("io.insert-koin:koin-test:$koinVersion")
 }
 
-task<FlywayMigrateTask>("migrateDatabase") {
+flyway {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
   baselineVersion = "0"
   url = dotEnvSetting["DB_JDBC_URL"]
