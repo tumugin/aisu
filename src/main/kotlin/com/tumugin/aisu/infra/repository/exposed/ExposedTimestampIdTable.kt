@@ -5,7 +5,7 @@ import org.jetbrains.exposed.dao.*
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 
-abstract class ExposedTimestampIdTable : IntIdTable() {
+abstract class ExposedTimestampIdTable(name: String = "", columnName: String = "id") : IntIdTable(name, columnName) {
   val createdAt = datetimeWithTZ("created_at").clientDefault { Clock.System.now() }
   val updatedAt = datetimeWithTZ("updated_at").clientDefault { Clock.System.now() }
 }

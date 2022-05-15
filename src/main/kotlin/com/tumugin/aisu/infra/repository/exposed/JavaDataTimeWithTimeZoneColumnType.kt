@@ -1,14 +1,13 @@
 package com.tumugin.aisu.infra.repository.exposed
 
-import kotlinx.datetime.Instant
-import kotlinx.datetime.toJavaInstant
-import kotlinx.datetime.toKotlinInstant
+import kotlinx.datetime.*
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ColumnType
 import org.jetbrains.exposed.sql.IDateColumnType
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.vendors.currentDialect
 import java.sql.Timestamp
+import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -29,16 +28,20 @@ class JavaDataTimeWithTimeZoneColumnType : ColumnType(), IDateColumnType {
   }
 
   override fun valueFromDB(value: Any): Instant {
-    if (value !is java.sql.Timestamp) {
-      error("$value is not a java.sql.Timestamp!")
+    if (value is Instant) {
+      return value
     }
 
-    return value.toInstant().toKotlinInstant()
+    if (value is LocalDateTime) {
+      return value.toKotlinLocalDateTime().toInstant(UtcOffset.ZERO)
+    }
+
+    error("$value is not Instant or LocalDateTime")
   }
 
   override fun notNullValueToDB(value: Any): Any {
     if (value !is Instant) {
-      error("$value is not a java.time.Instant!")
+      error("$value is not a Instant!")
     }
 
     return Timestamp.from(value.toJavaInstant())
