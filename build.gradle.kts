@@ -28,6 +28,7 @@ val exposedVersion = "0.38.2"
 val koinVersion = "3.1.6"
 val ktorVersion = "2.0.1"
 val logbackVersion = "1.2.11"
+val coroutineVersion = "1.6.1"
 
 application {
   mainClass.set("com.tumugin.aisu.ApplicationKt")
@@ -61,7 +62,8 @@ dependencies {
   implementation("io.konform:konform:0.3.0")
   implementation("redis.clients:jedis:4.2.3")
   // kotlin
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")

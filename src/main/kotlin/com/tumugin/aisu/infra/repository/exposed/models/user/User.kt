@@ -6,20 +6,20 @@ import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
 import com.tumugin.aisu.infra.repository.exposed.datetimeWithTZ
 import org.jetbrains.exposed.dao.id.EntityID
 
-object Users : ExposedTimestampIdTable() {
+object Users : ExposedTimestampIdTable("users") {
   val name = varchar("name", 255)
   val email = varchar("email", 255).nullable()
   val password = varchar("password", 255).nullable()
   val emailVerifiedAt = datetimeWithTZ("email_verified_at").nullable()
-  val userForceLogoutGeneration = integer("user_force_logout_generation").default(0)
+  val forceLogoutGeneration = integer("force_logout_generation").default(0)
 }
 
 class User(id: EntityID<Int>) : ExposedTimestampIdEntity(id, Users) {
   companion object : ExposedTimestampIdEntityClass<User>(Users)
 
-  val name by Users.name
-  val email by Users.email
-  val password by Users.password
-  val emailVerifiedAt by Users.emailVerifiedAt
-  val userForceLogoutGeneration by Users.userForceLogoutGeneration
+  var name by Users.name
+  var email by Users.email
+  var password by Users.password
+  var emailVerifiedAt by Users.emailVerifiedAt
+  var forceLogoutGeneration by Users.forceLogoutGeneration
 }
