@@ -13,16 +13,12 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class JavaDataTimeWithTimeZoneColumnType : ColumnType(), IDateColumnType {
-  private val utcZoneOffset = ZoneOffset.UTC
-  private val dateTimeStringFormatter =
-    DateTimeFormatter.ISO_LOCAL_DATE_TIME.withLocale(Locale.ROOT).withZone(utcZoneOffset)
-
+  private val dateTimeStringFormatter = DateTimeFormatter.ISO_INSTANT
   override val hasTimePart: Boolean = true
   override fun sqlType(): String = currentDialect.dataTypeProvider.dateTimeType()
 
   override fun nonNullValueToString(value: Any): String {
-    if (value !is Instant)
-      error("$value is not a Instant!")
+    if (value !is Instant) error("$value is not a Instant!")
 
     return "'${dateTimeStringFormatter.format(value.toJavaInstant())}'"
   }
@@ -32,7 +28,12 @@ class JavaDataTimeWithTimeZoneColumnType : ColumnType(), IDateColumnType {
       return value
     }
 
+    if (value is java.time.Instant) {
+      return value.toKotlinInstant()
+    }
+
     if (value is LocalDateTime) {
+      // タイムゾーンをサポートしないDBから来た時は強制的にUTCへ変換する
       return value.toKotlinLocalDateTime().toInstant(UtcOffset.ZERO)
     }
 
