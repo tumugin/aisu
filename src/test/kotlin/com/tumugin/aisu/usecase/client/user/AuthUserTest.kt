@@ -2,14 +2,13 @@ package com.tumugin.aisu.usecase.client.user
 
 import com.tumugin.aisu.BaseTest
 import com.tumugin.aisu.domain.user.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.koin.test.inject
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class AuthUserTest : BaseTest() {
   private val authUser = AuthUser()
   private val userRepository by inject<UserRepository>()
@@ -24,9 +23,13 @@ class AuthUserTest : BaseTest() {
     )
   }
 
+  @BeforeTest
+  fun beforeTest() = runTest {
+    prepareUser()
+  }
+
   @Test
   fun testAuthAndGetUser() = runTest {
-    prepareUser()
     assertNotNull(
       authUser.authAndGetUser(
         UserEmail("aoisuzu@example.com"), UserRawPassword("aoisuzu")
@@ -36,7 +39,6 @@ class AuthUserTest : BaseTest() {
 
   @Test
   fun testAuthAndGetUserWithInvalidUser() = runTest {
-    prepareUser()
     // wrong password
     assertNull(
       authUser.authAndGetUser(

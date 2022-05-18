@@ -4,11 +4,8 @@ import com.tumugin.aisu.di.AisuDIModule
 import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.junit.BeforeClass
 import org.koin.core.context.GlobalContext
-import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
-import org.koin.test.get
 import kotlin.test.BeforeTest
 
 abstract class BaseTest : KoinTest {
@@ -21,7 +18,7 @@ abstract class BaseTest : KoinTest {
   }
 
   @BeforeTest
-  fun beforeTest() {
+  fun beforeBaseTest() {
     setupApplication()
     truncateDatabase()
   }
