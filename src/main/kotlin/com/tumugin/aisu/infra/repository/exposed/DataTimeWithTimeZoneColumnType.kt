@@ -39,10 +39,7 @@ class DataTimeWithTimeZoneColumnType : ColumnType(), IDateColumnType {
 
   private fun currentDBSupportsTimeZone(): Boolean {
     return arrayOf(
-      PostgreSQLDialect.dialectName,
-      H2Dialect.dialectName,
-      OracleDialect.dialectName,
-      SQLServerDialect.dialectName
+      PostgreSQLDialect.dialectName, H2Dialect.dialectName, OracleDialect.dialectName, SQLServerDialect.dialectName
     ).contains(
       currentDialect.name
     )
@@ -50,9 +47,7 @@ class DataTimeWithTimeZoneColumnType : ColumnType(), IDateColumnType {
 
   override fun sqlType(): String {
     return when (currentDialect.name) {
-      PostgreSQLDialect.dialectName -> "TIMESTAMP WITH TIME ZONE"
-      H2Dialect.dialectName -> "TIMESTAMP WITH TIME ZONE"
-      OracleDialect.dialectName -> "TIMESTAMP WITH TIME ZONE"
+      PostgreSQLDialect.dialectName, H2Dialect.dialectName, OracleDialect.dialectName -> "TIMESTAMP WITH TIME ZONE"
       SQLServerDialect.dialectName -> "DATETIMEOFFSET"
       else -> "DATETIME"
     }
