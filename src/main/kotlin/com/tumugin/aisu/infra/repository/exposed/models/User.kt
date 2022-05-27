@@ -1,4 +1,4 @@
-package com.tumugin.aisu.infra.repository.exposed.models.user
+package com.tumugin.aisu.infra.repository.exposed.models
 
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
@@ -14,7 +14,7 @@ object Users : ExposedTimestampIdTable("users") {
   val forceLogoutGeneration = integer("force_logout_generation").default(0)
 }
 
-class User(id: EntityID<Int>) : ExposedTimestampIdEntity(id, Users) {
+class User(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Users) {
   companion object : ExposedTimestampIdEntityClass<User>(Users)
 
   var name by Users.name
