@@ -1,6 +1,6 @@
-create table users
+create table `users`
 (
-  `id`                      integer primary key auto_increment not null,
+  `id`                      bigint unsigned primary key auto_increment not null,
   `name`                    varchar(255) not null,
   `email`                   varchar(255) unique,
   `password`                varchar(255),

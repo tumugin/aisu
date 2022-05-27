@@ -1,4 +1,6 @@
 import io.github.cdimascio.dotenv.dotenv
+import org.flywaydb.gradle.task.AbstractFlywayTask
+import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 
 buildscript {
@@ -81,7 +83,7 @@ flyway {
   password = dotEnvSetting["DB_PASSWORD"]
 }
 
-task<FlywayMigrateTask>("migrateTestingDatabase") {
+val flywayTestingDatabaseConfig: AbstractFlywayTask.() -> Unit = {
   val dotEnvSetting = dotenv {
     ignoreIfMissing = true
     filename = ".env.testing"
@@ -91,3 +93,6 @@ task<FlywayMigrateTask>("migrateTestingDatabase") {
   user = dotEnvSetting["DB_USERNAME"]
   password = dotEnvSetting["DB_PASSWORD"]
 }
+
+task<FlywayMigrateTask>("migrateTestingDatabase", flywayTestingDatabaseConfig)
+task<FlywayCleanTask>("cleanTestingDatabase", flywayTestingDatabaseConfig)
