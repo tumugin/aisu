@@ -1,9 +1,9 @@
 package com.tumugin.aisu.infra.repository.exposed.repository
 
 import com.tumugin.aisu.domain.user.*
-import com.tumugin.aisu.infra.repository.exposed.models.user.Users
+import com.tumugin.aisu.infra.repository.exposed.models.Users
 import org.jetbrains.exposed.sql.transactions.transaction
-import com.tumugin.aisu.infra.repository.exposed.models.user.User as UserModel
+import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 
 class UserRepositoryImpl : UserRepository {
   override suspend fun getUserById(userId: UserId): User? {
