@@ -28,7 +28,7 @@ class CreateUserTest : BaseTest() {
     val result = userRepository.getUserByEmail(UserEmail("aoisuzu@example.com"))
     assertEquals(
       mutableMapOf<String, Any?>(
-        "userId" to 1,
+        "userId" to 1L,
         "userEmail" to "aoisuzu@example.com",
         "userEmailVerifiedAt" to null,
         "userForceLogoutGeneration" to 0

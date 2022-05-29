@@ -6,7 +6,7 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.sessions.*
 
-data class UserAuthSession(val userId: Int, val validThroughTimestamp: String, val forceLogoutGeneration: Int)
+data class UserAuthSession(val userId: Long, val validThroughTimestamp: String, val forceLogoutGeneration: Int)
 
 data class UserPrincipal(val user: User) : Principal
 
