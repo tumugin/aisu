@@ -50,14 +50,21 @@ class UserRepositoryImpl : UserRepository {
     return toDomain(createdModel)
   }
 
-  override suspend fun updateUser(userId: UserId, updatedUser: User): User {
+  override suspend fun updateUser(
+    userId: UserId,
+    userName: UserName,
+    userEmail: UserEmail?,
+    userPassword: UserPassword?,
+    userEmailVerifiedAt: UserEmailVerifiedAt?,
+    userForceLogoutGeneration: UserForceLogoutGeneration
+  ): User {
     return transaction {
       val user = UserModel[userId.value]
-      user.name = updatedUser.userName.value
-      user.email = updatedUser.userEmail?.value
-      user.password = updatedUser.userPassword?.value
-      user.emailVerifiedAt = updatedUser.userEmailVerifiedAt?.value
-      user.forceLogoutGeneration = updatedUser.userForceLogoutGeneration.value
+      user.name = userName.value
+      user.email = userEmail?.value
+      user.password = userPassword?.value
+      user.emailVerifiedAt = userEmailVerifiedAt?.value
+      user.forceLogoutGeneration = userForceLogoutGeneration.value
       toDomain(user)
     }
   }

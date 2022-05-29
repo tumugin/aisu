@@ -8,7 +8,7 @@ data class Cheki(
   val chekiId: ChekiId,
   val userId: UserId,
   val idolId: IdolId,
-  val regulationId: RegulationId,
+  val regulationId: RegulationId?,
   val chekiQuantity: ChekiQuantity,
   val chekiShotAt: ChekiShotAt,
   val chekiCreatedAt: ChekiCreatedAt,
