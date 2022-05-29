@@ -10,4 +10,11 @@ interface UserRepository {
     userEmailVerifiedAt: UserEmailVerifiedAt?,
     userForceLogoutGeneration: UserForceLogoutGeneration,
   ): User
+
+  suspend fun updateUser(
+    userId: UserId,
+    updatedUser: User
+  ): User
+
+  suspend fun deleteUser(userId: UserId)
 }
