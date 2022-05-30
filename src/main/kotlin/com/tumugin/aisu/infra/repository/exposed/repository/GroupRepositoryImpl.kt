@@ -42,14 +42,16 @@ class GroupRepositoryImpl : GroupRepository {
     }
   }
 
-  private fun toDomain(model: GroupModel): Group {
-    return Group(
-      groupId = GroupId(model.id.value),
-      userId = model.userId?.let { UserId(it) },
-      groupName = GroupName(model.name),
-      groupStatus = GroupStatus.valueOf(model.status),
-      groupCreatedAt = GroupCreatedAt(model.createdAt),
-      groupUpdatedAt = GroupUpdatedAt(model.updatedAt)
-    )
+  companion object {
+    fun toDomain(model: GroupModel): Group {
+      return Group(
+        groupId = GroupId(model.id.value),
+        userId = model.userId?.let { UserId(it) },
+        groupName = GroupName(model.name),
+        groupStatus = GroupStatus.valueOf(model.status),
+        groupCreatedAt = GroupCreatedAt(model.createdAt),
+        groupUpdatedAt = GroupUpdatedAt(model.updatedAt)
+      )
+    }
   }
 }

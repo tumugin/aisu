@@ -44,15 +44,19 @@ class IdolRepositoryImpl : IdolRepository {
     }
   }
 
-  private fun toDomain(model: IdolModel): Idol {
-    return Idol(
-      idolId = IdolId(model.id.value),
-      groupId = model.groupId?.let { GroupId(it) },
-      userId = model.userId?.let { UserId(it) },
-      idolName = IdolName(model.name),
-      idolStatus = IdolStatus.valueOf(model.status),
-      idolCreatedAt = IdolCreatedAt(model.createdAt),
-      idolUpdatedAt = IdolUpdatedAt(model.updatedAt)
-    )
+  companion object {
+    fun toDomain(model: IdolModel): Idol {
+      return Idol(
+        idolId = IdolId(model.id.value),
+        groupId = model.groupId?.let { GroupId(it) },
+        group = model.group?.let { GroupRepositoryImpl.toDomain(it) },
+        userId = model.userId?.let { UserId(it) },
+        user = model.user?.let { UserRepositoryImpl.toDomain(it) },
+        idolName = IdolName(model.name),
+        idolStatus = IdolStatus.valueOf(model.status),
+        idolCreatedAt = IdolCreatedAt(model.createdAt),
+        idolUpdatedAt = IdolUpdatedAt(model.updatedAt)
+      )
+    }
   }
 }

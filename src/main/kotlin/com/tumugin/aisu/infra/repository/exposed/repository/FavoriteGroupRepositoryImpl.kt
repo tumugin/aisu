@@ -33,11 +33,13 @@ class FavoriteGroupRepositoryImpl : FavoriteGroupRepository {
     })
   }
 
-  private fun toDomain(model: FavoriteGroupModel): FavoriteGroup {
-    return FavoriteGroup(
-      favoriteGroupId = FavoriteGroupId(model.id.value),
-      userId = UserId(model.userId),
-      groupId = GroupId(model.groupId)
-    )
+  companion object {
+    fun toDomain(model: FavoriteGroupModel): FavoriteGroup {
+      return FavoriteGroup(
+        favoriteGroupId = FavoriteGroupId(model.id.value),
+        userId = UserId(model.userId),
+        groupId = GroupId(model.groupId)
+      )
+    }
   }
 }

@@ -66,17 +66,19 @@ class RegulationRepositoryImpl : RegulationRepository {
     })
   }
 
-  private fun toDomain(model: RegulationModel): Regulation {
-    return Regulation(
-      regulationId = RegulationId(model.id.value),
-      groupId = GroupId(model.groupId),
-      userId = model.userId?.let { UserId(it) },
-      regulationName = RegulationName(model.name),
-      regulationComment = RegulationComment(model.comment),
-      regulationUnitPrice = RegulationUnitPrice(model.unitPrice),
-      regulationStatus = RegulationStatus.valueOf(model.status),
-      regulationCreatedAt = RegulationCreatedAt(model.createdAt),
-      regulationUpdatedAt = RegulationUpdatedAt(model.updatedAt)
-    )
+  companion object {
+    fun toDomain(model: RegulationModel): Regulation {
+      return Regulation(
+        regulationId = RegulationId(model.id.value),
+        groupId = GroupId(model.groupId),
+        userId = model.userId?.let { UserId(it) },
+        regulationName = RegulationName(model.name),
+        regulationComment = RegulationComment(model.comment),
+        regulationUnitPrice = RegulationUnitPrice(model.unitPrice),
+        regulationStatus = RegulationStatus.valueOf(model.status),
+        regulationCreatedAt = RegulationCreatedAt(model.createdAt),
+        regulationUpdatedAt = RegulationUpdatedAt(model.updatedAt)
+      )
+    }
   }
 }

@@ -76,16 +76,18 @@ class UserRepositoryImpl : UserRepository {
     }
   }
 
-  private fun toDomain(rawModel: UserModel): User {
-    return User(
-      UserId(rawModel.id.value),
-      UserName(rawModel.name),
-      rawModel.email?.let { UserEmail(it) },
-      rawModel.password?.let { UserPassword(it) },
-      rawModel.emailVerifiedAt?.let { UserEmailVerifiedAt(it) },
-      UserForceLogoutGeneration(rawModel.forceLogoutGeneration),
-      UserCreatedAt(rawModel.createdAt),
-      UserUpdatedAt(rawModel.updatedAt)
-    )
+  companion object {
+    fun toDomain(rawModel: UserModel): User {
+      return User(
+        UserId(rawModel.id.value),
+        UserName(rawModel.name),
+        rawModel.email?.let { UserEmail(it) },
+        rawModel.password?.let { UserPassword(it) },
+        rawModel.emailVerifiedAt?.let { UserEmailVerifiedAt(it) },
+        UserForceLogoutGeneration(rawModel.forceLogoutGeneration),
+        UserCreatedAt(rawModel.createdAt),
+        UserUpdatedAt(rawModel.updatedAt)
+      )
+    }
   }
 }
