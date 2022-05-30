@@ -4,14 +4,16 @@ import com.tumugin.aisu.domain.app.config.AppConfigRepository
 import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
 import com.tumugin.aisu.domain.app.database.RedisPoolRepository
 import com.tumugin.aisu.domain.app.session.SessionKVSRepository
+import com.tumugin.aisu.domain.favoritegroup.FavoriteGroupRepository
+import com.tumugin.aisu.domain.group.GroupRepository
+import com.tumugin.aisu.domain.idol.IdolRepository
 import com.tumugin.aisu.domain.regulation.RegulationRepository
 import com.tumugin.aisu.domain.user.UserRepository
 import com.tumugin.aisu.infra.app.config.AppConfigRepositoryImpl
 import com.tumugin.aisu.infra.app.database.JDBCConnectionRepositoryImpl
 import com.tumugin.aisu.infra.app.database.RedisPoolRepositoryImpl
 import com.tumugin.aisu.infra.app.session.SessionKVSRepositoryImpl
-import com.tumugin.aisu.infra.repository.exposed.repository.RegulationRepositoryImpl
-import com.tumugin.aisu.infra.repository.exposed.repository.UserRepositoryImpl
+import com.tumugin.aisu.infra.repository.exposed.repository.*
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import redis.clients.jedis.JedisPool
@@ -36,6 +38,9 @@ object AisuDIModule {
   private val aisuModule = module {
     factory<UserRepository> { UserRepositoryImpl() }
     factory<RegulationRepository> { RegulationRepositoryImpl() }
+    factory<IdolRepository> { IdolRepositoryImpl() }
+    factory<GroupRepository> { GroupRepositoryImpl() }
+    factory<FavoriteGroupRepository> { FavoriteGroupRepositoryImpl() }
   }
 
   fun start() {

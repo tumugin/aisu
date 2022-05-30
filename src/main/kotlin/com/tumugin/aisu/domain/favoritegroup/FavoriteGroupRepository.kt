@@ -9,5 +9,5 @@ interface FavoriteGroupRepository {
   suspend fun addFavoriteGroup(
     userId: UserId,
     groupId: GroupId
-  )
+  ): FavoriteGroup
 }

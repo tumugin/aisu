@@ -32,7 +32,7 @@ class RegulationRepositoryImpl : RegulationRepository {
     regulationUnitPrice: RegulationUnitPrice,
     regulationStatus: RegulationStatus
   ): Regulation {
-    val rawModel = transaction {
+    return toDomain(transaction {
       RegulationModel.new {
         this.groupId = groupId.value
         this.userId = userId.value
@@ -41,8 +41,7 @@ class RegulationRepositoryImpl : RegulationRepository {
         this.unitPrice = regulationUnitPrice.value
         this.status = regulationStatus.name
       }
-    }
-    return toDomain(rawModel)
+    })
   }
 
   override suspend fun updateRegulation(
@@ -54,7 +53,7 @@ class RegulationRepositoryImpl : RegulationRepository {
     regulationUnitPrice: RegulationUnitPrice,
     regulationStatus: RegulationStatus
   ): Regulation {
-    val rawModel = transaction {
+    return toDomain(transaction {
       val model = RegulationModel[regulationId.value]
       model.apply {
         this.groupId = groupId.value
@@ -64,8 +63,7 @@ class RegulationRepositoryImpl : RegulationRepository {
         this.unitPrice = regulationUnitPrice.value
         this.status = regulationStatus.name
       }
-    }
-    return toDomain(rawModel)
+    })
   }
 
   private fun toDomain(model: RegulationModel): Regulation {

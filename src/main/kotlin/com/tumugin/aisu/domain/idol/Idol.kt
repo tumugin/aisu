@@ -5,8 +5,8 @@ import com.tumugin.aisu.domain.user.UserId
 
 data class Idol(
   val idolId: IdolId,
-  val groupId: GroupId,
-  val userId: UserId,
+  val groupId: GroupId?,
+  val userId: UserId?,
   val idolName: IdolName,
   val idolStatus: IdolStatus,
   val idolCreatedAt: IdolCreatedAt,
