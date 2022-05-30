@@ -4,6 +4,7 @@ import com.tumugin.aisu.domain.app.config.AppConfigRepository
 import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
 import com.tumugin.aisu.domain.app.database.RedisPoolRepository
 import com.tumugin.aisu.domain.app.session.SessionKVSRepository
+import com.tumugin.aisu.domain.cheki.ChekiRepository
 import com.tumugin.aisu.domain.favoritegroup.FavoriteGroupRepository
 import com.tumugin.aisu.domain.group.GroupRepository
 import com.tumugin.aisu.domain.idol.IdolRepository
@@ -41,6 +42,7 @@ object AisuDIModule {
     factory<IdolRepository> { IdolRepositoryImpl() }
     factory<GroupRepository> { GroupRepositoryImpl() }
     factory<FavoriteGroupRepository> { FavoriteGroupRepositoryImpl() }
+    factory<ChekiRepository> { ChekiRepositoryImpl() }
   }
 
   fun start() {

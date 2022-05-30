@@ -3,6 +3,7 @@ package com.tumugin.aisu.domain.cheki
 import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.regulation.RegulationId
 import com.tumugin.aisu.domain.user.UserId
+import kotlinx.datetime.TimeZone
 
 interface ChekiRepository {
   suspend fun getCheki(chekiId: ChekiId): Cheki?
@@ -20,7 +21,7 @@ interface ChekiRepository {
   ): List<ChekiIdolCount>
 
   suspend fun getChekiMonthIdolCountByUserIdAndIdol(
-    userId: UserId, idolId: IdolId
+    userId: UserId, idolId: IdolId, baseTimezone: TimeZone
   ): List<ChekiMonthIdolCount>
 
   suspend fun addCheki(
