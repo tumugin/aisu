@@ -11,8 +11,8 @@ object FavoriteGroups : ExposedTimestampIdTable("favorite_groups") {
   val groupId = long("group_id").references(Groups.id, onDelete = ReferenceOption.CASCADE)
 }
 
-class FavoriteGroup(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Groups) {
-  companion object : ExposedTimestampIdEntityClass<User>(Groups)
+class FavoriteGroup(id: EntityID<Long>) : ExposedTimestampIdEntity(id, FavoriteGroups) {
+  companion object : ExposedTimestampIdEntityClass<FavoriteGroup>(FavoriteGroups)
 
   var userId by FavoriteGroups.userId
   var groupId by FavoriteGroups.groupId

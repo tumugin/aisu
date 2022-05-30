@@ -15,8 +15,8 @@ object Chekis : ExposedTimestampIdTable("chekis") {
   val shotAt = datetimeWithTZ("shot_at")
 }
 
-class Cheki(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Groups) {
-  companion object : ExposedTimestampIdEntityClass<User>(Groups)
+class Cheki(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Chekis) {
+  companion object : ExposedTimestampIdEntityClass<Cheki>(Chekis)
 
   var userId by Chekis.userId
   var idolId by Chekis.idolId

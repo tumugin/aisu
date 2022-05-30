@@ -10,7 +10,7 @@ interface RegulationRepository {
 
   suspend fun addRegulation(
     groupId: GroupId,
-    userId: UserId?,
+    userId: UserId,
     regulationName: RegulationName,
     regulationComment: RegulationComment,
     regulationUnitPrice: RegulationUnitPrice,
@@ -25,5 +25,5 @@ interface RegulationRepository {
     regulationComment: RegulationComment,
     regulationUnitPrice: RegulationUnitPrice,
     regulationStatus: RegulationStatus,
-  )
+  ): Regulation
 }

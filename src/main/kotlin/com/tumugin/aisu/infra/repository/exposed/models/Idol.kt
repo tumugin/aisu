@@ -13,8 +13,8 @@ object Idols : ExposedTimestampIdTable("idols") {
   val status = varchar("status", 255)
 }
 
-class Idol(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Groups) {
-  companion object : ExposedTimestampIdEntityClass<User>(Groups)
+class Idol(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Idols) {
+  companion object : ExposedTimestampIdEntityClass<Idol>(Idols)
 
   var groupId by Idols.groupId
   var userId by Idols.userId

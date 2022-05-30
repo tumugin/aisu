@@ -15,8 +15,8 @@ object Regulations : ExposedTimestampIdTable("regulations") {
   val status = varchar("status", 255)
 }
 
-class Regulation(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Groups) {
-  companion object : ExposedTimestampIdEntityClass<User>(Groups)
+class Regulation(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Regulations) {
+  companion object : ExposedTimestampIdEntityClass<Regulation>(Regulations)
 
   var groupId by Regulations.groupId
   var userId by Regulations.userId

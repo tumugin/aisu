@@ -58,15 +58,15 @@ class UserRepositoryImpl : UserRepository {
     userEmailVerifiedAt: UserEmailVerifiedAt?,
     userForceLogoutGeneration: UserForceLogoutGeneration
   ): User {
-    return transaction {
+    return toDomain(transaction {
       val user = UserModel[userId.value]
       user.name = userName.value
       user.email = userEmail?.value
       user.password = userPassword?.value
       user.emailVerifiedAt = userEmailVerifiedAt?.value
       user.forceLogoutGeneration = userForceLogoutGeneration.value
-      toDomain(user)
-    }
+      user
+    })
   }
 
   override suspend fun deleteUser(userId: UserId) {

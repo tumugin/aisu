@@ -13,7 +13,7 @@ object Groups : ExposedTimestampIdTable("groups") {
 }
 
 class Group(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Groups) {
-  companion object : ExposedTimestampIdEntityClass<User>(Groups)
+  companion object : ExposedTimestampIdEntityClass<Group>(Groups)
 
   var userId by Groups.userId
   var name by Groups.name
