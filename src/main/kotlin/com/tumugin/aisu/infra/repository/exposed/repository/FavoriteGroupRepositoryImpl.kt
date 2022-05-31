@@ -38,7 +38,9 @@ class FavoriteGroupRepositoryImpl : FavoriteGroupRepository {
       return FavoriteGroup(
         favoriteGroupId = FavoriteGroupId(model.id.value),
         userId = UserId(model.userId),
-        groupId = GroupId(model.groupId)
+        user = UserRepositoryImpl.toDomain(model.user),
+        groupId = GroupId(model.groupId),
+        group = GroupRepositoryImpl.toDomain(model.group)
       )
     }
   }

@@ -71,7 +71,9 @@ class RegulationRepositoryImpl : RegulationRepository {
       return Regulation(
         regulationId = RegulationId(model.id.value),
         groupId = GroupId(model.groupId),
+        group = GroupRepositoryImpl.toDomain(model.group),
         userId = model.userId?.let { UserId(it) },
+        user = model.user?.let { UserRepositoryImpl.toDomain(it) },
         regulationName = RegulationName(model.name),
         regulationComment = RegulationComment(model.comment),
         regulationUnitPrice = RegulationUnitPrice(model.unitPrice),

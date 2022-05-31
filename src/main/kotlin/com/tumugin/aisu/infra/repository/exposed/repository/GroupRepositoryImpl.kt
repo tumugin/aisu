@@ -47,6 +47,7 @@ class GroupRepositoryImpl : GroupRepository {
       return Group(
         groupId = GroupId(model.id.value),
         userId = model.userId?.let { UserId(it) },
+        user = model.user?.let { UserRepositoryImpl.toDomain(it) },
         groupName = GroupName(model.name),
         groupStatus = GroupStatus.valueOf(model.status),
         groupCreatedAt = GroupCreatedAt(model.createdAt),
