@@ -85,16 +85,22 @@ class ChekiRepositoryImpl : ChekiRepository {
     baseTimezone: TimeZone
   ): List<ChekiMonthIdolCount> {
     return transaction {
+      val yearConvertFunc = DateFormatWithTZFunction(
+        Chekis.shotAt,
+        "%Y",
+        TimeZone.UTC,
+        baseTimezone
+      )
       val monthConvertFunc = DateFormatWithTZFunction(
         Chekis.shotAt,
-        "%Y-%c",
+        "%c",
         TimeZone.UTC,
         baseTimezone
       )
       val countResults = Chekis
-        .slice(Chekis.idolId, monthConvertFunc, Chekis.quantity.sum())
+        .slice(Chekis.idolId, yearConvertFunc, monthConvertFunc, Chekis.quantity.sum())
         .select(Chekis.userId.eq(userId.value))
-        .groupBy(Chekis.idolId, monthConvertFunc)
+        .groupBy(Chekis.idolId, yearConvertFunc, monthConvertFunc)
       val idolIds = countResults.mapNotNull { it[Chekis.idolId] }
       val idols = IdolModel.forIds(idolIds)
       countResults.map { row ->
@@ -102,7 +108,7 @@ class ChekiRepositoryImpl : ChekiRepository {
           idol = idols.find { idol -> idol.id.value === row[Chekis.idolId] }
             ?.let { v -> IdolRepositoryImpl.toDomain(v) },
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0),
-          chekiShotAtMonth = ChekiShotAtMonth.fromString(row[monthConvertFunc], baseTimezone)
+          chekiShotAtMonth = ChekiShotAtMonth.fromString(row[yearConvertFunc], row[monthConvertFunc], baseTimezone)
         )
       }
     }
@@ -115,7 +121,15 @@ class ChekiRepositoryImpl : ChekiRepository {
     chekiQuantity: ChekiQuantity,
     chekiShotAt: ChekiShotAt
   ): Cheki {
-    TODO("Not yet implemented")
+    return toDomain(transaction {
+      ChekiModel.new {
+        this.userId = userId.value
+        this.idolId = idolId.value
+        this.regulationId = regulationId?.value
+        this.quantity = chekiQuantity.value
+        this.shotAt = chekiShotAt.value
+      }
+    })
   }
 
   override suspend fun updateCheki(
@@ -126,11 +140,22 @@ class ChekiRepositoryImpl : ChekiRepository {
     chekiQuantity: ChekiQuantity,
     chekiShotAt: ChekiShotAt
   ): Cheki {
-    TODO("Not yet implemented")
+    return toDomain(transaction {
+      val model = ChekiModel[chekiId.value]
+      model.userId = userId.value
+      model.idolId = idolId.value
+      model.regulationId = regulationId?.value
+      model.quantity = chekiQuantity.value
+      model.shotAt = chekiShotAt.value
+      model
+    })
   }
 
   override suspend fun deleteCheki(chekiId: ChekiId) {
-    TODO("Not yet implemented")
+    transaction {
+      val model = ChekiModel[chekiId.value]
+      model.delete()
+    }
   }
 
   companion object {
