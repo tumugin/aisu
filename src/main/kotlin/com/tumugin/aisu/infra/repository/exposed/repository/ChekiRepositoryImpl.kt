@@ -8,6 +8,7 @@ import com.tumugin.aisu.infra.repository.exposed.DateFormatWithTZFunction
 import com.tumugin.aisu.infra.repository.exposed.models.Chekis
 import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
 import kotlinx.datetime.TimeZone
+import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.between
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -15,6 +16,11 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import com.tumugin.aisu.infra.repository.exposed.models.Cheki as ChekiModel
 
 class ChekiRepositoryImpl : ChekiRepository {
+  private val withModels =
+    listOf(ChekiModel::user, ChekiModel::idol, ChekiModel::regulation).toTypedArray()
+  private val idolWithModels =
+    listOf(IdolModel::group, IdolModel::user).toTypedArray()
+
   override suspend fun getCheki(chekiId: ChekiId): Cheki? {
     return transaction {
       ChekiModel.findById(chekiId.value)
@@ -32,7 +38,7 @@ class ChekiRepositoryImpl : ChekiRepository {
           chekiShotAtStart.value,
           chekiShotEnd.value
         )
-      )
+      ).with(*withModels)
     }.map { toDomain(it) }
   }
 
@@ -48,7 +54,7 @@ class ChekiRepositoryImpl : ChekiRepository {
           chekiShotAtStart.value,
           chekiShotEnd.value
         ) and Chekis.idolId.eq(idolId.value)
-      )
+      ).with(*withModels)
     }.map { toDomain(it) }
   }
 
@@ -68,7 +74,7 @@ class ChekiRepositoryImpl : ChekiRepository {
         }
         .groupBy(Chekis.idolId)
       val idolIds = countResults.mapNotNull { it[Chekis.idolId] }
-      val idols = IdolModel.forIds(idolIds)
+      val idols = IdolModel.forIds(idolIds).with(*idolWithModels)
       countResults.map { row ->
         ChekiIdolCount(
           idol = idols.find { idol -> idol.id.value === row[Chekis.idolId] }
@@ -102,7 +108,7 @@ class ChekiRepositoryImpl : ChekiRepository {
         .select(Chekis.userId.eq(userId.value))
         .groupBy(Chekis.idolId, yearConvertFunc, monthConvertFunc)
       val idolIds = countResults.mapNotNull { it[Chekis.idolId] }
-      val idols = IdolModel.forIds(idolIds)
+      val idols = IdolModel.forIds(idolIds).with(*idolWithModels)
       countResults.map { row ->
         ChekiMonthIdolCount(
           idol = idols.find { idol -> idol.id.value === row[Chekis.idolId] }

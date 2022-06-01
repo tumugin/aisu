@@ -7,10 +7,10 @@ import io.ktor.server.testing.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ApplicationTest {
+class ApplicationTest : BaseDatabaseTest() {
   @Test
   fun testRoot() = testApplication {
-    application(ktorModule)
+    application(createKtorModule(getKoin()))
     client.get("/").apply {
       assertEquals(HttpStatusCode.OK, status)
       assertEquals("Hello World!", bodyAsText())

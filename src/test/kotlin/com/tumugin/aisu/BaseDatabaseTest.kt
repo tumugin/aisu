@@ -8,7 +8,7 @@ import org.koin.core.context.GlobalContext
 import org.koin.test.KoinTest
 import kotlin.test.BeforeTest
 
-abstract class BaseTest : KoinTest {
+abstract class BaseDatabaseTest : KoinTest {
   private fun setupApplication() {
     if (GlobalContext.getOrNull() !== null) {
       return

@@ -5,10 +5,10 @@ import com.tumugin.aisu.domain.user.UserRepository
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
-import org.koin.core.context.GlobalContext
+import org.koin.core.Koin
 
-fun Application.configureAuthentication() {
-  val userRepository: UserRepository = GlobalContext.get().get()
+fun Application.configureAuthentication(koin: Koin) {
+  val userRepository = koin.get<UserRepository>()
   install(Authentication) {
     session<UserAuthSession>("user_session") {
       challenge {

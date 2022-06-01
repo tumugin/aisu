@@ -1,6 +1,6 @@
 package com.tumugin.aisu.usecase.client.user
 
-import com.tumugin.aisu.BaseTest
+import com.tumugin.aisu.BaseDatabaseTest
 import com.tumugin.aisu.domain.user.*
 import kotlinx.coroutines.test.runTest
 import org.koin.test.inject
@@ -9,7 +9,7 @@ import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-class AuthUserTest : BaseTest() {
+class AuthUserTest : BaseDatabaseTest() {
   private val authUser = AuthUser()
   private val userRepository by inject<UserRepository>()
 
