@@ -5,10 +5,7 @@ import com.tumugin.aisu.domain.user.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import org.koin.core.component.inject
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
+import kotlin.test.*
 
 class UserRepositoryTest : BaseDatabaseTest() {
   private val userRepository: UserRepository by inject()
@@ -30,12 +27,12 @@ class UserRepositoryTest : BaseDatabaseTest() {
     userRepository.addUser(
       UserName("橋本あみ"),
       UserEmail("ami@example.com"),
-      UserPassword("amichi"),
+      UserRawPassword("amichi").toHashedPassword(),
       UserEmailVerifiedAt(Instant.parse("2022-12-07T12:00:00+09:00")),
       UserForceLogoutGeneration(100)
     )
 
-    val ami = userRepository.getUserByEmail(UserEmail("ami@example.com"))
+    val ami = userRepository.getUserByEmail(UserEmail("ami@example.com"))!!
 
     assertEquals(
       mutableMapOf<String, Any?>(
@@ -45,13 +42,14 @@ class UserRepositoryTest : BaseDatabaseTest() {
         "userEmailVerifiedAt" to Instant.parse("2022-12-07T12:00:00+09:00"),
         "userForceLogoutGeneration" to 100
       ), mutableMapOf<String, Any?>(
-        "userId" to ami?.userId?.value,
-        "userName" to ami?.userName?.value,
-        "userEmail" to ami?.userEmail?.value,
-        "userEmailVerifiedAt" to ami?.userEmailVerifiedAt?.value,
-        "userForceLogoutGeneration" to ami?.userForceLogoutGeneration?.value
+        "userId" to ami?.userId.value,
+        "userName" to ami.userName.value,
+        "userEmail" to ami.userEmail?.value,
+        "userEmailVerifiedAt" to ami.userEmailVerifiedAt?.value,
+        "userForceLogoutGeneration" to ami.userForceLogoutGeneration.value
       )
     )
+    assertTrue(ami.userPassword!!.isValid(UserRawPassword("amichi")))
   }
 
   @Test
@@ -61,7 +59,7 @@ class UserRepositoryTest : BaseDatabaseTest() {
       user.userId,
       UserName("めーぽむ"),
       UserEmail("maypomu@example.com"),
-      UserPassword("maypomupomu"),
+      UserRawPassword("maypomupomu").toHashedPassword(),
       UserEmailVerifiedAt(Instant.parse("2022-12-10T12:00:00+09:00")),
       UserForceLogoutGeneration(110)
     )
@@ -83,6 +81,7 @@ class UserRepositoryTest : BaseDatabaseTest() {
         "userForceLogoutGeneration" to updatedUser.userForceLogoutGeneration.value
       )
     )
+    assertTrue(updatedUser.userPassword!!.isValid(UserRawPassword("maypomupomu")))
   }
 
   @Test
@@ -98,7 +97,7 @@ class UserRepositoryTest : BaseDatabaseTest() {
     userRepository.addUser(
       UserName("藤宮めい"),
       UserEmail("may@example.com"),
-      UserPassword("maypomu"),
+      UserRawPassword("maypomu").toHashedPassword(),
       UserEmailVerifiedAt(Instant.parse("2022-12-07T12:00:00+09:00")),
       UserForceLogoutGeneration(100)
     )
@@ -120,5 +119,6 @@ class UserRepositoryTest : BaseDatabaseTest() {
         "userForceLogoutGeneration" to maypomu.userForceLogoutGeneration.value
       )
     )
+    assertTrue(maypomu.userPassword!!.isValid(UserRawPassword("maypomu")))
   }
 }
