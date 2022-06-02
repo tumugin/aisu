@@ -10,10 +10,8 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.ReferenceOption
 
 object Idols : ExposedTimestampIdTable("idols") {
-  val groupId = long("group_id").references(Groups.id, onDelete = ReferenceOption.SET_NULL).nullable()
-  val group = reference("group_id", Groups).nullable()
-  val userId = long("user_id").references(Users.id, onDelete = ReferenceOption.SET_NULL).nullable()
-  val user = reference("user_id", Users).nullable()
+  val group = reference("group_id", Groups, onDelete = ReferenceOption.SET_NULL).nullable()
+  val user = reference("user_id", Users, onDelete = ReferenceOption.SET_NULL).nullable()
   val name = varchar("name", 255)
   val status = varchar("status", 255)
 }
@@ -21,19 +19,17 @@ object Idols : ExposedTimestampIdTable("idols") {
 class Idol(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Idols) {
   companion object : ExposedTimestampIdEntityClass<Idol>(Idols)
 
-  var groupId by Idols.groupId
-  val group by Group optionalReferencedOn Idols.group
-  var userId by Idols.userId
-  val user by User optionalReferencedOn Idols.user
+  var group by Group optionalReferencedOn Idols.group
+  var user by User optionalReferencedOn Idols.user
   var name by Idols.name
   var status by Idols.status
 
   fun toDomain(): com.tumugin.aisu.domain.idol.Idol {
     return Idol(
       idolId = IdolId(this.id.value),
-      groupId = this.groupId?.let { GroupId(it) },
+      groupId = this.group?.id?.value?.let { GroupId(it) },
       group = this.group?.toDomain(),
-      userId = this.userId?.let { UserId(it) },
+      userId = this.user?.id?.value?.let { UserId(it) },
       user = this.user?.toDomain(),
       idolName = IdolName(this.name),
       idolStatus = IdolStatus.valueOf(this.status),

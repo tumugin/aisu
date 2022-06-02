@@ -16,7 +16,7 @@ class GroupRepositoryImpl : GroupRepository {
   override suspend fun addGroup(userId: UserId?, groupName: GroupName, groupStatus: GroupStatus): Group {
     return transaction {
       GroupModel.new {
-        this.user = userId?.value?.let { UserModel.findById(it) }
+        this.user = userId?.value?.let { UserModel[it] }
         this.name = groupName.value
         this.status = groupStatus.name
       }.toDomain()
@@ -29,7 +29,7 @@ class GroupRepositoryImpl : GroupRepository {
     return transaction {
       val model = GroupModel[groupId.value]
       model.apply {
-        this.user = userId?.value?.let { UserModel.findById(it) }
+        this.user = userId?.value?.let { UserModel[it] }
         this.name = groupName.value
         this.status = groupStatus.name
       }.toDomain()

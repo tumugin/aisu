@@ -10,7 +10,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.ReferenceOption
 
 object Groups : ExposedTimestampIdTable("groups") {
-  val user = reference("user_id", Users).nullable()
+  val user = reference("user_id", Users, onDelete = ReferenceOption.SET_NULL).nullable()
   val name = varchar("name", 255)
   val status = varchar("status", 255)
 }

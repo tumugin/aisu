@@ -6,6 +6,8 @@ import com.tumugin.aisu.domain.regulation.RegulationId
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.DateFormatWithTZFunction
 import com.tumugin.aisu.infra.repository.exposed.models.Chekis
+import com.tumugin.aisu.infra.repository.exposed.models.Regulation as RegulationModel
+import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
 import kotlinx.datetime.TimeZone
 import org.jetbrains.exposed.dao.with
@@ -34,7 +36,7 @@ class ChekiRepositoryImpl : ChekiRepository {
   ): List<Cheki> {
     return transaction {
       ChekiModel.find(
-        Chekis.userId.eq(userId.value) and Chekis.shotAt.between(
+        Chekis.user.eq(userId.value) and Chekis.shotAt.between(
           chekiShotAtStart.value,
           chekiShotEnd.value
         )
@@ -52,10 +54,10 @@ class ChekiRepositoryImpl : ChekiRepository {
   ): List<Cheki> {
     return transaction {
       ChekiModel.find(
-        Chekis.userId.eq(userId.value) and Chekis.shotAt.between(
+        Chekis.user.eq(userId.value) and Chekis.shotAt.between(
           chekiShotAtStart.value,
           chekiShotEnd.value
-        ) and Chekis.idolId.eq(idolId.value)
+        ) and Chekis.idol.eq(idolId.value)
       ).with(*withModels).map { it.toDomain() }
     }
   }
@@ -67,19 +69,19 @@ class ChekiRepositoryImpl : ChekiRepository {
   ): List<ChekiIdolCount> {
     return transaction {
       val countResults = Chekis
-        .slice(Chekis.idolId, Chekis.quantity.sum())
+        .slice(Chekis.idol, Chekis.quantity.sum())
         .select {
-          Chekis.userId.eq(userId.value) and Chekis.shotAt.between(
+          Chekis.user.eq(userId.value) and Chekis.shotAt.between(
             chekiShotAtStart.value,
             chekiShotEnd.value
           )
         }
-        .groupBy(Chekis.idolId)
-      val idolIds = countResults.mapNotNull { it[Chekis.idolId] }
-      val idols = IdolModel.forIds(idolIds).with(*idolWithModels)
+        .groupBy(Chekis.idol)
+      val idolIds = countResults.mapNotNull { it[Chekis.idol] }
+      val idols = IdolModel.forEntityIds(idolIds).with(*idolWithModels)
       countResults.map { row ->
         ChekiIdolCount(
-          idol = idols.find { idol -> idol.id.value === row[Chekis.idolId] }
+          idol = idols.find { idol -> idol.id === row[Chekis.idol] }
             ?.let { v -> v.toDomain() },
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0)
         )
@@ -106,14 +108,14 @@ class ChekiRepositoryImpl : ChekiRepository {
         baseTimezone
       )
       val countResults = Chekis
-        .slice(Chekis.idolId, yearConvertFunc, monthConvertFunc, Chekis.quantity.sum())
-        .select(Chekis.userId.eq(userId.value))
-        .groupBy(Chekis.idolId, yearConvertFunc, monthConvertFunc)
-      val idolIds = countResults.mapNotNull { it[Chekis.idolId] }
-      val idols = IdolModel.forIds(idolIds).with(*idolWithModels)
+        .slice(Chekis.idol, yearConvertFunc, monthConvertFunc, Chekis.quantity.sum())
+        .select(Chekis.user.eq(userId.value))
+        .groupBy(Chekis.idol, yearConvertFunc, monthConvertFunc)
+      val idolIds = countResults.mapNotNull { it[Chekis.idol] }
+      val idols = IdolModel.forEntityIds(idolIds).with(*idolWithModels)
       countResults.map { row ->
         ChekiMonthIdolCount(
-          idol = idols.find { idol -> idol.id.value === row[Chekis.idolId] }
+          idol = idols.find { idol -> idol.id === row[Chekis.idol] }
             ?.let { v -> v.toDomain() },
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0),
           chekiShotAtMonth = ChekiShotAtMonth.fromString(row[yearConvertFunc], row[monthConvertFunc], baseTimezone)
@@ -131,9 +133,9 @@ class ChekiRepositoryImpl : ChekiRepository {
   ): Cheki {
     return transaction {
       ChekiModel.new {
-        this.userId = userId.value
-        this.idolId = idolId.value
-        this.regulationId = regulationId?.value
+        this.user = UserModel[userId.value]
+        this.idol = IdolModel[idolId.value]
+        this.regulation = regulationId?.value?.let { RegulationModel[it] }
         this.quantity = chekiQuantity.value
         this.shotAt = chekiShotAt.value
       }.toDomain()
@@ -150,9 +152,9 @@ class ChekiRepositoryImpl : ChekiRepository {
   ): Cheki {
     return transaction {
       val model = ChekiModel[chekiId.value]
-      model.userId = userId.value
-      model.idolId = idolId.value
-      model.regulationId = regulationId?.value
+      model.user = UserModel[userId.value]
+      model.idol = IdolModel[idolId.value]
+      model.regulation = regulationId?.value?.let { RegulationModel[it] }
       model.quantity = chekiQuantity.value
       model.shotAt = chekiShotAt.value
       model.toDomain()

@@ -12,26 +12,22 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.ReferenceOption
 
 object FavoriteGroups : ExposedTimestampIdTable("favorite_groups") {
-  val userId = long("user_id").references(Users.id, onDelete = ReferenceOption.CASCADE)
-  val user = reference("user_id", Users)
-  val groupId = long("group_id").references(Groups.id, onDelete = ReferenceOption.CASCADE)
-  val group = reference("group_id", Groups)
+  val user = reference("user_id", Users, onDelete = ReferenceOption.CASCADE)
+  val group = reference("group_id", Groups, onDelete = ReferenceOption.CASCADE)
 }
 
 class FavoriteGroup(id: EntityID<Long>) : ExposedTimestampIdEntity(id, FavoriteGroups) {
   companion object : ExposedTimestampIdEntityClass<FavoriteGroup>(FavoriteGroups)
 
-  var userId by FavoriteGroups.userId
-  val user by User referencedOn FavoriteGroups.user
-  var groupId by FavoriteGroups.groupId
-  val group by Group referencedOn FavoriteGroups.group
+  var user by User referencedOn FavoriteGroups.user
+  var group by Group referencedOn FavoriteGroups.group
 
   fun toDomain(): com.tumugin.aisu.domain.favoritegroup.FavoriteGroup {
     return com.tumugin.aisu.domain.favoritegroup.FavoriteGroup(
       favoriteGroupId = FavoriteGroupId(this.id.value),
-      userId = UserId(this.userId),
+      userId = UserId(this.user.id.value),
       user = this.user.toDomain(),
-      groupId = GroupId(this.groupId),
+      groupId = GroupId(this.group.id.value),
       group = this.group.toDomain()
     )
   }

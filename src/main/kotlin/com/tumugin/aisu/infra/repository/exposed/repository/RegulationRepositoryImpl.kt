@@ -3,6 +3,8 @@ package com.tumugin.aisu.infra.repository.exposed.repository
 import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.regulation.*
 import com.tumugin.aisu.domain.user.UserId
+import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
+import com.tumugin.aisu.infra.repository.exposed.models.Group as GroupModel
 import org.jetbrains.exposed.sql.transactions.transaction
 import com.tumugin.aisu.infra.repository.exposed.models.Regulation as RegulationModel
 
@@ -30,8 +32,8 @@ class RegulationRepositoryImpl : RegulationRepository {
   ): Regulation {
     return transaction {
       RegulationModel.new {
-        this.groupId = groupId.value
-        this.userId = userId.value
+        this.group = GroupModel[groupId.value]
+        this.user = UserModel[userId.value]
         this.name = regulationName.value
         this.comment = regulationComment.value
         this.unitPrice = regulationUnitPrice.value
@@ -52,8 +54,8 @@ class RegulationRepositoryImpl : RegulationRepository {
     return transaction {
       val model = RegulationModel[regulationId.value]
       model.apply {
-        this.groupId = groupId.value
-        this.userId = userId.value
+        this.group = GroupModel[groupId.value]
+        this.user = UserModel[userId.value]
         this.name = regulationName.value
         this.comment = regulationComment.value
         this.unitPrice = regulationUnitPrice.value
