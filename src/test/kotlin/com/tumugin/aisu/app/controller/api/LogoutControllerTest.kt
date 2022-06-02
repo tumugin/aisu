@@ -8,9 +8,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
-class LogoutController : BaseKtorTest() {
+class LogoutControllerTest : BaseKtorTest() {
   private val userSeeder = UserSeeder()
 
   @BeforeTest
@@ -21,9 +20,13 @@ class LogoutController : BaseKtorTest() {
   @Test
   fun testLogout() = testAisuApplication {
     client.post("/api/logout") {
+      cookie("USER_AUTH", "test")
     }.apply {
       assertEquals(HttpStatusCode.OK, status)
-      assertTrue(headers["Set-Cookie"]!!.contains("USER_AUTH"))
+      assertEquals(
+        "USER_AUTH=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/; \$x-enc=URI_ENCODING",
+        headers["Set-Cookie"]
+      )
     }
   }
 }
