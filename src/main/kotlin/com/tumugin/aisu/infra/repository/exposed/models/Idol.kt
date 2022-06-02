@@ -1,5 +1,8 @@
 package com.tumugin.aisu.infra.repository.exposed.models
 
+import com.tumugin.aisu.domain.group.GroupId
+import com.tumugin.aisu.domain.idol.*
+import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
@@ -24,4 +27,18 @@ class Idol(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Idols) {
   val user by User optionalReferencedOn Idols.user
   var name by Idols.name
   var status by Idols.status
+
+  fun toDomain(): com.tumugin.aisu.domain.idol.Idol {
+    return Idol(
+      idolId = IdolId(this.id.value),
+      groupId = this.groupId?.let { GroupId(it) },
+      group = this.group?.toDomain(),
+      userId = this.userId?.let { UserId(it) },
+      user = this.user?.toDomain(),
+      idolName = IdolName(this.name),
+      idolStatus = IdolStatus.valueOf(this.status),
+      idolCreatedAt = IdolCreatedAt(this.createdAt),
+      idolUpdatedAt = IdolUpdatedAt(this.updatedAt)
+    )
+  }
 }

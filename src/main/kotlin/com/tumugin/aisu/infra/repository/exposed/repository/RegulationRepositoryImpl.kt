@@ -8,13 +8,9 @@ import com.tumugin.aisu.infra.repository.exposed.models.Regulation as Regulation
 
 class RegulationRepositoryImpl : RegulationRepository {
   override suspend fun getRegulation(regulationId: RegulationId): Regulation? {
-    val rawModel = transaction {
-      RegulationModel.findById(regulationId.value)
+    return transaction {
+      RegulationModel.findById(regulationId.value)?.toDomain()
     }
-    if (rawModel === null) {
-      return null
-    }
-    return toDomain(rawModel)
   }
 
   override suspend fun deleteRegulation(regulationId: RegulationId) {
@@ -32,7 +28,7 @@ class RegulationRepositoryImpl : RegulationRepository {
     regulationUnitPrice: RegulationUnitPrice,
     regulationStatus: RegulationStatus
   ): Regulation {
-    return toDomain(transaction {
+    return transaction {
       RegulationModel.new {
         this.groupId = groupId.value
         this.userId = userId.value
@@ -40,8 +36,8 @@ class RegulationRepositoryImpl : RegulationRepository {
         this.comment = regulationComment.value
         this.unitPrice = regulationUnitPrice.value
         this.status = regulationStatus.name
-      }
-    })
+      }.toDomain()
+    }
   }
 
   override suspend fun updateRegulation(
@@ -53,7 +49,7 @@ class RegulationRepositoryImpl : RegulationRepository {
     regulationUnitPrice: RegulationUnitPrice,
     regulationStatus: RegulationStatus
   ): Regulation {
-    return toDomain(transaction {
+    return transaction {
       val model = RegulationModel[regulationId.value]
       model.apply {
         this.groupId = groupId.value
@@ -62,25 +58,7 @@ class RegulationRepositoryImpl : RegulationRepository {
         this.comment = regulationComment.value
         this.unitPrice = regulationUnitPrice.value
         this.status = regulationStatus.name
-      }
-    })
-  }
-
-  companion object {
-    fun toDomain(model: RegulationModel): Regulation {
-      return Regulation(
-        regulationId = RegulationId(model.id.value),
-        groupId = GroupId(model.groupId),
-        group = GroupRepositoryImpl.toDomain(model.group),
-        userId = model.userId?.let { UserId(it) },
-        user = model.user?.let { UserRepositoryImpl.toDomain(it) },
-        regulationName = RegulationName(model.name),
-        regulationComment = RegulationComment(model.comment),
-        regulationUnitPrice = RegulationUnitPrice(model.unitPrice),
-        regulationStatus = RegulationStatus.valueOf(model.status),
-        regulationCreatedAt = RegulationCreatedAt(model.createdAt),
-        regulationUpdatedAt = RegulationUpdatedAt(model.updatedAt)
-      )
+      }.toDomain()
     }
   }
 }

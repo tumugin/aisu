@@ -13,8 +13,8 @@ import com.tumugin.aisu.infra.repository.exposed.models.FavoriteGroup as Favorit
 class FavoriteGroupRepositoryImpl : FavoriteGroupRepository {
   override suspend fun getFavoriteGroupsByUserId(userId: UserId): List<FavoriteGroup> {
     return transaction {
-      FavoriteGroupModel.find(FavoriteGroups.userId eq userId.value).asIterable()
-    }.map { toDomain(it) }
+      FavoriteGroupModel.find(FavoriteGroups.userId eq userId.value).map { it.toDomain() }
+    }
   }
 
   override suspend fun deleteFavoriteGroup(favoriteGroupId: FavoriteGroupId) {
@@ -25,23 +25,11 @@ class FavoriteGroupRepositoryImpl : FavoriteGroupRepository {
   }
 
   override suspend fun addFavoriteGroup(userId: UserId, groupId: GroupId): FavoriteGroup {
-    return toDomain(transaction {
+    return transaction {
       FavoriteGroupModel.new {
         this.userId = userId.value
         this.groupId = groupId.value
-      }
-    })
-  }
-
-  companion object {
-    fun toDomain(model: FavoriteGroupModel): FavoriteGroup {
-      return FavoriteGroup(
-        favoriteGroupId = FavoriteGroupId(model.id.value),
-        userId = UserId(model.userId),
-        user = UserRepositoryImpl.toDomain(model.user),
-        groupId = GroupId(model.groupId),
-        group = GroupRepositoryImpl.toDomain(model.group)
-      )
+      }.toDomain()
     }
   }
 }

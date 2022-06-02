@@ -23,8 +23,8 @@ class ChekiRepositoryImpl : ChekiRepository {
 
   override suspend fun getCheki(chekiId: ChekiId): Cheki? {
     return transaction {
-      ChekiModel.findById(chekiId.value)
-    }?.let { toDomain(it) }
+      ChekiModel.findById(chekiId.value)?.toDomain()
+    }
   }
 
   override suspend fun getChekiByUserIdAndShotDateTimeRange(
@@ -38,8 +38,10 @@ class ChekiRepositoryImpl : ChekiRepository {
           chekiShotAtStart.value,
           chekiShotEnd.value
         )
-      ).with(*withModels)
-    }.map { toDomain(it) }
+      )
+        .with(*withModels)
+        .map { it.toDomain() }
+    }
   }
 
   override suspend fun getChekiByUserIdAndShotDateTimeRangeAndIdolId(
@@ -54,8 +56,8 @@ class ChekiRepositoryImpl : ChekiRepository {
           chekiShotAtStart.value,
           chekiShotEnd.value
         ) and Chekis.idolId.eq(idolId.value)
-      ).with(*withModels)
-    }.map { toDomain(it) }
+      ).with(*withModels).map { it.toDomain() }
+    }
   }
 
   override suspend fun getChekiIdolCountByUserId(
@@ -78,7 +80,7 @@ class ChekiRepositoryImpl : ChekiRepository {
       countResults.map { row ->
         ChekiIdolCount(
           idol = idols.find { idol -> idol.id.value === row[Chekis.idolId] }
-            ?.let { v -> IdolRepositoryImpl.toDomain(v) },
+            ?.let { v -> v.toDomain() },
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0)
         )
       }
@@ -112,7 +114,7 @@ class ChekiRepositoryImpl : ChekiRepository {
       countResults.map { row ->
         ChekiMonthIdolCount(
           idol = idols.find { idol -> idol.id.value === row[Chekis.idolId] }
-            ?.let { v -> IdolRepositoryImpl.toDomain(v) },
+            ?.let { v -> v.toDomain() },
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0),
           chekiShotAtMonth = ChekiShotAtMonth.fromString(row[yearConvertFunc], row[monthConvertFunc], baseTimezone)
         )
@@ -127,15 +129,15 @@ class ChekiRepositoryImpl : ChekiRepository {
     chekiQuantity: ChekiQuantity,
     chekiShotAt: ChekiShotAt
   ): Cheki {
-    return toDomain(transaction {
+    return transaction {
       ChekiModel.new {
         this.userId = userId.value
         this.idolId = idolId.value
         this.regulationId = regulationId?.value
         this.quantity = chekiQuantity.value
         this.shotAt = chekiShotAt.value
-      }
-    })
+      }.toDomain()
+    }
   }
 
   override suspend fun updateCheki(
@@ -146,39 +148,21 @@ class ChekiRepositoryImpl : ChekiRepository {
     chekiQuantity: ChekiQuantity,
     chekiShotAt: ChekiShotAt
   ): Cheki {
-    return toDomain(transaction {
+    return transaction {
       val model = ChekiModel[chekiId.value]
       model.userId = userId.value
       model.idolId = idolId.value
       model.regulationId = regulationId?.value
       model.quantity = chekiQuantity.value
       model.shotAt = chekiShotAt.value
-      model
-    })
+      model.toDomain()
+    }
   }
 
   override suspend fun deleteCheki(chekiId: ChekiId) {
     transaction {
       val model = ChekiModel[chekiId.value]
       model.delete()
-    }
-  }
-
-  companion object {
-    fun toDomain(rawModel: ChekiModel): Cheki {
-      return Cheki(
-        chekiId = ChekiId(rawModel.id.value),
-        userId = UserId(rawModel.userId),
-        user = UserRepositoryImpl.toDomain(rawModel.user),
-        idolId = rawModel.idolId?.let { IdolId(it) },
-        idol = rawModel.idol?.let { IdolRepositoryImpl.toDomain(it) },
-        regulationId = rawModel.regulationId?.let { RegulationId(it) },
-        regulation = rawModel.regulation?.let { RegulationRepositoryImpl.toDomain(it) },
-        chekiQuantity = ChekiQuantity(rawModel.quantity),
-        chekiShotAt = ChekiShotAt(rawModel.shotAt),
-        chekiCreatedAt = ChekiCreatedAt(rawModel.createdAt),
-        chekiUpdatedAt = ChekiUpdatedAt(rawModel.updatedAt)
-      )
     }
   }
 }

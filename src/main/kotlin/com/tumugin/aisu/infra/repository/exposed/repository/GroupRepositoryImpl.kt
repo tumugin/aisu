@@ -2,57 +2,44 @@ package com.tumugin.aisu.infra.repository.exposed.repository
 
 import com.tumugin.aisu.domain.group.*
 import com.tumugin.aisu.domain.user.UserId
+import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import org.jetbrains.exposed.sql.transactions.transaction
 import com.tumugin.aisu.infra.repository.exposed.models.Group as GroupModel
 
 class GroupRepositoryImpl : GroupRepository {
   override suspend fun getGroup(groupId: GroupId): Group? {
     return transaction {
-      GroupModel.findById(groupId.value)
-    }?.let { toDomain(it) }
+      GroupModel.findById(groupId.value)?.toDomain()
+    }
   }
 
   override suspend fun addGroup(userId: UserId?, groupName: GroupName, groupStatus: GroupStatus): Group {
-    return toDomain(transaction {
+    return transaction {
       GroupModel.new {
-        this.userId = userId?.value
+        this.user = userId?.value?.let { UserModel.findById(it) }
         this.name = groupName.value
         this.status = groupStatus.name
-      }
-    })
+      }.toDomain()
+    }
   }
 
   override suspend fun updateGroup(
     groupId: GroupId, userId: UserId?, groupName: GroupName, groupStatus: GroupStatus
   ): Group {
-    return toDomain(transaction {
+    return transaction {
       val model = GroupModel[groupId.value]
       model.apply {
-        this.userId = userId?.value
+        this.user = userId?.value?.let { UserModel.findById(it) }
         this.name = groupName.value
         this.status = groupStatus.name
-      }
-    })
+      }.toDomain()
+    }
   }
 
   override suspend fun deleteGroup(groupId: GroupId) {
     transaction {
       val model = GroupModel[groupId.value]
       model.delete()
-    }
-  }
-
-  companion object {
-    fun toDomain(model: GroupModel): Group {
-      return Group(
-        groupId = GroupId(model.id.value),
-        userId = model.userId?.let { UserId(it) },
-        user = model.user?.let { UserRepositoryImpl.toDomain(it) },
-        groupName = GroupName(model.name),
-        groupStatus = GroupStatus.valueOf(model.status),
-        groupCreatedAt = GroupCreatedAt(model.createdAt),
-        groupUpdatedAt = GroupUpdatedAt(model.updatedAt)
-      )
     }
   }
 }

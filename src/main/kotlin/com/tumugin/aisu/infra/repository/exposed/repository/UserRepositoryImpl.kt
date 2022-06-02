@@ -7,21 +7,11 @@ import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 
 class UserRepositoryImpl : UserRepository {
   override suspend fun getUserById(userId: UserId): User? {
-    val rawModel = transaction { UserModel.findById(userId.value) }
-    return if (rawModel != null) {
-      toDomain(rawModel)
-    } else {
-      null
-    }
+    return transaction { UserModel.findById(userId.value)?.toDomain() }
   }
 
   override suspend fun getUserByEmail(userEmail: UserEmail): User? {
-    val rawModel = transaction { UserModel.find { Users.email eq userEmail.value }.firstOrNull() }
-    return if (rawModel != null) {
-      toDomain(rawModel)
-    } else {
-      null
-    }
+    return transaction { UserModel.find { Users.email eq userEmail.value }.firstOrNull()?.toDomain() }
   }
 
   override suspend fun addUser(
@@ -31,7 +21,7 @@ class UserRepositoryImpl : UserRepository {
     userEmailVerifiedAt: UserEmailVerifiedAt?,
     userForceLogoutGeneration: UserForceLogoutGeneration,
   ): User {
-    val createdModel = transaction {
+    return transaction {
       UserModel.new {
         name = userName.value
         if (userEmail != null) {
@@ -44,10 +34,8 @@ class UserRepositoryImpl : UserRepository {
           emailVerifiedAt = userEmailVerifiedAt.value
         }
         this.forceLogoutGeneration = userForceLogoutGeneration.value
-      }
+      }.toDomain()
     }
-
-    return toDomain(createdModel)
   }
 
   override suspend fun updateUser(
@@ -58,36 +46,21 @@ class UserRepositoryImpl : UserRepository {
     userEmailVerifiedAt: UserEmailVerifiedAt?,
     userForceLogoutGeneration: UserForceLogoutGeneration
   ): User {
-    return toDomain(transaction {
+    return transaction {
       val user = UserModel[userId.value]
       user.name = userName.value
       user.email = userEmail?.value
       user.password = userPassword?.value
       user.emailVerifiedAt = userEmailVerifiedAt?.value
       user.forceLogoutGeneration = userForceLogoutGeneration.value
-      user
-    })
+      user.toDomain()
+    }
   }
 
   override suspend fun deleteUser(userId: UserId) {
     transaction {
       val user = UserModel[userId.value]
       user.delete()
-    }
-  }
-
-  companion object {
-    fun toDomain(rawModel: UserModel): User {
-      return User(
-        UserId(rawModel.id.value),
-        UserName(rawModel.name),
-        rawModel.email?.let { UserEmail(it) },
-        rawModel.password?.let { UserPassword(it) },
-        rawModel.emailVerifiedAt?.let { UserEmailVerifiedAt(it) },
-        UserForceLogoutGeneration(rawModel.forceLogoutGeneration),
-        UserCreatedAt(rawModel.createdAt),
-        UserUpdatedAt(rawModel.updatedAt)
-      )
     }
   }
 }

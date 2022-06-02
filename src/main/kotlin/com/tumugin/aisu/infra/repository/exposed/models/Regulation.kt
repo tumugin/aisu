@@ -1,5 +1,8 @@
 package com.tumugin.aisu.infra.repository.exposed.models
 
+import com.tumugin.aisu.domain.group.GroupId
+import com.tumugin.aisu.domain.regulation.*
+import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
@@ -28,4 +31,20 @@ class Regulation(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Regulations)
   var comment by Regulations.comment
   var unitPrice by Regulations.unitPrice
   var status by Regulations.status
+
+  fun toDomain(): com.tumugin.aisu.domain.regulation.Regulation {
+    return Regulation(
+      regulationId = RegulationId(this.id.value),
+      groupId = GroupId(this.groupId),
+      group = this.group.toDomain(),
+      userId = this.userId?.let { UserId(it) },
+      user = this.user?.toDomain(),
+      regulationName = RegulationName(this.name),
+      regulationComment = RegulationComment(this.comment),
+      regulationUnitPrice = RegulationUnitPrice(this.unitPrice),
+      regulationStatus = RegulationStatus.valueOf(this.status),
+      regulationCreatedAt = RegulationCreatedAt(this.createdAt),
+      regulationUpdatedAt = RegulationUpdatedAt(this.updatedAt)
+    )
+  }
 }

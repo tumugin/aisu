@@ -1,9 +1,13 @@
 package com.tumugin.aisu.infra.repository.exposed.models
 
+import com.tumugin.aisu.domain.favoritegroup.FavoriteGroupId
+import com.tumugin.aisu.domain.group.GroupId
+import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
 import com.tumugin.aisu.infra.repository.exposed.models.Regulations.nullable
+import com.tumugin.aisu.infra.repository.exposed.repository.GroupRepositoryImpl
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.ReferenceOption
 
@@ -21,4 +25,14 @@ class FavoriteGroup(id: EntityID<Long>) : ExposedTimestampIdEntity(id, FavoriteG
   val user by User referencedOn FavoriteGroups.user
   var groupId by FavoriteGroups.groupId
   val group by Group referencedOn FavoriteGroups.group
+
+  fun toDomain(): com.tumugin.aisu.domain.favoritegroup.FavoriteGroup {
+    return com.tumugin.aisu.domain.favoritegroup.FavoriteGroup(
+      favoriteGroupId = FavoriteGroupId(this.id.value),
+      userId = UserId(this.userId),
+      user = this.user.toDomain(),
+      groupId = GroupId(this.groupId),
+      group = this.group.toDomain()
+    )
+  }
 }

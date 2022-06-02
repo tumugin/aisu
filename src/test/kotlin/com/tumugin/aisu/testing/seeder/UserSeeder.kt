@@ -7,8 +7,8 @@ import org.koin.core.component.inject
 class UserSeeder : KoinComponent {
   private val userRepository by inject<UserRepository>()
 
-  suspend fun seedUser() {
-    userRepository.addUser(
+  suspend fun seedUser(): User {
+    return userRepository.addUser(
       userName = UserName("藍井すず"),
       userEmail = UserEmail("aoisuzu@example.com"),
       userPassword = UserRawPassword("aoisuzu").toHashedPassword(),
