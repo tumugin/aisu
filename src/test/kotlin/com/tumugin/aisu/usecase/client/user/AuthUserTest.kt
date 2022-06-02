@@ -2,6 +2,7 @@ package com.tumugin.aisu.usecase.client.user
 
 import com.tumugin.aisu.BaseDatabaseTest
 import com.tumugin.aisu.domain.user.*
+import com.tumugin.aisu.seeder.UserSeeder
 import kotlinx.coroutines.test.runTest
 import org.koin.test.inject
 import kotlin.test.BeforeTest
@@ -11,21 +12,11 @@ import kotlin.test.assertNull
 
 class AuthUserTest : BaseDatabaseTest() {
   private val authUser = AuthUser()
-  private val userRepository by inject<UserRepository>()
-
-  private suspend fun prepareUser() {
-    userRepository.addUser(
-      userName = UserName("藍井すず"),
-      userEmail = UserEmail("aoisuzu@example.com"),
-      userPassword = UserRawPassword("aoisuzu").toHashedPassword(),
-      userEmailVerifiedAt = null,
-      userForceLogoutGeneration = UserForceLogoutGeneration(0)
-    )
-  }
+  private val userSeeder = UserSeeder()
 
   @BeforeTest
   fun beforeTest() = runTest {
-    prepareUser()
+    userSeeder.seedUser()
   }
 
   @Test
