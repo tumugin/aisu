@@ -1,6 +1,6 @@
-package com.tumugin.aisu.infra.repository
+package com.tumugin.aisu.testing.infra.repository
 
-import com.tumugin.aisu.BaseDatabaseTest
+import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.domain.user.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant

@@ -1,7 +1,8 @@
-package com.tumugin.aisu.usecase.client.user
+package com.tumugin.aisu.testing.usecase.client.user
 
-import com.tumugin.aisu.BaseDatabaseTest
+import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.domain.user.*
+import com.tumugin.aisu.usecase.client.user.CreateUser
 import kotlinx.coroutines.test.runTest
 import org.koin.test.inject
 import kotlin.test.Test

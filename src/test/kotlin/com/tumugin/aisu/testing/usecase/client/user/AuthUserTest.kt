@@ -1,10 +1,10 @@
-package com.tumugin.aisu.usecase.client.user
+package com.tumugin.aisu.testing.usecase.client.user
 
-import com.tumugin.aisu.BaseDatabaseTest
+import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.domain.user.*
-import com.tumugin.aisu.seeder.UserSeeder
+import com.tumugin.aisu.testing.seeder.UserSeeder
+import com.tumugin.aisu.usecase.client.user.AuthUser
 import kotlinx.coroutines.test.runTest
-import org.koin.test.inject
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertNotNull

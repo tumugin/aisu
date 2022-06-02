@@ -1,4 +1,4 @@
-package com.tumugin.aisu.seeder
+package com.tumugin.aisu.testing.seeder
 
 import com.tumugin.aisu.domain.user.*
 import org.koin.core.component.KoinComponent

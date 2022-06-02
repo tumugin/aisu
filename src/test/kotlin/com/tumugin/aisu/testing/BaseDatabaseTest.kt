@@ -1,4 +1,4 @@
-package com.tumugin.aisu
+package com.tumugin.aisu.testing
 
 import com.tumugin.aisu.di.AisuDIModule
 import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository

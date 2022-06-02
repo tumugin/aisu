@@ -1,5 +1,6 @@
-package com.tumugin.aisu
+package com.tumugin.aisu.testing
 
+import com.tumugin.aisu.createKtorModule
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*

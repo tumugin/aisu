@@ -1,8 +1,8 @@
-package com.tumugin.aisu.app.controller.api
+package com.tumugin.aisu.testing.app.controller.api
 
-import com.tumugin.aisu.BaseKtorTest
+import com.tumugin.aisu.testing.BaseKtorTest
 import com.tumugin.aisu.app.request.api.LoginRequest
-import com.tumugin.aisu.seeder.UserSeeder
+import com.tumugin.aisu.testing.seeder.UserSeeder
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.coroutines.test.runTest

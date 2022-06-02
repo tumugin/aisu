@@ -1,5 +1,6 @@
-package com.tumugin.aisu
+package com.tumugin.aisu.testing
 
+import com.tumugin.aisu.createKtorModule
 import io.ktor.server.testing.*
 
 abstract class BaseKtorTest : BaseDatabaseTest() {
