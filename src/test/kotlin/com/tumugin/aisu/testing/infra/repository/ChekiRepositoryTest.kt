@@ -1,13 +1,18 @@
 package com.tumugin.aisu.testing.infra.repository
 
 import com.tumugin.aisu.domain.cheki.ChekiId
+import com.tumugin.aisu.domain.cheki.ChekiQuantity
 import com.tumugin.aisu.domain.cheki.ChekiRepository
+import com.tumugin.aisu.domain.cheki.ChekiShotAt
+import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.testing.seeder.*
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Instant
 import org.koin.core.component.inject
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class ChekiRepositoryTest : BaseDatabaseTest() {
@@ -19,8 +24,25 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
     val group = GroupSeeder().seedGroup(user.userId)
     val idol = IdolSeeder().seedIdol(group.groupId, user.userId)
     val regulation = RegulationSeeder().seedRegulation(group.groupId, user.userId)
+    // 2021/12/01の0時(JST)ぴったりに10枚のチェキを10回登録
     (1..10).forEach { _ ->
-      ChekiSeeder().seedCheki(user.userId, idol.idolId, regulation.regulationId)
+      ChekiSeeder().seedCheki(
+        user.userId,
+        idol.idolId,
+        regulation.regulationId,
+        ChekiQuantity(10),
+        ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
+      )
+    }
+    // 2021/12/31の23:59:59(JST)ぴったりに10枚のチェキを10回登録
+    (1..10).forEach { _ ->
+      ChekiSeeder().seedCheki(
+        user.userId,
+        idol.idolId,
+        regulation.regulationId,
+        ChekiQuantity(10),
+        ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
+      )
     }
   }
 
@@ -28,5 +50,18 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
   fun testGetCheki() = runTest {
     val cheki = chekiRepository.getCheki(ChekiId(1))
     assertNotNull(cheki)
+  }
+
+  @Test
+  fun testGetChekiByUserIdAndShotDateTimeRange() = runTest {
+    val chekis = chekiRepository.getChekiByUserIdAndShotDateTimeRange(
+      UserId(1),
+      ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00")),
+      ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
+    )
+    assertEquals(
+      20,
+      chekis.size
+    )
   }
 }

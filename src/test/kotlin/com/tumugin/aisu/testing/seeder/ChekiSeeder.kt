@@ -14,13 +14,19 @@ import org.koin.core.component.inject
 class ChekiSeeder : KoinComponent {
   private val chekiRepository by inject<ChekiRepository>()
 
-  suspend fun seedCheki(userId: UserId, idolId: IdolId, regulationId: RegulationId?): Cheki {
+  suspend fun seedCheki(
+    userId: UserId,
+    idolId: IdolId,
+    regulationId: RegulationId?,
+    chekiQuantity: ChekiQuantity = ChekiQuantity(1),
+    chekiShotAt: ChekiShotAt = ChekiShotAt(Instant.parse("2021-12-01T00:10:30+09:00"))
+  ): Cheki {
     return chekiRepository.addCheki(
       userId,
       idolId,
       regulationId,
-      ChekiQuantity(10),
-      ChekiShotAt(Instant.parse("2021-12-07T21:10:30+09:00"))
+      chekiQuantity,
+      chekiShotAt
     )
   }
 }
