@@ -70,10 +70,7 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
       ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00")),
       ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
     )
-    assertEquals(
-      20,
-      chekis.size
-    )
+    assertEquals(20, chekis.size)
   }
 
   @Test
@@ -84,9 +81,20 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
       ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00")),
       ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
     )
-    assertEquals(
-      10,
-      chekis.size
+    assertEquals(10, chekis.size)
+  }
+
+  @Test
+  fun testGetChekiIdolCountByUserId() = runTest {
+    val chekiIdolCounts = chekiRepository.getChekiIdolCountByUserId(
+      UserId(1),
+      ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00")),
+      ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
     )
+    assertEquals(2, chekiIdolCounts.size)
+    assertNotNull(chekiIdolCounts[0].idol)
+    assertEquals(100, chekiIdolCounts[0].chekiCount.value)
+    assertNotNull(chekiIdolCounts[1].idol)
+    assertEquals(100, chekiIdolCounts[1].chekiCount.value)
   }
 }

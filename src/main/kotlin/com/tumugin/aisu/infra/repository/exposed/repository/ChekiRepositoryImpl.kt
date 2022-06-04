@@ -81,7 +81,7 @@ class ChekiRepositoryImpl : ChekiRepository {
       val idols = IdolModel.forEntityIds(idolIds).with(*idolWithModels)
       countResults.map { row ->
         ChekiIdolCount(
-          idol = idols.find { idol -> idol.id === row[Chekis.idol] }
+          idol = idols.find { idol -> idol.id.value === row[Chekis.idol]?.value  }
             ?.let { v -> v.toDomain() },
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0)
         )
