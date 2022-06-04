@@ -12,12 +12,17 @@ import org.koin.core.component.inject
 class IdolSeeder : KoinComponent {
   private val idolRepository by inject<IdolRepository>()
 
-  suspend fun seedIdol(groupId: GroupId, userId: UserId): Idol {
+  suspend fun seedIdol(
+    groupId: GroupId,
+    userId: UserId,
+    idolName: IdolName = IdolName("村崎ゆうな"),
+    idolStatus: IdolStatus = IdolStatus.PRIVATE_ACTIVE
+  ): Idol {
     return idolRepository.addIdol(
       groupId,
       userId,
-      IdolName("村崎ゆうな"),
-      IdolStatus.PRIVATE_ACTIVE
+      idolName,
+      idolStatus
     )
   }
 }
