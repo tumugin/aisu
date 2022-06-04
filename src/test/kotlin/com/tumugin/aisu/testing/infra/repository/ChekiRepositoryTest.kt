@@ -6,6 +6,7 @@ import com.tumugin.aisu.domain.cheki.ChekiRepository
 import com.tumugin.aisu.domain.cheki.ChekiShotAt
 import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.idol.IdolName
+import com.tumugin.aisu.domain.regulation.RegulationId
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.testing.seeder.*
@@ -13,10 +14,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import org.koin.core.component.inject
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
+import kotlin.test.*
 
 class ChekiRepositoryTest : BaseDatabaseTest() {
   private val chekiRepository by inject<ChekiRepository>()
@@ -120,5 +118,67 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
     assertNotNull(chekiMonthIdolCount[0].idol)
     assertNotNull(chekiMonthIdolCount[1].idol)
     assertNotNull(chekiMonthIdolCount[2].idol)
+  }
+
+  @Test
+  fun testAddCheki() = runTest {
+    val cheki = chekiRepository.addCheki(
+      UserId(1),
+      IdolId(1),
+      RegulationId(1),
+      ChekiQuantity(10),
+      ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
+    )
+    val addedResult = chekiRepository.getCheki(cheki.chekiId)!!
+    assertEquals(
+      mutableMapOf<String, Any?>(
+        "userId" to 1L,
+        "idolId" to 1L,
+        "regulationId" to 1L,
+        "chekiQuantity" to 10,
+        "chekiShotAt" to Instant.parse("2021-12-31T23:59:59+09:00").toString()
+      ), mutableMapOf<String, Any?>(
+        "userId" to addedResult.user.userId.value,
+        "idolId" to addedResult.idol?.idolId?.value,
+        "regulationId" to addedResult.regulation?.regulationId?.value,
+        "chekiQuantity" to addedResult.chekiQuantity.value,
+        "chekiShotAt" to addedResult.chekiShotAt.value.toString()
+      )
+    )
+  }
+
+  @Test
+  fun testUpdateCheki() = runTest {
+    val cheki = chekiRepository.updateCheki(
+      ChekiId(1),
+      UserId(1),
+      IdolId(1),
+      RegulationId(1),
+      ChekiQuantity(99),
+      ChekiShotAt(Instant.parse("2021-12-15T20:10:30+09:00"))
+    )
+    val addedResult = chekiRepository.getCheki(cheki.chekiId)!!
+    assertEquals(
+      mutableMapOf<String, Any?>(
+        "userId" to 1L,
+        "idolId" to 1L,
+        "regulationId" to 1L,
+        "chekiQuantity" to 99,
+        "chekiShotAt" to Instant.parse("2021-12-15T20:10:30+09:00").toString()
+      ), mutableMapOf<String, Any?>(
+        "userId" to addedResult.user.userId.value,
+        "idolId" to addedResult.idol?.idolId?.value,
+        "regulationId" to addedResult.regulation?.regulationId?.value,
+        "chekiQuantity" to addedResult.chekiQuantity.value,
+        "chekiShotAt" to addedResult.chekiShotAt.value.toString()
+      )
+    )
+  }
+
+  @Test
+  fun testDeleteCheki() = runTest {
+    assertNotNull(chekiRepository.getCheki(ChekiId(1)))
+    chekiRepository.deleteCheki(ChekiId(1))
+    assertNull(chekiRepository.getCheki(ChekiId(1)))
   }
 }
