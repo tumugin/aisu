@@ -11,6 +11,7 @@ import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.testing.seeder.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
 import org.koin.core.component.inject
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -55,6 +56,16 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
         ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
       )
     }
+    // 2022/01/01の00:00:00(JST)ぴったりに10枚のチェキを10回登録
+    (1..10).forEach { _ ->
+      ChekiSeeder().seedCheki(
+        user.userId,
+        idolMika.idolId,
+        regulation.regulationId,
+        ChekiQuantity(10),
+        ChekiShotAt(Instant.parse("2022-01-01T00:00:00+09:00"))
+      )
+    }
   }
 
   @Test
@@ -96,5 +107,18 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
     assertEquals(100, chekiIdolCounts[0].chekiCount.value)
     assertNotNull(chekiIdolCounts[1].idol)
     assertEquals(100, chekiIdolCounts[1].chekiCount.value)
+  }
+
+  @Test
+  fun testGetChekiMonthIdolCountByUserIdAndIdol() = runTest {
+    val chekiMonthIdolCount = chekiRepository.getChekiMonthIdolCountByUserIdAndIdol(
+      UserId(1),
+      IdolId(1),
+      TimeZone.of("Asia/Tokyo")
+    )
+    assertEquals(3, chekiMonthIdolCount.size)
+    assertNotNull(chekiMonthIdolCount[0].idol)
+    assertNotNull(chekiMonthIdolCount[1].idol)
+    assertNotNull(chekiMonthIdolCount[2].idol)
   }
 }

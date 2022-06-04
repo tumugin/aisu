@@ -98,13 +98,13 @@ class ChekiRepositoryImpl : ChekiRepository {
       val yearConvertFunc = DateFormatWithTZFunction(
         Chekis.shotAt,
         "%Y",
-        TimeZone.UTC,
+        TimeZone.of("UTC"),
         baseTimezone
       )
       val monthConvertFunc = DateFormatWithTZFunction(
         Chekis.shotAt,
         "%c",
-        TimeZone.UTC,
+        TimeZone.of("UTC"),
         baseTimezone
       )
       val countResults = Chekis
@@ -115,7 +115,7 @@ class ChekiRepositoryImpl : ChekiRepository {
       val idols = IdolModel.forEntityIds(idolIds).with(*idolWithModels)
       countResults.map { row ->
         ChekiMonthIdolCount(
-          idol = idols.find { idol -> idol.id === row[Chekis.idol] }
+          idol = idols.find { idol -> idol.id.value === row[Chekis.idol]?.value }
             ?.let { v -> v.toDomain() },
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0),
           chekiShotAtMonth = ChekiShotAtMonth.fromString(row[yearConvertFunc], row[monthConvertFunc], baseTimezone)
