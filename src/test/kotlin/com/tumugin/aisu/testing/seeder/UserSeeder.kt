@@ -14,12 +14,14 @@ class UserSeeder : KoinComponent {
     userEmailVerifiedAt: UserEmailVerifiedAt? = null,
     userForceLogoutGeneration: UserForceLogoutGeneration = UserForceLogoutGeneration(0)
   ): User {
-    return userRepository.addUser(
-      userName,
-      userEmail,
-      userRawPassword.toHashedPassword(),
-      userEmailVerifiedAt,
-      userForceLogoutGeneration
-    )
+    return userRepository.getUserById(
+      userRepository.addUser(
+        userName,
+        userEmail,
+        userRawPassword.toHashedPassword(),
+        userEmailVerifiedAt,
+        userForceLogoutGeneration
+      ).userId
+    )!!
   }
 }

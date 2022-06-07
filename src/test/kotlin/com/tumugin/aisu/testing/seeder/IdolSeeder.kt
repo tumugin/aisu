@@ -18,11 +18,13 @@ class IdolSeeder : KoinComponent {
     idolName: IdolName = IdolName("村崎ゆうな"),
     idolStatus: IdolStatus = IdolStatus.PRIVATE_ACTIVE
   ): Idol {
-    return idolRepository.addIdol(
-      groupId,
-      userId,
-      idolName,
-      idolStatus
-    )
+    return idolRepository.getIdol(
+      idolRepository.addIdol(
+        groupId,
+        userId,
+        idolName,
+        idolStatus
+      ).idolId
+    )!!
   }
 }

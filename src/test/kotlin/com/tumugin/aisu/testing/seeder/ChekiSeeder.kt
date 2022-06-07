@@ -21,12 +21,14 @@ class ChekiSeeder : KoinComponent {
     chekiQuantity: ChekiQuantity = ChekiQuantity(1),
     chekiShotAt: ChekiShotAt = ChekiShotAt(Instant.parse("2021-12-01T00:10:30+09:00"))
   ): Cheki {
-    return chekiRepository.addCheki(
-      userId,
-      idolId,
-      regulationId,
-      chekiQuantity,
-      chekiShotAt
-    )
+    return chekiRepository.getCheki(
+      chekiRepository.addCheki(
+        userId,
+        idolId,
+        regulationId,
+        chekiQuantity,
+        chekiShotAt
+      ).chekiId
+    )!!
   }
 }

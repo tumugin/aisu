@@ -10,13 +10,15 @@ class RegulationSeeder : KoinComponent {
   private val regulationRepository by inject<RegulationRepository>()
 
   suspend fun seedRegulation(groupId: GroupId, userId: UserId): Regulation {
-    return regulationRepository.addRegulation(
-      groupId,
-      userId,
-      RegulationName("コメント付きチェキ券"),
-      RegulationComment("メンバー指定チェキ券"),
-      RegulationUnitPrice(1500),
-      RegulationStatus.PRIVATE_ACTIVE
-    )
+    return regulationRepository.getRegulation(
+      regulationRepository.addRegulation(
+        groupId,
+        userId,
+        RegulationName("コメント付きチェキ券"),
+        RegulationComment("メンバー指定チェキ券"),
+        RegulationUnitPrice(1500),
+        RegulationStatus.PRIVATE_ACTIVE
+      ).regulationId
+    )!!
   }
 }

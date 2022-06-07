@@ -11,11 +11,17 @@ import org.koin.core.component.inject
 class GroupSeeder : KoinComponent {
   private val groupRepository by inject<GroupRepository>()
 
-  suspend fun seedGroup(userId: UserId): Group {
-    return groupRepository.addGroup(
-      userId,
-      GroupName("群青の世界"),
-      GroupStatus.PRIVATE_ACTIVE
-    )
+  suspend fun seedGroup(
+    userId: UserId,
+    groupName: GroupName = GroupName("群青の世界"),
+    groupStatus: GroupStatus = GroupStatus.PRIVATE_ACTIVE
+  ): Group {
+    return groupRepository.getGroup(
+      groupRepository.addGroup(
+        userId,
+        GroupName("群青の世界"),
+        GroupStatus.PRIVATE_ACTIVE
+      ).groupId
+    )!!
   }
 }
