@@ -7,13 +7,19 @@ import org.koin.core.component.inject
 class UserSeeder : KoinComponent {
   private val userRepository by inject<UserRepository>()
 
-  suspend fun seedUser(): User {
+  suspend fun seedUser(
+    userName: UserName = UserName("藍井すず"),
+    userEmail: UserEmail = UserEmail("aoisuzu@example.com"),
+    userRawPassword: UserRawPassword = UserRawPassword("aoisuzu"),
+    userEmailVerifiedAt: UserEmailVerifiedAt? = null,
+    userForceLogoutGeneration: UserForceLogoutGeneration = UserForceLogoutGeneration(0)
+  ): User {
     return userRepository.addUser(
-      userName = UserName("藍井すず"),
-      userEmail = UserEmail("aoisuzu@example.com"),
-      userPassword = UserRawPassword("aoisuzu").toHashedPassword(),
-      userEmailVerifiedAt = null,
-      userForceLogoutGeneration = UserForceLogoutGeneration(0)
+      userName,
+      userEmail,
+      userRawPassword.toHashedPassword(),
+      userEmailVerifiedAt,
+      userForceLogoutGeneration
     )
   }
 }
