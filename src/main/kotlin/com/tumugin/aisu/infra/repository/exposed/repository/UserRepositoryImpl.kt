@@ -1,5 +1,7 @@
 package com.tumugin.aisu.infra.repository.exposed.repository
 
+import com.tumugin.aisu.domain.base.PaginatorParam
+import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.user.*
 import com.tumugin.aisu.infra.repository.exposed.models.Users
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -61,6 +63,18 @@ class UserRepositoryImpl : UserRepository {
     transaction {
       val user = UserModel[userId.value]
       user.delete()
+    }
+  }
+
+  override suspend fun getAllUsers(paginatorParam: PaginatorParam): PaginatorResult<User> {
+    return transaction {
+      val query = UserModel.all()
+      val count = query.count()
+      val results = query.limit(paginatorParam.limit.toInt(), paginatorParam.offset).map { it.toDomain() }
+      paginatorParam.createPaginatorResult(
+        count,
+        results
+      )
     }
   }
 }

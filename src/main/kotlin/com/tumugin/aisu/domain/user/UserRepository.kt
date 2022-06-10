@@ -1,5 +1,8 @@
 package com.tumugin.aisu.domain.user
 
+import com.tumugin.aisu.domain.base.PaginatorParam
+import com.tumugin.aisu.domain.base.PaginatorResult
+
 interface UserRepository {
   suspend fun getUserById(userId: UserId): User?
   suspend fun getUserByEmail(userEmail: UserEmail): User?
@@ -21,4 +24,6 @@ interface UserRepository {
   ): User
 
   suspend fun deleteUser(userId: UserId)
+
+  suspend fun getAllUsers(paginatorParam: PaginatorParam): PaginatorResult<User>
 }

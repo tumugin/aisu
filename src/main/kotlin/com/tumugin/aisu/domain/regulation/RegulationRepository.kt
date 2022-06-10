@@ -26,4 +26,6 @@ interface RegulationRepository {
     regulationUnitPrice: RegulationUnitPrice,
     regulationStatus: RegulationStatus,
   ): Regulation
+
+  suspend fun getRegulationsByGroupId(groupId: GroupId): List<Regulation>
 }

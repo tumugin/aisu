@@ -1,12 +1,19 @@
 package com.tumugin.aisu.infra.repository.exposed.repository
 
+import com.tumugin.aisu.domain.base.PaginatorParam
+import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.group.*
 import com.tumugin.aisu.domain.user.UserId
+import com.tumugin.aisu.infra.repository.exposed.models.Groups
+import org.jetbrains.exposed.dao.with
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import org.jetbrains.exposed.sql.transactions.transaction
 import com.tumugin.aisu.infra.repository.exposed.models.Group as GroupModel
 
 class GroupRepositoryImpl : GroupRepository {
+  private val withModels = listOf(GroupModel::user).toTypedArray()
+
   override suspend fun getGroup(groupId: GroupId): Group? {
     return transaction {
       GroupModel.findById(groupId.value)?.toDomain()
@@ -40,6 +47,20 @@ class GroupRepositoryImpl : GroupRepository {
     transaction {
       val model = GroupModel[groupId.value]
       model.delete()
+    }
+  }
+
+  override suspend fun getAllGroupsByStatuses(
+    paginatorParam: PaginatorParam, statues: List<GroupStatus>
+  ): PaginatorResult<Group> {
+    return transaction {
+      val query = GroupModel.find(Groups.status.inList(statues.map { it.name }))
+      val results = query.limit(paginatorParam.limit.toInt(), paginatorParam.offset)
+        .with(*withModels)
+        .map { it.toDomain() }
+      paginatorParam.createPaginatorResult(
+        query.count(), results
+      )
     }
   }
 }
