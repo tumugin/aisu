@@ -17,7 +17,7 @@ class RegulationSeeder : KoinComponent {
         RegulationName("コメント付きチェキ券"),
         RegulationComment("メンバー指定チェキ券"),
         RegulationUnitPrice(1500),
-        RegulationStatus.PRIVATE_ACTIVE
+        RegulationStatus.ACTIVE
       ).regulationId
     )!!
   }

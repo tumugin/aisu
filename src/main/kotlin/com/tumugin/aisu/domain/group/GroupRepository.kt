@@ -22,5 +22,5 @@ interface GroupRepository {
 
   suspend fun deleteGroup(groupId: GroupId)
 
-  suspend fun getAllGroupsByStatuses(paginatorParam: PaginatorParam, statues: List<GroupStatus>): PaginatorResult<Group>
+  suspend fun getAllGroupsByStatuses(paginatorParam: PaginatorParam, statues: List<GroupStatus>, userId: UserId?): PaginatorResult<Group>
 }

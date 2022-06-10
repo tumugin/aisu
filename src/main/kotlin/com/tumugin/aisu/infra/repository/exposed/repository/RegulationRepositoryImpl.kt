@@ -6,6 +6,8 @@ import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.models.Regulations
 import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
+import org.jetbrains.exposed.sql.and
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import com.tumugin.aisu.infra.repository.exposed.models.Group as GroupModel
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -69,9 +71,13 @@ class RegulationRepositoryImpl : RegulationRepository {
     }
   }
 
-  override suspend fun getRegulationsByGroupId(groupId: GroupId): List<Regulation> {
+  override suspend fun getRegulationsByGroupId(
+    groupId: GroupId, regulationStatues: List<RegulationStatus>
+  ): List<Regulation> {
     return transaction {
-      RegulationModel.find(Regulations.group.eq(groupId.value)).with(*withModel).map { it.toDomain() }
+      RegulationModel.find(
+        Regulations.group.eq(groupId.value).and(Regulations.status.inList(regulationStatues.map { it.name }))
+      ).with(*withModel).map { it.toDomain() }
     }
   }
 }

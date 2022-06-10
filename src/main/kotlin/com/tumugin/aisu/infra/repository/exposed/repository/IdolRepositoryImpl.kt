@@ -7,7 +7,9 @@ import com.tumugin.aisu.domain.idol.*
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.models.Idols
 import org.jetbrains.exposed.dao.with
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
+import org.jetbrains.exposed.sql.and
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import com.tumugin.aisu.infra.repository.exposed.models.Group as GroupModel
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -54,13 +56,18 @@ class IdolRepositoryImpl : IdolRepository {
   }
 
   override suspend fun getAllIdolsByStatues(
-    paginatorParam: PaginatorParam, statues: List<IdolStatus>
+    paginatorParam: PaginatorParam, statues: List<IdolStatus>, userId: UserId?
   ): PaginatorResult<Idol> {
     return transaction {
-      val query = IdolModel.find(Idols.status.inList(statues.map { it.name }))
-      val results = query.limit(paginatorParam.limit.toInt(), paginatorParam.offset)
-        .with(*withModels)
-        .map { it.toDomain() }
+      val query = IdolModel.find(Idols.status.inList(statues.map { it.name }).let {
+        if (userId != null) {
+          it.and(Idols.user.eq(userId.value))
+        } else {
+          it
+        }
+      })
+      val results =
+        query.limit(paginatorParam.limit.toInt(), paginatorParam.offset).with(*withModels).map { it.toDomain() }
       paginatorParam.createPaginatorResult(
         query.count(), results
       )

@@ -44,7 +44,7 @@ class RegulationRepositoryTest : BaseDatabaseTest() {
       RegulationName("Appare!券"),
       RegulationComment("テスト"),
       RegulationUnitPrice(2000),
-      RegulationStatus.PRIVATE_ACTIVE
+      RegulationStatus.ACTIVE
     )
     val actual = regulationRepository.getRegulation(expected.regulationId)!!
     assertEquals(expected.groupId, actual.groupId)
@@ -65,7 +65,7 @@ class RegulationRepositoryTest : BaseDatabaseTest() {
       RegulationName("ほげほげ"),
       RegulationComment("テストああああ"),
       RegulationUnitPrice(2000),
-      RegulationStatus.PUBLIC_ACTIVE
+      RegulationStatus.ACTIVE
     )
     val actual = regulationRepository.getRegulation(expected.regulationId)!!
     assertEquals(expected.groupId, actual.groupId)

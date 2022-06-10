@@ -26,6 +26,6 @@ interface IdolRepository {
   suspend fun deleteIdol(idolId: IdolId)
 
   suspend fun getAllIdolsByStatues(
-    paginatorParam: PaginatorParam, statues: List<IdolStatus>
+    paginatorParam: PaginatorParam, statues: List<IdolStatus>, userId: UserId?
   ): PaginatorResult<Idol>
 }
