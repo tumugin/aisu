@@ -22,13 +22,12 @@ class IdolRepositoryTest : BaseDatabaseTest() {
   @BeforeTest
   fun seed() = runTest {
     val user = UserSeeder().seedUser()
-    IdolSeeder().seedIdol(GroupSeeder().seedGroup(user.userId).groupId, user.userId)
+    IdolSeeder().seedIdol(user.userId)
   }
 
   @Test
   fun testGetIdol() = runTest {
     val idol = idolRepository.getIdol(IdolId(1))!!
-    assertNotNull(idol.group)
     assertNotNull(idol.user)
     assertEquals("村崎ゆうな", idol.idolName.value)
     assertEquals(IdolStatus.PRIVATE_ACTIVE, idol.idolStatus)
@@ -37,13 +36,11 @@ class IdolRepositoryTest : BaseDatabaseTest() {
   @Test
   fun testAddIdol() = runTest {
     val idol = idolRepository.addIdol(
-      GroupId(1),
       UserId(1),
       IdolName("工藤みか"),
       IdolStatus.PRIVATE_ACTIVE
     )
     val addedIdol = idolRepository.getIdol(idol.idolId)!!
-    assertNotNull(addedIdol.group)
     assertNotNull(addedIdol.user)
     assertEquals("工藤みか", addedIdol.idolName.value)
     assertEquals(IdolStatus.PRIVATE_ACTIVE, addedIdol.idolStatus)
@@ -55,14 +52,12 @@ class IdolRepositoryTest : BaseDatabaseTest() {
     val newGroup = GroupSeeder().seedGroup(newUser.userId, GroupName("Appare!"))
     idolRepository.updateIdol(
       IdolId(1),
-      newGroup.groupId,
       newUser.userId,
       IdolName("工藤のか"),
       IdolStatus.PUBLIC_ACTIVE
     )
     val updatedIdol = idolRepository.getIdol(IdolId(1))!!
     assertEquals(newUser, updatedIdol.user)
-    assertEquals(newGroup, updatedIdol.group)
     assertEquals("工藤のか", updatedIdol.idolName.value)
     assertEquals(IdolStatus.PUBLIC_ACTIVE, updatedIdol.idolStatus)
   }

@@ -24,12 +24,10 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
     val user = UserSeeder().seedUser()
     val group = GroupSeeder().seedGroup(user.userId)
     val idolUna = IdolSeeder().seedIdol(
-      group.groupId,
       user.userId,
       IdolName("村崎ゆうな")
     )
     val idolMika = IdolSeeder().seedIdol(
-      group.groupId,
       user.userId,
       IdolName("工藤みか")
     )

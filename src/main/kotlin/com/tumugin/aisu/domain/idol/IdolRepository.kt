@@ -9,7 +9,6 @@ interface IdolRepository {
   suspend fun getIdol(idolId: IdolId): Idol?
 
   suspend fun addIdol(
-    groupId: GroupId,
     userId: UserId,
     idolName: IdolName,
     idolStatus: IdolStatus,
@@ -17,7 +16,6 @@ interface IdolRepository {
 
   suspend fun updateIdol(
     idolId: IdolId,
-    groupId: GroupId,
     userId: UserId,
     idolName: IdolName,
     idolStatus: IdolStatus,

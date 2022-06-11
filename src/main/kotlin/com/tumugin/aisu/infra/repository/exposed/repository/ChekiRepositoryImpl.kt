@@ -21,7 +21,7 @@ class ChekiRepositoryImpl : ChekiRepository {
   private val withModels =
     listOf(ChekiModel::user, ChekiModel::idol, ChekiModel::regulation).toTypedArray()
   private val idolWithModels =
-    listOf(IdolModel::group, IdolModel::user).toTypedArray()
+    listOf(IdolModel::user).toTypedArray()
 
   override suspend fun getCheki(chekiId: ChekiId): Cheki? {
     return transaction {

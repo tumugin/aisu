@@ -1,6 +1,5 @@
 package com.tumugin.aisu.testing.seeder
 
-import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.idol.Idol
 import com.tumugin.aisu.domain.idol.IdolName
 import com.tumugin.aisu.domain.idol.IdolRepository
@@ -13,14 +12,12 @@ class IdolSeeder : KoinComponent {
   private val idolRepository by inject<IdolRepository>()
 
   suspend fun seedIdol(
-    groupId: GroupId,
     userId: UserId,
     idolName: IdolName = IdolName("村崎ゆうな"),
     idolStatus: IdolStatus = IdolStatus.PRIVATE_ACTIVE
   ): Idol {
     return idolRepository.getIdol(
       idolRepository.addIdol(
-        groupId,
         userId,
         idolName,
         idolStatus

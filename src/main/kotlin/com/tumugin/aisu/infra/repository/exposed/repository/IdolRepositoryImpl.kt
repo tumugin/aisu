@@ -16,7 +16,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
 
 class IdolRepositoryImpl : IdolRepository {
-  private val withModels = listOf(IdolModel::group, IdolModel::user).toTypedArray()
+  private val withModels = listOf(IdolModel::user).toTypedArray()
 
   override suspend fun getIdol(idolId: IdolId): Idol? {
     return transaction {
@@ -24,10 +24,9 @@ class IdolRepositoryImpl : IdolRepository {
     }
   }
 
-  override suspend fun addIdol(groupId: GroupId, userId: UserId, idolName: IdolName, idolStatus: IdolStatus): Idol {
+  override suspend fun addIdol(userId: UserId, idolName: IdolName, idolStatus: IdolStatus): Idol {
     return transaction {
       IdolModel.new {
-        this.group = GroupModel[groupId.value]
         this.user = UserModel[userId.value]
         this.name = idolName.value
         this.status = idolStatus.name
@@ -36,11 +35,10 @@ class IdolRepositoryImpl : IdolRepository {
   }
 
   override suspend fun updateIdol(
-    idolId: IdolId, groupId: GroupId, userId: UserId, idolName: IdolName, idolStatus: IdolStatus
+    idolId: IdolId, userId: UserId, idolName: IdolName, idolStatus: IdolStatus
   ): Idol {
     return transaction {
       val model = IdolModel[idolId.value]
-      model.group = GroupModel[groupId.value]
       model.user = UserModel[userId.value]
       model.name = idolName.value
       model.status = idolStatus.name

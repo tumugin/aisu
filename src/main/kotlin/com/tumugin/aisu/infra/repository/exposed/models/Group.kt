@@ -21,12 +21,14 @@ class Group(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Groups) {
   var user by User optionalReferencedOn Groups.user
   var name by Groups.name
   var status by Groups.status
+  var idols by Idol via GroupIdols
 
   fun toDomain(): com.tumugin.aisu.domain.group.Group {
     return Group(
       groupId = GroupId(this.id.value),
       userId = this.user?.let { UserId(it.id.value) },
       user = this.user?.toDomain(),
+      idols = this.idols.map { it.toDomain() },
       groupName = GroupName(this.name),
       groupStatus = GroupStatus.valueOf(this.status),
       groupCreatedAt = GroupCreatedAt(this.createdAt),
