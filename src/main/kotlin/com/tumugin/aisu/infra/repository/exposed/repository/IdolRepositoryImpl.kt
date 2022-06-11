@@ -2,6 +2,7 @@ package com.tumugin.aisu.infra.repository.exposed.repository
 
 import com.tumugin.aisu.domain.base.PaginatorParam
 import com.tumugin.aisu.domain.base.PaginatorResult
+import com.tumugin.aisu.domain.group.Group
 import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.idol.*
 import com.tumugin.aisu.domain.user.UserId
@@ -69,6 +70,13 @@ class IdolRepositoryImpl : IdolRepository {
       paginatorParam.createPaginatorResult(
         query.count(), results
       )
+    }
+  }
+
+  override suspend fun getGroupsOfIdol(idolId: IdolId): List<Group> {
+    return transaction {
+      val idol = IdolModel[idolId.value]
+      idol.groups.with(GroupModel::user).map { it.toDomain() }
     }
   }
 }
