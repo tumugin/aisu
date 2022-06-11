@@ -25,7 +25,6 @@ class Idol(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Idols) {
   fun toDomain(): com.tumugin.aisu.domain.idol.Idol {
     return Idol(
       idolId = IdolId(this.id.value),
-      groups = this.groups.map { it.toDomain() },
       userId = this.user?.id?.value?.let { UserId(it) },
       user = this.user?.toDomain(),
       idolName = IdolName(this.name),

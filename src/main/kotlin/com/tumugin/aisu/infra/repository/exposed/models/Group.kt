@@ -28,7 +28,6 @@ class Group(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Groups) {
       groupId = GroupId(this.id.value),
       userId = this.user?.let { UserId(it.id.value) },
       user = this.user?.toDomain(),
-      idols = this.idols.map { it.toDomain() },
       groupName = GroupName(this.name),
       groupStatus = GroupStatus.valueOf(this.status),
       groupCreatedAt = GroupCreatedAt(this.createdAt),
