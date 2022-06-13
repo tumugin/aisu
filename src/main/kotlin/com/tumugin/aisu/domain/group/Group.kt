@@ -36,4 +36,11 @@ data class Group(
 
     return false
   }
+
+  fun isEditableByUser(userId: UserId?): Boolean {
+    if (this.userId == userId) {
+      return true
+    }
+    return false
+  }
 }
