@@ -19,8 +19,8 @@ class GroupSeeder : KoinComponent {
     return groupRepository.getGroup(
       groupRepository.addGroup(
         userId,
-        GroupName("群青の世界"),
-        GroupStatus.PRIVATE_ACTIVE
+        groupName,
+        groupStatus
       ).groupId
     )!!
   }
