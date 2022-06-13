@@ -4,7 +4,9 @@ import com.tumugin.aisu.domain.base.PaginatorParam
 import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.group.*
 import com.tumugin.aisu.domain.idol.Idol
+import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.user.UserId
+import com.tumugin.aisu.infra.repository.exposed.models.GroupIdol as GroupIdolModel
 import com.tumugin.aisu.infra.repository.exposed.models.Groups
 import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -77,6 +79,17 @@ class GroupRepositoryImpl : GroupRepository {
   override suspend fun getIdolsOfGroup(groupId: GroupId): List<Idol> {
     return transaction {
       GroupModel[groupId.value].idols.with(IdolModel::user).map { it.toDomain() }
+    }
+  }
+
+  override suspend fun addIdolToGroup(groupId: GroupId, idolId: IdolId) {
+    return transaction {
+      val idolModel = IdolModel[idolId.value]
+      val groupModel = GroupModel[groupId.value]
+      GroupIdolModel.new {
+        idol = idolModel
+        group = groupModel
+      }
     }
   }
 }
