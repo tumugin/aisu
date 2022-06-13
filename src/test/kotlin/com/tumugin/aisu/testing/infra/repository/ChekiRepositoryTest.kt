@@ -13,13 +13,15 @@ import com.tumugin.aisu.testing.seeder.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.koin.core.component.inject
-import kotlin.test.*
 
 class ChekiRepositoryTest : BaseDatabaseTest() {
   private val chekiRepository by inject<ChekiRepository>()
 
-  @BeforeTest
+  @BeforeEach
   fun seed() = runTest {
     val user = UserSeeder().seedUser()
     val group = GroupSeeder().seedGroup(user.userId)

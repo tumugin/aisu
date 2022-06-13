@@ -3,6 +3,7 @@ package com.tumugin.aisu.infra.repository.exposed.repository
 import com.tumugin.aisu.domain.base.PaginatorParam
 import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.group.*
+import com.tumugin.aisu.domain.idol.Idol
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.models.Groups
 import org.jetbrains.exposed.dao.with
@@ -12,6 +13,7 @@ import org.jetbrains.exposed.sql.and
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import org.jetbrains.exposed.sql.transactions.transaction
 import com.tumugin.aisu.infra.repository.exposed.models.Group as GroupModel
+import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
 
 class GroupRepositoryImpl : GroupRepository {
   private val withModels = listOf(GroupModel::user).toTypedArray()
@@ -69,6 +71,12 @@ class GroupRepositoryImpl : GroupRepository {
       paginatorParam.createPaginatorResult(
         count, results
       )
+    }
+  }
+
+  override suspend fun getIdolsOfGroup(groupId: GroupId): List<Idol> {
+    return transaction {
+      GroupModel[groupId.value].idols.with(IdolModel::user).map { it.toDomain() }
     }
   }
 }

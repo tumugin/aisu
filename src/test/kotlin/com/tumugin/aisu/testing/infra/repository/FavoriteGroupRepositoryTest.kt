@@ -9,15 +9,15 @@ import com.tumugin.aisu.testing.seeder.FavoriteGroupSeeder
 import com.tumugin.aisu.testing.seeder.GroupSeeder
 import com.tumugin.aisu.testing.seeder.UserSeeder
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.koin.core.component.inject
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class FavoriteGroupRepositoryTest : BaseDatabaseTest() {
   private val favoriteGroupRepository by inject<FavoriteGroupRepository>()
 
-  @BeforeTest
+  @BeforeEach
   fun seed() = runTest {
     val user = UserSeeder().seedUser()
     (1..10).forEach { _ ->

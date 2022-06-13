@@ -9,13 +9,15 @@ import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.testing.seeder.GroupSeeder
 import com.tumugin.aisu.testing.seeder.UserSeeder
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.koin.core.component.inject
-import kotlin.test.*
 
 class GroupRepositoryTest : BaseDatabaseTest() {
   private val groupRepository by inject<GroupRepository>()
 
-  @BeforeTest
+  @BeforeEach
   fun seed() = runTest {
     val user = UserSeeder().seedUser()
     GroupSeeder().seedGroup(user.userId)

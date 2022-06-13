@@ -9,13 +9,15 @@ import com.tumugin.aisu.testing.seeder.GroupSeeder
 import com.tumugin.aisu.testing.seeder.RegulationSeeder
 import com.tumugin.aisu.testing.seeder.UserSeeder
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.koin.core.component.inject
-import kotlin.test.*
 
 class RegulationRepositoryTest : BaseDatabaseTest() {
   private val regulationRepository by inject<RegulationRepository>()
 
-  @BeforeTest
+  @BeforeEach
   fun seed() = runTest {
     val user = UserSeeder().seedUser()
     RegulationSeeder().seedRegulation(

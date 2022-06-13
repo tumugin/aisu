@@ -4,8 +4,10 @@ import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.domain.user.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.koin.core.component.inject
-import kotlin.test.*
 
 class UserRepositoryTest : BaseDatabaseTest() {
   private val userRepository: UserRepository by inject()
@@ -92,7 +94,7 @@ class UserRepositoryTest : BaseDatabaseTest() {
     )
   }
 
-  @BeforeTest
+  @BeforeEach
   fun prepareTestUser() = runTest {
     userRepository.addUser(
       UserName("藤宮めい"),

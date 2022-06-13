@@ -1,10 +1,10 @@
 package com.tumugin.aisu.testing.domain.base
 
 import com.tumugin.aisu.domain.base.PaginatorParam
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Test
 import org.koin.core.component.KoinComponent
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class PaginatorParamTest : KoinComponent {
   @Test
@@ -17,10 +17,10 @@ class PaginatorParamTest : KoinComponent {
 
   @Test
   fun testIllegalParams() {
-    assertFailsWith(IllegalArgumentException::class) {
+    assertThrows(IllegalArgumentException::class.java) {
       PaginatorParam(0, 100)
     }
-    assertFailsWith(IllegalArgumentException::class) {
+    assertThrows(IllegalArgumentException::class.java) {
       PaginatorParam(100, -1)
     }
   }

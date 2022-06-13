@@ -1,6 +1,5 @@
 package com.tumugin.aisu.testing.infra.repository
 
-import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.group.GroupName
 import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.idol.IdolName
@@ -13,13 +12,15 @@ import com.tumugin.aisu.testing.seeder.GroupSeeder
 import com.tumugin.aisu.testing.seeder.IdolSeeder
 import com.tumugin.aisu.testing.seeder.UserSeeder
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.koin.core.component.inject
-import kotlin.test.*
 
 class IdolRepositoryTest : BaseDatabaseTest() {
   private val idolRepository by inject<IdolRepository>()
 
-  @BeforeTest
+  @BeforeEach
   fun seed() = runTest {
     val user = UserSeeder().seedUser()
     IdolSeeder().seedIdol(user.userId)

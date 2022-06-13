@@ -3,11 +3,12 @@ package com.tumugin.aisu.testing.usecase.client.user
 import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.domain.user.*
 import com.tumugin.aisu.usecase.client.user.CreateUser
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.koin.test.inject
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class CreateUserTest : BaseDatabaseTest() {
   private val createUser = CreateUser()
@@ -45,14 +46,16 @@ class CreateUserTest : BaseDatabaseTest() {
   @Test
   fun testDuplicateEmailUser() = runTest {
     createAoiSuzu()
-    assertFailsWith(UserAlreadyExistException::class) {
-      createUser.createUser(
-        UserName("すずあおい"),
-        UserEmail("aoisuzu@example.com"),
-        UserRawPassword("suzuaoi").toHashedPassword(),
-        null,
-        UserForceLogoutGeneration.createDefault()
-      )
+    assertThrows(UserAlreadyExistException::class.java) {
+      runBlocking {
+        createUser.createUser(
+          UserName("すずあおい"),
+          UserEmail("aoisuzu@example.com"),
+          UserRawPassword("suzuaoi").toHashedPassword(),
+          null,
+          UserForceLogoutGeneration.createDefault()
+        )
+      }
     }
   }
 }

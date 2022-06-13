@@ -4,9 +4,9 @@ import com.tumugin.aisu.di.AisuDIModule
 import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.junit.jupiter.api.BeforeEach
 import org.koin.core.context.GlobalContext
 import org.koin.test.KoinTest
-import kotlin.test.BeforeTest
 
 abstract class BaseDatabaseTest : KoinTest {
   private fun setupApplication() {
@@ -17,7 +17,7 @@ abstract class BaseDatabaseTest : KoinTest {
     GlobalContext.get().get<JDBCConnectionRepository>().prepareORM()
   }
 
-  @BeforeTest
+  @BeforeEach
   fun beforeBaseTest() {
     setupApplication()
     truncateDatabase()
