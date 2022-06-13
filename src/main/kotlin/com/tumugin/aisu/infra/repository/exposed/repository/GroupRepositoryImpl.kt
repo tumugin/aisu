@@ -6,6 +6,7 @@ import com.tumugin.aisu.domain.group.*
 import com.tumugin.aisu.domain.idol.Idol
 import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.user.UserId
+import com.tumugin.aisu.infra.repository.exposed.models.GroupIdols
 import com.tumugin.aisu.infra.repository.exposed.models.GroupIdol as GroupIdolModel
 import com.tumugin.aisu.infra.repository.exposed.models.Groups
 import org.jetbrains.exposed.dao.with
@@ -90,6 +91,17 @@ class GroupRepositoryImpl : GroupRepository {
         idol = idolModel
         group = groupModel
       }
+    }
+  }
+
+  override suspend fun removeIdolFromGroup(groupId: GroupId, idolId: IdolId) {
+    transaction {
+      val idolModel = IdolModel[idolId.value]
+      val groupModel = GroupModel[groupId.value]
+      GroupIdolModel
+        .find(GroupIdols.idol.eq(idolModel.id) and GroupIdols.group.eq(groupModel.id))
+        .first()
+        .delete()
     }
   }
 }

@@ -33,4 +33,6 @@ interface GroupRepository {
   suspend fun getIdolsOfGroup(groupId: GroupId): List<Idol>
 
   suspend fun addIdolToGroup(groupId: GroupId, idolId: IdolId)
+
+  suspend fun removeIdolFromGroup(groupId: GroupId, idolId: IdolId)
 }
