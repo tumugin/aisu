@@ -16,12 +16,10 @@ class AddGroupTest : BaseDatabaseTest() {
   private val writeGroup = WriteGroup()
   private val getGroup = GetGroup()
   private lateinit var userOne: User
-  private lateinit var userTwo: User
 
   @BeforeEach
   fun seed() = runTest {
     userOne = UserSeeder().seedNonDuplicateUser()
-    userTwo = UserSeeder().seedNonDuplicateUser()
   }
 
   @Test
