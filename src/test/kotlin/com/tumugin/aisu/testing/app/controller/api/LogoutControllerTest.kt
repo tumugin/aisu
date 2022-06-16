@@ -5,14 +5,14 @@ import com.tumugin.aisu.testing.seeder.UserSeeder
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
-import kotlin.test.BeforeTest
-import kotlin.test.assertEquals
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class LogoutControllerTest : BaseKtorTest() {
   private val userSeeder = UserSeeder()
 
-  @BeforeTest
+  @BeforeEach
   fun seedUser() = runTest {
     userSeeder.seedUser()
   }

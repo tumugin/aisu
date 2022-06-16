@@ -7,17 +7,17 @@ import com.tumugin.aisu.testing.seeder.GroupSeeder
 import com.tumugin.aisu.testing.seeder.UserSeeder
 import com.tumugin.aisu.usecase.client.group.GetGroup
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
 class GetGroupTest : BaseDatabaseTest() {
   private val getGroup = GetGroup()
-  lateinit var userOne: User
-  lateinit var userTwo: User
+  private lateinit var userOne: User
+  private lateinit var userTwo: User
 
   @BeforeEach
   fun seed() = runTest {
