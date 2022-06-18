@@ -1,8 +1,6 @@
 package com.tumugin.aisu.testing.usecase.client.group
 
 import com.tumugin.aisu.domain.group.Group
-import com.tumugin.aisu.domain.group.GroupName
-import com.tumugin.aisu.domain.group.GroupStatus
 import com.tumugin.aisu.domain.idol.Idol
 import com.tumugin.aisu.domain.user.User
 import com.tumugin.aisu.testing.BaseDatabaseTest
