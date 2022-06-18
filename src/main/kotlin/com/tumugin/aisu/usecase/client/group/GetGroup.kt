@@ -1,5 +1,6 @@
 package com.tumugin.aisu.usecase.client.group
 
+import com.tumugin.aisu.domain.exception.HasNoPermissionException
 import com.tumugin.aisu.domain.group.Group
 import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.group.GroupRepository
@@ -16,7 +17,7 @@ class GetGroup : KoinComponent {
     if (group.isVisibleToUser(sessionUserId)) {
       return group
     }
-    return null
+    throw HasNoPermissionException()
   }
 
   suspend fun getIdolsOfGroup(sessionUserId: UserId, group: Group): List<Idol> {

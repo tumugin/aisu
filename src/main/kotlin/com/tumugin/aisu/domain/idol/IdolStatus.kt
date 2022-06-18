@@ -24,5 +24,16 @@ enum class IdolStatus(s: String) {
   /**
    * 運営削除(論理削除)
    */
-  OPERATION_DELETED("operation_deleted")
+  OPERATION_DELETED("operation_deleted");
+
+  companion object {
+    val allPublicStatuses: List<IdolStatus>
+      get() {
+        return listOf(PUBLIC_ACTIVE, PUBLIC_NOT_ACTIVE)
+      }
+    val allStatues: List<IdolStatus>
+      get() {
+        return listOf(PUBLIC_ACTIVE, PUBLIC_NOT_ACTIVE, PRIVATE_ACTIVE, PRIVATE_NOT_ACTIVE, OPERATION_DELETED)
+      }
+  }
 }
