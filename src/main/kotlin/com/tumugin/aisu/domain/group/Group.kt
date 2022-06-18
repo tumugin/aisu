@@ -17,6 +17,7 @@ data class Group(
     GroupStatus.PRIVATE_NOT_ACTIVE,
     GroupStatus.PUBLIC_ACTIVE,
     GroupStatus.PUBLIC_NOT_ACTIVE,
+    GroupStatus.OPERATION_DELETED,
   )
   private val notOwnGroupsVisibleStatuses = listOf(
     GroupStatus.PUBLIC_ACTIVE,

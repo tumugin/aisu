@@ -7,8 +7,7 @@ import com.tumugin.aisu.testing.seeder.GroupSeeder
 import com.tumugin.aisu.testing.seeder.UserSeeder
 import com.tumugin.aisu.usecase.client.group.GetGroup
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -34,7 +33,7 @@ class GetGroupTest : BaseDatabaseTest() {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = ["PRIVATE_ACTIVE", "PRIVATE_NOT_ACTIVE"])
+  @ValueSource(strings = ["PRIVATE_ACTIVE", "PRIVATE_NOT_ACTIVE", "OPERATION_DELETED"])
   fun testGetNotRetrievableGroup(status: String) = runTest {
     val createdGroup = GroupSeeder().seedGroup(userOne.userId, groupStatus = GroupStatus.valueOf(status))
 
@@ -49,9 +48,11 @@ class GetGroupTest : BaseDatabaseTest() {
   fun testGetOperationDeletedGroup() = runTest {
     val createdGroup = GroupSeeder().seedGroup(userOne.userId, groupStatus = GroupStatus.OPERATION_DELETED)
 
+    // 運営削除されたものは自分が作った場合のみ取得出来る
     val retrievedGroup = getGroup.getGroup(userOne.userId, createdGroup.groupId)
-    assertNull(retrievedGroup)
+    assertNotNull(retrievedGroup)
 
+    // 他人からは取得出来ない
     val retrievedGroupByUserTwo = getGroup.getGroup(userTwo.userId, createdGroup.groupId)
     assertNull(retrievedGroupByUserTwo)
   }
