@@ -1,5 +1,6 @@
 package com.tumugin.aisu.testing.usecase.client.group
 
+import com.tumugin.aisu.domain.exception.HasNoPermissionException
 import com.tumugin.aisu.domain.group.Group
 import com.tumugin.aisu.domain.idol.Idol
 import com.tumugin.aisu.domain.user.User
@@ -9,7 +10,9 @@ import com.tumugin.aisu.testing.seeder.IdolSeeder
 import com.tumugin.aisu.testing.seeder.UserSeeder
 import com.tumugin.aisu.usecase.client.group.GetGroup
 import com.tumugin.aisu.usecase.client.group.WriteGroup
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -42,5 +45,18 @@ class AddIdolToGroupTest : BaseDatabaseTest() {
       listOf(targetIdol),
       idols
     )
+  }
+
+  @Test
+  fun testNotAddableIdolToGroup() = runTest {
+    Assertions.assertThrows(HasNoPermissionException::class.java) {
+      runBlocking {
+        writeGroup.addIdolToGroup(
+          userTwo.userId,
+          targetGroup,
+          targetIdol
+        )
+      }
+    }
   }
 }
