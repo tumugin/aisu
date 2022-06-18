@@ -23,14 +23,18 @@ class AddIdolToGroupTest : BaseDatabaseTest() {
   private lateinit var userOne: User
   private lateinit var userTwo: User
   private lateinit var targetGroup: Group
+  private lateinit var targetGroupTwo: Group
   private lateinit var targetIdol: Idol
+  private lateinit var targetIdolTwo: Idol
 
   @BeforeEach
   fun seed() = runTest {
     userOne = UserSeeder().seedNonDuplicateUser()
     userTwo = UserSeeder().seedNonDuplicateUser()
     targetGroup = GroupSeeder().seedGroup(userOne.userId)
+    targetGroupTwo = GroupSeeder().seedGroup(userTwo.userId)
     targetIdol = IdolSeeder().seedIdol(userOne.userId)
+    targetIdolTwo = IdolSeeder().seedIdol(userTwo.userId)
   }
 
   @Test
@@ -48,13 +52,39 @@ class AddIdolToGroupTest : BaseDatabaseTest() {
   }
 
   @Test
-  fun testNotAddableIdolToGroup() = runTest {
+  fun testNotAddableIdolToGroupPatternA() = runTest {
     Assertions.assertThrows(HasNoPermissionException::class.java) {
       runBlocking {
         writeGroup.addIdolToGroup(
           userTwo.userId,
           targetGroup,
           targetIdol
+        )
+      }
+    }
+  }
+
+  @Test
+  fun testNotAddableIdolToGroupPatternB() = runTest {
+    Assertions.assertThrows(HasNoPermissionException::class.java) {
+      runBlocking {
+        writeGroup.addIdolToGroup(
+          userTwo.userId,
+          targetGroupTwo,
+          targetIdol
+        )
+      }
+    }
+  }
+
+  @Test
+  fun testNotAddableIdolToGroupPatternC() = runTest {
+    Assertions.assertThrows(HasNoPermissionException::class.java) {
+      runBlocking {
+        writeGroup.addIdolToGroup(
+          userTwo.userId,
+          targetGroup,
+          targetIdolTwo
         )
       }
     }
