@@ -1,11 +1,13 @@
 package com.tumugin.aisu.testing.usecase.client.group
 
+import com.tumugin.aisu.domain.exception.HasNoPermissionException
 import com.tumugin.aisu.domain.group.GroupStatus
 import com.tumugin.aisu.domain.user.User
 import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.testing.seeder.GroupSeeder
 import com.tumugin.aisu.testing.seeder.UserSeeder
 import com.tumugin.aisu.usecase.client.group.GetGroup
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -40,8 +42,11 @@ class GetGroupTest : BaseDatabaseTest() {
     val retrievedGroup = getGroup.getGroup(userOne.userId, createdGroup.groupId)
     assertEquals(createdGroup, retrievedGroup)
 
-    val retrievedGroupByUserTwo = getGroup.getGroup(userTwo.userId, createdGroup.groupId)
-    assertNull(retrievedGroupByUserTwo)
+    assertThrows(HasNoPermissionException::class.java) {
+      runBlocking {
+        getGroup.getGroup(userTwo.userId, createdGroup.groupId)
+      }
+    }
   }
 
   @Test
@@ -53,7 +58,10 @@ class GetGroupTest : BaseDatabaseTest() {
     assertNotNull(retrievedGroup)
 
     // 他人からは取得出来ない
-    val retrievedGroupByUserTwo = getGroup.getGroup(userTwo.userId, createdGroup.groupId)
-    assertNull(retrievedGroupByUserTwo)
+    assertThrows(HasNoPermissionException::class.java) {
+      runBlocking {
+        getGroup.getGroup(userTwo.userId, createdGroup.groupId)
+      }
+    }
   }
 }
