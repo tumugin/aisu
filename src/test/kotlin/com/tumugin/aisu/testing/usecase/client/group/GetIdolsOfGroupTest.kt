@@ -63,6 +63,6 @@ class GetIdolsOfGroupTest : BaseDatabaseTest() {
     GroupIdolSeeder().seedGroupIdol(createdGroup.groupId, idolTwo.idolId)
 
     assertEquals(listOf<Idol>(), getGroup.getIdolsOfGroup(userTwo.userId, createdGroup))
-    assertEquals(listOf<Idol>(), getGroup.getIdolsOfGroup(userOne.userId, createdGroup))
+    assertEquals(listOf(idolOne, idolTwo), getGroup.getIdolsOfGroup(userOne.userId, createdGroup))
   }
 }
