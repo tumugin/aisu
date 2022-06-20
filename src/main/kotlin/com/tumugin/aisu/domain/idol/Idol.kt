@@ -17,6 +17,7 @@ data class Idol(
     IdolStatus.PRIVATE_NOT_ACTIVE,
     IdolStatus.PUBLIC_ACTIVE,
     IdolStatus.PUBLIC_NOT_ACTIVE,
+    IdolStatus.OPERATION_DELETED,
   )
   private val notOwnIdolVisibleStatues = listOf(
     IdolStatus.PUBLIC_ACTIVE,
