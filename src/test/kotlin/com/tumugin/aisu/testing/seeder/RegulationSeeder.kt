@@ -9,7 +9,11 @@ import org.koin.core.component.inject
 class RegulationSeeder : KoinComponent {
   private val regulationRepository by inject<RegulationRepository>()
 
-  suspend fun seedRegulation(groupId: GroupId, userId: UserId): Regulation {
+  suspend fun seedRegulation(
+    groupId: GroupId,
+    userId: UserId,
+    regulationStatus: RegulationStatus = RegulationStatus.ACTIVE
+  ): Regulation {
     return regulationRepository.getRegulation(
       regulationRepository.addRegulation(
         groupId,
@@ -17,7 +21,7 @@ class RegulationSeeder : KoinComponent {
         RegulationName("コメント付きチェキ券"),
         RegulationComment("メンバー指定チェキ券"),
         RegulationUnitPrice(1500),
-        RegulationStatus.ACTIVE
+        regulationStatus
       ).regulationId
     )!!
   }
