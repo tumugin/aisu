@@ -2,8 +2,6 @@ package com.tumugin.aisu.testing.usecase.client.idol
 
 import com.tumugin.aisu.domain.exception.HasNoPermissionException
 import com.tumugin.aisu.domain.idol.Idol
-import com.tumugin.aisu.domain.idol.IdolName
-import com.tumugin.aisu.domain.idol.IdolStatus
 import com.tumugin.aisu.domain.user.User
 import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.testing.seeder.IdolSeeder
