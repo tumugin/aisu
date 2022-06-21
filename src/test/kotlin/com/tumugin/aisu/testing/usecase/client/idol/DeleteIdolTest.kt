@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class UpdateIdolTest : BaseDatabaseTest() {
+class DeleteIdolTest : BaseDatabaseTest() {
   private val getIdol = GetIdol()
   private val writeIdol = WriteIdol()
   private lateinit var user: User
@@ -31,31 +31,16 @@ class UpdateIdolTest : BaseDatabaseTest() {
   }
 
   @Test
-  fun testUpdateIdol() = runTest {
-    val updatedIdol = writeIdol.updateIdol(
-      idol.idolId,
-      user.userId,
-      IdolName("小波もも"),
-      IdolStatus.PUBLIC_ACTIVE
-    )
-    val retrievedIdol = getIdol.getIdol(user.userId, idol.idolId)
-    Assertions.assertEquals(updatedIdol.idolId, retrievedIdol?.idolId)
-    Assertions.assertEquals(updatedIdol.idolName, retrievedIdol?.idolName)
-    Assertions.assertEquals(updatedIdol.idolStatus, retrievedIdol?.idolStatus)
-    Assertions.assertEquals(updatedIdol.user, retrievedIdol?.user)
-    Assertions.assertEquals(updatedIdol.userId, retrievedIdol?.userId)
+  fun testDeleteIdol() = runTest {
+    writeIdol.deleteIdol(user.userId, idol.idolId)
+    Assertions.assertNull(getIdol.getIdol(user.userId, idol.idolId))
   }
 
   @Test
   fun testUpdateIdolWithNoPermissionUser() = runTest {
     Assertions.assertThrows(HasNoPermissionException::class.java) {
       runBlocking {
-        writeIdol.updateIdol(
-          idol.idolId,
-          userTwo.userId,
-          IdolName("小波もも"),
-          IdolStatus.PUBLIC_ACTIVE
-        )
+        writeIdol.deleteIdol(userTwo.userId, idol.idolId)
       }
     }
   }
