@@ -5,12 +5,10 @@ import com.tumugin.aisu.domain.exception.NotFoundException
 import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.regulation.*
 import com.tumugin.aisu.domain.user.UserId
-import com.tumugin.aisu.usecase.client.group.GetGroup
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class WriteRegulation : KoinComponent {
-  private val getGroup = GetGroup()
   private val getRegulation = GetRegulation()
   private val regulationRepository by inject<RegulationRepository>()
 
