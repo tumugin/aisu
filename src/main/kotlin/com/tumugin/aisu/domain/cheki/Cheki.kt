@@ -19,4 +19,12 @@ data class Cheki(
   val chekiShotAt: ChekiShotAt,
   val chekiCreatedAt: ChekiCreatedAt,
   val chekiUpdatedAt: ChekiUpdatedAt
-) {}
+) {
+  fun isVisibleToUser(userId: UserId?): Boolean {
+    return this.userId == userId
+  }
+
+  fun isEditableByUser(userId: UserId?): Boolean {
+    return this.userId == userId
+  }
+}
