@@ -33,6 +33,6 @@ class GetChekiMonthIdolCountByUserIdAndIdolTest : BaseDatabaseTest() {
 
   @Test
   fun testGetChekiMonthIdolCountByUserIdAndIdol() = runTest {
-
+    TODO()
   }
 }
