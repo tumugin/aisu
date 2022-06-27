@@ -26,9 +26,7 @@ class FavoriteGroup(id: EntityID<Long>) : ExposedTimestampIdEntity(id, FavoriteG
     return com.tumugin.aisu.domain.favoritegroup.FavoriteGroup(
       favoriteGroupId = FavoriteGroupId(this.id.value),
       userId = UserId(this.user.id.value),
-      user = this.user.toDomain(),
       groupId = GroupId(this.group.id.value),
-      group = this.group.toDomain()
     )
   }
 }

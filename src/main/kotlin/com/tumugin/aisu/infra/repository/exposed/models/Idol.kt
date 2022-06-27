@@ -26,7 +26,6 @@ class Idol(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Idols) {
     return Idol(
       idolId = IdolId(this.id.value),
       userId = this.user?.id?.value?.let { UserId(it) },
-      user = this.user?.toDomain(),
       idolName = IdolName(this.name),
       idolStatus = IdolStatus.valueOf(this.status),
       idolCreatedAt = IdolCreatedAt(this.createdAt),

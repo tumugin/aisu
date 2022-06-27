@@ -18,7 +18,7 @@ class GetRegulation : KoinComponent {
 
   suspend fun getRegulation(sessionUserId: UserId?, regulationId: RegulationId): Regulation? {
     val regulation = regulationRepository.getRegulation(regulationId) ?: return null
-    if (!regulation.group.isVisibleToUser(sessionUserId)) {
+    if (!regulation.isVisibleToUser(sessionUserId)) {
       throw HasNoPermissionException()
     }
     return regulation
@@ -36,7 +36,7 @@ class GetRegulation : KoinComponent {
     }
 
     // 自分自身が作成したものの場合は削除ステータスの場合でも返す
-    if (sessionUserId == group.user?.userId) {
+    if (sessionUserId == group.userId) {
       return regulationRepository.getRegulationsByGroupId(groupId, regulationStatues)
     }
 

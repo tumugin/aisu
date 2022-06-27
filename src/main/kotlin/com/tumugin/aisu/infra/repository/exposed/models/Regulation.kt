@@ -34,7 +34,6 @@ class Regulation(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Regulations)
       groupId = GroupId(this.group.id.value),
       group = this.group.toDomain(),
       userId = this.user?.id?.value?.let { UserId(it) },
-      user = this.user?.toDomain(),
       regulationName = RegulationName(this.name),
       regulationComment = RegulationComment(this.comment),
       regulationUnitPrice = RegulationUnitPrice(this.unitPrice),

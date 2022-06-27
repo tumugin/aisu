@@ -26,7 +26,6 @@ class GroupRepositoryTest : BaseDatabaseTest() {
   @Test
   fun testGetGroup() = runTest {
     val group = groupRepository.getGroup(GroupId(1))!!
-    assertNotNull(group.user)
     assertEquals(
       mapOf(
         "groupId" to 1L,

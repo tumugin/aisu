@@ -6,7 +6,6 @@ import com.tumugin.aisu.domain.user.UserId
 data class Idol(
   val idolId: IdolId,
   val userId: UserId?,
-  val user: User?,
   val idolName: IdolName,
   val idolStatus: IdolStatus,
   val idolCreatedAt: IdolCreatedAt,
@@ -26,7 +25,7 @@ data class Idol(
 
   fun isVisibleToUser(userId: UserId?): Boolean {
     // 自分自身が持っているグループの場合
-    if (this.user?.userId == userId && ownIdolVisibleStatues.contains(this.idolStatus)) {
+    if (this.userId == userId && ownIdolVisibleStatues.contains(this.idolStatus)) {
       return true
     }
 

@@ -14,7 +14,7 @@ class WriteRegulation : KoinComponent {
 
   suspend fun deleteRegulation(sessionUserId: UserId?, regulationId: RegulationId) {
     val regulation = getRegulation.getRegulation(sessionUserId, regulationId) ?: throw NotFoundException()
-    if (!regulation.group.isEditableByUser(sessionUserId)) {
+    if (!regulation.isEditableByUser(sessionUserId)) {
       throw HasNoPermissionException()
     }
     regulationRepository.deleteRegulation(regulationId)
@@ -47,7 +47,7 @@ class WriteRegulation : KoinComponent {
     regulationStatus: RegulationStatus,
   ): Regulation {
     val regulation = getRegulation.getRegulation(sessionUserId, regulationId) ?: throw NotFoundException()
-    if (!regulation.group.isEditableByUser(sessionUserId)) {
+    if (!regulation.isEditableByUser(sessionUserId)) {
       throw HasNoPermissionException()
     }
     return regulationRepository.updateRegulation(

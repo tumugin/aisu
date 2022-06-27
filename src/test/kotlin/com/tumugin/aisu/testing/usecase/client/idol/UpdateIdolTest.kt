@@ -42,7 +42,6 @@ class UpdateIdolTest : BaseDatabaseTest() {
     Assertions.assertEquals(updatedIdol.idolId, retrievedIdol?.idolId)
     Assertions.assertEquals(updatedIdol.idolName, retrievedIdol?.idolName)
     Assertions.assertEquals(updatedIdol.idolStatus, retrievedIdol?.idolStatus)
-    Assertions.assertEquals(updatedIdol.user, retrievedIdol?.user)
     Assertions.assertEquals(updatedIdol.userId, retrievedIdol?.userId)
   }
 

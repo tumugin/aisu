@@ -31,7 +31,6 @@ class AddGroupTest : BaseDatabaseTest() {
     assertEquals(addedGroup.groupName, actualGroup?.groupName)
     assertEquals(addedGroup.groupStatus, actualGroup?.groupStatus)
     assertEquals(addedGroup.groupId, actualGroup?.groupId)
-    assertEquals(addedGroup.user, actualGroup?.user)
     assertEquals(addedGroup.userId, actualGroup?.userId)
   }
 }

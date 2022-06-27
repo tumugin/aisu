@@ -10,11 +10,18 @@ data class Regulation(
   val groupId: GroupId,
   val group: Group,
   val userId: UserId?,
-  val user: User?,
   val regulationName: RegulationName,
   val regulationComment: RegulationComment,
   val regulationUnitPrice: RegulationUnitPrice,
   val regulationStatus: RegulationStatus,
   val regulationCreatedAt: RegulationCreatedAt,
   val regulationUpdatedAt: RegulationUpdatedAt
-) {}
+) {
+  fun isVisibleToUser(userId: UserId?): Boolean {
+    return group.isVisibleToUser(userId)
+  }
+
+  fun isEditableByUser(userId: UserId?): Boolean {
+    return group.isEditableByUser(userId)
+  }
+}

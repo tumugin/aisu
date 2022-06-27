@@ -47,7 +47,6 @@ class UpdateRegulationTest : BaseDatabaseTest() {
     Assertions.assertEquals(regulation.regulationId, fetchedRegulation?.regulationId)
     Assertions.assertEquals(regulation.groupId, fetchedRegulation?.groupId)
     Assertions.assertEquals(regulation.userId, fetchedRegulation?.userId)
-    Assertions.assertEquals(regulation.user, fetchedRegulation?.user)
     Assertions.assertEquals(regulation.regulationName, fetchedRegulation?.regulationName)
     Assertions.assertEquals(regulation.regulationComment, fetchedRegulation?.regulationComment)
     Assertions.assertEquals(regulation.regulationUnitPrice, fetchedRegulation?.regulationUnitPrice)

@@ -138,8 +138,8 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
         "chekiQuantity" to 10,
         "chekiShotAt" to Instant.parse("2021-12-31T23:59:59+09:00").toString()
       ), mutableMapOf<String, Any?>(
-        "userId" to addedResult.user.userId.value,
-        "idolId" to addedResult.idol?.idolId?.value,
+        "userId" to addedResult.userId.value,
+        "idolId" to addedResult.idolId?.value,
         "regulationId" to addedResult.regulation?.regulationId?.value,
         "chekiQuantity" to addedResult.chekiQuantity.value,
         "chekiShotAt" to addedResult.chekiShotAt.value.toString()
@@ -166,8 +166,8 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
         "chekiQuantity" to 99,
         "chekiShotAt" to Instant.parse("2021-12-15T20:10:30+09:00").toString()
       ), mutableMapOf<String, Any?>(
-        "userId" to addedResult.user.userId.value,
-        "idolId" to addedResult.idol?.idolId?.value,
+        "userId" to addedResult.userId.value,
+        "idolId" to addedResult.idolId?.value,
         "regulationId" to addedResult.regulation?.regulationId?.value,
         "chekiQuantity" to addedResult.chekiQuantity.value,
         "chekiShotAt" to addedResult.chekiShotAt.value.toString()

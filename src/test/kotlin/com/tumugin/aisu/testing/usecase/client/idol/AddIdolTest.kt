@@ -33,7 +33,6 @@ class AddIdolTest : BaseDatabaseTest() {
     Assertions.assertEquals(idol.idolId, retrievedIdol?.idolId)
     Assertions.assertEquals(idol.idolName, retrievedIdol?.idolName)
     Assertions.assertEquals(idol.idolStatus, retrievedIdol?.idolStatus)
-    Assertions.assertEquals(idol.user, retrievedIdol?.user)
     Assertions.assertEquals(idol.userId, retrievedIdol?.userId)
   }
 }

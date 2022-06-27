@@ -34,9 +34,7 @@ class Cheki(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Chekis) {
     return Cheki(
       chekiId = ChekiId(this.id.value),
       userId = UserId(this.user.id.value),
-      user = this.user.toDomain(),
       idolId = this.idol?.id?.value?.let { IdolId(it) },
-      idol = this.idol?.toDomain(),
       regulationId = this.regulation?.id?.value?.let { RegulationId(it) },
       regulation = this.regulation?.toDomain(),
       chekiQuantity = ChekiQuantity(this.quantity),
