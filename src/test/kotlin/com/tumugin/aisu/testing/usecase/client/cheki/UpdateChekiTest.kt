@@ -28,6 +28,7 @@ class UpdateChekiTest : BaseDatabaseTest() {
   private lateinit var regulation: Regulation
   private lateinit var regulationTwo: Regulation
   private lateinit var cheki: Cheki
+  private lateinit var chekiTwo: Cheki
 
   @BeforeEach
   fun seed() = runTest {
@@ -39,6 +40,12 @@ class UpdateChekiTest : BaseDatabaseTest() {
     regulationTwo = RegulationSeeder().seedRegulation(GroupSeeder().seedGroup(userTwo.userId).groupId, user.userId)
     cheki = ChekiSeeder().seedCheki(
       user.userId,
+      idol.idolId,
+      regulation.regulationId,
+      chekiShotAt = ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
+    )
+    chekiTwo = ChekiSeeder().seedCheki(
+      userTwo.userId,
       idol.idolId,
       regulation.regulationId,
       chekiShotAt = ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
@@ -63,6 +70,22 @@ class UpdateChekiTest : BaseDatabaseTest() {
     Assertions.assertEquals(newRegulation.regulationId, updatedCheki.regulationId)
     Assertions.assertEquals(ChekiQuantity(100), updatedCheki.chekiQuantity)
     Assertions.assertEquals(ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00")), updatedCheki.chekiShotAt)
+  }
+
+  @Test
+  fun testUpdateChekiWithNoPermission() {
+    Assertions.assertThrows(HasNoPermissionException::class.java) {
+      runBlocking {
+        writeCheki.updateCheki(
+          chekiTwo.chekiId,
+          user.userId,
+          idol.idolId,
+          regulation.regulationId,
+          ChekiQuantity(100),
+          ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00"))
+        )
+      }
+    }
   }
 
   @Test
