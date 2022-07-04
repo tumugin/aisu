@@ -4,7 +4,6 @@ import com.tumugin.aisu.domain.cheki.Cheki
 import com.tumugin.aisu.domain.cheki.ChekiShotAt
 import com.tumugin.aisu.domain.exception.HasNoPermissionException
 import com.tumugin.aisu.domain.idol.Idol
-import com.tumugin.aisu.domain.regulation.Regulation
 import com.tumugin.aisu.domain.user.User
 import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.testing.seeder.*
