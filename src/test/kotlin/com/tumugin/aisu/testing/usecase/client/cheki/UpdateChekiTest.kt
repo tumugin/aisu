@@ -1,5 +1,6 @@
 package com.tumugin.aisu.testing.usecase.client.cheki
 
+import com.tumugin.aisu.domain.cheki.Cheki
 import com.tumugin.aisu.domain.cheki.ChekiQuantity
 import com.tumugin.aisu.domain.cheki.ChekiShotAt
 import com.tumugin.aisu.domain.exception.HasNoPermissionException
@@ -9,10 +10,7 @@ import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.regulation.Regulation
 import com.tumugin.aisu.domain.user.User
 import com.tumugin.aisu.testing.BaseDatabaseTest
-import com.tumugin.aisu.testing.seeder.GroupSeeder
-import com.tumugin.aisu.testing.seeder.IdolSeeder
-import com.tumugin.aisu.testing.seeder.RegulationSeeder
-import com.tumugin.aisu.testing.seeder.UserSeeder
+import com.tumugin.aisu.testing.seeder.*
 import com.tumugin.aisu.usecase.client.cheki.WriteCheki
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -21,7 +19,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class AddChekiTest : BaseDatabaseTest() {
+class UpdateChekiTest : BaseDatabaseTest() {
   private val writeCheki = WriteCheki()
   private lateinit var user: User
   private lateinit var userTwo: User
@@ -29,6 +27,7 @@ class AddChekiTest : BaseDatabaseTest() {
   private lateinit var idolTwo: Idol
   private lateinit var regulation: Regulation
   private lateinit var regulationTwo: Regulation
+  private lateinit var cheki: Cheki
 
   @BeforeEach
   fun seed() = runTest {
@@ -38,64 +37,77 @@ class AddChekiTest : BaseDatabaseTest() {
     idolTwo = IdolSeeder().seedIdol(userTwo.userId)
     regulation = RegulationSeeder().seedRegulation(GroupSeeder().seedGroup(user.userId).groupId, user.userId)
     regulationTwo = RegulationSeeder().seedRegulation(GroupSeeder().seedGroup(userTwo.userId).groupId, user.userId)
-  }
-
-  @Test
-  fun testAddCheki() = runTest {
-    val cheki = writeCheki.addCheki(
+    cheki = ChekiSeeder().seedCheki(
       user.userId,
       idol.idolId,
       regulation.regulationId,
-      ChekiQuantity(10),
-      ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
+      chekiShotAt = ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
     )
-    Assertions.assertEquals(user.userId, cheki.userId)
-    Assertions.assertEquals(idol.idolId, cheki.idolId)
-    Assertions.assertEquals(regulation.regulationId, cheki.regulationId)
-    Assertions.assertEquals(ChekiQuantity(10), cheki.chekiQuantity)
-    Assertions.assertEquals(ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00")), cheki.chekiShotAt)
   }
 
   @Test
-  fun testAddChekiWithNotExistIdol() {
+  fun testUpdateCheki() = runTest {
+    val newIdol = IdolSeeder().seedIdol(user.userId)
+    val newRegulation = RegulationSeeder().seedRegulation(GroupSeeder().seedGroup(user.userId).groupId, user.userId)
+    val updatedCheki = writeCheki.updateCheki(
+      cheki.chekiId,
+      user.userId,
+      newIdol.idolId,
+      newRegulation.regulationId,
+      ChekiQuantity(100),
+      ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00"))
+    )
+
+    Assertions.assertEquals(user.userId, updatedCheki.userId)
+    Assertions.assertEquals(newIdol.idolId, updatedCheki.idolId)
+    Assertions.assertEquals(newRegulation.regulationId, updatedCheki.regulationId)
+    Assertions.assertEquals(ChekiQuantity(100), updatedCheki.chekiQuantity)
+    Assertions.assertEquals(ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00")), updatedCheki.chekiShotAt)
+  }
+
+  @Test
+  fun testUpdateChekiWithNotExistIdol() {
     Assertions.assertThrows(InvalidContextException::class.java) {
       runBlocking {
-        writeCheki.addCheki(
+        writeCheki.updateCheki(
+          cheki.chekiId,
           user.userId,
-          IdolId(10000),
+          IdolId(1000),
           regulation.regulationId,
-          ChekiQuantity(10),
-          ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
+          ChekiQuantity(100),
+          ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00"))
         )
       }
     }
   }
 
   @Test
-  fun testAddChekiWithNotVisibleIdol() {
+  fun testUpdateChekiWithNotVisibleIdol() {
     Assertions.assertThrows(HasNoPermissionException::class.java) {
       runBlocking {
-        writeCheki.addCheki(
+        writeCheki.updateCheki(
+          cheki.chekiId,
           user.userId,
           idolTwo.idolId,
           regulation.regulationId,
-          ChekiQuantity(10),
-          ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
+          ChekiQuantity(100),
+          ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00"))
         )
       }
     }
   }
 
   @Test
-  fun testAddChekiWithNotVisibleRegulation() {
+  fun testUpdateChekiWithNotVisibleRegulation() {
     Assertions.assertThrows(HasNoPermissionException::class.java) {
       runBlocking {
-        writeCheki.addCheki(
+        writeCheki.updateCheki(
+          cheki.chekiId,
           user.userId,
-          idolTwo.idolId,
+          idol.idolId,
           regulationTwo.regulationId,
-          ChekiQuantity(10),
-          ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
+          ChekiQuantity(100),
+          ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00"))
         )
       }
     }

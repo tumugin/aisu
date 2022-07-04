@@ -8,12 +8,14 @@ import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.regulation.RegulationId
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.usecase.client.idol.GetIdol
+import com.tumugin.aisu.usecase.client.regulation.GetRegulation
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class WriteCheki : KoinComponent {
   private val getCheki = GetCheki()
   private val getIdol = GetIdol()
+  private val getRegulation = GetRegulation()
   private val chekiRepository by inject<ChekiRepository>()
 
   suspend fun addCheki(
@@ -26,6 +28,12 @@ class WriteCheki : KoinComponent {
     val idol = getIdol.getIdol(sessionUserId, idolId) ?: throw InvalidContextException()
     if (!idol.isVisibleToUser(sessionUserId)) {
       throw HasNoPermissionException()
+    }
+    if (regulationId != null) {
+      val regulation = getRegulation.getRegulation(sessionUserId, regulationId) ?: throw InvalidContextException()
+      if (!regulation.isVisibleToUser(sessionUserId)) {
+        throw HasNoPermissionException()
+      }
     }
 
     return chekiRepository.addCheki(
@@ -52,6 +60,12 @@ class WriteCheki : KoinComponent {
     val idol = getIdol.getIdol(sessionUserId, idolId) ?: throw InvalidContextException()
     if (!idol.isVisibleToUser(sessionUserId)) {
       throw HasNoPermissionException()
+    }
+    if (regulationId != null) {
+      val regulation = getRegulation.getRegulation(sessionUserId, regulationId) ?: throw InvalidContextException()
+      if (!regulation.isVisibleToUser(sessionUserId)) {
+        throw HasNoPermissionException()
+      }
     }
 
     return chekiRepository.updateCheki(
