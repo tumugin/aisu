@@ -59,7 +59,7 @@ dependencies {
   implementation("mysql:mysql-connector-java:8.0.29")
   implementation("com.zaxxer:HikariCP:5.0.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.3")
+  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
   implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.3.0")
