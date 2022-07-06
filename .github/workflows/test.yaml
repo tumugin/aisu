@@ -44,6 +44,6 @@ jobs:
           distribution: 'zulu'
           java-version: '18'
           cache: 'gradle'
-      - run: ./gradlew build --no-daemon
+      - run: ./gradlew build -x test --no-daemon
       - run: ./gradlew migrateTestingDatabase --no-daemon
       - run: ./gradlew test --no-daemon
