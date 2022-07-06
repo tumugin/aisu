@@ -3,15 +3,7 @@ import org.flywaydb.gradle.task.AbstractFlywayTask
 import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 
-dependencyLocking {
-  lockMode.set(LockMode.LENIENT)
-  lockAllConfigurations()
-}
-
 buildscript {
-  configurations.classpath {
-    resolutionStrategy.activateDependencyLocking()
-  }
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.2.2")
     classpath("mysql:mysql-connector-java:8.0.29")
