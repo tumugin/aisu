@@ -19,6 +19,12 @@ class FavoriteGroupRepositoryImpl : FavoriteGroupRepository {
     }
   }
 
+  override suspend fun getFavoriteGroup(favoriteGroupId: FavoriteGroupId): FavoriteGroup? {
+    return transaction {
+      FavoriteGroupModel.findById(favoriteGroupId.value)?.toDomain()
+    }
+  }
+
   override suspend fun deleteFavoriteGroup(favoriteGroupId: FavoriteGroupId) {
     transaction {
       val model = FavoriteGroupModel[favoriteGroupId.value]
