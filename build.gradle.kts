@@ -4,7 +4,6 @@ import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 
 dependencyLocking {
-  lockMode.set(LockMode.STRICT)
   lockAllConfigurations()
 }
 
