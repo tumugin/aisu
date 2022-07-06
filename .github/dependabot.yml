@@ -11,3 +11,4 @@ updates:
       interval: "daily"
     assignees:
       - tumugin
+    open-pull-requests-limit: 100
