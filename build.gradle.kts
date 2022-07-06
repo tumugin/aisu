@@ -62,7 +62,7 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
   implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
-  implementation("io.konform:konform:0.3.0")
+  implementation("io.konform:konform:0.4.0")
   implementation("redis.clients:jedis:4.2.3")
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
