@@ -31,7 +31,7 @@ val exposedVersion = "0.38.2"
 val koinVersion = "3.1.6"
 val ktorVersion = "2.0.1"
 val logbackVersion = "1.2.11"
-val coroutineVersion = "1.6.1"
+val coroutineVersion = "1.6.3"
 
 application {
   mainClass.set("com.tumugin.aisu.ApplicationKt")
