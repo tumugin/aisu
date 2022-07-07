@@ -12,7 +12,7 @@ buildscript {
 }
 
 plugins {
-  kotlin("jvm") version "1.6.21"
+  kotlin("jvm") version "1.7.10"
   application
   id("org.flywaydb.flyway") version "8.5.13"
   id("org.jetbrains.kotlin.plugin.serialization") version "1.6.21"
