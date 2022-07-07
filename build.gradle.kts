@@ -15,7 +15,7 @@ plugins {
   kotlin("jvm") version "1.6.21"
   application
   id("org.flywaydb.flyway") version "8.5.13"
-  id("org.jetbrains.kotlin.plugin.serialization") version "1.6.21"
+  id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
   id("com.adarshr.test-logger") version "3.2.0"
 }
 
