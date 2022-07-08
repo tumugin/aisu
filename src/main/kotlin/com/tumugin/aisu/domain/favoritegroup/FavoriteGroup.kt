@@ -15,4 +15,8 @@ open class FavoriteGroup(
   fun isEditableByUser(userId: UserId): Boolean {
     return this.userId == userId
   }
+
+  fun isEditableByAdmin(): Boolean {
+    return true
+  }
 }

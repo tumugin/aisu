@@ -15,9 +15,9 @@ import org.koin.core.component.inject
 class GetIdolAdmin : KoinComponent {
   private val idolRepository by inject<IdolRepository>()
 
-  suspend fun getIdol(sessionUserId: UserId?, idolId: IdolId): Idol? {
+  suspend fun getIdol(idolId: IdolId): Idol? {
     val idol = idolRepository.getIdol(idolId) ?: return null
-    if (idol.isVisibleToUser(sessionUserId)) {
+    if (idol.isVisibleToAdmin()) {
       return idol
     }
     throw HasNoPermissionException()
@@ -29,14 +29,14 @@ class GetIdolAdmin : KoinComponent {
     )
   }
 
-  suspend fun getAllUserCreatedIdols(sessionUserId: UserId, paginatorParam: PaginatorParam): PaginatorResult<Idol> {
+  suspend fun getAllUserCreatedIdols(clientUserId: UserId, paginatorParam: PaginatorParam): PaginatorResult<Idol> {
     return idolRepository.getAllIdolsByStatues(
-      paginatorParam, IdolStatus.allStatues, sessionUserId
+      paginatorParam, IdolStatus.allStatues, clientUserId
     )
   }
 
-  suspend fun getGroupsOfIdol(sessionUserId: UserId?, idolId: IdolId): List<Group> {
+  suspend fun getGroupsOfIdol(idolId: IdolId): List<Group> {
     val groups = idolRepository.getGroupsOfIdol(idolId)
-    return groups.filter { it.isVisibleToUser(sessionUserId) }
+    return groups.filter { it.isVisibleToAdmin() }
   }
 }

@@ -21,7 +21,15 @@ data class Regulation(
     return group.isVisibleToUser(userId)
   }
 
+  fun isVisibleToAdmin(): Boolean {
+    return true
+  }
+
   fun isEditableByUser(userId: UserId?): Boolean {
     return group.isEditableByUser(userId)
+  }
+
+  fun isEditableByAdmin(): Boolean {
+    return true
   }
 }

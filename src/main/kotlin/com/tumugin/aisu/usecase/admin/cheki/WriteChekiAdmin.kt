@@ -19,25 +19,25 @@ class WriteChekiAdmin : KoinComponent {
   private val chekiRepository by inject<ChekiRepository>()
 
   suspend fun addCheki(
-    sessionUserId: UserId,
+    clientUserId: UserId,
     idolId: IdolId,
     regulationId: RegulationId?,
     chekiQuantity: ChekiQuantity,
     chekiShotAt: ChekiShotAt,
   ): Cheki {
-    val idol = getIdol.getIdol(sessionUserId, idolId) ?: throw InvalidContextException()
-    if (!idol.isVisibleToUser(sessionUserId)) {
+    val idol = getIdol.getIdol(idolId) ?: throw InvalidContextException()
+    if (!idol.isVisibleToAdmin()) {
       throw HasNoPermissionException()
     }
     if (regulationId != null) {
-      val regulation = getRegulation.getRegulation(sessionUserId, regulationId) ?: throw InvalidContextException()
-      if (!regulation.isVisibleToUser(sessionUserId)) {
+      val regulation = getRegulation.getRegulation(regulationId) ?: throw InvalidContextException()
+      if (!regulation.isVisibleToAdmin()) {
         throw HasNoPermissionException()
       }
     }
 
     return chekiRepository.addCheki(
-      userId = sessionUserId,
+      userId = clientUserId,
       idolId = idolId,
       regulationId = regulationId,
       chekiQuantity = chekiQuantity,
@@ -47,23 +47,22 @@ class WriteChekiAdmin : KoinComponent {
 
   suspend fun updateCheki(
     chekiId: ChekiId,
-    sessionUserId: UserId,
     idolId: IdolId,
     regulationId: RegulationId?,
     chekiQuantity: ChekiQuantity,
     chekiShotAt: ChekiShotAt,
   ): Cheki {
-    val cheki = getCheki.getCheki(sessionUserId, chekiId) ?: throw NotFoundException()
-    if (!cheki.isEditableByUser(sessionUserId)) {
+    val cheki = getCheki.getCheki(chekiId) ?: throw NotFoundException()
+    if (!cheki.isEditableByAdmin()) {
       throw HasNoPermissionException()
     }
-    val idol = getIdol.getIdol(sessionUserId, idolId) ?: throw InvalidContextException()
-    if (!idol.isVisibleToUser(sessionUserId)) {
+    val idol = getIdol.getIdol(idolId) ?: throw InvalidContextException()
+    if (!idol.isVisibleToAdmin()) {
       throw HasNoPermissionException()
     }
     if (regulationId != null) {
-      val regulation = getRegulation.getRegulation(sessionUserId, regulationId) ?: throw InvalidContextException()
-      if (!regulation.isVisibleToUser(sessionUserId)) {
+      val regulation = getRegulation.getRegulation(regulationId) ?: throw InvalidContextException()
+      if (!regulation.isVisibleToAdmin()) {
         throw HasNoPermissionException()
       }
     }
@@ -78,9 +77,9 @@ class WriteChekiAdmin : KoinComponent {
     )
   }
 
-  suspend fun deleteCheki(sessionUserId: UserId, chekiId: ChekiId) {
-    val cheki = getCheki.getCheki(sessionUserId, chekiId) ?: throw NotFoundException()
-    if (!cheki.isEditableByUser(sessionUserId)) {
+  suspend fun deleteCheki(chekiId: ChekiId) {
+    val cheki = getCheki.getCheki(chekiId) ?: throw NotFoundException()
+    if (!cheki.isEditableByAdmin()) {
       throw HasNoPermissionException()
     }
 

@@ -11,10 +11,10 @@ class GetFavoriteGroupAdmin : KoinComponent {
   private val favoriteGroupRepository by inject<FavoriteGroupRepository>()
   private val groupRepository by inject<GroupRepository>()
 
-  suspend fun getFavoriteGroupsByUserId(sessionUserId: UserId): List<FavoriteGroupWithGroup> {
-    val favoriteGroups = favoriteGroupRepository.getFavoriteGroupsByUserId(sessionUserId)
+  suspend fun getFavoriteGroupsByUserId(clientUserId: UserId): List<FavoriteGroupWithGroup> {
+    val favoriteGroups = favoriteGroupRepository.getFavoriteGroupsByUserId(clientUserId)
     val groupIds = favoriteGroups.map { it.groupId }
-    val groups = groupRepository.getGroups(groupIds).filter { it.isVisibleToUser(sessionUserId) }
+    val groups = groupRepository.getGroups(groupIds).filter { it.isVisibleToAdmin() }
     return favoriteGroups.map { favoriteGroup ->
       FavoriteGroupWithGroup(
         favoriteGroup.favoriteGroupId,

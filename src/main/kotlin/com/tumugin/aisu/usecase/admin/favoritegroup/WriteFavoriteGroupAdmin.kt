@@ -13,18 +13,18 @@ import org.koin.core.component.inject
 class WriteFavoriteGroupAdmin : KoinComponent {
   private val favoriteGroupRepository by inject<FavoriteGroupRepository>()
 
-  suspend fun deleteFavoriteGroup(sessionUserId: UserId, favoriteGroupId: FavoriteGroupId) {
+  suspend fun deleteFavoriteGroup(favoriteGroupId: FavoriteGroupId) {
     val favoriteGroup = favoriteGroupRepository.getFavoriteGroup(favoriteGroupId) ?: throw NotFoundException()
-    if (!favoriteGroup.isEditableByUser(sessionUserId)) {
+    if (!favoriteGroup.isEditableByAdmin()) {
       throw HasNoPermissionException()
     }
     favoriteGroupRepository.deleteFavoriteGroup(favoriteGroupId)
   }
 
   suspend fun addFavoriteGroup(
-    sessionUserId: UserId,
+    clientUserId: UserId,
     groupId: GroupId
   ): FavoriteGroup {
-    return favoriteGroupRepository.addFavoriteGroup(sessionUserId, groupId)
+    return favoriteGroupRepository.addFavoriteGroup(clientUserId, groupId)
   }
 }

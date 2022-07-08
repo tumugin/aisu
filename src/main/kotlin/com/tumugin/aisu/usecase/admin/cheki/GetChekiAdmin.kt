@@ -11,37 +11,37 @@ import org.koin.core.component.inject
 class GetChekiAdmin : KoinComponent {
   private val chekiRepository by inject<ChekiRepository>()
 
-  suspend fun getCheki(sessionUserId: UserId, chekiId: ChekiId): Cheki? {
+  suspend fun getCheki(chekiId: ChekiId): Cheki? {
     val cheki = chekiRepository.getCheki(chekiId) ?: return null
-    if (cheki.isVisibleToUser(sessionUserId)) {
+    if (cheki.isVisibleToAdmin()) {
       return cheki
     }
     throw HasNoPermissionException()
   }
 
   suspend fun getChekiByUserIdAndShotDateTimeRange(
-    sessionUserId: UserId, chekiShotAtStart: ChekiShotAt, chekiShotEnd: ChekiShotAt
+    clientUserId: UserId, chekiShotAtStart: ChekiShotAt, chekiShotEnd: ChekiShotAt
   ): List<Cheki> {
-    return chekiRepository.getChekiByUserIdAndShotDateTimeRange(sessionUserId, chekiShotAtStart, chekiShotEnd)
+    return chekiRepository.getChekiByUserIdAndShotDateTimeRange(clientUserId, chekiShotAtStart, chekiShotEnd)
   }
 
   suspend fun getChekiByUserIdAndShotDateTimeRangeAndIdolId(
-    sessionUserId: UserId, idolId: IdolId, chekiShotAtStart: ChekiShotAt, chekiShotEnd: ChekiShotAt
+    clientUserId: UserId, idolId: IdolId, chekiShotAtStart: ChekiShotAt, chekiShotEnd: ChekiShotAt
   ): List<Cheki> {
     return chekiRepository.getChekiByUserIdAndShotDateTimeRangeAndIdolId(
-      sessionUserId, idolId, chekiShotAtStart, chekiShotEnd
+      clientUserId, idolId, chekiShotAtStart, chekiShotEnd
     )
   }
 
   suspend fun getChekiIdolCountByUserId(
-    sessionUserId: UserId, chekiShotAtStart: ChekiShotAt, chekiShotEnd: ChekiShotAt
+    clientUserId: UserId, chekiShotAtStart: ChekiShotAt, chekiShotEnd: ChekiShotAt
   ): List<ChekiIdolCount> {
-    return chekiRepository.getChekiIdolCountByUserId(sessionUserId, chekiShotAtStart, chekiShotEnd)
+    return chekiRepository.getChekiIdolCountByUserId(clientUserId, chekiShotAtStart, chekiShotEnd)
   }
 
   suspend fun getChekiMonthIdolCountByUserIdAndIdol(
-    sessionUserId: UserId, idolId: IdolId, baseTimezone: TimeZone
+    clientUserId: UserId, idolId: IdolId, baseTimezone: TimeZone
   ): List<ChekiMonthIdolCount> {
-    return chekiRepository.getChekiMonthIdolCountByUserIdAndIdol(sessionUserId, idolId, baseTimezone)
+    return chekiRepository.getChekiMonthIdolCountByUserIdAndIdol(clientUserId, idolId, baseTimezone)
   }
 }
