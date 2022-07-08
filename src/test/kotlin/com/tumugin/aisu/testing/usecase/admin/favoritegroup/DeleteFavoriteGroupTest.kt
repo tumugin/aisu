@@ -41,7 +41,7 @@ class DeleteFavoriteGroupTest : BaseDatabaseTest() {
 
   @Test
   fun testDeleteFavoriteGroupWithOtherUser() {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeFavoriteGroupAdmin.deleteFavoriteGroup(favoriteGroup.favoriteGroupId)
       }

@@ -73,7 +73,7 @@ class AddChekiTest : BaseDatabaseTest() {
 
   @Test
   fun testAddChekiWithNotVisibleIdol() {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeChekiAdmin.addCheki(
           user.userId,
@@ -88,7 +88,7 @@ class AddChekiTest : BaseDatabaseTest() {
 
   @Test
   fun testAddChekiWithNotVisibleRegulation() {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeChekiAdmin.addCheki(
           user.userId,

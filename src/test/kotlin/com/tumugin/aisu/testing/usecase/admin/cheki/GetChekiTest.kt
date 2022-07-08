@@ -36,7 +36,7 @@ class GetChekiTest : BaseDatabaseTest() {
 
   @Test
   fun getChekiWithNoPermissionTest() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         getChekiAdmin.getCheki(cheki.chekiId)
       }

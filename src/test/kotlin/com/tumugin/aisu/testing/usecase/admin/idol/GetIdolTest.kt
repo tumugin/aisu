@@ -32,7 +32,7 @@ class GetIdolTest : BaseDatabaseTest() {
     val idol = IdolSeeder().seedIdol(user.userId, idolStatus = IdolStatus.valueOf(status))
     val retrievedIdol = getIdolAdmin.getIdol(idol.idolId)
     Assertions.assertEquals(idol, retrievedIdol)
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         getIdolAdmin.getIdol(idol.idolId)
       }
@@ -54,7 +54,7 @@ class GetIdolTest : BaseDatabaseTest() {
     val idol = IdolSeeder().seedIdol(user.userId, idolStatus = IdolStatus.OPERATION_DELETED)
     val retrievedIdol = getIdolAdmin.getIdol(idol.idolId)
     Assertions.assertEquals(idol, retrievedIdol)
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         getIdolAdmin.getIdol(idol.idolId)
       }

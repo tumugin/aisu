@@ -91,7 +91,7 @@ class GetRegulationsByGroupIdTest : BaseDatabaseTest() {
 
   @Test
   fun testGetRegulationsByGroupIdWithNoPermission() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         getRegulationAdmin.getRegulationsByGroupId(
           group.groupId,

@@ -55,7 +55,7 @@ class RemoveIdolFromGroupTest : BaseDatabaseTest() {
 
   @Test
   fun testNotAddableIdolToGroupPatternA() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeGroupAdmin.removeIdolFromGroup(
           targetGroup,
@@ -67,7 +67,7 @@ class RemoveIdolFromGroupTest : BaseDatabaseTest() {
 
   @Test
   fun testNotAddableIdolToGroupPatternB() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeGroupAdmin.removeIdolFromGroup(
           targetGroupTwo,
@@ -79,7 +79,7 @@ class RemoveIdolFromGroupTest : BaseDatabaseTest() {
 
   @Test
   fun testNotAddableIdolToGroupPatternC() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeGroupAdmin.removeIdolFromGroup(
           targetGroup,

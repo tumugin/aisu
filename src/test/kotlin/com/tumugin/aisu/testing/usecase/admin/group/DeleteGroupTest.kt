@@ -40,7 +40,7 @@ class DeleteGroupTest : BaseDatabaseTest() {
   @ValueSource(strings = ["PUBLIC_ACTIVE", "PUBLIC_NOT_ACTIVE", "PRIVATE_ACTIVE", "PRIVATE_NOT_ACTIVE", "OPERATION_DELETED"])
   fun testNotDeletableGroup(groupStatus: String) = runTest {
     val group = GroupSeeder().seedGroup(userTwo.userId, groupStatus = GroupStatus.valueOf(groupStatus))
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeGroupAdmin.deleteGroup(userOne.userId, group)
       }

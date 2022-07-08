@@ -45,7 +45,7 @@ class DeleteChekiTest : BaseDatabaseTest() {
 
   @Test
   fun testDeleteChekiWithNoPermission() {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeChekiAdmin.deleteCheki(cheki.chekiId)
       }

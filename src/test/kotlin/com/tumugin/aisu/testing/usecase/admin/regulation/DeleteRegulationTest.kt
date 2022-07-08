@@ -40,7 +40,7 @@ class DeleteRegulationTest : BaseDatabaseTest() {
 
   @Test
   fun testDeleteRegulationWithNoPermission() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeRegulationAdmin.deleteRegulation(regulation.regulationId)
       }

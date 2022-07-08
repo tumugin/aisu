@@ -42,7 +42,7 @@ class GetRegulationTest : BaseDatabaseTest() {
 
   @Test
   fun getRegulationTestWithNoPermission() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         getRegulationAdmin.getRegulation(regulation.regulationId)
       }

@@ -47,7 +47,7 @@ class UpdateIdolTest : BaseDatabaseTest() {
 
   @Test
   fun testUpdateIdolWithNoPermissionUser() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeIdolAdmin.updateIdol(
           idol.idolId,

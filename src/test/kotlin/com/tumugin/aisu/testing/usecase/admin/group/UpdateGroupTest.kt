@@ -50,7 +50,7 @@ class UpdateGroupTest : BaseDatabaseTest() {
 
   @Test
   fun testNotUpdatableGroup() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeGroupAdmin.updateGroup(
           targetGroup,

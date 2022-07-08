@@ -52,7 +52,7 @@ class AddIdolToGroupTest : BaseDatabaseTest() {
 
   @Test
   fun testNotAddableIdolToGroupPatternA() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeGroupAdmin.addIdolToGroup(
           targetGroup,
@@ -64,7 +64,7 @@ class AddIdolToGroupTest : BaseDatabaseTest() {
 
   @Test
   fun testNotAddableIdolToGroupPatternB() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeGroupAdmin.addIdolToGroup(
           targetGroupTwo,
@@ -76,7 +76,7 @@ class AddIdolToGroupTest : BaseDatabaseTest() {
 
   @Test
   fun testNotAddableIdolToGroupPatternC() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeGroupAdmin.addIdolToGroup(
           targetGroup,

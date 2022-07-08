@@ -55,7 +55,7 @@ class UpdateRegulationTest : BaseDatabaseTest() {
 
   @Test
   fun testUpdateRegulationWithNoPermission() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeRegulationAdmin.updateRegulation(
           regulation.regulationId,

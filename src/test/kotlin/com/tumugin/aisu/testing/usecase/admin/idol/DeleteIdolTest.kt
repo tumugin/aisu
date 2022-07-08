@@ -1,6 +1,5 @@
 package com.tumugin.aisu.testing.usecase.admin.idol
 
-import com.tumugin.aisu.domain.exception.HasNoPermissionException
 import com.tumugin.aisu.domain.idol.Idol
 import com.tumugin.aisu.domain.user.User
 import com.tumugin.aisu.testing.BaseDatabaseTest
@@ -36,7 +35,7 @@ class DeleteIdolTest : BaseDatabaseTest() {
 
   @Test
   fun testUpdateIdolWithNoPermissionUser() = runTest {
-    Assertions.assertThrows(HasNoPermissionException::class.java) {
+    Assertions.assertDoesNotThrow {
       runBlocking {
         writeIdolAdmin.deleteIdol(idol.idolId)
       }

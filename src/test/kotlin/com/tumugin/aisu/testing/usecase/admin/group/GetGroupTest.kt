@@ -9,6 +9,7 @@ import com.tumugin.aisu.testing.seeder.UserSeeder
 import com.tumugin.aisu.usecase.admin.group.GetGroupAdmin
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -42,7 +43,7 @@ class GetGroupTest : BaseDatabaseTest() {
     val retrievedGroup = getGroupAdmin.getGroup(createdGroup.groupId)
     assertEquals(createdGroup, retrievedGroup)
 
-    assertThrows(HasNoPermissionException::class.java) {
+    assertDoesNotThrow {
       runBlocking {
         getGroupAdmin.getGroup(createdGroup.groupId)
       }
@@ -58,7 +59,7 @@ class GetGroupTest : BaseDatabaseTest() {
     assertNotNull(retrievedGroup)
 
     // 他人からは取得出来ない
-    assertThrows(HasNoPermissionException::class.java) {
+    assertDoesNotThrow {
       runBlocking {
         getGroupAdmin.getGroup(createdGroup.groupId)
       }
