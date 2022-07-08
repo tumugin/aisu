@@ -37,6 +37,14 @@ data class Idol(
     return false
   }
 
+  fun isVisibleToAdmin(): Boolean {
+    return true
+  }
+
+  fun isEditableByAdmin(): Boolean {
+    return true
+  }
+
   fun isEditableByUser(userId: UserId?): Boolean {
     if (this.userId == userId) {
       return true

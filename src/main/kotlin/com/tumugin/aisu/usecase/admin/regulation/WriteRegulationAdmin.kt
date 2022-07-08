@@ -12,9 +12,9 @@ class WriteRegulationAdmin : KoinComponent {
   private val getRegulation = GetRegulationAdmin()
   private val regulationRepository by inject<RegulationRepository>()
 
-  suspend fun deleteRegulation(sessionUserId: UserId?, regulationId: RegulationId) {
-    val regulation = getRegulation.getRegulation(sessionUserId, regulationId) ?: throw NotFoundException()
-    if (!regulation.isEditableByUser(sessionUserId)) {
+  suspend fun deleteRegulation(regulationId: RegulationId) {
+    val regulation = getRegulation.getRegulation(regulationId) ?: throw NotFoundException()
+    if (!regulation.isEditableByAdmin()) {
       throw HasNoPermissionException()
     }
     regulationRepository.deleteRegulation(regulationId)
@@ -22,7 +22,7 @@ class WriteRegulationAdmin : KoinComponent {
 
   suspend fun addRegulation(
     groupId: GroupId,
-    sessionUserId: UserId,
+    clientUserId: UserId,
     regulationName: RegulationName,
     regulationComment: RegulationComment,
     regulationUnitPrice: RegulationUnitPrice,
@@ -30,7 +30,7 @@ class WriteRegulationAdmin : KoinComponent {
   ): Regulation {
     return regulationRepository.addRegulation(
       groupId,
-      sessionUserId,
+      clientUserId,
       regulationName,
       regulationComment,
       regulationUnitPrice,
@@ -40,20 +40,20 @@ class WriteRegulationAdmin : KoinComponent {
 
   suspend fun updateRegulation(
     regulationId: RegulationId,
-    sessionUserId: UserId,
+    clientUserId: UserId,
     regulationName: RegulationName,
     regulationComment: RegulationComment,
     regulationUnitPrice: RegulationUnitPrice,
     regulationStatus: RegulationStatus,
   ): Regulation {
-    val regulation = getRegulation.getRegulation(sessionUserId, regulationId) ?: throw NotFoundException()
-    if (!regulation.isEditableByUser(sessionUserId)) {
+    val regulation = getRegulation.getRegulation(regulationId) ?: throw NotFoundException()
+    if (!regulation.isEditableByAdmin()) {
       throw HasNoPermissionException()
     }
     return regulationRepository.updateRegulation(
       regulationId,
       regulation.group.groupId,
-      sessionUserId,
+      clientUserId,
       regulationName,
       regulationComment,
       regulationUnitPrice,

@@ -11,29 +11,28 @@ class WriteGroupAdmin : KoinComponent {
   private val groupRepository by inject<GroupRepository>()
 
   suspend fun addGroup(
-    sessionUserId: UserId?,
+    clientUserId: UserId?,
     groupName: GroupName,
     groupStatus: GroupStatus,
   ): Group {
     return groupRepository.addGroup(
-      sessionUserId, groupName, groupStatus
+      clientUserId, groupName, groupStatus
     )
   }
 
-  suspend fun deleteGroup(sessionUserId: UserId?, group: Group) {
-    if (!group.isEditableByUser(sessionUserId)) {
+  suspend fun deleteGroup(clientUserId: UserId?, group: Group) {
+    if (!group.isEditableByAdmin()) {
       throw HasNoPermissionException()
     }
     groupRepository.deleteGroup(group.groupId)
   }
 
   suspend fun updateGroup(
-    sessionUserId: UserId?,
     group: Group,
     groupName: GroupName,
     groupStatus: GroupStatus,
   ): Group {
-    if (!group.isEditableByUser(sessionUserId)) {
+    if (!group.isEditableByAdmin()) {
       throw HasNoPermissionException()
     }
     return groupRepository.updateGroup(
@@ -42,9 +41,9 @@ class WriteGroupAdmin : KoinComponent {
   }
 
   suspend fun addIdolToGroup(
-    sessionUserId: UserId?, group: Group, idol: Idol
+    group: Group, idol: Idol
   ) {
-    if (!(group.isEditableByUser(sessionUserId) && idol.isEditableByUser(sessionUserId))) {
+    if (!(group.isEditableByAdmin() && idol.isEditableByAdmin())) {
       throw HasNoPermissionException()
     }
     return groupRepository.addIdolToGroup(
@@ -53,9 +52,9 @@ class WriteGroupAdmin : KoinComponent {
   }
 
   suspend fun removeIdolFromGroup(
-    sessionUserId: UserId?, group: Group, idol: Idol
+    group: Group, idol: Idol
   ) {
-    if (!(group.isEditableByUser(sessionUserId) && idol.isEditableByUser(sessionUserId))) {
+    if (!(group.isEditableByAdmin() && idol.isEditableByAdmin())) {
       throw HasNoPermissionException()
     }
     groupRepository.removeIdolFromGroup(

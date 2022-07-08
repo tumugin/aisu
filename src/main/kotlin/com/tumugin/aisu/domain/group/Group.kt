@@ -36,10 +36,18 @@ data class Group(
     return false
   }
 
+  fun isVisibleToAdmin(): Boolean {
+    return true
+  }
+
   fun isEditableByUser(userId: UserId?): Boolean {
     if (this.userId == userId) {
       return true
     }
     return false
+  }
+
+  fun isEditableByAdmin(): Boolean {
+    return true
   }
 }

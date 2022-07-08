@@ -11,33 +11,33 @@ class WriteIdolAdmin : KoinComponent {
   private val idolRepository by inject<IdolRepository>()
 
   suspend fun addIdol(
-    sessionUserId: UserId,
+    clientUserId: UserId,
     idolName: IdolName,
     idolStatus: IdolStatus,
   ): Idol {
     return idolRepository.addIdol(
-      sessionUserId, idolName, idolStatus
+      clientUserId, idolName, idolStatus
     )
   }
 
   suspend fun updateIdol(
     idolId: IdolId,
-    sessionUserId: UserId,
+    clientUserId: UserId,
     idolName: IdolName,
     idolStatus: IdolStatus,
   ): Idol {
     val idol = idolRepository.getIdol(idolId) ?: throw NotFoundException()
-    if (!idol.isEditableByUser(sessionUserId)) {
+    if (!idol.isEditableByAdmin()) {
       throw HasNoPermissionException()
     }
     return idolRepository.updateIdol(
-      idolId, sessionUserId, idolName, idolStatus
+      idolId, clientUserId, idolName, idolStatus
     )
   }
 
-  suspend fun deleteIdol(sessionUserId: UserId, idolId: IdolId) {
+  suspend fun deleteIdol(idolId: IdolId) {
     val idol = idolRepository.getIdol(idolId) ?: throw NotFoundException()
-    if (!idol.isEditableByUser(sessionUserId)) {
+    if (!idol.isEditableByAdmin()) {
       throw HasNoPermissionException()
     }
     idolRepository.deleteIdol(idolId)

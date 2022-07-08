@@ -23,4 +23,12 @@ data class Cheki(
   fun isEditableByUser(userId: UserId?): Boolean {
     return this.userId == userId
   }
+
+  fun isVisibleToAdmin(): Boolean {
+    return true
+  }
+
+  fun isEditableByAdmin(): Boolean {
+    return true
+  }
 }

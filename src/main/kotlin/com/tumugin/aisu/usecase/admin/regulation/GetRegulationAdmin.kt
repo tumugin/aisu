@@ -16,33 +16,24 @@ class GetRegulationAdmin : KoinComponent {
   private val getGroup = GetGroupAdmin()
   private val regulationRepository by inject<RegulationRepository>()
 
-  suspend fun getRegulation(sessionUserId: UserId?, regulationId: RegulationId): Regulation? {
+  suspend fun getRegulation(regulationId: RegulationId): Regulation? {
     val regulation = regulationRepository.getRegulation(regulationId) ?: return null
-    if (!regulation.isVisibleToUser(sessionUserId)) {
+    if (!regulation.isVisibleToAdmin()) {
       throw HasNoPermissionException()
     }
     return regulation
   }
 
   suspend fun getRegulationsByGroupId(
-    sessionUserId: UserId?,
     groupId: GroupId,
     regulationStatues: List<RegulationStatus>
   ): List<Regulation> {
-    val group = getGroup.getGroup(sessionUserId, groupId) ?: throw NotFoundException()
+    val group = getGroup.getGroup(groupId) ?: throw NotFoundException()
 
-    if (!group.isVisibleToUser(sessionUserId)) {
+    if (!group.isVisibleToAdmin()) {
       throw HasNoPermissionException()
     }
 
-    // 自分自身が作成したものの場合は削除ステータスの場合でも返す
-    if (sessionUserId == group.userId) {
-      return regulationRepository.getRegulationsByGroupId(groupId, regulationStatues)
-    }
-
-    return regulationRepository.getRegulationsByGroupId(
-      groupId,
-      regulationStatues.filter { it != RegulationStatus.OPERATION_DELETED }
-    )
+    return regulationRepository.getRegulationsByGroupId(groupId, regulationStatues)
   }
 }
