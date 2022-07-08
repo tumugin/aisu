@@ -12,10 +12,11 @@ buildscript {
 }
 
 plugins {
-  kotlin("jvm") version "1.6.21"
+  val kotlinVersion = "1.7.10"
+  kotlin("jvm") version kotlinVersion
   application
   id("org.flywaydb.flyway") version "8.5.13"
-  id("org.jetbrains.kotlin.plugin.serialization") version "1.6.21"
+  id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
 }
 
