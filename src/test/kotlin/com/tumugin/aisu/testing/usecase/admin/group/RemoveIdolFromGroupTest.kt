@@ -1,6 +1,5 @@
 package com.tumugin.aisu.testing.usecase.admin.group
 
-import com.tumugin.aisu.domain.exception.HasNoPermissionException
 import com.tumugin.aisu.domain.group.Group
 import com.tumugin.aisu.domain.idol.Idol
 import com.tumugin.aisu.domain.user.User
@@ -67,6 +66,8 @@ class RemoveIdolFromGroupTest : BaseDatabaseTest() {
 
   @Test
   fun testNotAddableIdolToGroupPatternB() = runTest {
+    GroupIdolSeeder().seedGroupIdol(targetGroupTwo.groupId, targetIdol.idolId)
+
     Assertions.assertDoesNotThrow {
       runBlocking {
         writeGroupAdmin.removeIdolFromGroup(
@@ -79,6 +80,8 @@ class RemoveIdolFromGroupTest : BaseDatabaseTest() {
 
   @Test
   fun testNotAddableIdolToGroupPatternC() = runTest {
+    GroupIdolSeeder().seedGroupIdol(targetGroup.groupId, targetIdolTwo.idolId)
+
     Assertions.assertDoesNotThrow {
       runBlocking {
         writeGroupAdmin.removeIdolFromGroup(

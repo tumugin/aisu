@@ -44,6 +44,6 @@ class GetFavoriteGroupsByUserIdTest : BaseDatabaseTest() {
     // 見えなくなっているグループはgroupがnullになる
     Assertions.assertEquals(user.userId, favoriteGroups[1].userId)
     Assertions.assertEquals(nonVisibleGroup.groupId, favoriteGroups[1].groupId)
-    Assertions.assertNull(favoriteGroups[1].group)
+    Assertions.assertEquals(nonVisibleGroup, favoriteGroups[1].group)
   }
 }

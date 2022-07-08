@@ -29,7 +29,7 @@ class GetIdolsOfGroupTest : BaseDatabaseTest() {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = ["PUBLIC_ACTIVE", "PUBLIC_NOT_ACTIVE"])
+  @ValueSource(strings = ["PUBLIC_ACTIVE", "PUBLIC_NOT_ACTIVE", "PRIVATE_ACTIVE", "PRIVATE_NOT_ACTIVE"])
   fun testGetIdolsOfGroupPublic(status: String) = runTest {
     val createdGroup = GroupSeeder().seedGroup(userOne.userId, groupStatus = GroupStatus.valueOf(status))
     val idolOne = IdolSeeder().seedIdol(userOne.userId, idolStatus = IdolStatus.valueOf(status))
@@ -41,19 +41,6 @@ class GetIdolsOfGroupTest : BaseDatabaseTest() {
     assertEquals(listOf(idolOne, idolTwo), retrievedIdols)
   }
 
-  @ParameterizedTest
-  @ValueSource(strings = ["PRIVATE_ACTIVE", "PRIVATE_NOT_ACTIVE"])
-  fun testGetIdolsOfGroupNotRetrievable(status: String) = runTest {
-    val createdGroup = GroupSeeder().seedGroup(userTwo.userId, groupStatus = GroupStatus.valueOf(status))
-    val idolOne = IdolSeeder().seedIdol(userOne.userId, idolStatus = IdolStatus.valueOf(status))
-    GroupIdolSeeder().seedGroupIdol(createdGroup.groupId, idolOne.idolId)
-    val idolTwo = IdolSeeder().seedIdol(userOne.userId, idolStatus = IdolStatus.valueOf(status))
-    GroupIdolSeeder().seedGroupIdol(createdGroup.groupId, idolTwo.idolId)
-
-    val retrievedIdols = getGroupAdmin.getIdolsOfGroup(createdGroup)
-    assertEquals(listOf<Idol>(), retrievedIdols)
-  }
-
   @Test
   fun testGetIdolsOfGroupOperationDeleted() = runTest {
     val createdGroup = GroupSeeder().seedGroup(userTwo.userId, groupStatus = GroupStatus.OPERATION_DELETED)
@@ -62,7 +49,6 @@ class GetIdolsOfGroupTest : BaseDatabaseTest() {
     val idolTwo = IdolSeeder().seedIdol(userOne.userId, idolStatus = IdolStatus.OPERATION_DELETED)
     GroupIdolSeeder().seedGroupIdol(createdGroup.groupId, idolTwo.idolId)
 
-    assertEquals(listOf<Idol>(), getGroupAdmin.getIdolsOfGroup(createdGroup))
     assertEquals(listOf(idolOne, idolTwo), getGroupAdmin.getIdolsOfGroup(createdGroup))
   }
 }
