@@ -44,7 +44,7 @@ class UserRepositoryTest : BaseDatabaseTest() {
         "userEmailVerifiedAt" to Instant.parse("2022-12-07T12:00:00+09:00"),
         "userForceLogoutGeneration" to 100
       ), mutableMapOf<String, Any?>(
-        "userId" to ami?.userId.value,
+        "userId" to ami.userId.value,
         "userName" to ami.userName.value,
         "userEmail" to ami.userEmail?.value,
         "userEmailVerifiedAt" to ami.userEmailVerifiedAt?.value,
