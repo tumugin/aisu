@@ -25,12 +25,12 @@ class WriteChekiAdmin : KoinComponent {
     chekiQuantity: ChekiQuantity,
     chekiShotAt: ChekiShotAt,
   ): Cheki {
-    val idol = getIdol.getIdol(clientUserId, idolId) ?: throw InvalidContextException()
+    val idol = getIdol.getIdol(idolId) ?: throw InvalidContextException()
     if (!idol.isVisibleToAdmin()) {
       throw HasNoPermissionException()
     }
     if (regulationId != null) {
-      val regulation = getRegulation.getRegulation(clientUserId, regulationId) ?: throw InvalidContextException()
+      val regulation = getRegulation.getRegulation(regulationId) ?: throw InvalidContextException()
       if (!regulation.isVisibleToAdmin()) {
         throw HasNoPermissionException()
       }
@@ -47,7 +47,6 @@ class WriteChekiAdmin : KoinComponent {
 
   suspend fun updateCheki(
     chekiId: ChekiId,
-    clientUserId: UserId,
     idolId: IdolId,
     regulationId: RegulationId?,
     chekiQuantity: ChekiQuantity,
@@ -57,12 +56,12 @@ class WriteChekiAdmin : KoinComponent {
     if (!cheki.isEditableByAdmin()) {
       throw HasNoPermissionException()
     }
-    val idol = getIdol.getIdol(clientUserId, idolId) ?: throw InvalidContextException()
+    val idol = getIdol.getIdol(idolId) ?: throw InvalidContextException()
     if (!idol.isVisibleToAdmin()) {
       throw HasNoPermissionException()
     }
     if (regulationId != null) {
-      val regulation = getRegulation.getRegulation(clientUserId, regulationId) ?: throw InvalidContextException()
+      val regulation = getRegulation.getRegulation(regulationId) ?: throw InvalidContextException()
       if (!regulation.isVisibleToAdmin()) {
         throw HasNoPermissionException()
       }
