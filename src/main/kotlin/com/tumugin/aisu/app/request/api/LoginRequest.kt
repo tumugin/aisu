@@ -9,13 +9,13 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
 @Serializable
-data class LoginRequest(val email: String, val password: String): BaseRequest<LoginRequest> {
+data class LoginRequest(val email: String, val password: String) : BaseRequest<LoginRequest> {
   @Transient
   override val validator = Validation<LoginRequest> {
-    LoginRequest::email {
+    LoginRequest::email required {
       pattern(RFC5322EmailPattern)
     }
-    LoginRequest::password {
+    LoginRequest::password required {
       minLength(1)
     }
   }
