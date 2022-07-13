@@ -12,7 +12,7 @@ fun Application.configureAuthentication(koin: Koin) {
   install(Authentication) {
     session<UserAuthSession>("user_session") {
       challenge {
-        call.respondRedirect("/login")
+        call.respondRedirect("/api/login")
       }
       validate { session ->
         val user = userRepository.getUserById(UserId(session.userId))

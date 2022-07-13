@@ -11,17 +11,17 @@ import kotlinx.datetime.Instant
 
 @kotlinx.serialization.Serializable
 class ChekisIndexRequest(
-  private val chekiShotAtStart: String,
-  private val chekiShotAtEnd: String,
+  private val chekiShotAtStart: String?,
+  private val chekiShotAtEnd: String?,
   private val idolId: Long?
 ) :
   BaseRequest<ChekisIndexRequest> {
 
   val chekiShotAtStartCasted: ChekiShotAt
-    get() = ChekiShotAt(Instant.parse(chekiShotAtStart))
+    get() = ChekiShotAt(Instant.parse(chekiShotAtStart!!))
 
   val chekiShotAtEndCasted: ChekiShotAt
-    get() = ChekiShotAt(Instant.parse(chekiShotAtEnd))
+    get() = ChekiShotAt(Instant.parse(chekiShotAtEnd!!))
 
   val idolIdCasted: IdolId?
     get() = idolId?.let { IdolId(it) }

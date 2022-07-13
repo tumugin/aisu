@@ -14,7 +14,7 @@ class ApplicationTest : BaseDatabaseTest() {
     application(createKtorModule(getKoin()))
     client.get("/").apply {
       assertEquals(HttpStatusCode.OK, status)
-      assertEquals("Hello World!", bodyAsText())
+      assertEquals("aisu", bodyAsText())
     }
   }
 }
