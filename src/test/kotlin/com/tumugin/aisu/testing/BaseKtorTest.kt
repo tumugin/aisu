@@ -10,7 +10,6 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.Assertions
 
 abstract class BaseKtorTest : BaseDatabaseTest() {
   fun testAisuApplication(block: suspend ApplicationTestBuilder.() -> Unit) {
@@ -30,8 +29,11 @@ abstract class BaseKtorTest : BaseDatabaseTest() {
     }
   }
 
-  suspend fun seedUserAndLoginAndGetCookieValue(builder: ApplicationTestBuilder): String {
+  suspend fun seedUserAndLoginAndGetCookieValue(builder: ApplicationTestBuilder): LoggedUserAndCookieValue {
     val user = UserSeeder().seedNonDuplicateUser(userRawPassword = UserRawPassword("password"))
-    return loginAndGetCookieValue(builder, user.userEmail!!.value, "password")
+    return LoggedUserAndCookieValue(user, loginAndGetCookieValue(builder, user.userEmail!!.value, "password"))
   }
+}
+
+data class LoggedUserAndCookieValue(val user: User, val cookieValue: String) {
 }

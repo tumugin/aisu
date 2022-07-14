@@ -13,11 +13,7 @@ class UserChekisController {
 
   suspend fun index(call: ApplicationCall) {
     val session = call.sessions.get<UserAuthSession>()!!
-    val request = ChekisIndexRequest(
-      chekiShotAtStart = call.request.queryParameters["chekiShotAtStart"],
-      chekiShotAtEnd = call.request.queryParameters["chekiShotAtEnd"],
-      idolId = call.request.queryParameters["idolId"]?.toLong(),
-    )
+    val request = ChekisIndexRequest.createByGetParameters(call.parameters)
 
     val chekis = if (request.idolIdCasted != null) {
       getCheki.getChekiByUserIdAndShotDateTimeRangeAndIdolId(

@@ -7,6 +7,7 @@ import com.tumugin.aisu.domain.idol.IdolId
 import io.konform.validation.Validation
 import io.konform.validation.jsonschema.minimum
 import io.konform.validation.jsonschema.pattern
+import io.ktor.http.*
 import kotlinx.datetime.Instant
 
 @kotlinx.serialization.Serializable
@@ -35,6 +36,15 @@ class ChekisIndexRequest(
     }
     ChekisIndexRequest::idolId ifPresent {
       minimum(1)
+    }
+  }
+
+  companion object {
+    fun createByGetParameters(parameters: Parameters): ChekisIndexRequest {
+      val chekiShotAtStart = parameters["chekiShotAtStart"]
+      val chekiShotAtEnd = parameters["chekiShotAtEnd"]
+      val idolId = parameters["idolId"]
+      return ChekisIndexRequest(chekiShotAtStart, chekiShotAtEnd, idolId?.toLong())
     }
   }
 
