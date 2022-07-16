@@ -12,17 +12,13 @@ class UserChekisIdolCountIndexRequest(
   private val chekiShotAtStart: String?,
   private val chekiShotAtEnd: String?,
 ) : BaseRequest<UserChekisIdolCountIndexRequest> {
-  init {
-    validate(this)
-  }
-
   val chekiShotAtStartCasted: ChekiShotAt
     get() = ChekiShotAt(Instant.parse(chekiShotAtStart!!))
 
   val chekiShotAtEndCasted: ChekiShotAt
     get() = ChekiShotAt(Instant.parse(chekiShotAtEnd!!))
 
-  override val validator: Validation<UserChekisIdolCountIndexRequest> = Validation {
+  override val validator = Validation {
     UserChekisIdolCountIndexRequest::chekiShotAtStart required {
       pattern(ValidatorPatterns.ISO8601Pattern)
     }
@@ -38,5 +34,9 @@ class UserChekisIdolCountIndexRequest(
         chekiShotAtEnd = parameters["chekiShotAtEnd"],
       )
     }
+  }
+
+  init {
+    validate(this)
   }
 }

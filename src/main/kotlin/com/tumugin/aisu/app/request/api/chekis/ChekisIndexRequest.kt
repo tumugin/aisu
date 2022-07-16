@@ -9,6 +9,7 @@ import io.konform.validation.jsonschema.minimum
 import io.konform.validation.jsonschema.pattern
 import io.ktor.http.*
 import kotlinx.datetime.Instant
+import kotlinx.serialization.Transient
 
 @kotlinx.serialization.Serializable
 class ChekisIndexRequest(
@@ -27,6 +28,7 @@ class ChekisIndexRequest(
   val idolIdCasted: IdolId?
     get() = idolId?.let { IdolId(it) }
 
+  @Transient
   override val validator: Validation<ChekisIndexRequest> = Validation {
     ChekisIndexRequest::chekiShotAtStart required {
       pattern(ISO8601Pattern)
