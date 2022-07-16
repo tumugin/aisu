@@ -1,4 +1,4 @@
-package com.tumugin.aisu.app.responder.login
+package com.tumugin.aisu.app.responder.api.login
 
 import com.tumugin.aisu.app.responder.BaseResponder
 import kotlinx.serialization.Serializable
