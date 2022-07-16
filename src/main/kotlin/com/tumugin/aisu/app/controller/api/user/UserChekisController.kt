@@ -2,16 +2,19 @@ package com.tumugin.aisu.app.controller.api.user
 
 import com.tumugin.aisu.app.plugins.UserAuthSession
 import com.tumugin.aisu.app.request.api.chekis.ChekisIndexRequest
-import com.tumugin.aisu.app.responder.chekis.ChekisIndexResponder
+import com.tumugin.aisu.app.responder.api.user.UserChekisResponder
 import com.tumugin.aisu.usecase.client.cheki.GetCheki
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.sessions.*
 
+/**
+ * @url /api/user/chekis
+ */
 class UserChekisController {
   private val getCheki = GetCheki()
 
-  suspend fun index(call: ApplicationCall) {
+  suspend fun get(call: ApplicationCall) {
     val session = call.sessions.get<UserAuthSession>()!!
     val request = ChekisIndexRequest.createByGetParameters(call.parameters)
 
@@ -30,6 +33,6 @@ class UserChekisController {
       )
     }
 
-    call.respond(ChekisIndexResponder.createResponse(chekis))
+    call.respond(UserChekisResponder.createResponse(chekis))
   }
 }
