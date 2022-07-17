@@ -3,7 +3,6 @@ package com.tumugin.aisu.app.request.api.user.idols
 import com.tumugin.aisu.app.request.BaseRequest
 import io.konform.validation.Validation
 import io.konform.validation.jsonschema.enum
-import io.konform.validation.jsonschema.minLength
 import kotlinx.datetime.TimeZone
 
 class UserIdolsCountRequest(private val baseTimezone: String?) : BaseRequest<UserIdolsCountRequest> {
