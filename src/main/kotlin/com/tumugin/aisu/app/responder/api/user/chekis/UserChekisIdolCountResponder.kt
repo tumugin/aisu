@@ -14,7 +14,7 @@ class UserChekisIdolCountResponder(val value: List<ChekiIdolCountSerializer>) : 
     fun createResponse(chekiIdolCount: List<ChekiIdolCount>): UserChekisIdolCountResponder {
       return UserChekisIdolCountResponder(chekiIdolCount.map {
         ChekiIdolCountSerializer(
-          it.idol?.let { idol -> IdolSerializer.fromIdol(idol) },
+          it.idol?.let { idol -> IdolSerializer.from(idol) },
           it.chekiCount.value
         )
       })

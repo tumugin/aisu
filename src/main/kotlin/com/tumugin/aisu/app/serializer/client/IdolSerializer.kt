@@ -12,7 +12,7 @@ class IdolSerializer(
   val idolUpdatedAt: String,
 ) {
   companion object {
-    fun fromIdol(idol: Idol): IdolSerializer {
+    fun from(idol: Idol): IdolSerializer {
       return IdolSerializer(
         idolId = idol.idolId.value,
         userId = idol.userId?.value,
