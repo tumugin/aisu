@@ -3,6 +3,7 @@ package com.tumugin.aisu.app.plugins
 import com.tumugin.aisu.app.controller.api.ChekisController
 import com.tumugin.aisu.app.controller.api.LoginController
 import com.tumugin.aisu.app.controller.api.LogoutController
+import com.tumugin.aisu.app.controller.api.MetadataController
 import com.tumugin.aisu.app.controller.api.user.UserChekisController
 import com.tumugin.aisu.app.controller.api.user.chekis.UserChekisIdolCountController
 import com.tumugin.aisu.domain.cheki.ChekiId
@@ -40,6 +41,9 @@ fun Application.configureRouting() {
       }
       post("logout") {
         LogoutController().post(call)
+      }
+      get("metadata") {
+        MetadataController().get(call)
       }
     }
     get("/") {
