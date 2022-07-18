@@ -74,7 +74,11 @@ class CsrfProtection(config: Configuration) {
           )
 
         // token values
-        val rawFormCsrfToken = call.receiveParameters()["_csrf"]
+        val rawFormCsrfToken = try {
+          call.receiveParameters()["_csrf"]
+        } catch (ex: Exception) {
+          null
+        }
         val rawHeaderCsrfToken = call.request.headers["X-CSRF-Token"]
         val rawCsrfToken = rawFormCsrfToken ?: rawHeaderCsrfToken
 
