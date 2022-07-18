@@ -23,11 +23,15 @@ abstract class BaseKtorTest : BaseDatabaseTest() {
     }
   }
 
+  fun addCSRFTokenHeader(builder: HttpRequestBuilder) {
+    builder.header("X-CSRF-Token", csrfRepository.generateToken().value)
+  }
+
   suspend fun loginAndGetCookieValue(builder: ApplicationTestBuilder, email: String, password: String): String {
     builder.client.post("/api/login") {
       contentType(ContentType.Application.Json)
       setBody(Json.encodeToString(LoginRequest(email, password)))
-      header("X-CSRF-Token", csrfRepository.generateToken().value)
+      addCSRFTokenHeader(this)
     }.apply {
       return headers.getAll("Set-Cookie")!!.map { parseServerSetCookieHeader(it) }
         .map { (it.name).encodeURLParameter() + "=" + (it.value).encodeURLParameter() }.joinToString("; ")

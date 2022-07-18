@@ -21,6 +21,7 @@ class LogoutControllerTest : BaseKtorTest() {
   fun testLogout() = testAisuApplication {
     client.post("/api/logout") {
       cookie("USER_AUTH", "test")
+      addCSRFTokenHeader(this)
     }.apply {
       assertEquals(HttpStatusCode.OK, status)
       assertEquals(
