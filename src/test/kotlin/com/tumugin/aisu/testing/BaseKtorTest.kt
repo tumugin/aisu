@@ -2,6 +2,7 @@ package com.tumugin.aisu.testing
 
 import com.tumugin.aisu.app.request.api.LoginRequest
 import com.tumugin.aisu.createKtorModule
+import com.tumugin.aisu.domain.app.csrf.CSRFRepository
 import com.tumugin.aisu.domain.user.User
 import com.tumugin.aisu.domain.user.UserRawPassword
 import com.tumugin.aisu.testing.seeder.UserSeeder
@@ -10,8 +11,11 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.koin.core.component.inject
 
 abstract class BaseKtorTest : BaseDatabaseTest() {
+  private val csrfRepository by inject<CSRFRepository>()
+
   fun testAisuApplication(block: suspend ApplicationTestBuilder.() -> Unit) {
     testApplication {
       application(createKtorModule(getKoin()))
@@ -19,10 +23,15 @@ abstract class BaseKtorTest : BaseDatabaseTest() {
     }
   }
 
+  fun addCSRFTokenHeader(builder: HttpRequestBuilder) {
+    builder.header("X-CSRF-Token", csrfRepository.generateToken().value)
+  }
+
   suspend fun loginAndGetCookieValue(builder: ApplicationTestBuilder, email: String, password: String): String {
     builder.client.post("/api/login") {
       contentType(ContentType.Application.Json)
       setBody(Json.encodeToString(LoginRequest(email, password)))
+      addCSRFTokenHeader(this)
     }.apply {
       return headers.getAll("Set-Cookie")!!.map { parseServerSetCookieHeader(it) }
         .map { (it.name).encodeURLParameter() + "=" + (it.value).encodeURLParameter() }.joinToString("; ")

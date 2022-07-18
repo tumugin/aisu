@@ -26,6 +26,7 @@ class LoginControllerTest : BaseKtorTest() {
     client.post("/api/login") {
       contentType(ContentType.Application.Json)
       setBody(Json.encodeToString(LoginRequest("aoisuzu@example.com", "aoisuzu")))
+      addCSRFTokenHeader(this)
     }.apply {
       assertEquals(HttpStatusCode.OK, status)
       assertTrue(headers["Set-Cookie"]!!.contains("USER_AUTH"))
@@ -37,6 +38,7 @@ class LoginControllerTest : BaseKtorTest() {
     client.post("/api/login") {
       contentType(ContentType.Application.Json)
       setBody(Json.encodeToString(LoginRequest("mayfujimiya@example.com", "maypomu")))
+      addCSRFTokenHeader(this)
     }.apply {
       assertEquals(HttpStatusCode.Forbidden, status)
     }

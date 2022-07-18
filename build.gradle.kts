@@ -51,6 +51,7 @@ dependencies {
   implementation("io.ktor:ktor-server-sessions-jvm:$ktorVersion")
   implementation("io.ktor:ktor-server-auth-jvm:$ktorVersion")
   implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
+  implementation("io.ktor:ktor-server-double-receive:$ktorVersion")
   implementation("ch.qos.logback:logback-classic:$logbackVersion")
   // libs
   implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
