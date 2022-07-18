@@ -1,6 +1,7 @@
 package com.tumugin.aisu.di
 
 import com.tumugin.aisu.domain.app.config.AppConfigRepository
+import com.tumugin.aisu.domain.app.csrf.CSRFRepository
 import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
 import com.tumugin.aisu.domain.app.database.RedisPoolRepository
 import com.tumugin.aisu.domain.app.session.SessionKVSRepository
@@ -11,6 +12,7 @@ import com.tumugin.aisu.domain.idol.IdolRepository
 import com.tumugin.aisu.domain.regulation.RegulationRepository
 import com.tumugin.aisu.domain.user.UserRepository
 import com.tumugin.aisu.infra.app.config.AppConfigRepositoryImpl
+import com.tumugin.aisu.infra.app.csrf.CSRFRepositoryImpl
 import com.tumugin.aisu.infra.app.database.JDBCConnectionRepositoryImpl
 import com.tumugin.aisu.infra.app.database.RedisPoolRepositoryImpl
 import com.tumugin.aisu.infra.app.session.SessionKVSRepositoryImpl
@@ -25,6 +27,7 @@ object AisuDIModule {
     single<JDBCConnectionRepository> { JDBCConnectionRepositoryImpl(get()) }
     single<RedisPoolRepository<JedisPool>> { RedisPoolRepositoryImpl(get()) }
     single<SessionKVSRepository> { SessionKVSRepositoryImpl(get()) }
+    single<CSRFRepository> { CSRFRepositoryImpl(get()) }
   }
 
   private val aisuConfigModule = module {
