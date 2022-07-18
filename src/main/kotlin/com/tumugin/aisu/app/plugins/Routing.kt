@@ -6,6 +6,7 @@ import com.tumugin.aisu.app.controller.api.LogoutController
 import com.tumugin.aisu.app.controller.api.MetadataController
 import com.tumugin.aisu.app.controller.api.user.UserChekisController
 import com.tumugin.aisu.app.controller.api.user.chekis.UserChekisIdolCountController
+import com.tumugin.aisu.app.plugins.security.CsrfProtection
 import com.tumugin.aisu.domain.cheki.ChekiId
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -15,6 +16,10 @@ import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
   install(Locations) {
+  }
+
+  install(CsrfProtection) {
+    applyToAllRoutesWithSideEffects()
   }
 
   routing {
