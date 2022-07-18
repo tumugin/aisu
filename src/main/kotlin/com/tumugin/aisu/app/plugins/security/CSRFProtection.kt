@@ -87,9 +87,10 @@ class CsrfProtection(config: Configuration) {
           if (rawCsrfToken == null) {
             csrf.handleValidationFailure(this, Unit)
             finish()
+            return@intercept
           }
 
-          val csrfToken = CSRFToken(rawCsrfToken!!)
+          val csrfToken = CSRFToken(rawCsrfToken)
           // if token is invalid
           if (!csrfRepository.validateTokenExists(csrfToken)) {
             csrf.handleValidationFailure(this, Unit)
@@ -97,6 +98,7 @@ class CsrfProtection(config: Configuration) {
           }
         }
       }
+
       return csrf
     }
   }
