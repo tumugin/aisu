@@ -63,7 +63,7 @@ fun Application.configureRouting() {
       GraphQLServerController().handle(this.call)
     }
     get("sdl") {
-      call.respondText(GraphQLSchema(this.call).graphQLSchema.print())
+      call.respondText(GraphQLSchema().graphQLSchema.print())
     }
     get("playground") {
       this.call.respondText(

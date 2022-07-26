@@ -2,10 +2,14 @@ package com.tumugin.aisu.app.graphql
 
 import com.expediagroup.graphql.generator.execution.GraphQLContext
 import com.expediagroup.graphql.server.execution.GraphQLContextFactory
+import com.tumugin.aisu.app.plugins.UserAuthSession
 import io.ktor.server.request.*
+import io.ktor.server.sessions.*
 
-class KtorGraphQLContextFactory : GraphQLContextFactory<GraphQLContext, ApplicationRequest> {
-  override suspend fun generateContext(request: ApplicationRequest): GraphQLContext? {
-    return null
+class KtorGraphQLContextFactory : GraphQLContextFactory<AisuGraphQLContext, ApplicationRequest> {
+  override suspend fun generateContext(request: ApplicationRequest): AisuGraphQLContext {
+    return AisuGraphQLContext(request.call.sessions.get())
   }
 }
+
+class AisuGraphQLContext(val userAuthSession: UserAuthSession?) : GraphQLContext

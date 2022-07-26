@@ -10,7 +10,7 @@ class GraphQLServerController {
   private val mapper = jacksonObjectMapper()
 
   suspend fun handle(applicationCall: ApplicationCall) {
-    val ktorGraphQLServer = getGraphQLServer(mapper, applicationCall)
+    val ktorGraphQLServer = getGraphQLServer(mapper)
     val result = ktorGraphQLServer.execute(applicationCall.request)
 
     if (result != null) {
