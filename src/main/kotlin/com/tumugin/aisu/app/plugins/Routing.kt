@@ -8,7 +8,7 @@ import com.tumugin.aisu.app.controller.api.LogoutController
 import com.tumugin.aisu.app.controller.api.MetadataController
 import com.tumugin.aisu.app.controller.api.user.UserChekisController
 import com.tumugin.aisu.app.controller.api.user.chekis.UserChekisIdolCountController
-import com.tumugin.aisu.app.graphql.GraphQLSchema.Companion.graphQLSchema
+import com.tumugin.aisu.app.graphql.GraphQLSchema
 import com.tumugin.aisu.app.plugins.security.CsrfProtection
 import com.tumugin.aisu.domain.cheki.ChekiId
 import io.ktor.http.*
@@ -63,7 +63,7 @@ fun Application.configureRouting() {
       GraphQLServerController().handle(this.call)
     }
     get("sdl") {
-      call.respondText(graphQLSchema.print())
+      call.respondText(GraphQLSchema(this.call).graphQLSchema.print())
     }
     get("playground") {
       this.call.respondText(

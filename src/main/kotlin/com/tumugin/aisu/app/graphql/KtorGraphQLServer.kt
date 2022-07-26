@@ -4,7 +4,7 @@ import com.expediagroup.graphql.server.execution.DefaultDataLoaderRegistryFactor
 import com.expediagroup.graphql.server.execution.GraphQLRequestHandler
 import com.expediagroup.graphql.server.execution.GraphQLServer
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.tumugin.aisu.app.graphql.GraphQLSchema.Companion.getGraphQLObject
+import io.ktor.server.application.*
 import io.ktor.server.request.*
 
 class KtorGraphQLServer(
@@ -13,11 +13,11 @@ class KtorGraphQLServer(
   requestHandler: GraphQLRequestHandler
 ) : GraphQLServer<ApplicationRequest>(requestParser, contextFactory, requestHandler) {
   companion object {
-    fun getGraphQLServer(mapper: ObjectMapper): KtorGraphQLServer {
+    fun getGraphQLServer(mapper: ObjectMapper, applicationCall: ApplicationCall): KtorGraphQLServer {
       val dataLoaderRegistryFactory = DefaultDataLoaderRegistryFactory(listOf())
       val requestParser = KtorGraphQLRequestParser(mapper)
       val contextFactory = KtorGraphQLContextFactory()
-      val graphQL = getGraphQLObject()
+      val graphQL = GraphQLSchema(applicationCall).getGraphQLObject()
       val requestHandler = GraphQLRequestHandler(graphQL, dataLoaderRegistryFactory)
 
       return KtorGraphQLServer(requestParser, contextFactory, requestHandler)

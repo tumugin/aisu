@@ -8,10 +8,9 @@ import io.ktor.server.response.*
 
 class GraphQLServerController {
   private val mapper = jacksonObjectMapper()
-  private val ktorGraphQLServer = getGraphQLServer(mapper)
 
   suspend fun handle(applicationCall: ApplicationCall) {
-    // Execute the query against the schema
+    val ktorGraphQLServer = getGraphQLServer(mapper, applicationCall)
     val result = ktorGraphQLServer.execute(applicationCall.request)
 
     if (result != null) {
