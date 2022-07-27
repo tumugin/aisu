@@ -5,7 +5,7 @@ import com.tumugin.aisu.app.graphql.AisuGraphQLContext
 import com.tumugin.aisu.app.serializer.client.UserSerializer
 import com.tumugin.aisu.usecase.client.user.GetUser
 
-class UserQueryService() : Query {
+class UserQueryService : Query {
   private val getuser = GetUser()
 
   suspend fun currentUser(aisuGraphQLContext: AisuGraphQLContext): UserSerializer? {

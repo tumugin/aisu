@@ -6,9 +6,13 @@ import com.tumugin.aisu.app.plugins.UserAuthSession
 import io.ktor.server.request.*
 import io.ktor.server.sessions.*
 
-class KtorGraphQLContextFactory : GraphQLContextFactory<AisuGraphQLContext, ApplicationRequest> {
-  override suspend fun generateContext(request: ApplicationRequest): AisuGraphQLContext {
-    return AisuGraphQLContext(request.call.sessions.get())
+class KtorGraphQLContextFactory : GraphQLContextFactory<GraphQLContext, ApplicationRequest> {
+  override suspend fun generateContext(request: ApplicationRequest): GraphQLContext? {
+    return null
+  }
+
+  override suspend fun generateContextMap(request: ApplicationRequest): Map<*, Any> {
+    return mapOf(AisuGraphQLContext::class to AisuGraphQLContext(request.call.sessions.get()))
   }
 }
 
