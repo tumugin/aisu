@@ -2,6 +2,7 @@ package com.tumugin.aisu.app.graphql
 
 import com.expediagroup.graphql.generator.SchemaGeneratorConfig
 import com.expediagroup.graphql.generator.TopLevelObject
+import com.expediagroup.graphql.generator.scalars.IDValueUnboxer
 import com.expediagroup.graphql.generator.toSchema
 import com.tumugin.aisu.app.graphql.mutation.UserMutationService
 import com.tumugin.aisu.app.graphql.query.UserQueryService
@@ -14,5 +15,7 @@ class GraphQLSchema {
   private val mutations = listOf(TopLevelObject(UserMutationService()))
   val graphQLSchema = toSchema(config, queries, mutations)
 
-  fun getGraphQLObject(): GraphQL = GraphQL.newGraphQL(graphQLSchema).build()
+  fun getGraphQLObject(): GraphQL = GraphQL.newGraphQL(graphQLSchema)
+    .valueUnboxer(IDValueUnboxer())
+    .build()
 }

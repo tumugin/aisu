@@ -20,7 +20,7 @@ data class UserSerializer(
         ID(user.userId.value.toString()),
         user.userName.value,
         user.userEmail?.value,
-        user.userEmailVerifiedAt?.value.toString(),
+        user.userEmailVerifiedAt?.let { it.value.toString() },
         user.userCreatedAt.value.toString(),
         user.userUpdatedAt.value.toString()
       )

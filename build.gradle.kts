@@ -54,8 +54,8 @@ dependencies {
   implementation("io.ktor:ktor-server-double-receive:$ktorVersion")
   implementation("ch.qos.logback:logback-classic:$logbackVersion")
   // graphql
-  implementation("com.expediagroup:graphql-kotlin-server:5.5.0")
-  implementation("com.expediagroup:graphql-kotlin-schema-generator:5.5.0")
+  implementation("com.expediagroup:graphql-kotlin-server:6.0.0")
+  implementation("com.expediagroup:graphql-kotlin-schema-generator:6.0.0")
   // libs
   implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
