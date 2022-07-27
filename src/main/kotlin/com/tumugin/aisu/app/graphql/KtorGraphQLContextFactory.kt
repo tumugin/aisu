@@ -12,7 +12,10 @@ class KtorGraphQLContextFactory : GraphQLContextFactory<GraphQLContext, Applicat
   }
 
   override suspend fun generateContextMap(request: ApplicationRequest): Map<*, Any> {
-    return mapOf(AisuGraphQLContext::class to AisuGraphQLContext(request.call.sessions.get()))
+    return mapOf(
+      AisuGraphQLContext::class to AisuGraphQLContext(request.call.sessions.get()),
+      ApplicationRequest::class to request
+    )
   }
 }
 

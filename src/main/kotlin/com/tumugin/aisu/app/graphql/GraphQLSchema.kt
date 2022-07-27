@@ -9,7 +9,7 @@ import graphql.GraphQL
 
 class GraphQLSchema {
   private val config =
-    SchemaGeneratorConfig(supportedPackages = listOf("com.expediagroup.graphql.examples.server.ktor"))
+    SchemaGeneratorConfig(supportedPackages = listOf("com.tumugin.aisu", "kotlin"))
   private val queries = listOf(TopLevelObject(UserQueryService()))
   private val mutations = listOf(TopLevelObject(UserMutationService()))
   val graphQLSchema = toSchema(config, queries, mutations)

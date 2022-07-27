@@ -16,7 +16,7 @@ class GraphQLServerController {
     if (result != null) {
       // write response as json
       val json = mapper.writeValueAsString(result)
-      applicationCall.response.call.respond(json)
+      applicationCall.response.call.respondText(json, ContentType.Application.Json)
     } else {
       applicationCall.response.call.respond(HttpStatusCode.BadRequest, "Invalid request")
     }

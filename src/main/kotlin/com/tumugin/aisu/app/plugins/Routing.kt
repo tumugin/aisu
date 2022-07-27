@@ -10,6 +10,7 @@ import com.tumugin.aisu.app.controller.api.user.UserChekisController
 import com.tumugin.aisu.app.controller.api.user.chekis.UserChekisIdolCountController
 import com.tumugin.aisu.app.graphql.GraphQLSchema
 import com.tumugin.aisu.app.plugins.security.CsrfProtection
+import com.tumugin.aisu.app.plugins.security.noCsrfProtection
 import com.tumugin.aisu.domain.cheki.ChekiId
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -59,8 +60,10 @@ fun Application.configureRouting() {
       call.respondText("aisu")
     }
     // graphql
-    post("graphql") {
-      GraphQLServerController().handle(this.call)
+    noCsrfProtection {
+      post("graphql") {
+        GraphQLServerController().handle(this.call)
+      }
     }
     get("sdl") {
       call.respondText(GraphQLSchema().graphQLSchema.print())

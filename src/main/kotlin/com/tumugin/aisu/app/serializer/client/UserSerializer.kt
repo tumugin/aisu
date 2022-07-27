@@ -1,10 +1,13 @@
 package com.tumugin.aisu.app.serializer.client
 
+import com.expediagroup.graphql.generator.scalars.ID
 import com.tumugin.aisu.domain.user.User
+import kotlinx.serialization.Contextual
 
 @kotlinx.serialization.Serializable
 data class UserSerializer(
-  val userId: Long,
+  @Contextual
+  val userId: ID,
   val userName: String,
   val userEmail: String?,
   val userEmailVerifiedAt: String?,
@@ -14,7 +17,7 @@ data class UserSerializer(
   companion object {
     fun from(user: User): UserSerializer {
       return UserSerializer(
-        user.userId.value,
+        ID(user.userId.value.toString()),
         user.userName.value,
         user.userEmail?.value,
         user.userEmailVerifiedAt?.value.toString(),
