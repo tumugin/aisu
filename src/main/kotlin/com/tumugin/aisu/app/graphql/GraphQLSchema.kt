@@ -16,6 +16,7 @@ class GraphQLSchema {
   val graphQLSchema = toSchema(config, queries, mutations)
 
   fun getGraphQLObject(): GraphQL = GraphQL.newGraphQL(graphQLSchema)
+    .defaultDataFetcherExceptionHandler(AisuDataFetcherExceptionHandler())
     .valueUnboxer(IDValueUnboxer())
     .build()
 }
