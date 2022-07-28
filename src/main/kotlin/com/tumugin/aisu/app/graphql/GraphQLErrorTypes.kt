@@ -1,8 +1,9 @@
 package com.tumugin.aisu.app.graphql
 
+import graphql.ErrorClassification
 import io.ktor.server.plugins.*
 
-enum class GraphQLErrorTypes(v: String) {
+enum class GraphQLErrorTypes(v: String) : ErrorClassification {
   BadRequest("BAD_REQUEST"),
   UnknownServerError("UNKNOWN_SERVER_ERROR");
 
