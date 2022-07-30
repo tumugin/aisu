@@ -1,0 +1,10 @@
+query {
+  currentUser {
+    userCreatedAt
+    userEmail
+    userEmailVerifiedAt
+    userId
+    userName
+    userUpdatedAt
+  }
+}

@@ -1,3 +1,6 @@
+import com.expediagroup.graphql.plugin.gradle.config.GraphQLSerializer
+import com.expediagroup.graphql.plugin.gradle.tasks.GraphQLGenerateClientTask
+import com.expediagroup.graphql.plugin.gradle.tasks.GraphQLGenerateTestClientTask
 import io.github.cdimascio.dotenv.dotenv
 import org.flywaydb.gradle.task.AbstractFlywayTask
 import org.flywaydb.gradle.task.FlywayCleanTask
@@ -18,6 +21,7 @@ plugins {
   id("org.flywaydb.flyway") version "9.0.4"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
+  id("com.expediagroup.graphql") version "6.0.0"
 }
 
 group = "com.tumugin"
@@ -33,6 +37,7 @@ val koinVersion = "3.2.0"
 val ktorVersion = "2.0.3"
 val logbackVersion = "1.2.11"
 val coroutineVersion = "1.6.4"
+val graphQLKotlinVersion = "6.0.0"
 
 application {
   mainClass.set("com.tumugin.aisu.ApplicationKt")
@@ -54,8 +59,10 @@ dependencies {
   implementation("io.ktor:ktor-server-double-receive:$ktorVersion")
   implementation("ch.qos.logback:logback-classic:$logbackVersion")
   // graphql
-  implementation("com.expediagroup:graphql-kotlin-server:6.0.0")
-  implementation("com.expediagroup:graphql-kotlin-schema-generator:6.0.0")
+  implementation("com.expediagroup:graphql-kotlin-server:$graphQLKotlinVersion")
+  implementation("com.expediagroup:graphql-kotlin-schema-generator:$graphQLKotlinVersion")
+  implementation("com.expediagroup:graphql-kotlin-ktor-client:$graphQLKotlinVersion")
+  implementation("com.expediagroup:graphql-kotlin-client-serialization:$graphQLKotlinVersion")
   // libs
   implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
@@ -81,6 +88,13 @@ dependencies {
   // test libs
   testImplementation("io.mockk:mockk:1.12.5")
   testImplementation("io.insert-koin:koin-test:$koinVersion")
+}
+
+val graphqlGenerateTestClient by tasks.getting(GraphQLGenerateTestClientTask::class) {
+  packageName.set("com.tumugin.aisu.testing.graphql.client")
+  schemaFile.set(file("${project.projectDir}/src/main/resources/aisuSchema.graphql"))
+  queryFileDirectory.set(file("${project.projectDir}/src/test/resources/graphql"))
+  serializer.set(GraphQLSerializer.KOTLINX)
 }
 
 flyway {

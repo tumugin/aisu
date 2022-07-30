@@ -2,6 +2,7 @@ package com.tumugin.aisu.app.graphql
 
 import com.tumugin.aisu.domain.exception.HasNoPermissionException
 import com.tumugin.aisu.domain.exception.LoginFailedException
+import com.tumugin.aisu.domain.user.UserAlreadyExistException
 import graphql.ErrorClassification
 import io.ktor.server.plugins.*
 
@@ -10,6 +11,7 @@ enum class GraphQLErrorTypes(v: String) : ErrorClassification {
   NotFound("NOT_FOUND"),
   HasNoPermission("HAS_NO_PERMISSION"),
   LoginFailed("LOGIN_FAILED"),
+  UserAlreadyExists("USER_ALREADY_EXISTS"),
   UnknownServerError("UNKNOWN_SERVER_ERROR");
 
   companion object {
@@ -20,6 +22,7 @@ enum class GraphQLErrorTypes(v: String) : ErrorClassification {
         is com.tumugin.aisu.domain.exception.NotFoundException -> NotFound
         is HasNoPermissionException -> HasNoPermission
         is LoginFailedException -> LoginFailed
+        is UserAlreadyExistException -> UserAlreadyExists
         else -> UnknownServerError
       }
     }
