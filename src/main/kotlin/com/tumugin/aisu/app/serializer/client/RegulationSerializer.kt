@@ -1,9 +1,14 @@
 package com.tumugin.aisu.app.serializer.client
 
 import com.expediagroup.graphql.generator.scalars.ID
+import com.expediagroup.graphql.server.extensions.getValueFromDataLoader
+import com.tumugin.aisu.app.graphql.dataLoader.GroupDataLoaderName
+import com.tumugin.aisu.app.graphql.dataLoader.LimitedUserDataLoaderName
 import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.regulation.Regulation
+import graphql.schema.DataFetchingEnvironment
 import kotlinx.serialization.Serializable
+import java.util.concurrent.CompletableFuture
 
 @Serializable
 data class RegulationSerializer(
@@ -11,10 +16,8 @@ data class RegulationSerializer(
   val regulationId: ID,
   @Serializable(with = IDSerializer::class)
   val groupId: ID,
-  val group: GroupSerializer? = null,
   @Serializable(with = IDSerializer::class)
   val userId: ID?,
-  val user: UserSerializer? = null,
   val regulationName: String,
   val regulationComment: String,
   val regulationUnitPrice: Int,
@@ -22,6 +25,14 @@ data class RegulationSerializer(
   val regulationCreatedAt: String,
   val regulationUpdatedAt: String
 ) {
+  fun user(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<LimitedUserSerializer?> {
+    return dataFetchingEnvironment.getValueFromDataLoader(LimitedUserDataLoaderName, userId)
+  }
+
+  fun group(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<GroupSerializer?> {
+    return dataFetchingEnvironment.getValueFromDataLoader(GroupDataLoaderName, groupId)
+  }
+
   companion object {
     fun from(regulation: Regulation): RegulationSerializer {
       return RegulationSerializer(

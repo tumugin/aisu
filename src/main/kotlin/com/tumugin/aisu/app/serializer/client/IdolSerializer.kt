@@ -1,23 +1,34 @@
 package com.tumugin.aisu.app.serializer.client
 
 import com.expediagroup.graphql.generator.scalars.ID
+import com.expediagroup.graphql.server.extensions.getValueFromDataLoader
+import com.tumugin.aisu.app.graphql.dataLoader.IdolDataLoaderName
+import com.tumugin.aisu.app.graphql.dataLoader.LimitedUserDataLoaderName
 import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.idol.*
+import graphql.schema.DataFetchingEnvironment
 import kotlinx.serialization.Serializable
+import java.util.concurrent.CompletableFuture
 
 @Serializable
 class IdolSerializer(
   @Serializable(with = IDSerializer::class)
   val idolId: ID,
-  val idol: IdolSerializer? = null,
   @Serializable(with = IDSerializer::class)
   val userId: ID?,
-  val user: LimitedUserSerializer? = null,
   val idolName: String,
   val idolStatus: String,
   val idolCreatedAt: String,
   val idolUpdatedAt: String,
 ) {
+  fun idol(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<IdolSerializer?> {
+    return dataFetchingEnvironment.getValueFromDataLoader(IdolDataLoaderName, idolId)
+  }
+
+  fun user(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<LimitedUserSerializer?> {
+    return dataFetchingEnvironment.getValueFromDataLoader(LimitedUserDataLoaderName, userId)
+  }
+
   companion object {
     fun from(idol: Idol): IdolSerializer {
       return IdolSerializer(

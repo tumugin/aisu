@@ -12,8 +12,10 @@ import kotlinx.coroutines.future.future
 import org.dataloader.DataLoader
 import org.dataloader.DataLoaderFactory
 
+const val RegulationDataLoaderName = "RegulationDataLoader"
+
 class RegulationDataLoader : KotlinDataLoader<ID, RegulationSerializer> {
-  override val dataLoaderName = "RegulationDataLoader"
+  override val dataLoaderName = RegulationDataLoaderName
   private val getRegulation = GetRegulation()
 
   override fun getDataLoader(): DataLoader<ID, RegulationSerializer> =

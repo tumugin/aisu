@@ -3,31 +3,31 @@ package com.tumugin.aisu.app.graphql.dataLoader
 import com.expediagroup.graphql.dataloader.KotlinDataLoader
 import com.expediagroup.graphql.generator.scalars.ID
 import com.tumugin.aisu.app.graphql.AisuGraphQLContext
-import com.tumugin.aisu.app.serializer.client.IdolSerializer
-import com.tumugin.aisu.domain.idol.IdolId
-import com.tumugin.aisu.usecase.client.idol.GetIdol
+import com.tumugin.aisu.app.serializer.client.GroupSerializer
+import com.tumugin.aisu.domain.group.GroupId
+import com.tumugin.aisu.usecase.client.group.GetGroup
 import graphql.GraphQLContext
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.future.future
 import org.dataloader.DataLoader
 import org.dataloader.DataLoaderFactory
 
-const val IdolDataLoaderName = "idolDataLoader"
+const val GroupDataLoaderName = "GroupDataLoader"
 
-class IdolDataLoader : KotlinDataLoader<ID, IdolSerializer> {
-  override val dataLoaderName = IdolDataLoaderName
-  private val getIdol = GetIdol()
+class GroupDataLoader : KotlinDataLoader<ID, GroupSerializer> {
+  override val dataLoaderName = GroupDataLoaderName
+  private val getGroup = GetGroup()
 
-  override fun getDataLoader(): DataLoader<ID, IdolSerializer> =
+  override fun getDataLoader(): DataLoader<ID, GroupSerializer> =
     DataLoaderFactory.newDataLoader { ids, dfe ->
       val aisuGraphQLContext =
         dfe.getContext<GraphQLContext>().get<AisuGraphQLContext>(AisuGraphQLContext::class)
       GlobalScope.future {
-        val idols = getIdol.getIdolsByIds(
+        val groups = getGroup.getGroupsById(
           aisuGraphQLContext.userAuthSession?.castedUserId,
-          ids.map { IdolId(it.value.toLong()) }
+          ids.map { GroupId(it.value.toLong()) }
         )
-        idols.map { IdolSerializer.from(it) }
+        groups.map { GroupSerializer.from(it) }
       }
     }
 }

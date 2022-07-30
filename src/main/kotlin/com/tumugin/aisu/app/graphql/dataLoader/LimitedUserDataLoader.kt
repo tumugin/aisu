@@ -11,8 +11,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.future.future
 import org.dataloader.DataLoaderFactory
 
+const val LimitedUserDataLoaderName = "LimitedUserDataLoader"
+
 class LimitedUserDataLoader : KotlinDataLoader<ID, LimitedUserSerializer> {
-  override val dataLoaderName = "LimitedUserDataLoader"
+  override val dataLoaderName = LimitedUserDataLoaderName
   private val getUser = GetUser()
 
   override fun getDataLoader() =

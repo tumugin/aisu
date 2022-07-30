@@ -4,6 +4,7 @@ import com.expediagroup.graphql.dataloader.KotlinDataLoaderRegistryFactory
 import com.expediagroup.graphql.server.execution.GraphQLRequestHandler
 import com.expediagroup.graphql.server.execution.GraphQLServer
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.tumugin.aisu.app.graphql.dataLoader.GroupDataLoader
 import com.tumugin.aisu.app.graphql.dataLoader.IdolDataLoader
 import com.tumugin.aisu.app.graphql.dataLoader.LimitedUserDataLoader
 import com.tumugin.aisu.app.graphql.dataLoader.RegulationDataLoader
@@ -19,7 +20,8 @@ class KtorGraphQLServer(
       val dataLoaderRegistryFactory = KotlinDataLoaderRegistryFactory(listOf(
         IdolDataLoader(),
         LimitedUserDataLoader(),
-        RegulationDataLoader()
+        RegulationDataLoader(),
+        GroupDataLoader()
       ))
       val requestParser = KtorGraphQLRequestParser(mapper)
       val contextFactory = KtorGraphQLContextFactory()
