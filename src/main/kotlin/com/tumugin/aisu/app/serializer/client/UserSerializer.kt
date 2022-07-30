@@ -1,12 +1,13 @@
 package com.tumugin.aisu.app.serializer.client
 
 import com.expediagroup.graphql.generator.scalars.ID
+import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.user.User
-import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class UserSerializer(
-  @Contextual
+  @Serializable(with = IDSerializer::class)
   val userId: ID,
   val userName: String,
   val userEmail: String?,

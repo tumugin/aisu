@@ -5,12 +5,12 @@ import com.tumugin.aisu.app.plugins.UserAuthSession
 import com.tumugin.aisu.app.request.api.CreateUserRequest
 import com.tumugin.aisu.app.request.api.LoginRequest
 import com.tumugin.aisu.app.serializer.client.UserSerializer
+import com.tumugin.aisu.domain.exception.LoginFailedException
 import com.tumugin.aisu.domain.user.UserEmail
 import com.tumugin.aisu.domain.user.UserForceLogoutGeneration
 import com.tumugin.aisu.domain.user.UserRawPassword
 import com.tumugin.aisu.usecase.client.user.AuthUser
 import com.tumugin.aisu.usecase.client.user.CreateUser
-import graphql.GraphQLException
 import graphql.schema.DataFetchingEnvironment
 import io.ktor.server.request.*
 import io.ktor.server.sessions.*
@@ -27,7 +27,7 @@ class UserMutationService : Mutation {
 
     val user = authUserUseCase.authAndGetUser(
       UserEmail(userLoginRequest.email), UserRawPassword(userLoginRequest.password)
-    ) ?: throw GraphQLException("Login failed.")
+    ) ?: throw LoginFailedException("Login failed. Wrong password or email.")
 
     request.call.sessions.set(
       UserAuthSession(
