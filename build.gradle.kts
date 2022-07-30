@@ -77,7 +77,7 @@ dependencies {
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
   // test libs
   testImplementation("io.mockk:mockk:1.12.5")
   testImplementation("io.insert-koin:koin-test:$koinVersion")
