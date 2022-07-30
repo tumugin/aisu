@@ -1,7 +1,7 @@
 package com.tumugin.aisu.testing.app.graphql.query.chekiQueryService
 
 import com.tumugin.aisu.testing.BaseKtorTest
-import com.tumugin.aisu.testing.graphql.client.GetCheki
+import com.tumugin.aisu.testing.graphql.client.GetChekiQuery
 import com.tumugin.aisu.testing.seeder.*
 import io.ktor.client.request.*
 import org.junit.jupiter.api.Assertions
@@ -18,7 +18,9 @@ class GetChekiTest : BaseKtorTest() {
     val cheki = ChekiSeeder().seedCheki(user.userId, idol.idolId, regulation.regulationId)
 
     val graphQLClient = createGraphQLKtorClient(client)
-    val result = graphQLClient.execute(GetCheki()) {
+    val result = graphQLClient.execute(
+      GetChekiQuery(GetChekiQuery.Variables(cheki.chekiId.value.toString()))
+    ) {
       header("Cookie", seededUserAndLoginInfo.cookieValue)
     }
     Assertions.assertNotNull(result.data?.getCheki)

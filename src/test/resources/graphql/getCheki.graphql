@@ -1,5 +1,5 @@
-query {
-  getCheki(chekiId: "1") {
+query GetChekiQuery($chekiId: ID!) {
+  getCheki(chekiId: $chekiId) {
     chekiCreatedAt
     chekiId
     chekiQuantity
