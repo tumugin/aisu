@@ -1,4 +1,5 @@
 import com.expediagroup.graphql.plugin.gradle.config.GraphQLSerializer
+import com.expediagroup.graphql.plugin.gradle.tasks.GraphQLGenerateClientTask
 import com.expediagroup.graphql.plugin.gradle.tasks.GraphQLGenerateTestClientTask
 import io.github.cdimascio.dotenv.dotenv
 import org.flywaydb.gradle.task.AbstractFlywayTask
@@ -89,18 +90,10 @@ dependencies {
   testImplementation("io.insert-koin:koin-test:$koinVersion")
 }
 
-graphql {
-  client {
-    packageName = "com.tumugin.aisu.graphql.client"
-    schemaFile = file("${project.projectDir}/src/main/resources/aisuSchema.graphql")
-    serializer = GraphQLSerializer.KOTLINX
-  }
-}
-
 val graphqlGenerateTestClient by tasks.getting(GraphQLGenerateTestClientTask::class) {
   packageName.set("com.tumugin.aisu.testing.graphql.client")
   schemaFile.set(file("${project.projectDir}/src/main/resources/aisuSchema.graphql"))
-  queryFileDirectory.set(file("${project.projectDir}/src/test/resources/graphql/queries"))
+  queryFileDirectory.set(file("${project.projectDir}/src/test/resources/graphql"))
   serializer.set(GraphQLSerializer.KOTLINX)
 }
 
