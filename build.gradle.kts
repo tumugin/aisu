@@ -79,7 +79,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
   // test libs
-  testImplementation("io.mockk:mockk:1.12.4")
+  testImplementation("io.mockk:mockk:1.12.5")
   testImplementation("io.insert-koin:koin-test:$koinVersion")
 }
 
