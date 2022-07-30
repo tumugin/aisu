@@ -6,8 +6,9 @@ import com.tumugin.aisu.domain.regulation.Regulation
 data class RegulationSerializer(
   val regulationId: Long,
   val groupId: Long,
-  val group: GroupSerializer,
+  val group: GroupSerializer? = null,
   val userId: Long?,
+  val user: UserSerializer? = null,
   val regulationName: String,
   val regulationComment: String,
   val regulationUnitPrice: Int,
@@ -20,7 +21,6 @@ data class RegulationSerializer(
       return RegulationSerializer(
         regulationId = regulation.regulationId.value,
         groupId = regulation.groupId.value,
-        group = GroupSerializer.from(regulation.group),
         userId = regulation.userId?.value,
         regulationName = regulation.regulationName.value,
         regulationComment = regulation.regulationComment.value,

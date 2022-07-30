@@ -53,8 +53,13 @@ class GetChekiMonthIdolCountByUserIdAndIdolTest : BaseDatabaseTest() {
       getChekiAdmin.getChekiMonthIdolCountByUserIdAndIdol(user.userId, idol.idolId, TimeZone.of("Asia/Tokyo"))
     Assertions.assertEquals(
       listOf(
-        ChekiMonthIdolCount(idol, ChekiCount(1), ChekiShotAtMonth(2021, 12, TimeZone.of("Asia/Tokyo"))),
-        ChekiMonthIdolCount(idolTwo, ChekiCount(10), ChekiShotAtMonth(2022, 1, TimeZone.of("Asia/Tokyo")))
+        ChekiMonthIdolCount(idol, idol.idolId, ChekiCount(1), ChekiShotAtMonth(2021, 12, TimeZone.of("Asia/Tokyo"))),
+        ChekiMonthIdolCount(
+          idolTwo,
+          idolTwo.idolId,
+          ChekiCount(10),
+          ChekiShotAtMonth(2022, 1, TimeZone.of("Asia/Tokyo"))
+        )
       ),
       chekiMonthIdolCount
     )

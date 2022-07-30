@@ -5,7 +5,9 @@ import com.tumugin.aisu.domain.idol.*
 @kotlinx.serialization.Serializable
 class IdolSerializer(
   val idolId: Long,
+  val idol: IdolSerializer? = null,
   val userId: Long?,
+  val user: UserSerializer? = null,
   val idolName: String,
   val idolStatus: String,
   val idolCreatedAt: String,

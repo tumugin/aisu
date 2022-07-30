@@ -83,6 +83,7 @@ class ChekiRepositoryImpl : ChekiRepository {
         ChekiIdolCount(
           idol = idols.find { idol -> idol.id.value === row[Chekis.idol]?.value  }
             ?.let { v -> v.toDomain() },
+          idolId = IdolId(row[Chekis.idol]!!.value),
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0)
         )
       }
@@ -117,6 +118,7 @@ class ChekiRepositoryImpl : ChekiRepository {
         ChekiMonthIdolCount(
           idol = idols.find { idol -> idol.id.value === row[Chekis.idol]?.value }
             ?.let { v -> v.toDomain() },
+          idolId = IdolId(row[Chekis.idol]!!.value),
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0),
           chekiShotAtMonth = ChekiShotAtMonth.fromString(row[yearConvertFunc], row[monthConvertFunc], baseTimezone)
         )
