@@ -12,6 +12,12 @@ class UserRepositoryImpl : UserRepository {
     return transaction { UserModel.findById(userId.value)?.toDomain() }
   }
 
+  override suspend fun getUserByIds(userIds: List<UserId>): List<User> {
+    return transaction {
+      UserModel.find { Users.id.inList(userIds.map { it.value }) }.map { it.toDomain() }
+    }
+  }
+
   override suspend fun getUserByEmail(userEmail: UserEmail): User? {
     return transaction { UserModel.find { Users.email eq userEmail.value }.firstOrNull()?.toDomain() }
   }

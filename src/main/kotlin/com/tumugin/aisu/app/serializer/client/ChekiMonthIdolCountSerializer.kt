@@ -5,7 +5,7 @@ import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.cheki.ChekiMonthIdolCount
 import kotlinx.serialization.Serializable
 
-@kotlinx.serialization.Serializable
+@Serializable
 class ChekiMonthIdolCountSerializer(
   val idol: IdolSerializer?,
   @Serializable(with = IDSerializer::class)

@@ -5,7 +5,11 @@ import com.tumugin.aisu.domain.base.PaginatorResult
 
 interface UserRepository {
   suspend fun getUserById(userId: UserId): User?
+
+  suspend fun getUserByIds(userIds: List<UserId>): List<User>
+
   suspend fun getUserByEmail(userEmail: UserEmail): User?
+
   suspend fun addUser(
     userName: UserName,
     userEmail: UserEmail?,

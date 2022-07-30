@@ -1,13 +1,19 @@
 package com.tumugin.aisu.app.serializer.client
 
+import com.expediagroup.graphql.generator.scalars.ID
+import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.regulation.Regulation
+import kotlinx.serialization.Serializable
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class RegulationSerializer(
-  val regulationId: Long,
-  val groupId: Long,
+  @Serializable(with = IDSerializer::class)
+  val regulationId: ID,
+  @Serializable(with = IDSerializer::class)
+  val groupId: ID,
   val group: GroupSerializer? = null,
-  val userId: Long?,
+  @Serializable(with = IDSerializer::class)
+  val userId: ID?,
   val user: UserSerializer? = null,
   val regulationName: String,
   val regulationComment: String,
@@ -19,9 +25,9 @@ data class RegulationSerializer(
   companion object {
     fun from(regulation: Regulation): RegulationSerializer {
       return RegulationSerializer(
-        regulationId = regulation.regulationId.value,
-        groupId = regulation.groupId.value,
-        userId = regulation.userId?.value,
+        regulationId = ID(regulation.regulationId.value.toString()),
+        groupId = ID(regulation.groupId.value.toString()),
+        userId = regulation.userId?.let { ID(it.value.toString()) },
         regulationName = regulation.regulationName.value,
         regulationComment = regulation.regulationComment.value,
         regulationUnitPrice = regulation.regulationUnitPrice.value,
