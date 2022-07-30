@@ -11,7 +11,8 @@ import java.util.concurrent.CompletableFuture
 
 @Serializable
 data class GroupSerializer(
-  val groupId: Long,
+  @Serializable(with = IDSerializer::class)
+  val groupId: ID,
   @Serializable(with = IDSerializer::class)
   val userId: ID?,
   val groupName: String,
@@ -26,7 +27,7 @@ data class GroupSerializer(
   companion object {
     fun from(group: Group): GroupSerializer {
       return GroupSerializer(
-        groupId = group.groupId.value,
+        groupId = ID(group.groupId.value.toString()),
         userId = group.userId?.let { ID(it.value.toString()) },
         groupName = group.groupName.value,
         groupStatus = group.groupStatus.toString(),

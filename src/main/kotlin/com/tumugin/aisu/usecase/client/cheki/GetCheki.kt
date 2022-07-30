@@ -11,7 +11,7 @@ import org.koin.core.component.inject
 class GetCheki : KoinComponent {
   private val chekiRepository by inject<ChekiRepository>()
 
-  suspend fun getCheki(sessionUserId: UserId, chekiId: ChekiId): Cheki? {
+  suspend fun getCheki(sessionUserId: UserId?, chekiId: ChekiId): Cheki? {
     val cheki = chekiRepository.getCheki(chekiId) ?: return null
     if (cheki.isVisibleToUser(sessionUserId)) {
       return cheki
