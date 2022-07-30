@@ -21,10 +21,6 @@ class IdolSerializer(
   val idolCreatedAt: String,
   val idolUpdatedAt: String,
 ) {
-  fun idol(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<IdolSerializer?> {
-    return dataFetchingEnvironment.getValueFromDataLoader(IdolDataLoaderName, idolId)
-  }
-
   fun user(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<LimitedUserSerializer?> {
     return dataFetchingEnvironment.getValueFromDataLoader(LimitedUserDataLoaderName, userId)
   }

@@ -27,6 +27,45 @@ directive @specifiedBy(
   url: String!
 ) on SCALAR
 
+type ChekiSerializer {
+  chekiCreatedAt: String!
+  chekiId: ID!
+  chekiQuantity: Int!
+  chekiShotAt: String!
+  chekiUpdatedAt: String!
+  idol: IdolSerializer
+  idolId: ID
+  regulation: RegulationSerializer
+  regulationId: ID
+  user: LimitedUserSerializer
+  userId: ID!
+}
+
+type GroupSerializer {
+  groupCreatedAt: String!
+  groupId: ID!
+  groupName: String!
+  groupStatus: String!
+  groupUpdatedAt: String!
+  user: LimitedUserSerializer
+  userId: ID
+}
+
+type IdolSerializer {
+  idolCreatedAt: String!
+  idolId: ID!
+  idolName: String!
+  idolStatus: String!
+  idolUpdatedAt: String!
+  user: LimitedUserSerializer
+  userId: ID
+}
+
+type LimitedUserSerializer {
+  userId: ID!
+  userName: String!
+}
+
 type Mutation {
   userCreate(params: UserCreateParamsInput!): UserSerializer!
   userLogin(params: UserLoginParamsInput!): UserSerializer!
@@ -35,6 +74,21 @@ type Mutation {
 
 type Query {
   currentUser: UserSerializer
+  getCheki(chekiId: ID!): ChekiSerializer!
+}
+
+type RegulationSerializer {
+  group: GroupSerializer
+  groupId: ID!
+  regulationComment: String!
+  regulationCreatedAt: String!
+  regulationId: ID!
+  regulationName: String!
+  regulationStatus: String!
+  regulationUnitPrice: Int!
+  regulationUpdatedAt: String!
+  user: LimitedUserSerializer
+  userId: ID
 }
 
 type UserSerializer {
