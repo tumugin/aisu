@@ -15,7 +15,7 @@ class GetUser : KoinComponent {
     return userRepository.getUserById(sessionUserId) ?: throw NotFoundException()
   }
 
-  suspend fun getUserByIds(sessionUserId: UserId, userIds: List<UserId>): List<LimitedUser> {
+  suspend fun getUserByIds(sessionUserId: UserId?, userIds: List<UserId>): List<LimitedUser> {
     return userRepository.getUserByIds(userIds).map { LimitedUser.createFromUser(it) }
   }
 }
