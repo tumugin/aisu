@@ -9,6 +9,8 @@ import com.tumugin.aisu.domain.user.UserId
 interface IdolRepository {
   suspend fun getIdol(idolId: IdolId): Idol?
 
+  suspend fun getIdolsByIds(idolIds: List<IdolId>): List<Idol>
+
   suspend fun addIdol(
     userId: UserId,
     idolName: IdolName,

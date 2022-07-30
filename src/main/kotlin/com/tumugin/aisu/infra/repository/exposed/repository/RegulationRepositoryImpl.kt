@@ -22,6 +22,13 @@ class RegulationRepositoryImpl : RegulationRepository {
     }
   }
 
+  override suspend fun getRegulationsByIds(regulationIds: List<RegulationId>): List<Regulation> {
+    return transaction {
+      RegulationModel.find { Regulations.id.inList(regulationIds.map { it.value }) }.with(*withModel)
+        .map { it.toDomain() }
+    }
+  }
+
   override suspend fun deleteRegulation(regulationId: RegulationId) {
     transaction {
       val rawModel = RegulationModel[regulationId.value]

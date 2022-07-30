@@ -6,6 +6,8 @@ import com.tumugin.aisu.domain.user.UserId
 interface RegulationRepository {
   suspend fun getRegulation(regulationId: RegulationId): Regulation?
 
+  suspend fun getRegulationsByIds(regulationIds: List<RegulationId>): List<Regulation>
+
   suspend fun deleteRegulation(regulationId: RegulationId)
 
   suspend fun addRegulation(

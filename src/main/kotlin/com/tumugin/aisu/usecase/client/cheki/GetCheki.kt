@@ -19,6 +19,11 @@ class GetCheki : KoinComponent {
     throw HasNoPermissionException()
   }
 
+  suspend fun getChekisByIds(sessionUserId: UserId, chekiIds: List<ChekiId>): List<Cheki> {
+    return chekiRepository.getChekisByIds(chekiIds)
+      .filter { it.isVisibleToUser(sessionUserId) }
+  }
+
   suspend fun getChekiByUserIdAndShotDateTimeRange(
     sessionUserId: UserId, chekiShotAtStart: ChekiShotAt, chekiShotEnd: ChekiShotAt
   ): List<Cheki> {

@@ -25,6 +25,12 @@ class IdolRepositoryImpl : IdolRepository {
     }
   }
 
+  override suspend fun getIdolsByIds(idolIds: List<IdolId>): List<Idol> {
+    return transaction {
+      IdolModel.find { Idols.id inList idolIds.map { it.value } }.with(*withModels).map { it.toDomain() }
+    }
+  }
+
   override suspend fun addIdol(userId: UserId, idolName: IdolName, idolStatus: IdolStatus): Idol {
     return transaction {
       IdolModel.new {

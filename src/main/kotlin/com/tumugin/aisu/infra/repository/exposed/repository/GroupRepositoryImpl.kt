@@ -27,7 +27,7 @@ class GroupRepositoryImpl : GroupRepository {
     }
   }
 
-  override suspend fun getGroups(groupIds: List<GroupId>): List<Group> {
+  override suspend fun getGroupsByIds(groupIds: List<GroupId>): List<Group> {
     return transaction {
       GroupModel.find { Groups.id inList groupIds.map { it.value } }
         .map { it.toDomain() }

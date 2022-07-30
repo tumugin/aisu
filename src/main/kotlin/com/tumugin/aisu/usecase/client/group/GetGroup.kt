@@ -20,6 +20,11 @@ class GetGroup : KoinComponent {
     throw HasNoPermissionException()
   }
 
+  suspend fun getGroupsById(sessionUserId: UserId?, groupIds: List<GroupId>): List<Group> {
+    return groupRepository.getGroupsByIds(groupIds)
+      .filter { it.isVisibleToUser(sessionUserId) }
+  }
+
   suspend fun getIdolsOfGroup(sessionUserId: UserId, group: Group): List<Idol> {
     val idols = groupRepository.getIdolsOfGroup(group.groupId)
     return idols.filter { it.isVisibleToUser(sessionUserId) }

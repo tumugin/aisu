@@ -8,6 +8,8 @@ import kotlinx.datetime.TimeZone
 interface ChekiRepository {
   suspend fun getCheki(chekiId: ChekiId): Cheki?
 
+  suspend fun getChekisByIds(chekiIds: List<ChekiId>): List<Cheki>
+
   suspend fun getChekiByUserIdAndShotDateTimeRange(
     userId: UserId, chekiShotAtStart: ChekiShotAt, chekiShotEnd: ChekiShotAt
   ): List<Cheki>

@@ -14,7 +14,7 @@ class GetFavoriteGroupAdmin : KoinComponent {
   suspend fun getFavoriteGroupsByUserId(clientUserId: UserId): List<FavoriteGroupWithGroup> {
     val favoriteGroups = favoriteGroupRepository.getFavoriteGroupsByUserId(clientUserId)
     val groupIds = favoriteGroups.map { it.groupId }
-    val groups = groupRepository.getGroups(groupIds).filter { it.isVisibleToAdmin() }
+    val groups = groupRepository.getGroupsByIds(groupIds).filter { it.isVisibleToAdmin() }
     return favoriteGroups.map { favoriteGroup ->
       FavoriteGroupWithGroup(
         favoriteGroup.favoriteGroupId,

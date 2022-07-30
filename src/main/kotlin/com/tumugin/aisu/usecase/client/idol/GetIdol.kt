@@ -23,6 +23,11 @@ class GetIdol : KoinComponent {
     throw HasNoPermissionException()
   }
 
+  suspend fun getIdolsByIds(sessionUserId: UserId?, idolIds: List<IdolId>): List<Idol> {
+    val idols = idolRepository.getIdolsByIds(idolIds)
+    return idols.filter { it.isVisibleToUser(sessionUserId) }
+  }
+
   suspend fun getAllPublicIdols(paginatorParam: PaginatorParam): PaginatorResult<Idol> {
     return idolRepository.getAllIdolsByStatues(
       paginatorParam, IdolStatus.allPublicStatuses, null

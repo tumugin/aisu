@@ -24,6 +24,11 @@ class GetRegulation : KoinComponent {
     return regulation
   }
 
+  suspend fun getRegulationsByIds(sessionUserId: UserId?, regulationIds: List<RegulationId>): List<Regulation> {
+    val regulations = regulationRepository.getRegulationsByIds(regulationIds)
+    return regulations.filter { it.isVisibleToUser(sessionUserId) }
+  }
+
   suspend fun getRegulationsByGroupId(
     sessionUserId: UserId?,
     groupId: GroupId,

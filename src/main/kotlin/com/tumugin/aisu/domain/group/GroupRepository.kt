@@ -9,7 +9,7 @@ import com.tumugin.aisu.domain.user.UserId
 interface GroupRepository {
   suspend fun getGroup(groupId: GroupId): Group?
 
-  suspend fun getGroups(groupIds: List<GroupId>): List<Group>
+  suspend fun getGroupsByIds(groupIds: List<GroupId>): List<Group>
 
   suspend fun addGroup(
     userId: UserId?,

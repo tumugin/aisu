@@ -29,6 +29,12 @@ class ChekiRepositoryImpl : ChekiRepository {
     }
   }
 
+  override suspend fun getChekisByIds(chekiIds: List<ChekiId>): List<Cheki> {
+    return transaction {
+      ChekiModel.find { Chekis.id inList chekiIds.map { it.value } }.map { it.toDomain() }
+    }
+  }
+
   override suspend fun getChekiByUserIdAndShotDateTimeRange(
     userId: UserId,
     chekiShotAtStart: ChekiShotAt,
@@ -81,7 +87,7 @@ class ChekiRepositoryImpl : ChekiRepository {
       val idols = IdolModel.forEntityIds(idolIds).with(*idolWithModels)
       countResults.map { row ->
         ChekiIdolCount(
-          idol = idols.find { idol -> idol.id.value === row[Chekis.idol]?.value  }
+          idol = idols.find { idol -> idol.id.value === row[Chekis.idol]?.value }
             ?.let { v -> v.toDomain() },
           idolId = IdolId(row[Chekis.idol]!!.value),
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0)
