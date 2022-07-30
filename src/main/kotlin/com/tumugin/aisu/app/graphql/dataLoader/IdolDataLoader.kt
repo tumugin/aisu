@@ -20,8 +20,7 @@ class IdolDataLoader : KotlinDataLoader<ID, IdolSerializer> {
 
   override fun getDataLoader(): DataLoader<ID, IdolSerializer> =
     DataLoaderFactory.newDataLoader { ids, dfe ->
-      val aisuGraphQLContext =
-        dfe.getContext<GraphQLContext>().get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = dfe.keyContexts[AisuGraphQLContext::class] as AisuGraphQLContext
       GlobalScope.future {
         val idols = getIdol.getIdolsByIds(
           aisuGraphQLContext.userAuthSession?.castedUserId,

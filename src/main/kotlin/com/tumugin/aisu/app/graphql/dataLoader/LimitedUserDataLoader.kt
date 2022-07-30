@@ -19,8 +19,7 @@ class LimitedUserDataLoader : KotlinDataLoader<ID, LimitedUserSerializer> {
 
   override fun getDataLoader() =
     DataLoaderFactory.newDataLoader<ID, LimitedUserSerializer> { ids, dfe ->
-      val aisuGraphQLContext =
-        dfe.getContext<GraphQLContext>().get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = dfe.keyContexts[AisuGraphQLContext::class] as AisuGraphQLContext
       GlobalScope.future {
         val users =
           getUser.getUserByIds(

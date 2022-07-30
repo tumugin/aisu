@@ -20,8 +20,7 @@ class RegulationDataLoader : KotlinDataLoader<ID, RegulationSerializer> {
 
   override fun getDataLoader(): DataLoader<ID, RegulationSerializer> =
     DataLoaderFactory.newDataLoader { ids, dfe ->
-      val aisuGraphQLContext =
-        dfe.getContext<GraphQLContext>().get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = dfe.keyContexts[AisuGraphQLContext::class] as AisuGraphQLContext
       GlobalScope.future {
         val regulations = getRegulation.getRegulationsByIds(
           aisuGraphQLContext.userAuthSession?.castedUserId,
