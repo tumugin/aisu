@@ -11,7 +11,6 @@ import io.konform.validation.Validation
 import io.konform.validation.jsonschema.pattern
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 @Serializable
 class GetUserChekisParams(
