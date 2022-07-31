@@ -1,5 +1,6 @@
 package com.tumugin.aisu.app.graphql.params
 
+import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.scalars.ID
 import com.tumugin.aisu.app.request.BaseRequest
 import com.tumugin.aisu.app.request.ValidatorPatterns.ISO8601Pattern
@@ -14,23 +15,26 @@ import kotlinx.serialization.Transient
 
 @Serializable
 class GetUserChekisParams(
-  private val chekiShotAtStart: String,
-  private val chekiShotAtEnd: String,
+  val chekiShotAtStart: String,
+  val chekiShotAtEnd: String,
   @Serializable(with = IDSerializer::class)
-  private val idolId: ID?
+  val idolId: ID?
 ) :
   BaseRequest<GetUserChekisParams> {
 
+  @GraphQLIgnore
   val chekiShotAtStartCasted: ChekiShotAt
     get() = ChekiShotAt(Instant.parse(chekiShotAtStart))
 
+  @GraphQLIgnore
   val chekiShotAtEndCasted: ChekiShotAt
     get() = ChekiShotAt(Instant.parse(chekiShotAtEnd))
 
+  @GraphQLIgnore
   val idolIdCasted: IdolId?
     get() = idolId?.let { IdolId(it.value.toLong()) }
 
-  @Transient
+  @GraphQLIgnore
   override val validator: Validation<GetUserChekisParams> = Validation {
     GetUserChekisParams::chekiShotAtStart required {
       pattern(ISO8601Pattern)
