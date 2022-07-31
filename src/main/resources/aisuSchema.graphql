@@ -93,10 +93,8 @@ type Mutation {
 
 type Query {
   currentUser: UserSerializer
+  currentUserChekis: UserChekis!
   getCheki(chekiId: ID!): ChekiSerializer!
-  getChekiMonthIdolCount(params: GetChekiMonthIdolCountParamsInput!): [ChekiMonthIdolCountSerializer!]!
-  getUserChekiIdolCount(params: GetUserChekiIdolCountParamsInput!): [ChekiIdolCountSerializer!]!
-  getUserChekis(params: GetUserChekisParamsInput!): [ChekiSerializer!]!
 }
 
 type RegulationSerializer {
@@ -111,6 +109,12 @@ type RegulationSerializer {
   regulationUpdatedAt: String!
   user: LimitedUserSerializer
   userId: ID
+}
+
+type UserChekis {
+  getChekiMonthIdolCount(params: GetChekiMonthIdolCountParamsInput!): [ChekiMonthIdolCountSerializer!]!
+  getUserChekiIdolCount(params: GetUserChekiIdolCountParamsInput!): [ChekiIdolCountSerializer!]!
+  getUserChekis(params: GetUserChekisParamsInput!): [ChekiSerializer!]!
 }
 
 type UserSerializer {
