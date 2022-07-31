@@ -110,9 +110,8 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
   @Test
   fun testGetChekiMonthIdolCountByUserIdAndIdol() = runTest {
     val chekiMonthIdolCount = chekiRepository.getChekiMonthIdolCountByUserIdAndIdol(
-      UserId(1),
-      IdolId(1),
-      TimeZone.of("Asia/Tokyo")
+        UserId(1),
+        TimeZone.of("Asia/Tokyo")
     )
     assertEquals(3, chekiMonthIdolCount.size)
     assertNotNull(chekiMonthIdolCount[0].idol)

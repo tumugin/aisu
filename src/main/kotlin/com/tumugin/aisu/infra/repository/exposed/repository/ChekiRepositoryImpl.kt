@@ -98,7 +98,6 @@ class ChekiRepositoryImpl : ChekiRepository {
 
   override suspend fun getChekiMonthIdolCountByUserIdAndIdol(
     userId: UserId,
-    idolId: IdolId,
     baseTimezone: TimeZone
   ): List<ChekiMonthIdolCount> {
     return transaction {
