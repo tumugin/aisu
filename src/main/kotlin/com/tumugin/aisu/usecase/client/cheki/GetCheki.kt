@@ -45,8 +45,8 @@ class GetCheki : KoinComponent {
   }
 
   suspend fun getChekiMonthIdolCountByUserIdAndIdol(
-    sessionUserId: UserId, idolId: IdolId, baseTimezone: TimeZone
+    sessionUserId: UserId, baseTimezone: TimeZone
   ): List<ChekiMonthIdolCount> {
-    return chekiRepository.getChekiMonthIdolCountByUserIdAndIdol(sessionUserId, idolId, baseTimezone)
+    return chekiRepository.getChekiMonthIdolCountByUserIdAndIdol(sessionUserId, baseTimezone)
   }
 }

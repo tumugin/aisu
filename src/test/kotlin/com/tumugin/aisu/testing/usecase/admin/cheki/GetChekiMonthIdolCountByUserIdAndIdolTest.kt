@@ -50,7 +50,7 @@ class GetChekiMonthIdolCountByUserIdAndIdolTest : BaseDatabaseTest() {
     )
 
     val chekiMonthIdolCount =
-      getChekiAdmin.getChekiMonthIdolCountByUserIdAndIdol(user.userId, idol.idolId, TimeZone.of("Asia/Tokyo"))
+      getChekiAdmin.getChekiMonthIdolCountByUserIdAndIdol(user.userId, TimeZone.of("Asia/Tokyo"))
     Assertions.assertEquals(
       listOf(
         ChekiMonthIdolCount(idol, idol.idolId, ChekiCount(1), ChekiShotAtMonth(2021, 12, TimeZone.of("Asia/Tokyo"))),

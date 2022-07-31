@@ -27,6 +27,19 @@ directive @specifiedBy(
   url: String!
 ) on SCALAR
 
+type ChekiIdolCountSerializer {
+  chekiCount: Int!
+  idol: IdolSerializer
+  idolId: ID!
+}
+
+type ChekiMonthIdolCountSerializer {
+  chekiCount: Int!
+  chekiShotAtMonth: ChekiShotAtMonthSerializer!
+  idol: IdolSerializer
+  idolId: ID!
+}
+
 type ChekiSerializer {
   chekiCreatedAt: String!
   chekiId: ID!
@@ -39,6 +52,12 @@ type ChekiSerializer {
   regulationId: ID
   user: LimitedUserSerializer
   userId: ID!
+}
+
+type ChekiShotAtMonthSerializer {
+  baseTimezone: String!
+  month: Int!
+  year: Int!
 }
 
 type GroupSerializer {
@@ -74,6 +93,7 @@ type Mutation {
 
 type Query {
   currentUser: UserSerializer
+  currentUserChekis: UserChekis!
   getCheki(chekiId: ID!): ChekiSerializer!
 }
 
@@ -91,6 +111,12 @@ type RegulationSerializer {
   userId: ID
 }
 
+type UserChekis {
+  getChekiMonthIdolCount(params: GetChekiMonthIdolCountParamsInput!): [ChekiMonthIdolCountSerializer!]!
+  getUserChekiIdolCount(params: GetUserChekiIdolCountParamsInput!): [ChekiIdolCountSerializer!]!
+  getUserChekis(params: GetUserChekisParamsInput!): [ChekiSerializer!]!
+}
+
 type UserSerializer {
   userCreatedAt: String!
   userEmail: String
@@ -98,6 +124,21 @@ type UserSerializer {
   userId: ID!
   userName: String!
   userUpdatedAt: String!
+}
+
+input GetChekiMonthIdolCountParamsInput {
+  baseTimezone: String!
+}
+
+input GetUserChekiIdolCountParamsInput {
+  chekiShotAtEnd: String!
+  chekiShotAtStart: String!
+}
+
+input GetUserChekisParamsInput {
+  chekiShotAtEnd: String!
+  chekiShotAtStart: String!
+  idolId: ID
 }
 
 input UserCreateParamsInput {

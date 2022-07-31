@@ -23,7 +23,7 @@ interface ChekiRepository {
   ): List<ChekiIdolCount>
 
   suspend fun getChekiMonthIdolCountByUserIdAndIdol(
-    userId: UserId, idolId: IdolId, baseTimezone: TimeZone
+    userId: UserId, baseTimezone: TimeZone
   ): List<ChekiMonthIdolCount>
 
   suspend fun addCheki(
