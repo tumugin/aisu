@@ -26,7 +26,15 @@ class ChekiQueryService : Query {
     )?.let { ChekiSerializer.from(it) } ?: throw NotFoundException()
   }
 
-  fun currentUserChekis() = UserChekis()
+  fun currentUserChekis(dfe: DataFetchingEnvironment): UserChekis {
+    // 全てログインされたユーザに関するデータのため、未ログインの場合はここでエラーにしてしまう
+    val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+    if (aisuGraphQLContext.userAuthSession?.userId == null) {
+      throw NotAuthorizedException()
+    }
+
+    return UserChekis()
+  }
 
   class UserChekis : Query {
     private val getCheki = GetCheki()
