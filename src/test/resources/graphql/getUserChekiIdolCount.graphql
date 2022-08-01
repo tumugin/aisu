@@ -1,0 +1,20 @@
+query GetUserChekiIdolCount($chekiShotAtStart: String!, $chekiShotAtEnd: String!) {
+  currentUserChekis {
+    getUserChekiIdolCount(params: {chekiShotAtStart: $chekiShotAtStart, chekiShotAtEnd: $chekiShotAtEnd}) {
+      chekiCount
+      idol{
+        idolCreatedAt
+        idolId
+        idolName
+        idolStatus
+        idolUpdatedAt
+        user {
+          userId
+          userName
+        }
+        userId
+      }
+      idolId
+    }
+  }
+}

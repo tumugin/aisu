@@ -22,7 +22,7 @@ class ChekiIdolCountSerializer(
   companion object {
     fun from(chekiIdolCount: ChekiIdolCount): ChekiIdolCountSerializer {
       return ChekiIdolCountSerializer(
-        ID(chekiIdolCount.idolId.toString()),
+        ID(chekiIdolCount.idolId.value.toString()),
         chekiIdolCount.chekiCount.value
       )
     }
