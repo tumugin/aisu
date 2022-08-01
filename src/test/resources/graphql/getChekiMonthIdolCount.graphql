@@ -1,0 +1,25 @@
+query GetChekiMonthIdolCount {
+  currentUserChekis {
+    getChekiMonthIdolCount(params: {baseTimezone: "Asia/Tokyo"}) {
+      chekiCount
+      chekiShotAtMonth {
+        baseTimezone
+        month
+        year
+      }
+      idol {
+        idolCreatedAt
+        idolId
+        idolName
+        idolStatus
+        idolUpdatedAt
+        user {
+          userId
+          userName
+        }
+        userId
+      }
+      idolId
+    }
+  }
+}
