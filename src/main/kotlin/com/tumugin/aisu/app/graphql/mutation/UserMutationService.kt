@@ -1,9 +1,9 @@
 package com.tumugin.aisu.app.graphql.mutation
 
 import com.expediagroup.graphql.server.operations.Mutation
+import com.tumugin.aisu.app.graphql.params.UserCreateParams
+import com.tumugin.aisu.app.graphql.params.UserLoginParams
 import com.tumugin.aisu.app.plugins.UserAuthSession
-import com.tumugin.aisu.app.request.api.CreateUserRequest
-import com.tumugin.aisu.app.request.api.LoginRequest
 import com.tumugin.aisu.app.serializer.client.UserSerializer
 import com.tumugin.aisu.domain.exception.LoginFailedException
 import com.tumugin.aisu.domain.user.UserEmail
@@ -40,10 +40,6 @@ class UserMutationService : Mutation {
     return UserSerializer.from(user)
   }
 
-  class UserLoginParams(val email: String, val password: String) {
-    fun toLoginRequest() = LoginRequest(email, password)
-  }
-
   suspend fun userLogout(dfe: DataFetchingEnvironment): String {
     val request = dfe.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)
     request.call.sessions.clear<UserAuthSession>()
@@ -70,15 +66,5 @@ class UserMutationService : Mutation {
     )
 
     return UserSerializer.from(user)
-  }
-
-  class UserCreateParams(val email: String, val password: String, val name: String) {
-    fun toCreateUserRequest(): CreateUserRequest {
-      return CreateUserRequest(
-        email = email,
-        password = password,
-        name = name
-      )
-    }
   }
 }
