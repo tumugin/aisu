@@ -19,11 +19,13 @@ import java.net.URL
 abstract class BaseKtorTest : BaseDatabaseTest() {
   private val csrfRepository by inject<CSRFRepository>()
 
-  fun testAisuApplication(block: suspend ApplicationTestBuilder.() -> Unit) {
+  fun <T> testAisuApplication(block: suspend ApplicationTestBuilder.() -> T): T {
+    var result: T? = null
     testApplication {
       application(createKtorModule(getKoin()))
-      block()
+      result = block()
     }
+    return result!!
   }
 
   fun addCSRFTokenHeader(builder: HttpRequestBuilder) {

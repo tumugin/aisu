@@ -1,0 +1,57 @@
+query GetUserChekis($chekiShotAtStart: String!, $chekiShotAtEnd: String!, $idolId: ID) {
+  currentUserChekis {
+    getUserChekis(params: {chekiShotAtStart: $chekiShotAtStart, chekiShotAtEnd: $chekiShotAtEnd, idolId: $idolId}) {
+      chekiCreatedAt
+      chekiId
+      chekiQuantity
+      chekiShotAt
+      chekiUpdatedAt
+      idol {
+        idolCreatedAt
+        idolId
+        idolName
+        idolStatus
+        idolUpdatedAt
+        user {
+          userId
+          userName
+        }
+        userId
+      }
+      idolId
+      regulation {
+        group {
+          groupCreatedAt
+          groupId
+          groupName
+          groupStatus
+          groupUpdatedAt
+          user {
+            userId
+            userName
+          }
+          userId
+        }
+        groupId
+        regulationComment
+        regulationCreatedAt
+        regulationId
+        regulationName
+        regulationStatus
+        regulationUnitPrice
+        regulationUpdatedAt
+        user {
+          userId
+          userName
+        }
+        userId
+      }
+      regulationId
+      user {
+        userId
+        userName
+      }
+      userId
+    }
+  }
+}
