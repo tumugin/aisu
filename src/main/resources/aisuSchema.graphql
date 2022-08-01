@@ -86,9 +86,7 @@ type LimitedUserSerializer {
 }
 
 type Mutation {
-  userCreate(params: UserCreateParamsInput!): UserSerializer!
-  userLogin(params: UserLoginParamsInput!): UserSerializer!
-  userLogout: String!
+  user: UserMutationServices!
 }
 
 type Query {
@@ -115,6 +113,12 @@ type UserChekis {
   getChekiMonthIdolCount(params: GetChekiMonthIdolCountParamsInput!): [ChekiMonthIdolCountSerializer!]!
   getUserChekiIdolCount(params: GetUserChekiIdolCountParamsInput!): [ChekiIdolCountSerializer!]!
   getUserChekis(params: GetUserChekisParamsInput!): [ChekiSerializer!]!
+}
+
+type UserMutationServices {
+  userCreate(params: UserCreateParamsInput!): UserSerializer!
+  userLogin(params: UserLoginParamsInput!): UserSerializer!
+  userLogout: String!
 }
 
 type UserSerializer {

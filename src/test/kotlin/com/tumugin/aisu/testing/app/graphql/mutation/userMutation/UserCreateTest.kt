@@ -15,7 +15,7 @@ class UserCreateTest : BaseKtorTest() {
   fun testUserCreate() = testAisuApplication {
     val graphQLClient = createGraphQLKtorClient(client)
     val result = graphQLClient.execute(UserCreate())
-    Assertions.assertNotNull(result.data?.userCreate)
+    Assertions.assertNotNull(result.data?.user?.userCreate)
     Assertions.assertNull(result.errors)
   }
 
@@ -24,7 +24,7 @@ class UserCreateTest : BaseKtorTest() {
     userSeeder.seedUser(userEmail = UserEmail("aoisuzu@example.com"))
     val graphQLClient = createGraphQLKtorClient(client)
     val result = graphQLClient.execute(UserCreate())
-    Assertions.assertNull(result.data?.userCreate)
+    Assertions.assertNull(result.data?.user?.userCreate)
     Assertions.assertNotNull(result.errors)
     Assertions.assertEquals(GraphQLErrorTypes.UserAlreadyExists.name, result.errors?.first()?.extensions?.get("type"))
   }

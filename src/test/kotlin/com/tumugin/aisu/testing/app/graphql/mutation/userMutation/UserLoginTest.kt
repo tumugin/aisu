@@ -22,7 +22,7 @@ class UserLoginTest : BaseKtorTest() {
   fun testUserLogin() = testAisuApplication {
     val graphQLClient = createGraphQLKtorClient(client)
     val result = graphQLClient.execute(UserLogin())
-    Assertions.assertNotNull(result.data?.userLogin)
+    Assertions.assertNotNull(result.data?.user?.userLogin)
     Assertions.assertNull(result.errors)
   }
 
@@ -30,7 +30,7 @@ class UserLoginTest : BaseKtorTest() {
   fun testUserWithWrongIDLogin() = testAisuApplication {
     val graphQLClient = createGraphQLKtorClient(client)
     val result = graphQLClient.execute(UserLoginWithWrongID())
-    Assertions.assertNull(result.data?.userLogin)
+    Assertions.assertNull(result.data?.user?.userLogin)
     Assertions.assertNotNull(result.errors)
     Assertions.assertEquals(GraphQLErrorTypes.LoginFailed.name, result.errors?.first()?.extensions?.get("type"))
   }

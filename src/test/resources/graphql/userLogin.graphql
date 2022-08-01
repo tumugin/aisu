@@ -1,12 +1,14 @@
 mutation {
-  userLogin(
-    params: { email: "aoisuzu@example.com", password: "aoisuzu" }
-  ) {
-    userCreatedAt
-    userEmail
-    userEmailVerifiedAt
-    userId
-    userName
-    userUpdatedAt
+  user {
+    userLogin(
+      params: { email: "aoisuzu@example.com", password: "aoisuzu" }
+    ) {
+      userCreatedAt
+      userEmail
+      userEmailVerifiedAt
+      userId
+      userName
+      userUpdatedAt
+    }
   }
 }
