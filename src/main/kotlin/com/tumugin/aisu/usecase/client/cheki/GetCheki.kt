@@ -19,7 +19,7 @@ class GetCheki : KoinComponent {
     throw HasNoPermissionException()
   }
 
-  suspend fun getChekisByIds(sessionUserId: UserId, chekiIds: List<ChekiId>): List<Cheki> {
+  suspend fun getChekisByIds(sessionUserId: UserId?, chekiIds: List<ChekiId>): List<Cheki> {
     return chekiRepository.getChekisByIds(chekiIds)
       .filter { it.isVisibleToUser(sessionUserId) }
   }
