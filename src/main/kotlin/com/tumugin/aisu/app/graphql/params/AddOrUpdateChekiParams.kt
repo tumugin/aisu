@@ -1,5 +1,6 @@
 package com.tumugin.aisu.app.graphql.params
 
+import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.scalars.ID
 import com.tumugin.aisu.app.request.BaseRequest
 import com.tumugin.aisu.app.request.ValidatorPatterns.ISO8601Pattern
@@ -21,6 +22,7 @@ class AddOrUpdateChekiParams(
   val chekiQuantity: Int,
   val chekiShotAt: String
 ) : BaseRequest<AddOrUpdateChekiParams> {
+  @GraphQLIgnore
   override val validator: Validation<AddOrUpdateChekiParams> = Validation {
     AddOrUpdateChekiParams::idolId required {
       run(aisuIdsValidator)
@@ -36,12 +38,19 @@ class AddOrUpdateChekiParams(
     }
   }
 
+  @GraphQLIgnore
   val castedIdolId
     get() = IdolId(idolId.value.toLong())
+
+  @GraphQLIgnore
   val castedRegulationId
     get() = regulationId?.value?.toLong()?.let { RegulationId(it) }
+
+  @GraphQLIgnore
   val castedChekiQuantity
     get() = ChekiQuantity(chekiQuantity)
+
+  @GraphQLIgnore
   val castedChekiShotAt
     get() = ChekiShotAt(Instant.parse(chekiShotAt))
 
