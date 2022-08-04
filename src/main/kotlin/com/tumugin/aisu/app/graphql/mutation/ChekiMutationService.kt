@@ -53,7 +53,7 @@ class ChekiMutationService : Mutation {
       return ChekiSerializer.from(cheki)
     }
 
-    suspend fun deleteCheki(dfe: DataFetchingEnvironment, chekiId: ID): Unit? {
+    suspend fun deleteCheki(dfe: DataFetchingEnvironment, chekiId: ID): String? {
       val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
       aisuIdsValidator.validate(chekiId)
       writeCheki.deleteCheki(aisuGraphQLContext.userAuthSession!!.castedUserId, ChekiId(chekiId.value.toLong()))
