@@ -40,6 +40,12 @@ type ChekiMonthIdolCountSerializer {
   idolId: ID!
 }
 
+type ChekiMutationServices {
+  addCheki(params: AddOrUpdateChekiParamsInput!): ChekiSerializer!
+  deleteCheki(chekiId: ID!): String
+  updateCheki(chekiId: ID!, params: AddOrUpdateChekiParamsInput!): ChekiSerializer!
+}
+
 type ChekiSerializer {
   chekiCreatedAt: String!
   chekiId: ID!
@@ -86,6 +92,7 @@ type LimitedUserSerializer {
 }
 
 type Mutation {
+  cheki: ChekiMutationServices!
   user: UserMutationServices!
 }
 
@@ -128,6 +135,13 @@ type UserSerializer {
   userId: ID!
   userName: String!
   userUpdatedAt: String!
+}
+
+input AddOrUpdateChekiParamsInput {
+  chekiQuantity: Int!
+  chekiShotAt: String!
+  idolId: ID!
+  regulationId: ID
 }
 
 input GetChekiMonthIdolCountParamsInput {
