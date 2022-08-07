@@ -45,8 +45,8 @@ class AddChekiTest : BaseKtorTest() {
           AddOrUpdateChekiParamsInput(
             chekiQuantity = 5,
             chekiShotAt = "2022-12-07T15:30:00+09:00",
-            idolId = idol.idolId.toString(),
-            regulationId = regulation.regulationId.toString()
+            idolId = idol.idolId.value.toString(),
+            regulationId = regulation.regulationId.value.toString()
           )
         )
       )
