@@ -1,0 +1,5 @@
+mutation DeleteCheki($chekiId: ID!) {
+  cheki {
+    deleteCheki(chekiId: $chekiId)
+  }
+}

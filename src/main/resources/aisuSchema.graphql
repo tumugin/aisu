@@ -42,7 +42,7 @@ type ChekiMonthIdolCountSerializer {
 
 type ChekiMutationServices {
   addCheki(params: AddOrUpdateChekiParamsInput!): ChekiSerializer!
-  deleteCheki(chekiId: ID!): String
+  deleteCheki(chekiId: ID!): String!
   updateCheki(chekiId: ID!, params: AddOrUpdateChekiParamsInput!): ChekiSerializer!
 }
 
