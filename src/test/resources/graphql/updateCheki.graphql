@@ -1,0 +1,57 @@
+mutation UpdateCheki($chekiId: ID!, $params: AddOrUpdateChekiParamsInput!) {
+  cheki {
+    updateCheki(chekiId: $chekiId, params: $params) {
+      chekiCreatedAt
+      chekiId
+      chekiQuantity
+      chekiShotAt
+      chekiUpdatedAt
+      idolId
+      regulationId
+      userId
+      idol {
+        idolCreatedAt
+        idolId
+        idolName
+        idolStatus
+        idolUpdatedAt
+        userId
+        user {
+          userId
+          userName
+        }
+      }
+      regulation {
+        groupId
+        regulationComment
+        regulationCreatedAt
+        regulationId
+        regulationName
+        regulationStatus
+        regulationUnitPrice
+        regulationUpdatedAt
+        userId
+        group {
+          groupCreatedAt
+          groupId
+          groupName
+          groupStatus
+          groupUpdatedAt
+          userId
+          user {
+            userId
+            userName
+          }
+        }
+        user {
+          userId
+          userName
+        }
+      }
+      user {
+        userId
+        userName
+      }
+    }
+  }
+}

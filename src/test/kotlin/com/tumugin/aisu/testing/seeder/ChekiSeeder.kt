@@ -31,4 +31,16 @@ class ChekiSeeder : KoinComponent {
       ).chekiId
     )!!
   }
+
+  suspend fun seedChekiWithAttachments(userId: UserId): Cheki {
+    val idol = IdolSeeder().seedIdol(userId)
+    val group = GroupSeeder().seedGroup(userId)
+    GroupIdolSeeder().seedGroupIdol(group.groupId, idol.idolId)
+    val regulation = RegulationSeeder().seedRegulation(group.groupId, userId)
+    return this.seedCheki(
+      userId,
+      idol.idolId,
+      regulation.regulationId
+    )
+  }
 }
