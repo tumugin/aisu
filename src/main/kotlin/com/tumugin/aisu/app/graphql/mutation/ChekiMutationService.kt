@@ -5,6 +5,7 @@ import com.expediagroup.graphql.server.operations.Mutation
 import com.tumugin.aisu.app.graphql.AisuGraphQLContext
 import com.tumugin.aisu.app.graphql.params.AddOrUpdateChekiParams
 import com.tumugin.aisu.app.graphql.params.aisuIdsValidator
+import com.tumugin.aisu.app.graphql.params.assertValidationResult
 import com.tumugin.aisu.app.serializer.client.ChekiSerializer
 import com.tumugin.aisu.domain.cheki.ChekiId
 import com.tumugin.aisu.domain.exception.NotAuthorizedException
@@ -41,7 +42,7 @@ class ChekiMutationService : Mutation {
       dfe: DataFetchingEnvironment, chekiId: ID, params: AddOrUpdateChekiParams
     ): ChekiSerializer {
       val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
-      aisuIdsValidator.validate(chekiId)
+      assertValidationResult(aisuIdsValidator.validate(chekiId))
       val cheki = writeCheki.updateCheki(
         ChekiId(chekiId.value.toLong()),
         aisuGraphQLContext.userAuthSession!!.castedUserId,
@@ -55,7 +56,7 @@ class ChekiMutationService : Mutation {
 
     suspend fun deleteCheki(dfe: DataFetchingEnvironment, chekiId: ID): String? {
       val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
-      aisuIdsValidator.validate(chekiId)
+      assertValidationResult(aisuIdsValidator.validate(chekiId))
       writeCheki.deleteCheki(aisuGraphQLContext.userAuthSession!!.castedUserId, ChekiId(chekiId.value.toLong()))
       return null
     }
