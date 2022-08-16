@@ -6,6 +6,7 @@ import com.tumugin.aisu.app.graphql.AisuGraphQLContext
 import com.tumugin.aisu.app.graphql.params.aisuIdsValidator
 import com.tumugin.aisu.app.graphql.params.assertValidationResult
 import com.tumugin.aisu.app.serializer.PaginationSerializer
+import com.tumugin.aisu.app.serializer.client.IdolPaginationSerializer
 import com.tumugin.aisu.app.serializer.client.IdolSerializer
 import com.tumugin.aisu.domain.base.PaginatorParam
 import com.tumugin.aisu.domain.exception.NotAuthorizedException
@@ -26,9 +27,9 @@ class IdolQueryService : Query {
     return IdolSerializer.from(idol)
   }
 
-  suspend fun getAllIdols(page: Int): PaginationSerializer<List<IdolSerializer>> {
+  suspend fun getAllIdols(page: Int): IdolPaginationSerializer {
     val idols = getIdol.getAllPublicIdols(PaginatorParam(page.toLong(), 50))
-    return PaginationSerializer(page, idols.pages.toInt(), idols.result.map { IdolSerializer.from(it) })
+    return IdolPaginationSerializer(page, idols.pages.toInt(), idols.result.map { IdolSerializer.from(it) })
   }
 
   fun currentUserIdols(dfe: DataFetchingEnvironment): CurrentUserIdols {
@@ -46,12 +47,12 @@ class IdolQueryService : Query {
 
     suspend fun getIdolsCreatedByUser(
       dfe: DataFetchingEnvironment, page: Int
-    ): PaginationSerializer<List<IdolSerializer>> {
+    ): IdolPaginationSerializer {
       val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
       val idols = getIdol.getAllUserCreatedIdols(
         aisuGraphQLContext.userAuthSession!!.castedUserId, PaginatorParam(page.toLong(), 50)
       )
-      return PaginationSerializer(page, idols.pages.toInt(), idols.result.map { IdolSerializer.from(it) })
+      return IdolPaginationSerializer(page, idols.pages.toInt(), idols.result.map { IdolSerializer.from(it) })
     }
   }
 }
