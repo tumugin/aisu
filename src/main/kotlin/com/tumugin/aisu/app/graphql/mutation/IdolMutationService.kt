@@ -13,17 +13,17 @@ import com.tumugin.aisu.usecase.client.idol.WriteIdol
 import graphql.schema.DataFetchingEnvironment
 
 class IdolMutationService : Mutation {
-  fun idol(dfe: DataFetchingEnvironment): IdolMutatuonServices {
+  fun idol(dfe: DataFetchingEnvironment): IdolMutationServices {
     // ログインしないと使えない機能
     val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
     if (aisuGraphQLContext.userAuthSession?.userId == null) {
       throw NotAuthorizedException()
     }
 
-    return IdolMutatuonServices()
+    return IdolMutationServices()
   }
 
-  class IdolMutatuonServices {
+  class IdolMutationServices {
     private val writeIdol = WriteIdol()
 
     suspend fun addIdol(dfe: DataFetchingEnvironment, params: AddOrUpdateIdolParams): IdolSerializer {
