@@ -24,7 +24,7 @@ class IdolMutationService : Mutation {
   }
 
   class IdolMutatuonServices {
-    val writeIdol = WriteIdol()
+    private val writeIdol = WriteIdol()
 
     suspend fun addIdol(dfe: DataFetchingEnvironment, params: AddOrUpdateIdolParams): IdolSerializer {
       val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
