@@ -1,0 +1,18 @@
+query GetAllIdolsQuery($page:Int!) {
+  getAllIdols(page: $page) {
+    currentPage
+    idols {
+      idolCreatedAt
+      idolId
+      idolName
+      idolStatus
+      idolUpdatedAt
+      user {
+        userId
+        userName
+      }
+      userId
+    }
+    pageCount
+  }
+}
