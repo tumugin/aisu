@@ -35,5 +35,9 @@ enum class IdolStatus(s: String) {
       get() {
         return listOf(PUBLIC_ACTIVE, PUBLIC_NOT_ACTIVE, PRIVATE_ACTIVE, PRIVATE_NOT_ACTIVE, OPERATION_DELETED)
       }
+    val allUserCanSpecifyStatus: List<IdolStatus>
+      get() {
+        return listOf(PUBLIC_ACTIVE, PUBLIC_NOT_ACTIVE, PRIVATE_ACTIVE, PRIVATE_NOT_ACTIVE)
+      }
   }
 }
