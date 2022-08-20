@@ -15,7 +15,7 @@ directive @include(
   if: Boolean!
 ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 
-"Directs the executor to skip this field or fragment when the `if`'argument is true."
+"Directs the executor to skip this field or fragment when the `if` argument is true."
 directive @skip(
   "Skipped when true."
   if: Boolean!
@@ -26,6 +26,11 @@ directive @specifiedBy(
   "The URL that specifies the behaviour of this scalar."
   url: String!
 ) on SCALAR
+
+interface PaginationSerializer {
+  currentPage: Int!
+  pageCount: Int!
+}
 
 type ChekiIdolCountSerializer {
   chekiCount: Int!
@@ -66,6 +71,10 @@ type ChekiShotAtMonthSerializer {
   year: Int!
 }
 
+type CurrentUserIdols {
+  getIdolsCreatedByUser(page: Int!): IdolPaginationSerializer!
+}
+
 type GroupSerializer {
   groupCreatedAt: String!
   groupId: ID!
@@ -74,6 +83,12 @@ type GroupSerializer {
   groupUpdatedAt: String!
   user: LimitedUserSerializer
   userId: ID
+}
+
+type IdolPaginationSerializer implements PaginationSerializer {
+  currentPage: Int!
+  idols: [IdolSerializer!]!
+  pageCount: Int!
 }
 
 type IdolSerializer {
@@ -99,7 +114,10 @@ type Mutation {
 type Query {
   currentUser: UserSerializer
   currentUserChekis: UserChekis!
+  currentUserIdols: CurrentUserIdols!
+  getAllIdols(page: Int!): IdolPaginationSerializer!
   getCheki(chekiId: ID!): ChekiSerializer!
+  getIdol(idolId: ID!): IdolSerializer!
 }
 
 type RegulationSerializer {

@@ -17,7 +17,7 @@ class GetUserChekisParams(
   val chekiShotAtStart: String,
   val chekiShotAtEnd: String,
   @Serializable(with = IDSerializer::class)
-  val idolId: ID?
+  val idolId: ID? = null
 ) :
   BaseRequest<GetUserChekisParams> {
 
