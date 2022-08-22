@@ -1,0 +1,5 @@
+mutation DeleteIdolMutation($idolId: ID!) {
+  idol {
+    deleteIdol(idolId: $idolId)
+  }
+}

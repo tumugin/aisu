@@ -1,0 +1,16 @@
+mutation UpdateIdolMutation($params: AddOrUpdateIdolParamsInput!, $idolId: ID!) {
+  idol {
+    updateIdol(params: $params, idolId: $idolId) {
+      idolCreatedAt
+      idolId
+      idolName
+      idolStatus
+      idolUpdatedAt
+      userId
+      user {
+        userId
+        userName
+      }
+    }
+  }
+}
