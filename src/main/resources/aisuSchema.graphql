@@ -71,8 +71,18 @@ type ChekiShotAtMonthSerializer {
   year: Int!
 }
 
+type CurrentUserGroups {
+  getGroupsCreatedByUser(page: Int!): GroupPaginationSerializer!
+}
+
 type CurrentUserIdols {
   getIdolsCreatedByUser(page: Int!): IdolPaginationSerializer!
+}
+
+type GroupPaginationSerializer implements PaginationSerializer {
+  currentPage: Int!
+  groups: [GroupSerializer!]!
+  pageCount: Int!
 }
 
 type GroupSerializer {
@@ -121,9 +131,11 @@ type Mutation {
 type Query {
   currentUser: UserSerializer
   currentUserChekis: UserChekis!
+  currentUserGroups: CurrentUserGroups!
   currentUserIdols: CurrentUserIdols!
   getAllIdols(page: Int!): IdolPaginationSerializer!
   getCheki(chekiId: ID!): ChekiSerializer!
+  getGroup(groupId: ID!): GroupSerializer!
   getIdol(idolId: ID!): IdolSerializer!
 }
 
