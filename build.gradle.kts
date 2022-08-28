@@ -37,7 +37,7 @@ val koinVersion = "3.2.0"
 val ktorVersion = "2.1.0"
 val logbackVersion = "1.2.11"
 val coroutineVersion = "1.6.4"
-val graphQLKotlinVersion = "6.2.1"
+val graphQLKotlinVersion = "6.2.2"
 
 application {
   mainClass.set("com.tumugin.aisu.ApplicationKt")
