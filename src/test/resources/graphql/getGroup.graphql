@@ -1,0 +1,14 @@
+query GetGroupQuery($groupId: ID!) {
+  getGroup(groupId: $groupId) {
+    groupCreatedAt
+    groupId
+    groupName
+    groupStatus
+    groupUpdatedAt
+    user {
+      userId
+      userName
+    }
+    userId
+  }
+}
