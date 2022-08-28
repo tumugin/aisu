@@ -21,7 +21,7 @@ plugins {
   id("org.flywaydb.flyway") version "9.2.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
-  id("com.expediagroup.graphql") version "6.2.1"
+  id("com.expediagroup.graphql") version "6.2.2"
 }
 
 group = "com.tumugin"
