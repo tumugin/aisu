@@ -24,5 +24,9 @@ enum class GroupStatus(s: String) {
   /**
    * 運営削除(論理削除)
    */
-  OPERATION_DELETED("operation_deleted")
+  OPERATION_DELETED("operation_deleted");
+
+  companion object {
+    val allUserCanSpecifyStatus = listOf(PUBLIC_ACTIVE, PUBLIC_NOT_ACTIVE, PRIVATE_ACTIVE, PRIVATE_NOT_ACTIVE)
+  }
 }
