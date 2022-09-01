@@ -79,6 +79,14 @@ type CurrentUserIdols {
   getIdolsCreatedByUser(page: Int!): IdolPaginationSerializer!
 }
 
+type GroupMutationServices {
+  addGroup(params: AddOrUpdateGroupParamsInput!): GroupSerializer!
+  addIdolToGroup(groupId: ID!, idolId: ID!): GroupSerializer!
+  deleteGroup(groupId: ID!): String!
+  removeIdolFromGroup(groupId: ID!, idolId: ID!): GroupSerializer!
+  updateGroup(groupId: ID!, params: AddOrUpdateGroupParamsInput!): GroupSerializer!
+}
+
 type GroupPaginationSerializer implements PaginationSerializer {
   currentPage: Int!
   groups: [GroupSerializer!]!
@@ -124,6 +132,7 @@ type LimitedUserSerializer {
 
 type Mutation {
   cheki: ChekiMutationServices!
+  group: GroupMutationServices!
   idol: IdolMutationServices!
   user: UserMutationServices!
 }
@@ -174,6 +183,14 @@ type UserSerializer {
   userUpdatedAt: String!
 }
 
+enum GroupStatus {
+  OPERATION_DELETED
+  PRIVATE_ACTIVE
+  PRIVATE_NOT_ACTIVE
+  PUBLIC_ACTIVE
+  PUBLIC_NOT_ACTIVE
+}
+
 enum IdolStatus {
   OPERATION_DELETED
   PRIVATE_ACTIVE
@@ -187,6 +204,11 @@ input AddOrUpdateChekiParamsInput {
   chekiShotAt: String!
   idolId: ID!
   regulationId: ID
+}
+
+input AddOrUpdateGroupParamsInput {
+  groupName: String!
+  groupStatus: GroupStatus!
 }
 
 input AddOrUpdateIdolParamsInput {

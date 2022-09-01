@@ -5,6 +5,7 @@ import com.expediagroup.graphql.generator.TopLevelObject
 import com.expediagroup.graphql.generator.scalars.IDValueUnboxer
 import com.expediagroup.graphql.generator.toSchema
 import com.tumugin.aisu.app.graphql.mutation.ChekiMutationService
+import com.tumugin.aisu.app.graphql.mutation.GroupMutationService
 import com.tumugin.aisu.app.graphql.mutation.IdolMutationService
 import com.tumugin.aisu.app.graphql.mutation.UserMutationService
 import com.tumugin.aisu.app.graphql.query.ChekiQueryService
@@ -22,7 +23,10 @@ class GraphQLSchema {
     TopLevelObject(GroupQueryService())
   )
   private val mutations = listOf(
-    TopLevelObject(UserMutationService()), TopLevelObject(ChekiMutationService()), TopLevelObject(IdolMutationService())
+    TopLevelObject(UserMutationService()),
+    TopLevelObject(ChekiMutationService()),
+    TopLevelObject(IdolMutationService()),
+    TopLevelObject(GroupMutationService())
   )
   val graphQLSchema = toSchema(config, queries, mutations)
 
