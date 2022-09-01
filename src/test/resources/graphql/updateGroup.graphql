@@ -1,0 +1,16 @@
+mutation UpdateGroup($groupId: ID!, $params: AddOrUpdateGroupParamsInput!) {
+  group {
+    updateGroup(groupId: $groupId, params: $params) {
+      groupCreatedAt
+      groupId
+      groupName
+      groupStatus
+      groupUpdatedAt
+      user {
+        userId
+        userName
+      }
+      userId
+    }
+  }
+}

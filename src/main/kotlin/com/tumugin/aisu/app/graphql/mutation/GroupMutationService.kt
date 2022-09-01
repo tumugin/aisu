@@ -66,7 +66,7 @@ class GroupMutationService : Mutation {
       return "group deleted."
     }
 
-    suspend fun addIdolToGroup(dfe: DataFetchingEnvironment, groupId: ID, idolId: ID): String {
+    suspend fun addIdolToGroup(dfe: DataFetchingEnvironment, groupId: ID, idolId: ID): GroupSerializer {
       val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
       val targetGroup = getGroup.getGroup(
         aisuGraphQLContext.userAuthSession!!.castedUserId, GroupId(groupId.value.toLong())
@@ -75,10 +75,11 @@ class GroupMutationService : Mutation {
         ?: throw NotFoundException()
 
       writeGroup.addIdolToGroup(aisuGraphQLContext.userAuthSession.castedUserId, targetGroup, targetIdol)
-      return "idol added to group."
+
+      return GroupSerializer.from(targetGroup)
     }
 
-    suspend fun removeIdolFromGroup(dfe: DataFetchingEnvironment, groupId: ID, idolId: ID): String {
+    suspend fun removeIdolFromGroup(dfe: DataFetchingEnvironment, groupId: ID, idolId: ID): GroupSerializer {
       val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
       val targetGroup = getGroup.getGroup(
         aisuGraphQLContext.userAuthSession!!.castedUserId, GroupId(groupId.value.toLong())
@@ -87,7 +88,8 @@ class GroupMutationService : Mutation {
         ?: throw NotFoundException()
 
       writeGroup.removeIdolFromGroup(aisuGraphQLContext.userAuthSession.castedUserId, targetGroup, targetIdol)
-      return "idol removed from group."
+
+      return GroupSerializer.from(targetGroup)
     }
   }
 }

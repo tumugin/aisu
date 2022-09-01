@@ -1,0 +1,16 @@
+mutation RemoveIdolToGroup($groupId: ID!, $idolId: ID!) {
+  group {
+    removeIdolFromGroup(groupId: $groupId, idolId: $idolId) {
+      groupCreatedAt
+      groupId
+      groupName
+      groupStatus
+      groupUpdatedAt
+      user {
+        userId
+        userName
+      }
+      userId
+    }
+  }
+}
