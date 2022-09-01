@@ -1,4 +1,4 @@
-mutation RemoveIdolToGroup($groupId: ID!, $idolId: ID!) {
+mutation RemoveIdolFromGroup($groupId: ID!, $idolId: ID!) {
   group {
     removeIdolFromGroup(groupId: $groupId, idolId: $idolId) {
       groupCreatedAt
