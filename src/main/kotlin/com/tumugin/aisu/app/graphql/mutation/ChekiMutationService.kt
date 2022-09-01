@@ -15,7 +15,7 @@ import graphql.schema.DataFetchingEnvironment
 class ChekiMutationService : Mutation {
   fun cheki(dfe: DataFetchingEnvironment): ChekiMutationServices {
     // ログインしないと使えない機能
-    val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     if (aisuGraphQLContext.userAuthSession?.userId == null) {
       throw NotAuthorizedException()
     }
@@ -27,7 +27,7 @@ class ChekiMutationService : Mutation {
     private val writeCheki = WriteCheki()
 
     suspend fun addCheki(dfe: DataFetchingEnvironment, params: AddOrUpdateChekiParams): ChekiSerializer {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       val cheki = writeCheki.addCheki(
         aisuGraphQLContext.userAuthSession!!.castedUserId,
         params.castedIdolId,
@@ -41,7 +41,7 @@ class ChekiMutationService : Mutation {
     suspend fun updateCheki(
       dfe: DataFetchingEnvironment, chekiId: ID, params: AddOrUpdateChekiParams
     ): ChekiSerializer {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       assertValidationResult(aisuIdsValidator.validate(chekiId))
       val cheki = writeCheki.updateCheki(
         ChekiId(chekiId.value.toLong()),
@@ -55,7 +55,7 @@ class ChekiMutationService : Mutation {
     }
 
     suspend fun deleteCheki(dfe: DataFetchingEnvironment, chekiId: ID): String {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       assertValidationResult(aisuIdsValidator.validate(chekiId))
       writeCheki.deleteCheki(aisuGraphQLContext.userAuthSession!!.castedUserId, ChekiId(chekiId.value.toLong()))
       return "cheki deleted."

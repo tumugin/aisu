@@ -15,7 +15,7 @@ import graphql.schema.DataFetchingEnvironment
 class IdolMutationService : Mutation {
   fun idol(dfe: DataFetchingEnvironment): IdolMutationServices {
     // ログインしないと使えない機能
-    val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     if (aisuGraphQLContext.userAuthSession?.userId == null) {
       throw NotAuthorizedException()
     }
@@ -27,7 +27,7 @@ class IdolMutationService : Mutation {
     private val writeIdol = WriteIdol()
 
     suspend fun addIdol(dfe: DataFetchingEnvironment, params: AddOrUpdateIdolParams): IdolSerializer {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
 
       val idol = writeIdol.addIdol(
         aisuGraphQLContext.userAuthSession!!.castedUserId, params.castedIdolName, params.idolStatus
@@ -37,7 +37,7 @@ class IdolMutationService : Mutation {
     }
 
     suspend fun updateIdol(dfe: DataFetchingEnvironment, idolId: ID, params: AddOrUpdateIdolParams): IdolSerializer {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       assertValidationResult(aisuIdsValidator.validate(idolId))
 
       val idol = writeIdol.updateIdol(
@@ -51,7 +51,7 @@ class IdolMutationService : Mutation {
     }
 
     suspend fun deleteIdol(dfe: DataFetchingEnvironment, idolId: ID): String {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       assertValidationResult(aisuIdsValidator.validate(idolId))
 
       writeIdol.deleteIdol(aisuGraphQLContext.userAuthSession!!.castedUserId, IdolId(idolId.value.toLong()))
