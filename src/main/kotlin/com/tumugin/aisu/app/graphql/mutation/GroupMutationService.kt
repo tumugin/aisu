@@ -17,7 +17,7 @@ import io.ktor.server.plugins.*
 class GroupMutationService : Mutation {
   fun group(dfe: DataFetchingEnvironment): GroupMutationServices {
     // ログインしないと使えない機能
-    val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     if (aisuGraphQLContext.userAuthSession?.userId == null) {
       throw NotAuthorizedException()
     }
@@ -31,7 +31,7 @@ class GroupMutationService : Mutation {
     private val getIdol = GetIdol()
 
     suspend fun addGroup(dfe: DataFetchingEnvironment, params: AddOrUpdateGroupParams): GroupSerializer {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
 
       val group = writeGroup.addGroup(
         aisuGraphQLContext.userAuthSession!!.castedUserId, params.castedGroupName, params.groupStatus
@@ -43,7 +43,7 @@ class GroupMutationService : Mutation {
     suspend fun updateGroup(
       dfe: DataFetchingEnvironment, groupId: ID, params: AddOrUpdateGroupParams
     ): GroupSerializer {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       val targetGroup =
         getGroup.getGroup(aisuGraphQLContext.userAuthSession!!.castedUserId, GroupId(groupId.value.toLong()))
           ?: throw NotFoundException()
@@ -56,7 +56,7 @@ class GroupMutationService : Mutation {
     }
 
     suspend fun deleteGroup(dfe: DataFetchingEnvironment, groupId: ID): String {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       val targetGroup = getGroup.getGroup(
         aisuGraphQLContext.userAuthSession!!.castedUserId, GroupId(groupId.value.toLong())
       ) ?: throw NotFoundException()
@@ -67,7 +67,7 @@ class GroupMutationService : Mutation {
     }
 
     suspend fun addIdolToGroup(dfe: DataFetchingEnvironment, groupId: ID, idolId: ID): GroupSerializer {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       val targetGroup = getGroup.getGroup(
         aisuGraphQLContext.userAuthSession!!.castedUserId, GroupId(groupId.value.toLong())
       ) ?: throw NotFoundException()
@@ -80,7 +80,7 @@ class GroupMutationService : Mutation {
     }
 
     suspend fun removeIdolFromGroup(dfe: DataFetchingEnvironment, groupId: ID, idolId: ID): GroupSerializer {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       val targetGroup = getGroup.getGroup(
         aisuGraphQLContext.userAuthSession!!.castedUserId, GroupId(groupId.value.toLong())
       ) ?: throw NotFoundException()

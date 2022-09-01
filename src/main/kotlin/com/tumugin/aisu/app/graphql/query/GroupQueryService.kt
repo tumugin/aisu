@@ -16,7 +16,7 @@ class GroupQueryService : Query {
   private val getGroup = GetGroup()
 
   suspend fun getGroup(dfe: DataFetchingEnvironment, groupId: ID): GroupSerializer {
-    val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     return getGroup.getGroup(
       aisuGraphQLContext.userAuthSession?.castedUserId, GroupId(groupId.value.toLong())
     )?.let { GroupSerializer.from(it) } ?: throw NotFoundException()
@@ -24,7 +24,7 @@ class GroupQueryService : Query {
 
   fun currentUserGroups(dfe: DataFetchingEnvironment): CurrentUserGroups {
     // 全てログインされたユーザに関するデータのため、未ログインの場合はここでエラーにしてしまう
-    val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     if (aisuGraphQLContext.userAuthSession?.userId == null) {
       throw NotAuthorizedException()
     }
@@ -36,7 +36,7 @@ class GroupQueryService : Query {
     private val getGroup = GetGroup()
 
     suspend fun getGroupsCreatedByUser(dfe: DataFetchingEnvironment, page: Int): GroupPaginationSerializer {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       val groups = getGroup.getAllUserCreatedGroups(
         aisuGraphQLContext.userAuthSession!!.castedUserId, PaginatorParam(page.toLong(), 20)
       )

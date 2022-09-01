@@ -19,7 +19,7 @@ class ChekiQueryService : Query {
   private val getCheki = GetCheki()
 
   suspend fun getCheki(dfe: DataFetchingEnvironment, chekiId: ID): ChekiSerializer {
-    val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     return getCheki.getCheki(
       aisuGraphQLContext.userAuthSession?.castedUserId,
       ChekiId(chekiId.value.toLong())
@@ -28,7 +28,7 @@ class ChekiQueryService : Query {
 
   fun currentUserChekis(dfe: DataFetchingEnvironment): UserChekis {
     // 全てログインされたユーザに関するデータのため、未ログインの場合はここでエラーにしてしまう
-    val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     if (aisuGraphQLContext.userAuthSession?.userId == null) {
       throw NotAuthorizedException()
     }
@@ -40,7 +40,7 @@ class ChekiQueryService : Query {
     private val getCheki = GetCheki()
 
     suspend fun getUserChekis(dfe: DataFetchingEnvironment, params: GetUserChekisParams): List<ChekiSerializer> {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       val userId = aisuGraphQLContext.userAuthSession?.castedUserId ?: throw NotAuthorizedException()
       return if (params.idolIdCasted != null) {
         getCheki.getChekiByUserIdAndShotDateTimeRangeAndIdolId(
@@ -62,7 +62,7 @@ class ChekiQueryService : Query {
       dfe: DataFetchingEnvironment,
       params: GetUserChekiIdolCountParams
     ): List<ChekiIdolCountSerializer> {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       val userId = aisuGraphQLContext.userAuthSession?.castedUserId ?: throw NotAuthorizedException()
       return getCheki.getChekiIdolCountByUserId(userId, params.chekiShotAtStartCasted, params.chekiShotAtEndCasted)
         .map { ChekiIdolCountSerializer.from(it) }
@@ -72,7 +72,7 @@ class ChekiQueryService : Query {
       dfe: DataFetchingEnvironment,
       params: GetChekiMonthIdolCountParams
     ): List<ChekiMonthIdolCountSerializer> {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       val userId = aisuGraphQLContext.userAuthSession?.castedUserId ?: throw NotAuthorizedException()
       return getCheki.getChekiMonthIdolCountByUserIdAndIdol(
         userId,

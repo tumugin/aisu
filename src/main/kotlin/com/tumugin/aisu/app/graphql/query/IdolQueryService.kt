@@ -5,7 +5,6 @@ import com.expediagroup.graphql.server.operations.Query
 import com.tumugin.aisu.app.graphql.AisuGraphQLContext
 import com.tumugin.aisu.app.graphql.params.aisuIdsValidator
 import com.tumugin.aisu.app.graphql.params.assertValidationResult
-import com.tumugin.aisu.app.serializer.PaginationSerializer
 import com.tumugin.aisu.app.serializer.client.IdolPaginationSerializer
 import com.tumugin.aisu.app.serializer.client.IdolSerializer
 import com.tumugin.aisu.domain.base.PaginatorParam
@@ -20,7 +19,7 @@ class IdolQueryService : Query {
 
   suspend fun getIdol(dfe: DataFetchingEnvironment, idolId: ID): IdolSerializer {
     assertValidationResult(aisuIdsValidator.validate(idolId))
-    val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     val idol = getIdol.getIdol(
       aisuGraphQLContext?.userAuthSession?.castedUserId, IdolId(idolId.value.toLong())
     ) ?: throw NotFoundException()
@@ -34,7 +33,7 @@ class IdolQueryService : Query {
 
   fun currentUserIdols(dfe: DataFetchingEnvironment): CurrentUserIdols {
     // 全てログインされたユーザに関するデータのため、未ログインの場合はここでエラーにしてしまう
-    val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     if (aisuGraphQLContext.userAuthSession?.userId == null) {
       throw NotAuthorizedException()
     }
@@ -48,7 +47,7 @@ class IdolQueryService : Query {
     suspend fun getIdolsCreatedByUser(
       dfe: DataFetchingEnvironment, page: Int
     ): IdolPaginationSerializer {
-      val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
       val idols = getIdol.getAllUserCreatedIdols(
         aisuGraphQLContext.userAuthSession!!.castedUserId, PaginatorParam(page.toLong(), 50)
       )

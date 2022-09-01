@@ -10,7 +10,7 @@ class UserQueryService : Query {
   private val getuser = GetUser()
 
   suspend fun currentUser(dfe: DataFetchingEnvironment): UserSerializer? {
-    val aisuGraphQLContext = dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     val user = aisuGraphQLContext.userAuthSession?.let { getuser.getUserBySessionUserId(it.castedUserId) }
     return user?.let { UserSerializer.from(it) }
   }
