@@ -19,4 +19,4 @@ class KtorGraphQLContextFactory : GraphQLContextFactory<GraphQLContext, Applicat
   }
 }
 
-class AisuGraphQLContext(val userAuthSession: UserAuthSession?) : GraphQLContext
+class AisuGraphQLContext(val userAuthSession: UserAuthSession?)
