@@ -1,0 +1,29 @@
+query GetRegulation($regulationId: ID!) {
+  getRegulation(regulationId: $regulationId) {
+    group {
+      groupCreatedAt
+      groupId
+      groupName
+      groupStatus
+      groupUpdatedAt
+      user {
+        userId
+        userName
+      }
+      userId
+    }
+    groupId
+    regulationComment
+    regulationCreatedAt
+    regulationId
+    regulationName
+    regulationStatus
+    regulationUnitPrice
+    regulationUpdatedAt
+    user {
+      userId
+      userName
+    }
+    userId
+  }
+}
