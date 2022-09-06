@@ -146,6 +146,7 @@ type Query {
   getCheki(chekiId: ID!): ChekiSerializer!
   getGroup(groupId: ID!): GroupSerializer!
   getIdol(idolId: ID!): IdolSerializer!
+  getRegulation(regulationId: ID!): RegulationSerializer!
 }
 
 type RegulationSerializer {
