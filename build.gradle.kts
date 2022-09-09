@@ -10,7 +10,7 @@ buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.3.1")
     classpath("mysql:mysql-connector-java:8.0.30")
-    classpath("org.flywaydb:flyway-mysql:9.2.2")
+    classpath("org.flywaydb:flyway-mysql:9.3.0")
   }
 }
 
