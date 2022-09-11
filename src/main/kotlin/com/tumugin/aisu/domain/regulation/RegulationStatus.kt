@@ -14,5 +14,9 @@ enum class RegulationStatus(s: String) {
   /**
    * 運営削除(論理削除)
    */
-  OPERATION_DELETED("operation_deleted")
+  OPERATION_DELETED("operation_deleted");
+
+  companion object {
+    val allUserCanSpecifyStatus = listOf(NOT_ACTIVE, ACTIVE)
+  }
 }

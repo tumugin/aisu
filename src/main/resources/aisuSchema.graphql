@@ -134,6 +134,7 @@ type Mutation {
   cheki: ChekiMutationServices!
   group: GroupMutationServices!
   idol: IdolMutationServices!
+  regulation: RegulationMutationServices!
   user: UserMutationServices!
 }
 
@@ -147,6 +148,12 @@ type Query {
   getGroup(groupId: ID!): GroupSerializer!
   getIdol(idolId: ID!): IdolSerializer!
   getRegulation(regulationId: ID!): RegulationSerializer!
+}
+
+type RegulationMutationServices {
+  addRegulation(params: AddOrUpdateRegulationParamsInput!): RegulationSerializer!
+  deleteRegulation(regulationId: ID!): String!
+  updateRegulation(params: AddOrUpdateRegulationParamsInput!, regulationId: ID!): RegulationSerializer!
 }
 
 type RegulationSerializer {
@@ -200,6 +207,12 @@ enum IdolStatus {
   PUBLIC_NOT_ACTIVE
 }
 
+enum RegulationStatus {
+  ACTIVE
+  NOT_ACTIVE
+  OPERATION_DELETED
+}
+
 input AddOrUpdateChekiParamsInput {
   chekiQuantity: Int!
   chekiShotAt: String!
@@ -215,6 +228,14 @@ input AddOrUpdateGroupParamsInput {
 input AddOrUpdateIdolParamsInput {
   idolName: String!
   idolStatus: IdolStatus!
+}
+
+input AddOrUpdateRegulationParamsInput {
+  groupId: ID!
+  regulationComment: String!
+  regulationName: String!
+  regulationStatus: RegulationStatus!
+  regulationUnitPrice: Int!
 }
 
 input GetChekiMonthIdolCountParamsInput {
