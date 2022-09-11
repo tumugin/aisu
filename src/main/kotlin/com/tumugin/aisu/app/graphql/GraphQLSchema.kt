@@ -15,7 +15,8 @@ class GraphQLSchema {
     TopLevelObject(ChekiQueryService()),
     TopLevelObject(IdolQueryService()),
     TopLevelObject(GroupQueryService()),
-    TopLevelObject(RegulationQueryService())
+    TopLevelObject(RegulationQueryService()),
+    TopLevelObject(FavoriteGroupQueryService())
   )
   private val mutations = listOf(
     TopLevelObject(UserMutationService()),
