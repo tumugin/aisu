@@ -1,0 +1,21 @@
+query GetFavoriteGroups {
+  userFavoriteGroups {
+    favoriteGroups {
+      favoriteGroupId
+      userId
+      groupId
+      group {
+        groupCreatedAt
+        groupId
+        groupName
+        groupStatus
+        groupUpdatedAt
+        user {
+          userId
+          userName
+        }
+        userId
+      }
+    }
+  }
+}

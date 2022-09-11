@@ -79,6 +79,14 @@ type CurrentUserIdols {
   getIdolsCreatedByUser(page: Int!): IdolPaginationSerializer!
 }
 
+type FavoriteGroupWithGroupSerializer {
+  favoriteGroupId: ID!
+  group: GroupSerializer
+  groupId: ID!
+  user: LimitedUserSerializer
+  userId: ID!
+}
+
 type GroupMutationServices {
   addGroup(params: AddOrUpdateGroupParamsInput!): GroupSerializer!
   addIdolToGroup(groupId: ID!, idolId: ID!): GroupSerializer!
@@ -148,6 +156,7 @@ type Query {
   getGroup(groupId: ID!): GroupSerializer!
   getIdol(idolId: ID!): IdolSerializer!
   getRegulation(regulationId: ID!): RegulationSerializer!
+  userFavoriteGroups: UserFavoriteGroup!
 }
 
 type RegulationMutationServices {
@@ -174,6 +183,10 @@ type UserChekis {
   getChekiMonthIdolCount(params: GetChekiMonthIdolCountParamsInput!): [ChekiMonthIdolCountSerializer!]!
   getUserChekiIdolCount(params: GetUserChekiIdolCountParamsInput!): [ChekiIdolCountSerializer!]!
   getUserChekis(params: GetUserChekisParamsInput!): [ChekiSerializer!]!
+}
+
+type UserFavoriteGroup {
+  favoriteGroups: [FavoriteGroupWithGroupSerializer!]!
 }
 
 type UserMutationServices {
