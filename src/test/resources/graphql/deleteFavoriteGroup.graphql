@@ -1,0 +1,5 @@
+mutation DeleteFavoriteGroup($favoriteGroupId: ID!) {
+  favoriteGroup {
+    deleteFavoriteGroup(favoriteGroupID: $favoriteGroupId)
+  }
+}

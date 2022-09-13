@@ -1,0 +1,25 @@
+mutation AddFavoriteGroup($groupId: ID!) {
+  favoriteGroup {
+    addFavoriteGroup(groupId: $groupId) {
+      favoriteGroupId
+      group {
+        groupCreatedAt
+        groupId
+        groupName
+        groupStatus
+        groupUpdatedAt
+        user {
+          userId
+          userName
+        }
+        userId
+      }
+      groupId
+      user {
+        userId
+        userName
+      }
+      userId
+    }
+  }
+}

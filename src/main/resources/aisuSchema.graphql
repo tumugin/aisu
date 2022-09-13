@@ -79,6 +79,19 @@ type CurrentUserIdols {
   getIdolsCreatedByUser(page: Int!): IdolPaginationSerializer!
 }
 
+type FavoriteGroupMutationServices {
+  addFavoriteGroup(groupId: ID!): FavoriteGroupSerializer!
+  deleteFavoriteGroup(favoriteGroupID: ID!): String!
+}
+
+type FavoriteGroupSerializer {
+  favoriteGroupId: ID!
+  group: GroupSerializer
+  groupId: ID!
+  user: LimitedUserSerializer
+  userId: ID!
+}
+
 type FavoriteGroupWithGroupSerializer {
   favoriteGroupId: ID!
   group: GroupSerializer
@@ -140,6 +153,7 @@ type LimitedUserSerializer {
 
 type Mutation {
   cheki: ChekiMutationServices!
+  favoriteGroup: FavoriteGroupMutationServices!
   group: GroupMutationServices!
   idol: IdolMutationServices!
   regulation: RegulationMutationServices!
