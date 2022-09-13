@@ -23,7 +23,8 @@ class GraphQLSchema {
     TopLevelObject(ChekiMutationService()),
     TopLevelObject(IdolMutationService()),
     TopLevelObject(GroupMutationService()),
-    TopLevelObject(RegulationMutationService())
+    TopLevelObject(RegulationMutationService()),
+    TopLevelObject(FavoriteGroupMutationService())
   )
   val graphQLSchema = toSchema(config, queries, mutations)
 
