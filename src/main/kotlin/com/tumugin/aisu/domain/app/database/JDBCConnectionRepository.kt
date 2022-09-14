@@ -5,4 +5,5 @@ import javax.sql.DataSource
 interface JDBCConnectionRepository {
   val dataSource: DataSource
   fun prepareORM()
+  fun closeConnection()
 }

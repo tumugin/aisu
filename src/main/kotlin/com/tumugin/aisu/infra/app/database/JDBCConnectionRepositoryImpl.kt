@@ -15,6 +15,10 @@ class JDBCConnectionRepositoryImpl(private val appConfigRepository: AppConfigRep
     Database.connect(this.dataSource)
   }
 
+  override fun closeConnection() {
+    this.dataSource.close()
+  }
+
   private fun createHikariConfig(): HikariConfig {
     val config = HikariConfig()
     config.jdbcUrl = appConfigRepository.appConfig.appConfigDatabaseJdbcUrl.value
