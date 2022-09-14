@@ -5,5 +5,6 @@ data class AppConfig(
   val appConfigDatabaseUserName: AppConfigDatabaseUserName,
   val appConfigDatabasePassword: AppConfigDatabasePassword,
   val appConfigRedisHost: AppConfigRedisHost,
-  val appConfigRedisPort: AppConfigRedisPort
+  val appConfigRedisPort: AppConfigRedisPort,
+  val appEnvironment: AppEnvironment
 )

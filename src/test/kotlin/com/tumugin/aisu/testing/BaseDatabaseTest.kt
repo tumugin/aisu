@@ -4,8 +4,10 @@ import com.tumugin.aisu.di.AisuDIModule
 import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.koin.core.context.GlobalContext
+import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 
 abstract class BaseDatabaseTest : KoinTest {
@@ -21,6 +23,11 @@ abstract class BaseDatabaseTest : KoinTest {
   fun beforeBaseTest() {
     setupApplication()
     truncateDatabase()
+  }
+
+  @AfterEach
+  fun afterEach() {
+    stopKoin()
   }
 
   private fun truncateDatabase() {
