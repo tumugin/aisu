@@ -22,7 +22,7 @@ class LoginControllerTest : BaseKtorTest() {
   }
 
   @Test
-  fun testLogin() = testAisuApplication {
+  fun testLogin(): Unit = testAisuApplication {
     client.post("/api/login") {
       contentType(ContentType.Application.Json)
       setBody(Json.encodeToString(LoginRequest("aoisuzu@example.com", "aoisuzu")))
@@ -34,7 +34,7 @@ class LoginControllerTest : BaseKtorTest() {
   }
 
   @Test
-  fun testLoginFailed() = testAisuApplication {
+  fun testLoginFailed(): Unit = testAisuApplication {
     client.post("/api/login") {
       contentType(ContentType.Application.Json)
       setBody(Json.encodeToString(LoginRequest("mayfujimiya@example.com", "maypomu")))

@@ -14,7 +14,7 @@ import kotlin.test.assertTrue
 
 class MetadataControllerTest : BaseKtorTest() {
   @Test
-  fun get() = testAisuApplication {
+  fun get(): Unit = testAisuApplication {
     val userAndCookie = seedUserAndLoginAndGetCookieValue(this)
     client.get("/api/metadata") {
       contentType(ContentType.Application.Json)
