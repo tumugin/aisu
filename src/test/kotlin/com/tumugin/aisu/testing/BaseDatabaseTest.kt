@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
+import org.koin.test.get
 
 abstract class BaseDatabaseTest : KoinTest {
   private fun setupApplication() {
@@ -16,7 +17,7 @@ abstract class BaseDatabaseTest : KoinTest {
       return
     }
     AisuDIModule.startTesting()
-    GlobalContext.get().get<JDBCConnectionRepository>().prepareORM()
+    get<JDBCConnectionRepository>().prepareORM()
   }
 
   @BeforeEach
@@ -27,6 +28,7 @@ abstract class BaseDatabaseTest : KoinTest {
 
   @AfterEach
   fun afterEach() {
+    get<JDBCConnectionRepository>().closeConnection()
     stopKoin()
   }
 
