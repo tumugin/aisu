@@ -1,5 +1,6 @@
 package com.tumugin.aisu.di
 
+import com.tumugin.aisu.domain.adminUser.AdminUserRepository
 import com.tumugin.aisu.domain.app.config.AppConfigRepository
 import com.tumugin.aisu.domain.app.csrf.CSRFRepository
 import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
@@ -46,6 +47,7 @@ object AisuDIModule {
     factory<GroupRepository> { GroupRepositoryImpl() }
     factory<FavoriteGroupRepository> { FavoriteGroupRepositoryImpl() }
     factory<ChekiRepository> { ChekiRepositoryImpl() }
+    factory<AdminUserRepository> { AdminUserRepositoryImpl() }
   }
 
   fun start() {
