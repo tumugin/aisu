@@ -21,7 +21,7 @@ plugins {
   id("org.flywaydb.flyway") version "9.3.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
-  id("com.expediagroup.graphql") version "6.2.3"
+  id("com.expediagroup.graphql") version "6.2.4"
 }
 
 group = "com.tumugin"
@@ -86,7 +86,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.0")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
   // test libs
-  testImplementation("io.mockk:mockk:1.12.7")
+  testImplementation("io.mockk:mockk:1.12.8")
   testImplementation("io.insert-koin:koin-test:$koinVersion")
 }
 
