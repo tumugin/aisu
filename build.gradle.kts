@@ -88,6 +88,7 @@ dependencies {
   // test libs
   testImplementation("io.mockk:mockk:1.12.8")
   testImplementation("io.insert-koin:koin-test:$koinVersion")
+  testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
 }
 
 val graphqlGenerateTestClient by tasks.getting(GraphQLGenerateTestClientTask::class) {
