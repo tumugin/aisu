@@ -2,6 +2,7 @@ package com.tumugin.aisu.app.graphql
 
 import com.expediagroup.graphql.generator.execution.GraphQLContext
 import com.expediagroup.graphql.server.execution.GraphQLContextFactory
+import com.tumugin.aisu.app.plugins.AdminUserAuthSession
 import com.tumugin.aisu.app.plugins.UserAuthSession
 import graphql.schema.DataFetchingEnvironment
 import io.ktor.server.request.*
@@ -14,13 +15,13 @@ class KtorGraphQLContextFactory : GraphQLContextFactory<GraphQLContext, Applicat
 
   override suspend fun generateContextMap(request: ApplicationRequest): Map<*, Any> {
     return mapOf(
-      AisuGraphQLContext::class to AisuGraphQLContext(request.call.sessions.get()),
+      AisuGraphQLContext::class to AisuGraphQLContext(request.call.sessions.get(), request.call.sessions.get()),
       ApplicationRequest::class to request
     )
   }
 }
 
-class AisuGraphQLContext(val userAuthSession: UserAuthSession?) {
+class AisuGraphQLContext(val userAuthSession: UserAuthSession?, val adminUserAuthSession: AdminUserAuthSession?) {
   companion object {
     fun createFromDataFetchingEnvironment(dfe: DataFetchingEnvironment): AisuGraphQLContext {
       return dfe.graphQlContext.get(AisuGraphQLContext::class)

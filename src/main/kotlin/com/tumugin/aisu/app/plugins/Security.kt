@@ -1,6 +1,7 @@
 package com.tumugin.aisu.app.plugins
 
 import com.tumugin.aisu.app.plugins.security.KVSSessionStorage
+import com.tumugin.aisu.domain.adminUser.AdminUser
 import com.tumugin.aisu.domain.adminUser.AdminUserId
 import com.tumugin.aisu.domain.user.User
 import com.tumugin.aisu.domain.user.UserId
@@ -13,16 +14,24 @@ data class UserAuthSession(val userId: Long, val validThroughTimestamp: String, 
     get() = UserId(userId)
 }
 
-data class AdminUserAuthSession(val userId: Long, val validThroughTimestamp: String, val forceLogoutGeneration: Int) {
+data class AdminUserAuthSession(
+  val adminUserId: Long, val validThroughTimestamp: String, val forceLogoutGeneration: Int
+) {
   val castedAdminUserId
-    get() = AdminUserId(userId)
+    get() = AdminUserId(adminUserId)
 }
 
 data class UserPrincipal(val user: User) : Principal
 
+data class AdminUserPrincipal(val adminUser: AdminUser) : Principal
+
 fun Application.configureSecurity() {
   install(Sessions) {
     cookie<UserAuthSession>("USER_AUTH", KVSSessionStorage()) {
+      cookie.httpOnly = true
+      cookie.extensions["SameSite"] = "lax"
+    }
+    cookie<AdminUserAuthSession>("ADMIN_USER_AUTH", KVSSessionStorage()) {
       cookie.httpOnly = true
       cookie.extensions["SameSite"] = "lax"
     }
