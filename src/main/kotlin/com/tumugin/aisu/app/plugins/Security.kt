@@ -27,6 +27,7 @@ data class AdminUserPrincipal(val adminUser: AdminUser) : Principal
 
 fun Application.configureSecurity() {
   install(Sessions) {
+    // FIXME: protect sessions. see: https://ktor.io/docs/sessions.html#protect_session
     cookie<UserAuthSession>("USER_AUTH", KVSSessionStorage()) {
       cookie.httpOnly = true
       cookie.extensions["SameSite"] = "lax"
