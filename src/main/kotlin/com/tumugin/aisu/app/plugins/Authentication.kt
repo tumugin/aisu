@@ -2,6 +2,7 @@ package com.tumugin.aisu.app.plugins
 
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.domain.user.UserRepository
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
@@ -12,7 +13,7 @@ fun Application.configureAuthentication(koin: Koin) {
   install(Authentication) {
     session<UserAuthSession>("user_session") {
       challenge {
-        call.respondRedirect("/api/login")
+        call.respond(HttpStatusCode.Unauthorized)
       }
       validate { session ->
         val user = userRepository.getUserById(UserId(session.userId))

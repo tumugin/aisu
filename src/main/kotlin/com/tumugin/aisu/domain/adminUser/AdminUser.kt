@@ -5,6 +5,7 @@ data class AdminUser(
   val adminUserName: AdminUserName,
   val adminUserEmail: AdminUserEmail,
   val adminUserPassword: AdminUserPassword,
+  val adminUserForceLogoutGeneration: AdminUserForceLogoutGeneration,
   val adminUserCreatedAt: AdminUserCreatedAt,
   val adminUserUpdatedAt: AdminUserUpdatedAt
 )
