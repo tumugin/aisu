@@ -20,6 +20,7 @@ class AppConfigRepositoryImpl(private val isTesting: Boolean = false) : AppConfi
       appConfigRedisHost = AppConfigRedisHost(env["REDIS_HOST"]),
       appConfigRedisPort = AppConfigRedisPort(env["REDIS_PORT"].toInt()),
       appEnvironment = AppEnvironment.valueOf(env["APP_ENV"].uppercase()),
+      appConfigCookieSecretSignKey = AppConfigCookieSecretSignKey(env["COOKIE_SECRET_SIGN_KEY"]),
     )
   }
 }
