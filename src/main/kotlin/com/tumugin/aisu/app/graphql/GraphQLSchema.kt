@@ -6,10 +6,19 @@ import com.expediagroup.graphql.generator.scalars.IDValueUnboxer
 import com.expediagroup.graphql.generator.toSchema
 import com.tumugin.aisu.app.graphql.mutation.*
 import com.tumugin.aisu.app.graphql.query.*
+import com.tumugin.aisu.domain.app.config.AppConfigRepository
+import com.tumugin.aisu.domain.app.config.AppEnvironment
 import graphql.GraphQL
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class GraphQLSchema {
-  private val config = SchemaGeneratorConfig(supportedPackages = listOf("com.tumugin.aisu", "kotlin"))
+class GraphQLSchema : KoinComponent {
+  private val appConfigRepository by inject<AppConfigRepository>()
+
+  private val config = SchemaGeneratorConfig(
+    supportedPackages = listOf("com.tumugin.aisu", "kotlin"),
+    introspectionEnabled = appConfigRepository.appConfig.appEnvironment != AppEnvironment.PRODUCTION
+  )
   private val queries = listOf(
     TopLevelObject(UserQueryService()),
     TopLevelObject(ChekiQueryService()),
