@@ -32,7 +32,6 @@ fun Application.configureSecurity(koin: Koin) {
   val appConfigRepository = koin.get<AppConfigRepository>()
   val secretSignKey = hex(appConfigRepository.appConfig.appConfigCookieSecretSignKey.value)
   install(Sessions) {
-    // FIXME: protect sessions. see: https://ktor.io/docs/sessions.html#protect_session
     cookie<UserAuthSession>("USER_AUTH", KVSSessionStorage()) {
       cookie.httpOnly = true
       cookie.extensions["SameSite"] = "lax"
