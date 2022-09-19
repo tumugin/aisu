@@ -25,7 +25,7 @@ fun createKtorModule(koin: Koin): Application.() -> Unit {
     configureRouting(koin)
     configureSerialization()
     configureHTTP()
-    configureSecurity()
+    configureSecurity(koin)
     configureAuthentication(koin)
   }
   return ktorModule

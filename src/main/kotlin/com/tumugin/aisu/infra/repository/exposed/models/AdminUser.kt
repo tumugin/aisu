@@ -10,6 +10,7 @@ object AdminUsers : ExposedTimestampIdTable("admin_users") {
   val name = varchar("name", 255)
   val email = varchar("email", 255)
   val password = varchar("password", 255)
+  val forceLogoutGeneration = integer("force_logout_generation").default(0)
 }
 
 class AdminUser(id: EntityID<Long>) : ExposedTimestampIdEntity(id, AdminUsers) {
@@ -18,6 +19,7 @@ class AdminUser(id: EntityID<Long>) : ExposedTimestampIdEntity(id, AdminUsers) {
   var name by AdminUsers.name
   var email by AdminUsers.email
   var password by AdminUsers.password
+  var forceLogoutGeneration by AdminUsers.forceLogoutGeneration
 
   fun toDomain(): com.tumugin.aisu.domain.adminUser.AdminUser {
     return com.tumugin.aisu.domain.adminUser.AdminUser(
@@ -25,6 +27,7 @@ class AdminUser(id: EntityID<Long>) : ExposedTimestampIdEntity(id, AdminUsers) {
       AdminUserName(this.name),
       AdminUserEmail(this.email),
       AdminUserPassword(this.password),
+      AdminUserForceLogoutGeneration(this.forceLogoutGeneration),
       AdminUserCreatedAt(this.createdAt),
       AdminUserUpdatedAt(this.updatedAt)
     )

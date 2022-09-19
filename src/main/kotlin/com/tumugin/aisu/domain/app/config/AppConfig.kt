@@ -6,5 +6,6 @@ data class AppConfig(
   val appConfigDatabasePassword: AppConfigDatabasePassword,
   val appConfigRedisHost: AppConfigRedisHost,
   val appConfigRedisPort: AppConfigRedisPort,
-  val appEnvironment: AppEnvironment
+  val appEnvironment: AppEnvironment,
+  val appConfigCookieSecretSignKey: AppConfigCookieSecretSignKey
 )

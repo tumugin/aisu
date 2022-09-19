@@ -24,7 +24,8 @@ class TestOnlyDebugRoute : BaseKtorTest() {
       originalRepository.appConfig.appConfigDatabasePassword,
       originalRepository.appConfig.appConfigRedisHost,
       originalRepository.appConfig.appConfigRedisPort,
-      AppEnvironment.PRODUCTION
+      AppEnvironment.PRODUCTION,
+      originalRepository.appConfig.appConfigCookieSecretSignKey
     )
     declare {
       mockedRepository
