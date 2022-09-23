@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 class AdminUserSerializer(
   @Serializable(with = IDSerializer::class) val adminUserId: ID,
   val adminUserName: String,
-  val adminUserEmail: String?,
+  val adminUserEmail: String,
   val adminUserCreatedAt: String,
   val adminUserUpdatedAt: String
 ) {
