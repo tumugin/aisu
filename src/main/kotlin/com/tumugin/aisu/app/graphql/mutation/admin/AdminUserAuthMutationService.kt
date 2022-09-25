@@ -14,7 +14,7 @@ import io.ktor.server.sessions.*
 import kotlinx.datetime.Clock
 import kotlin.time.Duration.Companion.days
 
-class AdminUserMutationService : Mutation {
+class AdminUserAuthMutationService : Mutation {
   private val authAdminUser = AuthAdminUser()
 
   suspend fun adminUserLogin(dfe: DataFetchingEnvironment, params: AdminUserLoginParams): AdminUserSerializer {
@@ -27,7 +27,7 @@ class AdminUserMutationService : Mutation {
     request.call.sessions.set(
       AdminUserAuthSession(
         adminUserId = adminUser.adminUserId.value,
-        validThroughTimestamp = Clock.System.now().plus(30.days).toString(),
+        validThroughTimestamp = Clock.System.now().plus(1.days).toString(),
         forceLogoutGeneration = adminUser.adminUserForceLogoutGeneration.value
       )
     )

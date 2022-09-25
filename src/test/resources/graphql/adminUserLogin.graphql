@@ -1,0 +1,11 @@
+mutation ($params: AdminUserLoginParamsInput!) {
+  adminUserAuth {
+    adminUserLogin(params: $params) {
+      adminUserCreatedAt
+      adminUserEmail
+      adminUserId
+      adminUserName
+      adminUserUpdatedAt
+    }
+  }
+}

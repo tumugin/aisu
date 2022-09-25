@@ -14,9 +14,15 @@ class AdminMutationService : Mutation {
     return AdminMutationServices()
   }
 
+  fun adminUserAuth(): AdminUserAuthMutationService {
+    return AdminUserAuthMutationService()
+  }
+
   class AdminMutationServices : Mutation {
-    fun adminUser(): AdminUserMutationService {
-      return AdminUserMutationService()
+    @Deprecated("This is dummy mutation.")
+    fun todo(): String {
+      // TODO: DELETE ME!
+      return "todo"
     }
   }
 }

@@ -32,6 +32,23 @@ interface PaginationSerializer {
   pageCount: Int!
 }
 
+type AdminMutationServices {
+  todo: String! @deprecated(reason : "This is dummy mutation.")
+}
+
+type AdminUserAuthMutationService {
+  adminUserLogin(params: AdminUserLoginParamsInput!): AdminUserSerializer!
+  adminUserLogout: String!
+}
+
+type AdminUserSerializer {
+  adminUserCreatedAt: String!
+  adminUserEmail: String!
+  adminUserId: ID!
+  adminUserName: String!
+  adminUserUpdatedAt: String!
+}
+
 type ChekiIdolCountSerializer {
   chekiCount: Int!
   idol: IdolSerializer
@@ -152,6 +169,8 @@ type LimitedUserSerializer {
 }
 
 type Mutation {
+  admin: AdminMutationServices!
+  adminUserAuth: AdminUserAuthMutationService!
   cheki: ChekiMutationServices!
   favoriteGroup: FavoriteGroupMutationServices!
   group: GroupMutationServices!
@@ -263,6 +282,11 @@ input AddOrUpdateRegulationParamsInput {
   regulationName: String!
   regulationStatus: RegulationStatus!
   regulationUnitPrice: Int!
+}
+
+input AdminUserLoginParamsInput {
+  email: String!
+  password: String!
 }
 
 input GetChekiMonthIdolCountParamsInput {
