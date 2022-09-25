@@ -21,8 +21,10 @@ class AdminUsersQueryService : Query {
 
   suspend fun getAdminUserList(dfe: DataFetchingEnvironment, page: Int): AdminUserPaginationSerializer {
     val adminUsers = getAdminUser.getAllAdminUsers(PaginatorParam(page.toLong(), 10))
-    return AdminUserPaginationSerializer(page,
+    return AdminUserPaginationSerializer(
+      page,
       adminUsers.pages.toInt(),
+      adminUsers.count.toInt(),
       adminUsers.result.map { AdminUserSerializer.from(it) })
   }
 }

@@ -1,0 +1,18 @@
+query GetAdminUserList($page: Int!) {
+  admin {
+    adminUsers {
+      getAdminUserList(page: $page) {
+        adminUsers {
+          adminUserCreatedAt
+          adminUserEmail
+          adminUserId
+          adminUserName
+          adminUserUpdatedAt
+        }
+        currentPage
+        pageCount
+        count
+      }
+    }
+  }
+}

@@ -28,6 +28,7 @@ directive @specifiedBy(
 ) on SCALAR
 
 interface PaginationSerializer {
+  count: Int!
   currentPage: Int!
   pageCount: Int!
 }
@@ -52,6 +53,7 @@ type AdminUserAuthQueryService {
 
 type AdminUserPaginationSerializer implements PaginationSerializer {
   adminUsers: [AdminUserSerializer!]!
+  count: Int!
   currentPage: Int!
   pageCount: Int!
 }
@@ -146,6 +148,7 @@ type GroupMutationServices {
 }
 
 type GroupPaginationSerializer implements PaginationSerializer {
+  count: Int!
   currentPage: Int!
   groups: [GroupSerializer!]!
   pageCount: Int!
@@ -168,6 +171,7 @@ type IdolMutationServices {
 }
 
 type IdolPaginationSerializer implements PaginationSerializer {
+  count: Int!
   currentPage: Int!
   idols: [IdolSerializer!]!
   pageCount: Int!

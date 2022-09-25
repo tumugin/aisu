@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 abstract class PaginationSerializer(
-  val currentPage: Int, val pageCount: Int
+  val currentPage: Int, val pageCount: Int, val count: Int
 ) {}

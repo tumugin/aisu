@@ -41,7 +41,11 @@ class GroupQueryService : Query {
         aisuGraphQLContext.userAuthSession!!.castedUserId, PaginatorParam(page.toLong(), 20)
       )
 
-      return GroupPaginationSerializer(page, groups.pages.toInt(), groups.result.map { GroupSerializer.from(it) })
+      return GroupPaginationSerializer(
+        page,
+        groups.pages.toInt(),
+        groups.count.toInt(),
+        groups.result.map { GroupSerializer.from(it) })
     }
   }
 }
