@@ -1,0 +1,13 @@
+query GetAdminUser($adminUserId: ID!) {
+  admin {
+    adminUsers {
+      getAdminUser(adminUserID: $adminUserId) {
+        adminUserCreatedAt
+        adminUserEmail
+        adminUserId
+        adminUserName
+        adminUserUpdatedAt
+      }
+    }
+  }
+}

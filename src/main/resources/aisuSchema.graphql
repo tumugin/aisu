@@ -28,6 +28,7 @@ directive @specifiedBy(
 ) on SCALAR
 
 interface PaginationSerializer {
+  count: Int!
   currentPage: Int!
   pageCount: Int!
 }
@@ -38,6 +39,7 @@ type AdminMutationServices {
 
 type AdminQueryServices {
   adminUserAuth: AdminUserAuthQueryService!
+  adminUsers: AdminUsersQueryService!
 }
 
 type AdminUserAuthMutationService {
@@ -49,12 +51,24 @@ type AdminUserAuthQueryService {
   currentAuthAdminUser: AdminUserSerializer!
 }
 
+type AdminUserPaginationSerializer implements PaginationSerializer {
+  adminUsers: [AdminUserSerializer!]!
+  count: Int!
+  currentPage: Int!
+  pageCount: Int!
+}
+
 type AdminUserSerializer {
   adminUserCreatedAt: String!
   adminUserEmail: String!
   adminUserId: ID!
   adminUserName: String!
   adminUserUpdatedAt: String!
+}
+
+type AdminUsersQueryService {
+  getAdminUser(adminUserID: ID!): AdminUserSerializer
+  getAdminUserList(page: Int!): AdminUserPaginationSerializer!
 }
 
 type ChekiIdolCountSerializer {
@@ -134,6 +148,7 @@ type GroupMutationServices {
 }
 
 type GroupPaginationSerializer implements PaginationSerializer {
+  count: Int!
   currentPage: Int!
   groups: [GroupSerializer!]!
   pageCount: Int!
@@ -156,6 +171,7 @@ type IdolMutationServices {
 }
 
 type IdolPaginationSerializer implements PaginationSerializer {
+  count: Int!
   currentPage: Int!
   idols: [IdolSerializer!]!
   pageCount: Int!

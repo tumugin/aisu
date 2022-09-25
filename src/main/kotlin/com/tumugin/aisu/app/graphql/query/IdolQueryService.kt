@@ -28,7 +28,10 @@ class IdolQueryService : Query {
 
   suspend fun getAllIdols(page: Int): IdolPaginationSerializer {
     val idols = getIdol.getAllPublicIdols(PaginatorParam(page.toLong(), 50))
-    return IdolPaginationSerializer(page, idols.pages.toInt(), idols.result.map { IdolSerializer.from(it) })
+    return IdolPaginationSerializer(page,
+      idols.pages.toInt(),
+      idols.count.toInt(),
+      idols.result.map { IdolSerializer.from(it) })
   }
 
   fun currentUserIdols(dfe: DataFetchingEnvironment): CurrentUserIdols {
@@ -51,7 +54,10 @@ class IdolQueryService : Query {
       val idols = getIdol.getAllUserCreatedIdols(
         aisuGraphQLContext.userAuthSession!!.castedUserId, PaginatorParam(page.toLong(), 50)
       )
-      return IdolPaginationSerializer(page, idols.pages.toInt(), idols.result.map { IdolSerializer.from(it) })
+      return IdolPaginationSerializer(page,
+        idols.pages.toInt(),
+        idols.count.toInt(),
+        idols.result.map { IdolSerializer.from(it) })
     }
   }
 }
