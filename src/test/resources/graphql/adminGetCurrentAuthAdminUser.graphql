@@ -1,0 +1,13 @@
+query AdminGetCurrentAuthAdminUser {
+  admin {
+    adminUserAuth {
+      currentAuthAdminUser {
+        adminUserCreatedAt
+        adminUserEmail
+        adminUserId
+        adminUserName
+        adminUserUpdatedAt
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ import com.expediagroup.graphql.generator.toSchema
 import com.tumugin.aisu.app.graphql.mutation.*
 import com.tumugin.aisu.app.graphql.mutation.admin.AdminMutationService
 import com.tumugin.aisu.app.graphql.query.*
+import com.tumugin.aisu.app.graphql.query.admin.AdminQueryService
 import com.tumugin.aisu.domain.app.config.AppConfigRepository
 import com.tumugin.aisu.domain.app.config.AppEnvironment
 import graphql.GraphQL
@@ -26,7 +27,8 @@ class GraphQLSchema : KoinComponent {
     TopLevelObject(IdolQueryService()),
     TopLevelObject(GroupQueryService()),
     TopLevelObject(RegulationQueryService()),
-    TopLevelObject(FavoriteGroupQueryService())
+    TopLevelObject(FavoriteGroupQueryService()),
+    TopLevelObject(AdminQueryService())
   )
   private val mutations = listOf(
     TopLevelObject(UserMutationService()),
