@@ -18,5 +18,9 @@ class AdminQueryService : Query {
     fun adminUserAuth(): AdminUserAuthQueryService {
       return AdminUserAuthQueryService()
     }
+
+    fun adminUsers(): AdminUsersQueryService {
+      return AdminUsersQueryService()
+    }
   }
 }
