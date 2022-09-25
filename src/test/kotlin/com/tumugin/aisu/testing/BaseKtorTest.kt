@@ -1,8 +1,10 @@
 package com.tumugin.aisu.testing
 
 import com.expediagroup.graphql.client.ktor.GraphQLKtorClient
+import com.tumugin.aisu.app.plugins.AdminUserAuthSession
 import com.tumugin.aisu.app.plugins.UserAuthSession
 import com.tumugin.aisu.createKtorModule
+import com.tumugin.aisu.domain.adminUser.AdminUser
 import com.tumugin.aisu.domain.app.csrf.CSRFRepository
 import com.tumugin.aisu.domain.user.User
 import com.tumugin.aisu.domain.user.UserRawPassword
@@ -48,6 +50,24 @@ abstract class BaseKtorTest : BaseDatabaseTest() {
       }
     }
     builder.client.get("/test-add-session").apply {
+      return headers.getAll("Set-Cookie")!!.map { parseServerSetCookieHeader(it) }
+        .map { (it.name).encodeURLParameter() + "=" + (it.value).encodeURLParameter() }.joinToString("; ")
+    }
+  }
+
+  suspend fun adminLoginAndGetCookieValue(builder: ApplicationTestBuilder, adminUser: AdminUser): String {
+    builder.routing {
+      get("/test-add-admin-session") {
+        call.sessions.set(
+          AdminUserAuthSession(
+            adminUserId = adminUser.adminUserId.value,
+            validThroughTimestamp = Clock.System.now().plus(30.days).toString(),
+            forceLogoutGeneration = adminUser.adminUserForceLogoutGeneration.value
+          )
+        )
+      }
+    }
+    builder.client.get("/test-add-admin-session").apply {
       return headers.getAll("Set-Cookie")!!.map { parseServerSetCookieHeader(it) }
         .map { (it.name).encodeURLParameter() + "=" + (it.value).encodeURLParameter() }.joinToString("; ")
     }

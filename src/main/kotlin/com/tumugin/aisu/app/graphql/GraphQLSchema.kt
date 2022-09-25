@@ -5,6 +5,7 @@ import com.expediagroup.graphql.generator.TopLevelObject
 import com.expediagroup.graphql.generator.scalars.IDValueUnboxer
 import com.expediagroup.graphql.generator.toSchema
 import com.tumugin.aisu.app.graphql.mutation.*
+import com.tumugin.aisu.app.graphql.mutation.admin.AdminMutationService
 import com.tumugin.aisu.app.graphql.query.*
 import com.tumugin.aisu.domain.app.config.AppConfigRepository
 import com.tumugin.aisu.domain.app.config.AppEnvironment
@@ -33,7 +34,8 @@ class GraphQLSchema : KoinComponent {
     TopLevelObject(IdolMutationService()),
     TopLevelObject(GroupMutationService()),
     TopLevelObject(RegulationMutationService()),
-    TopLevelObject(FavoriteGroupMutationService())
+    TopLevelObject(FavoriteGroupMutationService()),
+    TopLevelObject(AdminMutationService())
   )
   val graphQLSchema = toSchema(config, queries, mutations)
 
