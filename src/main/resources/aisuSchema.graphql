@@ -36,9 +36,17 @@ type AdminMutationServices {
   todo: String! @deprecated(reason : "This is dummy mutation.")
 }
 
+type AdminQueryServices {
+  adminUserAuth: AdminUserAuthQueryService!
+}
+
 type AdminUserAuthMutationService {
   adminUserLogin(params: AdminUserLoginParamsInput!): AdminUserSerializer!
   adminUserLogout: String!
+}
+
+type AdminUserAuthQueryService {
+  currentAuthAdminUser: AdminUserSerializer!
 }
 
 type AdminUserSerializer {
@@ -180,6 +188,7 @@ type Mutation {
 }
 
 type Query {
+  admin: AdminQueryServices!
   currentUser: UserSerializer
   currentUserChekis: UserChekis!
   currentUserGroups: CurrentUserGroups!
