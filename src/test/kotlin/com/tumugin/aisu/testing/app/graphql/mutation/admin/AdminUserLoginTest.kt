@@ -29,7 +29,7 @@ class AdminUserLoginTest : BaseKtorTest() {
       AdminUserLogin(
         AdminUserLogin.Variables(
           AdminUserLoginParamsInput(
-            email = adminUser.adminUserEmail.value, password = "aoisuzu"
+            email = adminUser.adminUserEmail.value, password = "password"
           )
         )
       )
