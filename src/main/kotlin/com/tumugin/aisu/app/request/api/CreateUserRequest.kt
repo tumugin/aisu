@@ -20,7 +20,7 @@ data class CreateUserRequest(val email: String, val password: String, val name: 
       pattern(ValidatorPatterns.RFC5322EmailPattern)
     }
     CreateUserRequest::password required {
-      minLength(1)
+      minLength(7)
     }
     CreateUserRequest::name required {
       minLength(1)
