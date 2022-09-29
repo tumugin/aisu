@@ -15,7 +15,7 @@ buildscript {
 }
 
 plugins {
-  val kotlinVersion = "1.7.10"
+  val kotlinVersion = "1.7.20"
   kotlin("jvm") version kotlinVersion
   application
   id("org.flywaydb.flyway") version "9.3.1"
