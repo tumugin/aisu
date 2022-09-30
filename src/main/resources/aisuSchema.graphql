@@ -34,7 +34,7 @@ interface PaginationSerializer {
 }
 
 type AdminMutationServices {
-  todo: String! @deprecated(reason : "This is dummy mutation.")
+  adminUser: AdminUserMutationService!
 }
 
 type AdminQueryServices {
@@ -49,6 +49,12 @@ type AdminUserAuthMutationService {
 
 type AdminUserAuthQueryService {
   currentAuthAdminUser: AdminUserSerializer!
+}
+
+type AdminUserMutationService {
+  addAdminUser(params: AddAdminUserParamsInput!): AdminUserSerializer!
+  updateAdminUser(adminUserId: ID!, params: UpdateAdminUserParamsInput!): AdminUserSerializer!
+  updateAdminUserPassword(adminUserId: ID!, params: UpdateAdminUserPasswordParamsInput!): AdminUserSerializer!
 }
 
 type AdminUserPaginationSerializer implements PaginationSerializer {
@@ -284,6 +290,12 @@ enum RegulationStatus {
   OPERATION_DELETED
 }
 
+input AddAdminUserParamsInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
 input AddOrUpdateChekiParamsInput {
   chekiQuantity: Int!
   chekiShotAt: String!
@@ -327,6 +339,15 @@ input GetUserChekisParamsInput {
   chekiShotAtEnd: String!
   chekiShotAtStart: String!
   idolId: ID
+}
+
+input UpdateAdminUserParamsInput {
+  email: String!
+  name: String!
+}
+
+input UpdateAdminUserPasswordParamsInput {
+  password: String!
 }
 
 input UserCreateParamsInput {

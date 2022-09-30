@@ -19,10 +19,8 @@ class AdminMutationService : Mutation {
   }
 
   class AdminMutationServices : Mutation {
-    @Deprecated("This is dummy mutation.")
-    fun todo(): String {
-      // TODO: DELETE ME!
-      return "todo"
+    fun adminUser(): AdminUserMutationService {
+      return AdminUserMutationService()
     }
   }
 }
