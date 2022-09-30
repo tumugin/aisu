@@ -19,6 +19,7 @@ import com.tumugin.aisu.infra.app.database.RedisPoolRepositoryImpl
 import com.tumugin.aisu.infra.app.session.SessionKVSRepositoryImpl
 import com.tumugin.aisu.infra.repository.exposed.repository.*
 import org.koin.core.context.startKoin
+import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import redis.clients.jedis.JedisPool
 

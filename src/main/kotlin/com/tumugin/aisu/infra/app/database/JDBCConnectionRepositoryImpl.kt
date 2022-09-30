@@ -8,16 +8,34 @@ import org.flywaydb.core.Flyway
 import org.jetbrains.exposed.sql.Database
 
 class JDBCConnectionRepositoryImpl(private val appConfigRepository: AppConfigRepository) : JDBCConnectionRepository {
+  var isConnected: Boolean = false
+    private set
+
+  private var hikariConnection: HikariDataSource? = null
+
   override val dataSource by lazy {
     HikariDataSource(this.createHikariConfig())
   }
 
+  private fun prepareHikari() {
+    if (hikariConnection == null) {
+      hikariConnection = HikariDataSource(this.createHikariConfig())
+    }
+  }
+
   override fun prepareORM() {
+    if (isConnected) {
+      return
+    }
+    prepareHikari()
     Database.connect(this.dataSource)
+    isConnected = true
   }
 
   override fun closeConnection() {
-    this.dataSource.close()
+    isConnected = false
+    this.hikariConnection?.close()
+    this.hikariConnection = null
   }
 
   override fun migrate() {

@@ -9,27 +9,30 @@ import org.junit.jupiter.api.BeforeEach
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
-import org.koin.test.get
 
 abstract class BaseDatabaseTest : KoinTest {
+  companion object {
+    // NOTE: 一度作ったコネクションは使い回す
+    private val jdbcConnectionRepository by lazy { GlobalContext.get().get<JDBCConnectionRepository>() }
+  }
+
   private fun setupApplication() {
     if (GlobalContext.getOrNull() !== null) {
       return
     }
     AisuDIModule.startTesting()
-    get<JDBCConnectionRepository>().prepareORM()
   }
 
   @BeforeEach
   fun beforeBaseTest() {
     setupApplication()
-    get<JDBCConnectionRepository>().migrate()
+    jdbcConnectionRepository.prepareORM()
+    jdbcConnectionRepository.migrate()
     truncateDatabase()
   }
 
   @AfterEach
   fun afterEach() {
-    get<JDBCConnectionRepository>().closeConnection()
     stopKoin()
   }
 

@@ -122,6 +122,7 @@ val flywayTestingDatabaseConfig: AbstractFlywayTask.() -> Unit = {
   url = dotEnvSetting["DB_JDBC_URL"]
   user = dotEnvSetting["DB_USERNAME"]
   password = dotEnvSetting["DB_PASSWORD"]
+  cleanDisabled = false
 }
 
 task<FlywayMigrateTask>("migrateTestingDatabase", flywayTestingDatabaseConfig)
