@@ -1,5 +1,4 @@
 import com.expediagroup.graphql.plugin.gradle.config.GraphQLSerializer
-import com.expediagroup.graphql.plugin.gradle.tasks.GraphQLGenerateClientTask
 import com.expediagroup.graphql.plugin.gradle.tasks.GraphQLGenerateTestClientTask
 import io.github.cdimascio.dotenv.dotenv
 import org.flywaydb.gradle.task.AbstractFlywayTask
@@ -38,6 +37,7 @@ val ktorVersion = "2.1.1"
 val logbackVersion = "1.4.1"
 val coroutineVersion = "1.6.4"
 val graphQLKotlinVersion = "6.2.5"
+val flywayVersion = "9.4.0"
 
 application {
   mainClass.set("com.tumugin.aisu.ApplicationKt")
@@ -76,6 +76,8 @@ dependencies {
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.4.0")
   implementation("redis.clients:jedis:4.2.3")
+  implementation("org.flywaydb:flyway-core:$flywayVersion")
+  implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
@@ -89,6 +91,7 @@ dependencies {
   testImplementation("io.mockk:mockk:1.13.2")
   testImplementation("io.insert-koin:koin-test:$koinVersion")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
+  testImplementation("com.h2database:h2:2.1.214")
 }
 
 val graphqlGenerateTestClient by tasks.getting(GraphQLGenerateTestClientTask::class) {
@@ -119,6 +122,7 @@ val flywayTestingDatabaseConfig: AbstractFlywayTask.() -> Unit = {
   url = dotEnvSetting["DB_JDBC_URL"]
   user = dotEnvSetting["DB_USERNAME"]
   password = dotEnvSetting["DB_PASSWORD"]
+  cleanDisabled = false
 }
 
 task<FlywayMigrateTask>("migrateTestingDatabase", flywayTestingDatabaseConfig)
