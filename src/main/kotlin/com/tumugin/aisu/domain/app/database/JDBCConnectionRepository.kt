@@ -6,4 +6,5 @@ interface JDBCConnectionRepository {
   val dataSource: DataSource
   fun prepareORM()
   fun closeConnection()
+  fun migrate()
 }

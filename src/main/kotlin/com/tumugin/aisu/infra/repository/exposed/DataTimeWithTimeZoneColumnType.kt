@@ -22,6 +22,7 @@ class DataTimeWithTimeZoneColumnType : ColumnType(), IDateColumnType {
       // タイムゾーン情報を付けられないMySQLのようなDBの場合には強制的にタイムゾーンをUTCとして扱う
       is LocalDateTime -> value.toInstant(UtcOffset.ZERO)
       is java.time.LocalDateTime -> value.toKotlinLocalDateTime().toInstant(UtcOffset.ZERO)
+      is java.sql.Timestamp -> value.toInstant().toKotlinInstant()
       else -> error("$value is not Instant or LocalDateTime!")
     }
   }

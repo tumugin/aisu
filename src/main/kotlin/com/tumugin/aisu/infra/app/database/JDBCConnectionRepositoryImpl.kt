@@ -4,6 +4,7 @@ import com.tumugin.aisu.domain.app.config.AppConfigRepository
 import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import org.flywaydb.core.Flyway
 import org.jetbrains.exposed.sql.Database
 
 class JDBCConnectionRepositoryImpl(private val appConfigRepository: AppConfigRepository) : JDBCConnectionRepository {
@@ -17,6 +18,15 @@ class JDBCConnectionRepositoryImpl(private val appConfigRepository: AppConfigRep
 
   override fun closeConnection() {
     this.dataSource.close()
+  }
+
+  override fun migrate() {
+    val flyway = Flyway.configure().dataSource(
+      appConfigRepository.appConfig.appConfigDatabaseJdbcUrl.value,
+      appConfigRepository.appConfig.appConfigDatabaseUserName.value,
+      appConfigRepository.appConfig.appConfigDatabasePassword.value,
+    ).load()
+    flyway.migrate()
   }
 
   private fun createHikariConfig(): HikariConfig {
