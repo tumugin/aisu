@@ -1,11 +1,10 @@
 package com.tumugin.aisu.testing.app.graphql.mutation.admin.adminUser
 
 import com.tumugin.aisu.domain.adminUser.AdminUser
-import com.tumugin.aisu.domain.adminUser.AdminUserId
 import com.tumugin.aisu.domain.adminUser.AdminUserRepository
 import com.tumugin.aisu.testing.BaseKtorTest
-import com.tumugin.aisu.testing.graphql.client.AddAdminUser
-import com.tumugin.aisu.testing.graphql.client.inputs.AddAdminUserParamsInput
+import com.tumugin.aisu.testing.graphql.client.UpdateAdminUser
+import com.tumugin.aisu.testing.graphql.client.inputs.UpdateAdminUserParamsInput
 import com.tumugin.aisu.testing.seeder.AdminUserSeeder
 import io.ktor.client.request.*
 import kotlinx.coroutines.test.runTest
@@ -14,8 +13,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.koin.core.component.inject
 
-class AddAdminUserTest : BaseKtorTest() {
-  private lateinit var adminUser: AdminUser
+class UpdateAdminUserTest : BaseKtorTest() {
+  lateinit var adminUser: AdminUser
   private val adminUserRepository by inject<AdminUserRepository>()
 
   @BeforeEach
@@ -24,29 +23,32 @@ class AddAdminUserTest : BaseKtorTest() {
   }
 
   @Test
-  fun testAddUser() = testAisuApplication {
+  fun testUpdateUser() = testAisuApplication {
+    val targetAdminUser = AdminUserSeeder().seedNonDuplicateAdminUser()
     val cookieValue = adminLoginAndGetCookieValue(this, adminUser)
     val graphQLClient = createGraphQLKtorClient(client)
     val result = graphQLClient.execute(
-      AddAdminUser(
-        AddAdminUser.Variables(
-          AddAdminUserParamsInput(
-            email = "test@example.com", name = "あおいすず", password = "aoisuzz_12_07"
+      UpdateAdminUser(
+        UpdateAdminUser.Variables(
+          targetAdminUser.adminUserId.value.toString(), UpdateAdminUserParamsInput(
+            "aoisuzz@example.com", "あおいすずちゃん！"
           )
         )
       )
     ) {
       header("Cookie", cookieValue)
     }
+
     Assertions.assertNull(result.errors)
-    Assertions.assertNotNull(result.data?.admin?.adminUser?.addAdminUser)
+    Assertions.assertNotNull(result.data?.admin?.adminUser?.updateAdminUser)
 
-    val addedAdminUserId = AdminUserId(
-      result.data?.admin?.adminUser?.addAdminUser?.adminUserId?.toLong() ?: throw Exception("unexpected value.")
+    val updatedTargetAdminUser = adminUserRepository.getAdminUserById(targetAdminUser.adminUserId)
+
+    Assertions.assertEquals(
+      "aoisuzz@example.com", updatedTargetAdminUser?.adminUserEmail?.value
     )
-
-    Assertions.assertNotNull(
-      adminUserRepository.getAdminUserById(addedAdminUserId)
+    Assertions.assertEquals(
+      "あおいすずちゃん！", updatedTargetAdminUser?.adminUserName?.value
     )
   }
 }
