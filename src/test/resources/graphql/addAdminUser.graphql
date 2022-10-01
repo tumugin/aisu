@@ -1,0 +1,13 @@
+mutation AddAdminUser($params: AddAdminUserParamsInput!) {
+  admin {
+    adminUser {
+      addAdminUser(params: $params) {
+        adminUserCreatedAt
+        adminUserEmail
+        adminUserId
+        adminUserName
+        adminUserUpdatedAt
+      }
+    }
+  }
+}
