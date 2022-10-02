@@ -1,0 +1,13 @@
+mutation UpdateAdminUser($adminUserId: ID!, $params: UpdateAdminUserParamsInput!) {
+  admin {
+    adminUser {
+      updateAdminUser(adminUserId: $adminUserId, params: $params) {
+        adminUserCreatedAt
+        adminUserEmail
+        adminUserId
+        adminUserName
+        adminUserUpdatedAt
+      }
+    }
+  }
+}
