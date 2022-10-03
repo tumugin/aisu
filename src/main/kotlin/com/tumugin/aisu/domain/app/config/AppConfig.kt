@@ -7,5 +7,8 @@ data class AppConfig(
   val appConfigRedisHost: AppConfigRedisHost,
   val appConfigRedisPort: AppConfigRedisPort,
   val appEnvironment: AppEnvironment,
-  val appConfigCookieSecretSignKey: AppConfigCookieSecretSignKey
+  val appConfigCookieSecretSignKey: AppConfigCookieSecretSignKey,
+  val appConfigAuth0ClientId: AppConfigAuth0ClientId,
+  val appConfigAuth0ClientSecret: AppConfigAuth0ClientSecret,
+  val appConfigAuth0Domain: AppConfigAuth0Domain
 )

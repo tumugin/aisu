@@ -1,5 +1,6 @@
 package com.tumugin.aisu.di
 
+import com.tumugin.aisu.app.client.AisuHTTPClient
 import com.tumugin.aisu.domain.adminUser.AdminUserRepository
 import com.tumugin.aisu.domain.app.config.AppConfigRepository
 import com.tumugin.aisu.domain.app.csrf.CSRFRepository
@@ -19,7 +20,6 @@ import com.tumugin.aisu.infra.app.database.RedisPoolRepositoryImpl
 import com.tumugin.aisu.infra.app.session.SessionKVSRepositoryImpl
 import com.tumugin.aisu.infra.repository.exposed.repository.*
 import org.koin.core.context.startKoin
-import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import redis.clients.jedis.JedisPool
 
@@ -49,6 +49,7 @@ object AisuDIModule {
     factory<FavoriteGroupRepository> { FavoriteGroupRepositoryImpl() }
     factory<ChekiRepository> { ChekiRepositoryImpl() }
     factory<AdminUserRepository> { AdminUserRepositoryImpl() }
+    factory { AisuHTTPClient() }
   }
 
   fun start() {
