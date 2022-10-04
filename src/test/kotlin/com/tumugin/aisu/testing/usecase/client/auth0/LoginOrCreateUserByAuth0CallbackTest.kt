@@ -25,8 +25,9 @@ class LoginOrCreateUserByAuth0CallbackTest : BaseKtorTest() {
 
   private fun mockAuth0API(): MockEngine {
     val mockEngine = MockEngine { request ->
+      val json = Json { encodeDefaults = true }
       respond(
-        content = ByteReadChannel(Json.encodeToString(MockUserInfo())),
+        content = ByteReadChannel(json.encodeToString(MockUserInfo())),
         status = HttpStatusCode.OK,
         headers = headersOf(HttpHeaders.ContentType, "application/json")
       )
@@ -46,7 +47,7 @@ class LoginOrCreateUserByAuth0CallbackTest : BaseKtorTest() {
         )
       )
       Assertions.assertEquals("Aoi Suzu", user.user.userName.value)
-      Assertions.assertEquals("12345|test", user.auth0UserId)
+      Assertions.assertEquals("12345|test", user.auth0UserId.value)
     }
   }
 
@@ -66,7 +67,7 @@ class LoginOrCreateUserByAuth0CallbackTest : BaseKtorTest() {
       )
       Assertions.assertEquals(existingUser.user.userId, user.user.userId)
       Assertions.assertEquals(existingUser.user.userName, user.user.userName)
-      Assertions.assertEquals("12345|test", user.auth0UserId)
+      Assertions.assertEquals("12345|test", user.auth0UserId.value)
     }
   }
 }
