@@ -8,6 +8,7 @@ import com.tumugin.aisu.domain.auth0.Auth0UserInfoRepository
 import com.tumugin.aisu.domain.auth0.Auth0UserName
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

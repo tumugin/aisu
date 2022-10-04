@@ -95,6 +95,7 @@ dependencies {
   testImplementation("io.insert-koin:koin-test:$koinVersion")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.1.214")
+  testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 }
 
 val graphqlGenerateTestClient by tasks.getting(GraphQLGenerateTestClientTask::class) {

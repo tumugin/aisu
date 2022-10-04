@@ -15,7 +15,7 @@ class Auth0CallbackController {
 
   suspend fun get(call: ApplicationCall) {
     val principal: OAuthAccessTokenResponse.OAuth2 = call.principal() ?: throw BadRequestException("Invalid token")
-    val user = loginOrCreateUserByAuth0Callback.getOrCreateUserByPrincipal(principal)
+    val user = loginOrCreateUserByAuth0Callback.getOrCreateUserByPrincipal(principal).user
     call.sessions.set(
       UserAuthSession(
         userId = user.userId.value,

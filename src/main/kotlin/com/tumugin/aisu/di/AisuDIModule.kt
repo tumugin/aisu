@@ -8,6 +8,7 @@ import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
 import com.tumugin.aisu.domain.app.database.RedisPoolRepository
 import com.tumugin.aisu.domain.app.session.SessionKVSRepository
 import com.tumugin.aisu.domain.auth0.Auth0UserInfoRepository
+import com.tumugin.aisu.domain.auth0.Auth0UserRepository
 import com.tumugin.aisu.domain.cheki.ChekiRepository
 import com.tumugin.aisu.domain.favoritegroup.FavoriteGroupRepository
 import com.tumugin.aisu.domain.group.GroupRepository
@@ -52,6 +53,7 @@ object AisuDIModule {
     factory<ChekiRepository> { ChekiRepositoryImpl() }
     factory<AdminUserRepository> { AdminUserRepositoryImpl() }
     factory<Auth0UserInfoRepository> { Auth0UserInfoRepositoryImpl() }
+    factory<Auth0UserRepository> { Auth0UserRepositoryImpl() }
     factory { AisuHTTPClient() }
   }
 
