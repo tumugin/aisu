@@ -57,6 +57,9 @@ dependencies {
   implementation("io.ktor:ktor-server-auth-jvm:$ktorVersion")
   implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
   implementation("io.ktor:ktor-server-double-receive:$ktorVersion")
+  implementation("io.ktor:ktor-client-core:$ktorVersion")
+  implementation("io.ktor:ktor-client-cio:$ktorVersion")
+  implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
   implementation("ch.qos.logback:logback-classic:$logbackVersion")
   // graphql
   implementation("com.expediagroup:graphql-kotlin-server:$graphQLKotlinVersion")

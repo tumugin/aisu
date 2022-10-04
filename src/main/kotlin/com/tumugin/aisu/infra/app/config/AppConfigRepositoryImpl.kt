@@ -21,6 +21,9 @@ class AppConfigRepositoryImpl(private val isTesting: Boolean = false) : AppConfi
       appConfigRedisPort = AppConfigRedisPort(env["REDIS_PORT"].toInt()),
       appEnvironment = AppEnvironment.valueOf(env["APP_ENV"].uppercase()),
       appConfigCookieSecretSignKey = AppConfigCookieSecretSignKey(env["COOKIE_SECRET_SIGN_KEY"]),
+      appConfigAuth0ClientId = AppConfigAuth0ClientId(env["AUTH0_CLIENT_ID"]),
+      appConfigAuth0ClientSecret = AppConfigAuth0ClientSecret(env["AUTH0_CLIENT_SECRET"]),
+      appConfigAuth0Domain = AppConfigAuth0Domain(env["AUTH0_DOMAIN"]),
     )
   }
 }
