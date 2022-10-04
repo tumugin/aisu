@@ -5,6 +5,7 @@ import com.tumugin.aisu.app.controller.GraphQLServerController
 import com.tumugin.aisu.app.controller.api.LoginController
 import com.tumugin.aisu.app.controller.api.LogoutController
 import com.tumugin.aisu.app.controller.api.MetadataController
+import com.tumugin.aisu.app.controller.auth0.Auth0CallbackController
 import com.tumugin.aisu.app.graphql.GraphQLSchema
 import com.tumugin.aisu.app.plugins.security.CsrfProtection
 import com.tumugin.aisu.app.plugins.security.OnlyDebugRoute
@@ -16,6 +17,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.locations.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.sessions.*
 import org.koin.core.Koin
 
 fun Application.configureRouting(koin: Koin) {
@@ -42,6 +44,7 @@ fun Application.configureRouting(koin: Koin) {
     get("/") {
       call.respondText("aisu")
     }
+
     // graphql
     noCsrfProtection {
       post("graphql") {
@@ -56,6 +59,19 @@ fun Application.configureRouting(koin: Koin) {
         this.call.respondText(
           buildPlaygroundHtml("graphql", "subscriptions"), ContentType.Text.Html
         )
+      }
+    }
+
+    // Auth0
+    authenticate("auth-oauth-auth0") {
+      route("auth0") {
+        get("/login") {
+          // Redirects to 'authorizeUrl' automatically
+          call.respondRedirect("/")
+        }
+        get("/callback") {
+          Auth0CallbackController().get(call)
+        }
       }
     }
   }

@@ -72,7 +72,7 @@ fun Application.configureAuthentication(koin: Koin) {
           requestMethod = HttpMethod.Post,
           clientId = appConfig.appConfigAuth0ClientId.value,
           clientSecret = appConfig.appConfigAuth0ClientSecret.value,
-          defaultScopes = listOf("profile", "email"),
+          defaultScopes = listOf("openid", "profile", "email"),
         )
       }
       client = aisuHTTPClient.httpClient
