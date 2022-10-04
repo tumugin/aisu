@@ -10,7 +10,7 @@ class Auth0UserSeeder : KoinComponent {
 
   suspend fun seedAuth0User(
     auth0UserId: Auth0UserId = Auth0UserId("${UUID.randomUUID()}|test"),
-    auth0UserName: Auth0UserName = Auth0UserName("藍井すず")
+    auth0UserName: Auth0UserName = Auth0UserName("Aoi Suzu")
   ): Auth0User {
     return auth0UserRepository.addAuth0User(
       Auth0UserInfo(
