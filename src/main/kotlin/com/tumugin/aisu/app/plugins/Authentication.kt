@@ -11,6 +11,7 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
 import org.koin.core.Koin
+import java.net.URL
 
 fun Application.configureAuthentication(koin: Koin) {
   val userRepository = koin.get<UserRepository>()
@@ -63,7 +64,7 @@ fun Application.configureAuthentication(koin: Koin) {
       }
     }
     oauth("auth-oauth-auth0") {
-      urlProvider = { "http://localhost:8080/callback" }
+      urlProvider = { URL(URL(appConfig.appConfigAppUrl.value), "/callback").toString() }
       providerLookup = {
         OAuthServerSettings.OAuth2ServerSettings(
           name = "auth0",
