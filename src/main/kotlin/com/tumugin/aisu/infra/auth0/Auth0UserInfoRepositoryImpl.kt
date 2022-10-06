@@ -27,13 +27,13 @@ class Auth0UserInfoRepositoryImpl : Auth0UserInfoRepository, KoinComponent {
         }
       }.body()
     return Auth0UserInfo(
-      Auth0UserId(userInfo.userId), Auth0UserName(userInfo.name)
+      Auth0UserId(userInfo.sub), Auth0UserName(userInfo.name)
     )
   }
 
   @Serializable
   private data class UserInfo(
-    @SerialName("user_id") val userId: String,
+    val sub: String,
     val name: String,
   )
 }

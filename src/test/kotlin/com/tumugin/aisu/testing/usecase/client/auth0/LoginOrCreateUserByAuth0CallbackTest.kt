@@ -19,7 +19,7 @@ import org.koin.test.mock.declare
 class LoginOrCreateUserByAuth0CallbackTest : BaseKtorTest() {
   @Serializable
   private data class MockUserInfo(
-    @SerialName("user_id") val userId: String = "12345|test",
+    val sub: String = "12345|test",
     val name: String = "Aoi Suzu",
   )
 
