@@ -10,5 +10,6 @@ data class AppConfig(
   val appConfigCookieSecretSignKey: AppConfigCookieSecretSignKey,
   val appConfigAuth0ClientId: AppConfigAuth0ClientId,
   val appConfigAuth0ClientSecret: AppConfigAuth0ClientSecret,
-  val appConfigAuth0Domain: AppConfigAuth0Domain
+  val appConfigAuth0Domain: AppConfigAuth0Domain,
+  val appConfigAppUrl: AppConfigAppUrl
 )
