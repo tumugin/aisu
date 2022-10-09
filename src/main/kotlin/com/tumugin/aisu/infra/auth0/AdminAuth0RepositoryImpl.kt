@@ -16,7 +16,7 @@ class AdminAuth0RepositoryImpl : AdminAuth0Repository, KoinComponent {
 
   override suspend fun getAuth0UserInfoByToken(token: AdminAuth0Token): AdminAuth0UserInfo {
     val userInfo: UserInfo =
-      aisuHTTPClient.httpClient.get("https://${appConfigRepository.appConfig.appConfigAuth0Domain.value}/userinfo") {
+      aisuHTTPClient.httpClient.get("https://${appConfigRepository.appConfig.appConfigAdminAuth0Domain.value}/userinfo") {
         headers {
           append(HttpHeaders.Authorization, "Bearer $token")
         }
