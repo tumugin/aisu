@@ -1,6 +1,7 @@
 package com.tumugin.aisu.di
 
 import com.tumugin.aisu.app.client.AisuHTTPClient
+import com.tumugin.aisu.domain.adminAuth0.AdminAuth0Repository
 import com.tumugin.aisu.domain.adminUser.AdminUserRepository
 import com.tumugin.aisu.domain.app.config.AppConfigRepository
 import com.tumugin.aisu.domain.app.csrf.CSRFRepository
@@ -20,6 +21,7 @@ import com.tumugin.aisu.infra.app.csrf.CSRFRepositoryImpl
 import com.tumugin.aisu.infra.app.database.JDBCConnectionRepositoryImpl
 import com.tumugin.aisu.infra.app.database.RedisPoolRepositoryImpl
 import com.tumugin.aisu.infra.app.session.SessionKVSRepositoryImpl
+import com.tumugin.aisu.infra.auth0.AdminAuth0RepositoryImpl
 import com.tumugin.aisu.infra.auth0.Auth0UserInfoRepositoryImpl
 import com.tumugin.aisu.infra.repository.exposed.repository.*
 import org.koin.core.context.startKoin
@@ -54,6 +56,7 @@ object AisuDIModule {
     factory<AdminUserRepository> { AdminUserRepositoryImpl() }
     factory<Auth0UserInfoRepository> { Auth0UserInfoRepositoryImpl() }
     factory<Auth0UserRepository> { Auth0UserRepositoryImpl() }
+    factory<AdminAuth0Repository> { AdminAuth0RepositoryImpl() }
     factory { AisuHTTPClient() }
   }
 

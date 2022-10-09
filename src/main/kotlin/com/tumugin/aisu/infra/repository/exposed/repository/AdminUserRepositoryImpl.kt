@@ -27,13 +27,13 @@ class AdminUserRepositoryImpl : AdminUserRepository {
   }
 
   override suspend fun addAdminUser(
-    adminUserName: AdminUserName, adminUserEmail: AdminUserEmail, adminUserPassword: AdminUserPassword
+    adminUserName: AdminUserName, adminUserEmail: AdminUserEmail, adminUserPassword: AdminUserPassword?
   ): AdminUser {
     return transaction {
       AdminUserModel.new {
         name = adminUserName.value
         email = adminUserEmail.value
-        password = adminUserPassword.value
+        password = adminUserPassword?.value
       }.toDomain()
     }
   }
@@ -42,13 +42,13 @@ class AdminUserRepositoryImpl : AdminUserRepository {
     adminUserId: AdminUserId,
     adminUserName: AdminUserName,
     adminUserEmail: AdminUserEmail,
-    adminUserPassword: AdminUserPassword
+    adminUserPassword: AdminUserPassword?
   ): AdminUser {
     return transaction {
       AdminUserModel[adminUserId.value].apply {
         name = adminUserName.value
         email = adminUserEmail.value
-        password = adminUserPassword.value
+        password = adminUserPassword?.value
       }.toDomain()
     }
   }

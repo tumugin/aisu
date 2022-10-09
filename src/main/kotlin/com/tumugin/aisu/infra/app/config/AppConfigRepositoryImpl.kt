@@ -24,7 +24,10 @@ class AppConfigRepositoryImpl(private val isTesting: Boolean = false) : AppConfi
       appConfigAuth0ClientId = AppConfigAuth0ClientId(env["AUTH0_CLIENT_ID"]),
       appConfigAuth0ClientSecret = AppConfigAuth0ClientSecret(env["AUTH0_CLIENT_SECRET"]),
       appConfigAuth0Domain = AppConfigAuth0Domain(env["AUTH0_DOMAIN"]),
-      appConfigAppUrl = AppConfigAppUrl(env["APP_URL"])
+      appConfigAppUrl = AppConfigAppUrl(env["APP_URL"]),
+      appConfigAdminAuth0ClientId = AppConfigAdminAuth0ClientId(env["ADMIN_AUTH0_CLIENT_ID"]),
+      appConfigAdminAuth0ClientSecret = AppConfigAdminAuth0ClientSecret(env["ADMIN_AUTH0_CLIENT_SECRET"]),
+      appConfigAdminAuth0Domain = AppConfigAdminAuth0Domain(env["ADMIN_AUTH0_DOMAIN"])
     )
   }
 }

@@ -11,14 +11,14 @@ interface AdminUserRepository {
   suspend fun getAdminUserByEmail(adminUserEmail: AdminUserEmail): AdminUser?
 
   suspend fun addAdminUser(
-    adminUserName: AdminUserName, adminUserEmail: AdminUserEmail, adminUserPassword: AdminUserPassword
+    adminUserName: AdminUserName, adminUserEmail: AdminUserEmail, adminUserPassword: AdminUserPassword?
   ): AdminUser
 
   suspend fun updateAdminUser(
     adminUserId: AdminUserId,
     adminUserName: AdminUserName,
     adminUserEmail: AdminUserEmail,
-    adminUserPassword: AdminUserPassword
+    adminUserPassword: AdminUserPassword?
   ): AdminUser
 
   suspend fun deleteAdminUser(adminUserId: AdminUserId)
