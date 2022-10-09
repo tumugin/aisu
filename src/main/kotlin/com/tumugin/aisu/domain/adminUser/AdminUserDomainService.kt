@@ -11,7 +11,7 @@ class AdminUserDomainService : KoinComponent {
   suspend fun createAdminUser(
     adminUserName: AdminUserName,
     adminUserEmail: AdminUserEmail,
-    adminUserPassword: AdminUserPassword,
+    adminUserPassword: AdminUserPassword?,
   ): AdminUser {
     val existingAdminUser = adminUserRepository.getAdminUserByEmail(adminUserEmail)
     if (existingAdminUser != null) {

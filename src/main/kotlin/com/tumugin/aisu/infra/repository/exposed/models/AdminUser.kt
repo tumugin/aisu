@@ -9,7 +9,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 object AdminUsers : ExposedTimestampIdTable("admin_users") {
   val name = varchar("name", 255)
   val email = varchar("email", 255)
-  val password = varchar("password", 255)
+  val password = varchar("password", 255).nullable()
   val forceLogoutGeneration = integer("force_logout_generation").default(0)
 }
 
@@ -26,7 +26,7 @@ class AdminUser(id: EntityID<Long>) : ExposedTimestampIdEntity(id, AdminUsers) {
       AdminUserId(this.id.value),
       AdminUserName(this.name),
       AdminUserEmail(this.email),
-      AdminUserPassword(this.password),
+      this.password?.let { AdminUserPassword(it) },
       AdminUserForceLogoutGeneration(this.forceLogoutGeneration),
       AdminUserCreatedAt(this.createdAt),
       AdminUserUpdatedAt(this.updatedAt)

@@ -29,7 +29,10 @@ class TestOnlyDebugRoute : BaseKtorTest() {
       originalRepository.appConfig.appConfigAuth0ClientId,
       originalRepository.appConfig.appConfigAuth0ClientSecret,
       originalRepository.appConfig.appConfigAuth0Domain,
-      originalRepository.appConfig.appConfigAppUrl
+      originalRepository.appConfig.appConfigAppUrl,
+      originalRepository.appConfig.appConfigAdminAuth0ClientId,
+      originalRepository.appConfig.appConfigAdminAuth0ClientSecret,
+      originalRepository.appConfig.appConfigAdminAuth0Domain
     )
     declare {
       mockedRepository
