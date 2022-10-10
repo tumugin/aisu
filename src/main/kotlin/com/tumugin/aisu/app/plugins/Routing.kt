@@ -2,6 +2,7 @@ package com.tumugin.aisu.app.plugins
 
 import com.expediagroup.graphql.generator.extensions.print
 import com.tumugin.aisu.app.controller.GraphQLServerController
+import com.tumugin.aisu.app.controller.admin.AdminAuth0CallbackController
 import com.tumugin.aisu.app.controller.api.LoginController
 import com.tumugin.aisu.app.controller.api.LogoutController
 import com.tumugin.aisu.app.controller.api.MetadataController
@@ -71,6 +72,17 @@ fun Application.configureRouting(koin: Koin) {
         }
         get("/callback") {
           Auth0CallbackController().get(call)
+        }
+      }
+    }
+    authenticate("admin-auth-oauth-auth0") {
+      route("admin/auth0") {
+        get("/login") {
+          // Redirects to 'authorizeUrl' automatically
+          call.respondRedirect("/")
+        }
+        get("/callback") {
+          AdminAuth0CallbackController().get(call)
         }
       }
     }
