@@ -78,5 +78,20 @@ fun Application.configureAuthentication(koin: Koin) {
       }
       client = aisuHTTPClient.httpClient
     }
+    oauth("admin-auth-oauth-auth0") {
+      urlProvider = { URL(URL(appConfig.appConfigAdminAppUrl.value), "/admin/auth0/callback").toString() }
+      providerLookup = {
+        OAuthServerSettings.OAuth2ServerSettings(
+          name = "admin-auth0",
+          authorizeUrl = "https://${appConfig.appConfigAdminAuth0Domain.value}/authorize",
+          accessTokenUrl = "https://${appConfig.appConfigAdminAuth0Domain.value}/oauth/token",
+          requestMethod = HttpMethod.Post,
+          clientId = appConfig.appConfigAdminAuth0ClientId.value,
+          clientSecret = appConfig.appConfigAdminAuth0ClientSecret.value,
+          defaultScopes = listOf("openid", "profile", "email"),
+        )
+      }
+      client = aisuHTTPClient.httpClient
+    }
   }
 }
