@@ -3,10 +3,12 @@ package com.tumugin.aisu.app.plugins
 import com.expediagroup.graphql.generator.extensions.print
 import com.tumugin.aisu.app.controller.GraphQLServerController
 import com.tumugin.aisu.app.controller.admin.AdminAuth0CallbackController
+import com.tumugin.aisu.app.controller.admin.AdminAuth0LogoutController
 import com.tumugin.aisu.app.controller.api.LoginController
 import com.tumugin.aisu.app.controller.api.LogoutController
 import com.tumugin.aisu.app.controller.api.MetadataController
 import com.tumugin.aisu.app.controller.auth0.Auth0CallbackController
+import com.tumugin.aisu.app.controller.auth0.Auth0LogoutController
 import com.tumugin.aisu.app.graphql.GraphQLSchema
 import com.tumugin.aisu.app.plugins.security.CsrfProtection
 import com.tumugin.aisu.app.plugins.security.OnlyDebugRoute
@@ -70,11 +72,16 @@ fun Application.configureRouting(koin: Koin) {
           // Redirects to 'authorizeUrl' automatically
           call.respondRedirect("/")
         }
+
         get("/callback") {
           Auth0CallbackController().get(call)
         }
       }
     }
+    post("/auth0/logout") {
+      Auth0LogoutController().post(call)
+    }
+
     authenticate("admin-auth-oauth-auth0") {
       route("admin/auth0") {
         get("/login") {
@@ -85,6 +92,9 @@ fun Application.configureRouting(koin: Koin) {
           AdminAuth0CallbackController().get(call)
         }
       }
+    }
+    post("/admin/auth0/logout") {
+      AdminAuth0LogoutController().post(call)
     }
   }
 }
