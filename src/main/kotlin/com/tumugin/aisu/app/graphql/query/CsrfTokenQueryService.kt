@@ -1,14 +1,12 @@
 package com.tumugin.aisu.app.graphql.query
 
 import com.expediagroup.graphql.server.operations.Query
-import com.tumugin.aisu.domain.app.csrf.CSRFRepository
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import com.tumugin.aisu.usecase.app.CSRFToken
 
-class CsrfTokenQueryService : Query, KoinComponent {
-  private val csrfRepository by inject<CSRFRepository>()
+class CsrfTokenQueryService : Query {
+  private val csrfToken = CSRFToken()
 
   suspend fun getCsrfToken(): String {
-    return csrfRepository.generateToken().value
+    return csrfToken.getCsrfToken().value
   }
 }
