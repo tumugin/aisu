@@ -28,7 +28,8 @@ class GraphQLSchema : KoinComponent {
     TopLevelObject(GroupQueryService()),
     TopLevelObject(RegulationQueryService()),
     TopLevelObject(FavoriteGroupQueryService()),
-    TopLevelObject(AdminQueryService())
+    TopLevelObject(AdminQueryService()),
+    TopLevelObject(CsrfTokenQueryService())
   )
   private val mutations = listOf(
     TopLevelObject(UserMutationService()),
