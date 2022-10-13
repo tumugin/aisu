@@ -21,6 +21,7 @@ plugins {
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
   id("com.expediagroup.graphql") version "6.2.5"
+  id("org.jetbrains.kotlinx.kover") version "0.6.1"
 }
 
 group = "com.tumugin"
