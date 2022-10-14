@@ -217,6 +217,7 @@ type Query {
   currentUserIdols: CurrentUserIdols!
   getAllIdols(page: Int!): IdolPaginationSerializer!
   getCheki(chekiId: ID!): ChekiSerializer!
+  getCsrfToken: String!
   getGroup(groupId: ID!): GroupSerializer!
   getIdol(idolId: ID!): IdolSerializer!
   getRegulation(regulationId: ID!): RegulationSerializer!
