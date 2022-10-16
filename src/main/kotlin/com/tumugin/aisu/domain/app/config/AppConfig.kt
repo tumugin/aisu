@@ -15,5 +15,6 @@ data class AppConfig(
   val appConfigAdminAuth0ClientId: AppConfigAdminAuth0ClientId,
   val appConfigAdminAuth0ClientSecret: AppConfigAdminAuth0ClientSecret,
   val appConfigAdminAuth0Domain: AppConfigAdminAuth0Domain,
-  val appConfigAdminAppUrl: AppConfigAdminAppUrl
+  val appConfigAdminAppUrl: AppConfigAdminAppUrl,
+  val appConfigSentryDsn: AppConfigSentryDsn
 )
