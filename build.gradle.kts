@@ -22,6 +22,7 @@ plugins {
   id("com.adarshr.test-logger") version "3.2.0"
   id("com.expediagroup.graphql") version "6.2.5"
   id("org.jetbrains.kotlinx.kover") version "0.6.1"
+  id("io.ktor.plugin") version "2.1.2"
 }
 
 group = "com.tumugin"
@@ -41,9 +42,14 @@ val graphQLKotlinVersion = "6.2.5"
 val flywayVersion = "9.4.0"
 
 application {
+  val dotEnvSetting = dotenv { ignoreIfMissing = true }
   mainClass.set("com.tumugin.aisu.ApplicationKt")
-  val isDevelopment: Boolean = project.ext.has("development")
+  val isDevelopment: Boolean = dotEnvSetting["APP_ENV"] != "production"
   applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+}
+
+java {
+  targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
@@ -134,3 +140,9 @@ val flywayTestingDatabaseConfig: AbstractFlywayTask.() -> Unit = {
 
 task<FlywayMigrateTask>("migrateTestingDatabase", flywayTestingDatabaseConfig)
 task<FlywayCleanTask>("cleanTestingDatabase", flywayTestingDatabaseConfig)
+
+ktor {
+  docker {
+    jreVersion.set(io.ktor.plugin.features.JreVersion.JRE_17)
+  }
+}
