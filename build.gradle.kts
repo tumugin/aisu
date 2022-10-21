@@ -9,7 +9,7 @@ buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.3.1")
     classpath("mysql:mysql-connector-java:8.0.30")
-    classpath("org.flywaydb:flyway-mysql:9.4.0")
+    classpath("org.flywaydb:flyway-mysql:9.5.1")
   }
 }
 
@@ -39,7 +39,7 @@ val ktorVersion = "2.1.2"
 val logbackVersion = "1.4.4"
 val coroutineVersion = "1.6.4"
 val graphQLKotlinVersion = "6.2.5"
-val flywayVersion = "9.4.0"
+val flywayVersion = "9.5.1"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
