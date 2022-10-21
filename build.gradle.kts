@@ -48,6 +48,10 @@ application {
   applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
+java {
+  targetCompatibility = JavaVersion.VERSION_17
+}
+
 dependencies {
   // ktor
   implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
@@ -136,3 +140,9 @@ val flywayTestingDatabaseConfig: AbstractFlywayTask.() -> Unit = {
 
 task<FlywayMigrateTask>("migrateTestingDatabase", flywayTestingDatabaseConfig)
 task<FlywayCleanTask>("cleanTestingDatabase", flywayTestingDatabaseConfig)
+
+ktor {
+  docker {
+    jreVersion.set(io.ktor.plugin.features.JreVersion.JRE_17)
+  }
+}
