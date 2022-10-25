@@ -88,7 +88,7 @@ dependencies {
   implementation("redis.clients:jedis:4.3.1")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
-  implementation("io.sentry:sentry:6.5.0")
+  implementation("io.sentry:sentry:6.6.0")
   implementation("io.sentry:sentry-kotlin-extensions:6.6.0")
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
