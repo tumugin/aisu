@@ -89,7 +89,7 @@ dependencies {
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   implementation("io.sentry:sentry:6.5.0")
-  implementation("io.sentry:sentry-kotlin-extensions:6.5.0")
+  implementation("io.sentry:sentry-kotlin-extensions:6.6.0")
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
