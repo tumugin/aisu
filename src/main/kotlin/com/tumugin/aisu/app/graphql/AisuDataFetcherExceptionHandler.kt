@@ -7,12 +7,22 @@ import graphql.execution.DataFetcherExceptionHandlerParameters
 import graphql.execution.DataFetcherExceptionHandlerResult
 import graphql.execution.ResultPath
 import graphql.language.SourceLocation
+import io.ktor.server.request.*
+import io.ktor.util.logging.*
 import java.util.concurrent.CompletableFuture
 
 class AisuDataFetcherExceptionHandler : DataFetcherExceptionHandler {
   override fun handleException(handlerParameters: DataFetcherExceptionHandlerParameters): CompletableFuture<DataFetcherExceptionHandlerResult> {
+    val isSupportedError = GraphQLErrorTypes.isSupportedType(handlerParameters.exception)
+
+    val request =
+      handlerParameters.dataFetchingEnvironment.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)
+    if (!isSupportedError) {
+      request.call.application.environment.log.error(handlerParameters.exception)
+    }
+
     val error = AisuGraphQLException(
-      if (GraphQLErrorTypes.isSupportedType(handlerParameters.exception)) {
+      if (isSupportedError) {
         handlerParameters.exception.message ?: "Exception while fetching data."
       } else {
         "Exception while fetching data."
@@ -21,7 +31,6 @@ class AisuDataFetcherExceptionHandler : DataFetcherExceptionHandler {
       GraphQLErrorTypes.fromException(handlerParameters.exception),
       handlerParameters.path
     )
-    handlerParameters.path
     val result = DataFetcherExceptionHandlerResult.newResult().error(error).build()
     return CompletableFuture.completedFuture(result)
   }
