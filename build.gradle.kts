@@ -8,7 +8,7 @@ import org.flywaydb.gradle.task.FlywayMigrateTask
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.3.1")
-    classpath("mysql:mysql-connector-java:8.0.30")
+    classpath("mysql:mysql-connector-java:8.0.31")
     classpath("org.flywaydb:flyway-mysql:9.7.0")
   }
 }
@@ -79,7 +79,7 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
-  implementation("mysql:mysql-connector-java:8.0.29")
+  implementation("mysql:mysql-connector-java:8.0.31")
   implementation("com.zaxxer:HikariCP:5.0.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
