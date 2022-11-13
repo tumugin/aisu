@@ -8,6 +8,7 @@ import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.plugins.doublereceive.*
 import org.koin.core.Koin
+import java.net.URI
 
 fun Application.configureHTTP(koin: Koin) {
   val appConfigRepository = koin.get<AppConfigRepository>()
@@ -32,6 +33,8 @@ fun Application.configureHTTP(koin: Koin) {
     // content type
     allowNonSimpleContentTypes = true
     // host
+    allowHost(URI(appConfigRepository.appConfig.appConfigAppUrl.value).host, listOf("http", "https"))
+    allowHost(URI(appConfigRepository.appConfig.appConfigAdminAppUrl.value).host, listOf("http", "https"))
     if (appConfigRepository.appConfig.appEnvironment === AppEnvironment.LOCAL) {
       anyHost()
     }
