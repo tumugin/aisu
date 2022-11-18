@@ -4,7 +4,7 @@ package com.tumugin.aisu.domain.app.config
 value class AppConfigCORSAllowHosts(val value: List<String>) {
   companion object {
     fun fromRawValue(rawValue: String): AppConfigCORSAllowHosts {
-      return AppConfigCORSAllowHosts(rawValue.split(",").map { it.trim() })
+      return AppConfigCORSAllowHosts(rawValue.split(",").map { it.trim() }.filter { it.isNotEmpty() })
     }
   }
 }
