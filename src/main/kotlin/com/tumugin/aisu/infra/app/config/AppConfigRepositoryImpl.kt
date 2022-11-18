@@ -29,7 +29,8 @@ class AppConfigRepositoryImpl(private val isTesting: Boolean = false) : AppConfi
       appConfigAdminAuth0ClientSecret = AppConfigAdminAuth0ClientSecret(env["ADMIN_AUTH0_CLIENT_SECRET"]),
       appConfigAdminAuth0Domain = AppConfigAdminAuth0Domain(env["ADMIN_AUTH0_DOMAIN"]),
       appConfigAdminAppUrl = AppConfigAdminAppUrl(env["ADMIN_APP_URL"]),
-      appConfigSentryDsn = AppConfigSentryDsn(env["SENTRY_DSN"])
+      appConfigSentryDsn = AppConfigSentryDsn(env["SENTRY_DSN"]),
+      appConfigCORSAllowHosts = AppConfigCORSAllowHosts.fromRawValue(env["CORS_ALLOW_HOSTS"]),
     )
   }
 }

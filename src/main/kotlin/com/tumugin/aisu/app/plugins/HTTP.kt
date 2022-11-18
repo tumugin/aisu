@@ -26,6 +26,8 @@ fun Application.configureHTTP(koin: Koin) {
     allowMethod(HttpMethod.Delete)
     allowMethod(HttpMethod.Patch)
     allowMethod(HttpMethod.Head)
+    // credentials
+    allowCredentials = true
     // header
     allowHeaders {
       true
@@ -35,8 +37,8 @@ fun Application.configureHTTP(koin: Koin) {
     // host
     allowHost(URI(appConfigRepository.appConfig.appConfigAppUrl.value).host, listOf("http", "https"))
     allowHost(URI(appConfigRepository.appConfig.appConfigAdminAppUrl.value).host, listOf("http", "https"))
-    if (appConfigRepository.appConfig.appEnvironment === AppEnvironment.LOCAL) {
-      anyHost()
+    appConfigRepository.appConfig.appConfigCORSAllowHosts.value.forEach {
+      allowHost(it, listOf("http", "https"))
     }
   }
 }
