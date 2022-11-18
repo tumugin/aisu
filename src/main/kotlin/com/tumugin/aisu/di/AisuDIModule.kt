@@ -1,6 +1,8 @@
 package com.tumugin.aisu.di
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.tumugin.aisu.app.client.AisuHTTPClient
+import com.tumugin.aisu.app.graphql.KtorGraphQLServer
 import com.tumugin.aisu.domain.adminAuth0.AdminAuth0Repository
 import com.tumugin.aisu.domain.adminUser.AdminUserRepository
 import com.tumugin.aisu.domain.app.config.AppConfigRepository
@@ -58,6 +60,8 @@ object AisuDIModule {
     factory<Auth0UserRepository> { Auth0UserRepositoryImpl() }
     factory<AdminAuth0Repository> { AdminAuth0RepositoryImpl() }
     factory { AisuHTTPClient() }
+    single { jacksonObjectMapper() }
+    single { KtorGraphQLServer.getGraphQLServer(get()) }
   }
 
   fun start() {
