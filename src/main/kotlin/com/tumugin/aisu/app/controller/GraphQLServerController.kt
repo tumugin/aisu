@@ -1,16 +1,18 @@
 package com.tumugin.aisu.app.controller
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.tumugin.aisu.app.graphql.KtorGraphQLServer.Companion.getGraphQLServer
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.tumugin.aisu.app.graphql.KtorGraphQLServer
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class GraphQLServerController {
-  private val mapper = jacksonObjectMapper()
+class GraphQLServerController : KoinComponent {
+  private val mapper by inject<ObjectMapper>()
+  private val ktorGraphQLServer by inject<KtorGraphQLServer>()
 
   suspend fun handle(applicationCall: ApplicationCall) {
-    val ktorGraphQLServer = getGraphQLServer(mapper)
     val result = ktorGraphQLServer.execute(applicationCall.request)
 
     if (result != null) {
