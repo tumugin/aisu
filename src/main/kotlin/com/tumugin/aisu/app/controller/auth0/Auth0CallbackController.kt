@@ -24,7 +24,7 @@ class Auth0CallbackController {
         forceLogoutGeneration = user.userForceLogoutGeneration.value
       )
     )
-    if (returnTo !== null) {
+    if (returnTo?.isNotBlank() == true) {
       call.respondRedirect(returnTo)
       return
     }
