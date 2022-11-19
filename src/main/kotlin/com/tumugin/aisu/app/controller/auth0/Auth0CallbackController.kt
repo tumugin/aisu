@@ -14,6 +14,7 @@ class Auth0CallbackController {
   private val loginOrCreateUserByAuth0Callback = LoginOrCreateUserByAuth0Callback()
 
   suspend fun get(call: ApplicationCall) {
+    val returnTo = call.request.queryParameters["return_to"]
     val principal: OAuthAccessTokenResponse.OAuth2 = call.principal() ?: throw BadRequestException("Invalid token")
     val user = loginOrCreateUserByAuth0Callback.getOrCreateUserByPrincipal(principal).user
     call.sessions.set(
@@ -23,6 +24,10 @@ class Auth0CallbackController {
         forceLogoutGeneration = user.userForceLogoutGeneration.value
       )
     )
+    if (returnTo !== null) {
+      call.respondRedirect(returnTo)
+      return
+    }
     call.respondRedirect("/")
   }
 }

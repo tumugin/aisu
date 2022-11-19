@@ -64,7 +64,14 @@ fun Application.configureAuthentication(koin: Koin) {
       }
     }
     oauth("auth-oauth-auth0") {
-      urlProvider = { URL(URL(appConfig.appConfigAppUrl.value), "/auth0/callback").toString() }
+      urlProvider = {
+        val returnTo = this.request.call.request.queryParameters["return_to"]
+        if (returnTo.isNullOrEmpty()) {
+          URL(URL(appConfig.appConfigAppUrl.value), "/auth0/callback").toString()
+        } else {
+          URL(URL(appConfig.appConfigAppUrl.value), "/auth0/callback?return_to=${returnTo}").toString()
+        }
+      }
       providerLookup = {
         OAuthServerSettings.OAuth2ServerSettings(
           name = "auth0",
