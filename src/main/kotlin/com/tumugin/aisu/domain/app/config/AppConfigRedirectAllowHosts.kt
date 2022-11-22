@@ -15,6 +15,7 @@ class AppConfigRedirectAllowHosts(val value: List<String>) {
 
   fun isAllowedByPath(path: String): Boolean {
     val uri = URI.create(path)
+    // リダイレクト先のhostが無い時は必然的に同ホストへ飛ばすので許可する
     if (uri.host == null) {
       return true
     }
