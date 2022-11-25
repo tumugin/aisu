@@ -7,9 +7,9 @@ import org.flywaydb.gradle.task.FlywayMigrateTask
 
 buildscript {
   dependencies {
-    classpath("io.github.cdimascio:dotenv-kotlin:6.3.1")
+    classpath("io.github.cdimascio:dotenv-kotlin:6.4.0")
     classpath("mysql:mysql-connector-java:8.0.31")
-    classpath("org.flywaydb:flyway-mysql:9.8.2")
+    classpath("org.flywaydb:flyway-mysql:9.8.3")
   }
 }
 
@@ -17,7 +17,7 @@ plugins {
   val kotlinVersion = "1.7.21"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "9.8.2"
+  id("org.flywaydb.flyway") version "9.8.3"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
   id("com.expediagroup.graphql") version "6.3.0"
@@ -39,7 +39,7 @@ val ktorVersion = "2.1.3"
 val logbackVersion = "1.4.5"
 val coroutineVersion = "1.6.4"
 val graphQLKotlinVersion = "6.3.0"
-val flywayVersion = "9.8.2"
+val flywayVersion = "9.8.3"
 val sentryVersion = "6.8.0"
 
 application {
@@ -84,7 +84,7 @@ dependencies {
   implementation("com.zaxxer:HikariCP:5.0.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-  implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
+  implementation("io.github.cdimascio:dotenv-kotlin:6.4.0")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.4.0")
   implementation("redis.clients:jedis:4.3.1")

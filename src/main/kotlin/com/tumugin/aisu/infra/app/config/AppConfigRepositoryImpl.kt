@@ -31,6 +31,7 @@ class AppConfigRepositoryImpl(private val isTesting: Boolean = false) : AppConfi
       appConfigAdminAppUrl = AppConfigAdminAppUrl(env["ADMIN_APP_URL"]),
       appConfigSentryDsn = AppConfigSentryDsn(env["SENTRY_DSN"]),
       appConfigCORSAllowHosts = AppConfigCORSAllowHosts.fromRawValue(env["CORS_ALLOW_HOSTS"]),
+      appConfigRedirectAllowHosts = AppConfigRedirectAllowHosts.fromRawValue(env["REDIRECT_ALLOW_HOSTS"]),
     )
   }
 }
