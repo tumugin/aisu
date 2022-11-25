@@ -6,9 +6,11 @@ import redis.clients.jedis.JedisPool
 
 class RedisPoolRepositoryImpl(private val appConfigRepository: AppConfigRepository) : RedisPoolRepository<JedisPool> {
   override val redisPool by lazy {
-    JedisPool(
+    val pool = JedisPool(
       appConfigRepository.appConfig.appConfigRedisHost.value,
       appConfigRepository.appConfig.appConfigRedisPort.value
     )
+    pool.testOnBorrow = true
+    pool
   }
 }
