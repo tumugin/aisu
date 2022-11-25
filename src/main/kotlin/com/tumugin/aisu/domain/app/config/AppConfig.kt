@@ -18,4 +18,5 @@ data class AppConfig(
   val appConfigAdminAppUrl: AppConfigAdminAppUrl,
   val appConfigSentryDsn: AppConfigSentryDsn,
   val appConfigCORSAllowHosts: AppConfigCORSAllowHosts,
+  val appConfigRedirectAllowHosts: AppConfigRedirectAllowHosts,
 )
