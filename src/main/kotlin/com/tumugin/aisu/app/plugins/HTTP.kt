@@ -18,6 +18,7 @@ fun Application.configureHTTP(koin: Koin) {
     header("X-Engine", "Ktor") // will send this header with each response
   }
   install(ForwardedHeaders)
+  install(XForwardedHeaders)
   install(CORS) {
     // method
     allowMethod(HttpMethod.Options)
