@@ -1,12 +1,12 @@
 package com.tumugin.aisu.app.plugins
 
 import com.tumugin.aisu.domain.app.config.AppConfigRepository
-import com.tumugin.aisu.domain.app.config.AppEnvironment
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.plugins.doublereceive.*
+import io.ktor.server.plugins.forwardedheaders.*
 import org.koin.core.Koin
 import java.net.URI
 
@@ -17,6 +17,7 @@ fun Application.configureHTTP(koin: Koin) {
   install(DefaultHeaders) {
     header("X-Engine", "Ktor") // will send this header with each response
   }
+  install(ForwardedHeaders)
   install(CORS) {
     // method
     allowMethod(HttpMethod.Options)
