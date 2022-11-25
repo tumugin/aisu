@@ -34,11 +34,13 @@ fun Application.configureSecurity(koin: Koin) {
   install(Sessions) {
     cookie<UserAuthSession>("USER_AUTH", KVSSessionStorage()) {
       cookie.httpOnly = true
+      cookie.secure = appConfigRepository.appConfig.appConfigAppUrl.isSecure()
       cookie.extensions["SameSite"] = "lax"
       transform(SessionTransportTransformerMessageAuthentication(secretSignKey))
     }
     cookie<AdminUserAuthSession>("ADMIN_USER_AUTH", KVSSessionStorage()) {
       cookie.httpOnly = true
+      cookie.secure = appConfigRepository.appConfig.appConfigAdminAppUrl.isSecure()
       cookie.extensions["SameSite"] = "lax"
       transform(SessionTransportTransformerMessageAuthentication(secretSignKey))
     }
