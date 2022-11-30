@@ -40,7 +40,7 @@ val logbackVersion = "1.4.5"
 val coroutineVersion = "1.6.4"
 val graphQLKotlinVersion = "6.3.0"
 val flywayVersion = "9.8.3"
-val sentryVersion = "6.8.0"
+val sentryVersion = "6.9.1"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
