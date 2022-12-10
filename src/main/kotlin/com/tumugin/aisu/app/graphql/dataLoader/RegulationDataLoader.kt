@@ -1,13 +1,11 @@
 package com.tumugin.aisu.app.graphql.dataLoader
 
 import com.expediagroup.graphql.dataloader.KotlinDataLoader
-import com.expediagroup.graphql.dataloader.instrumentation.extensions.getGraphQLContext
 import com.expediagroup.graphql.generator.scalars.ID
 import com.tumugin.aisu.app.graphql.AisuGraphQLContext
 import com.tumugin.aisu.app.serializer.client.RegulationSerializer
 import com.tumugin.aisu.domain.regulation.RegulationId
 import com.tumugin.aisu.usecase.client.regulation.GetRegulation
-import graphql.GraphQLContext
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.future.future
 import org.dataloader.DataLoader
