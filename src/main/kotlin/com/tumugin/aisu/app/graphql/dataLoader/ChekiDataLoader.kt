@@ -20,7 +20,7 @@ class ChekiDataLoader : KotlinDataLoader<ID, ChekiSerializer> {
   private val getCheki = GetCheki()
 
   override fun getDataLoader(): DataLoader<ID, ChekiSerializer> = DataLoaderFactory.newDataLoader { ids, dfe ->
-    val aisuGraphQLContext = dfe.getContext<AisuGraphQLContext>()
+    val aisuGraphQLContext = dfe.keyContextsList[0] as AisuGraphQLContext
     GlobalScope.future {
       val chekis =
         getCheki.getChekisByIds(

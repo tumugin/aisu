@@ -1,6 +1,7 @@
 package com.tumugin.aisu.app.graphql.dataLoader
 
 import com.expediagroup.graphql.dataloader.KotlinDataLoader
+import com.expediagroup.graphql.dataloader.instrumentation.extensions.getGraphQLContext
 import com.expediagroup.graphql.generator.scalars.ID
 import com.tumugin.aisu.app.graphql.AisuGraphQLContext
 import com.tumugin.aisu.app.serializer.client.RegulationSerializer
@@ -20,7 +21,7 @@ class RegulationDataLoader : KotlinDataLoader<ID, RegulationSerializer> {
 
   override fun getDataLoader(): DataLoader<ID, RegulationSerializer> =
     DataLoaderFactory.newDataLoader { ids, dfe ->
-      val aisuGraphQLContext = dfe.getContext<AisuGraphQLContext>()
+      val aisuGraphQLContext = dfe.keyContextsList[0] as AisuGraphQLContext
       GlobalScope.future {
         val regulations = getRegulation.getRegulationsByIds(
           aisuGraphQLContext.userAuthSession?.castedUserId,
