@@ -22,11 +22,11 @@ fun main() {
 
 fun createKtorModule(koin: Koin): Application.() -> Unit {
   val ktorModule: Application.() -> Unit = {
+    configureAuthentication(koin)
     configureRouting(koin)
     configureSerialization()
     configureHTTP(koin)
     configureSecurity(koin)
-    configureAuthentication(koin)
     configureSentry(koin)
   }
   return ktorModule

@@ -22,7 +22,7 @@ plugins {
   id("com.adarshr.test-logger") version "3.2.0"
   id("com.expediagroup.graphql") version "6.3.2"
   id("org.jetbrains.kotlinx.kover") version "0.6.1"
-  id("io.ktor.plugin") version "2.1.3"
+  id("io.ktor.plugin") version "2.2.1"
 }
 
 group = "com.tumugin"
@@ -35,7 +35,7 @@ repositories {
 
 val exposedVersion = "0.41.1"
 val koinVersion = "3.2.2"
-val ktorVersion = "2.1.3"
+val ktorVersion = "2.2.1"
 val logbackVersion = "1.4.5"
 val coroutineVersion = "1.6.4"
 val graphQLKotlinVersion = "6.3.0"
