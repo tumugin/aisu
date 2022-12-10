@@ -20,8 +20,7 @@ class GroupDataLoader : KotlinDataLoader<ID, GroupSerializer> {
 
   override fun getDataLoader(): DataLoader<ID, GroupSerializer> =
     DataLoaderFactory.newDataLoader { ids, dfe ->
-      val aisuGraphQLContext =
-        (dfe.keyContextsList.first() as GraphQLContext).get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = dfe.keyContextsList[0] as AisuGraphQLContext
       GlobalScope.future {
         val groups = getGroup.getGroupsById(
           aisuGraphQLContext.userAuthSession?.castedUserId,

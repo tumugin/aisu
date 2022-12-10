@@ -9,8 +9,9 @@ import io.ktor.server.request.*
 import io.ktor.server.sessions.*
 
 class KtorGraphQLContextFactory : GraphQLContextFactory<GraphQLContext, ApplicationRequest> {
-  override suspend fun generateContext(request: ApplicationRequest): GraphQLContext? {
-    return null
+  override suspend fun generateContext(request: ApplicationRequest): GraphQLContext {
+    // FIXME: GraphQLContextへの謎依存は7.xから外れるっぽいのでそのタイミングで依存を引き剥がす対応する
+    return AisuGraphQLContext(request.call.sessions.get(), request.call.sessions.get())
   }
 
   override suspend fun generateContextMap(request: ApplicationRequest): Map<*, Any> {
@@ -21,7 +22,8 @@ class KtorGraphQLContextFactory : GraphQLContextFactory<GraphQLContext, Applicat
   }
 }
 
-class AisuGraphQLContext(val userAuthSession: UserAuthSession?, val adminUserAuthSession: AdminUserAuthSession?) {
+class AisuGraphQLContext(val userAuthSession: UserAuthSession?, val adminUserAuthSession: AdminUserAuthSession?) :
+  GraphQLContext {
   companion object {
     fun createFromDataFetchingEnvironment(dfe: DataFetchingEnvironment): AisuGraphQLContext {
       return dfe.graphQlContext.get(AisuGraphQLContext::class)
