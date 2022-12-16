@@ -9,7 +9,7 @@ buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.0")
     classpath("mysql:mysql-connector-java:8.0.31")
-    classpath("org.flywaydb:flyway-mysql:9.10.0")
+    classpath("org.flywaydb:flyway-mysql:9.10.1")
   }
 }
 
@@ -39,7 +39,7 @@ val ktorVersion = "2.2.1"
 val logbackVersion = "1.4.5"
 val coroutineVersion = "1.6.4"
 val graphQLKotlinVersion = "6.3.2"
-val flywayVersion = "9.10.0"
+val flywayVersion = "9.10.1"
 val sentryVersion = "6.9.2"
 
 application {
