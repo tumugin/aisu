@@ -7,8 +7,7 @@ import redis.clients.jedis.JedisPool
 class RedisPoolRepositoryImpl(private val appConfigRepository: AppConfigRepository) : RedisPoolRepository<JedisPool> {
   override val redisPool by lazy {
     val pool = JedisPool(
-      appConfigRepository.appConfig.appConfigRedisHost.value,
-      appConfigRepository.appConfig.appConfigRedisPort.value
+      appConfigRepository.appConfig.appConfigRedisConnectionUrl.value
     )
     pool.testOnBorrow = true
     pool
