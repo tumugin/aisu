@@ -22,7 +22,7 @@ plugins {
   id("com.adarshr.test-logger") version "3.2.0"
   id("com.expediagroup.graphql") version "6.3.3"
   id("org.jetbrains.kotlinx.kover") version "0.6.1"
-  id("io.ktor.plugin") version "2.2.1"
+  id("io.ktor.plugin") version "2.2.2"
 }
 
 group = "com.tumugin"
