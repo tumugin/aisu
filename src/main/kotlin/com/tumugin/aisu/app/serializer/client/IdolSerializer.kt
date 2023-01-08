@@ -17,7 +17,7 @@ class IdolSerializer(
   @Serializable(with = IDSerializer::class)
   val userId: ID?,
   val idolName: String,
-  val idolStatus: String,
+  val idolStatus: IdolStatus,
   val idolCreatedAt: String,
   val idolUpdatedAt: String,
 ) {
@@ -31,7 +31,7 @@ class IdolSerializer(
         idolId = ID(idol.idolId.value.toString()),
         userId = idol.userId?.let { ID(it.value.toString()) },
         idolName = idol.idolName.value,
-        idolStatus = idol.idolStatus.name,
+        idolStatus = idol.idolStatus,
         idolCreatedAt = idol.idolCreatedAt.value.toString(),
         idolUpdatedAt = idol.idolUpdatedAt.value.toString(),
       )
