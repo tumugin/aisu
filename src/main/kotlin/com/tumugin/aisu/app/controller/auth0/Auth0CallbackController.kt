@@ -1,7 +1,7 @@
 package com.tumugin.aisu.app.controller.auth0
 
 import com.tumugin.aisu.app.plugins.UserAuthSession
-import com.tumugin.aisu.domain.app.config.AppConfig
+import com.tumugin.aisu.domain.app.config.AppConfigRepository
 import com.tumugin.aisu.usecase.client.auth0.LoginOrCreateUserByAuth0Callback
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -15,7 +15,7 @@ import kotlin.time.Duration.Companion.days
 
 class Auth0CallbackController : KoinComponent {
   private val loginOrCreateUserByAuth0Callback = LoginOrCreateUserByAuth0Callback()
-  private val appConfig by inject<AppConfig>()
+  private val appConfigRepository by inject<AppConfigRepository>()
 
   suspend fun get(call: ApplicationCall) {
     val returnTo = call.request.queryParameters["return_to"]
@@ -28,7 +28,12 @@ class Auth0CallbackController : KoinComponent {
         forceLogoutGeneration = user.userForceLogoutGeneration.value
       )
     )
-    if (returnTo?.isNotBlank() == true && appConfig.appConfigRedirectAllowHosts.isAllowedByPath(returnTo)) {
+    if (
+      returnTo?.isNotBlank() == true &&
+      appConfigRepository.appConfig.appConfigRedirectAllowHosts.isAllowedByPath(
+        returnTo
+      )
+    ) {
       call.respondRedirect(returnTo)
       return
     }
