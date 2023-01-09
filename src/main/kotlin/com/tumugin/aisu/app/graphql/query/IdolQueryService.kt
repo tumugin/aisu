@@ -23,24 +23,17 @@ class IdolQueryService : Query {
     val idol = getIdol.getIdol(
       aisuGraphQLContext.userAuthSession?.castedUserId, IdolId(idolId.value.toLong())
     ) ?: throw NotFoundException()
-    val groupIds = getIdol.getGroupIdsOfIdols(
-      aisuGraphQLContext.userAuthSession?.castedUserId, listOf(idol.idolId)
-    )[idol.idolId] ?: emptyList()
 
-    return IdolSerializer.from(idol, groupIds)
+    return IdolSerializer.from(idol)
   }
 
   suspend fun getAllIdols(dfe: DataFetchingEnvironment, page: Int): IdolPaginationSerializer {
-    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     val idols = getIdol.getAllPublicIdols(PaginatorParam(page.toLong(), 50))
-    val groupIds = getIdol.getGroupIdsOfIdols(
-      aisuGraphQLContext.userAuthSession?.castedUserId,
-      idols.result.map { idol -> idol.idolId })
 
     return IdolPaginationSerializer(page,
       idols.pages.toInt(),
       idols.count.toInt(),
-      idols.result.map { IdolSerializer.from(it, groupIds[it.idolId] ?: emptyList()) })
+      idols.result.map { IdolSerializer.from(it) })
   }
 
   fun currentUserIdols(dfe: DataFetchingEnvironment): CurrentUserIdols {
@@ -63,13 +56,11 @@ class IdolQueryService : Query {
       val idols = getIdol.getAllUserCreatedIdols(
         aisuGraphQLContext.userAuthSession!!.castedUserId, PaginatorParam(page.toLong(), 50)
       )
-      val groupIds = getIdol.getGroupIdsOfIdols(aisuGraphQLContext.userAuthSession.castedUserId,
-        idols.result.map { idol -> idol.idolId })
 
       return IdolPaginationSerializer(page,
         idols.pages.toInt(),
         idols.count.toInt(),
-        idols.result.map { IdolSerializer.from(it, groupIds[it.idolId] ?: emptyList()) })
+        idols.result.map { IdolSerializer.from(it) })
     }
   }
 }
