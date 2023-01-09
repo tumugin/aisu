@@ -2,13 +2,11 @@ package com.tumugin.aisu.app.serializer.client
 
 import com.expediagroup.graphql.generator.scalars.ID
 import com.expediagroup.graphql.server.extensions.getValueFromDataLoader
-import com.tumugin.aisu.app.graphql.dataLoader.IdolDataLoaderName
+import com.tumugin.aisu.app.graphql.dataLoader.GroupDataLoaderName
 import com.tumugin.aisu.app.graphql.dataLoader.LimitedUserDataLoaderName
-import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.idol.*
 import graphql.schema.DataFetchingEnvironment
-import kotlinx.serialization.Serializable
 import java.util.concurrent.CompletableFuture
 
 class IdolSerializer(
@@ -22,6 +20,10 @@ class IdolSerializer(
 ) {
   fun user(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<LimitedUserSerializer?> {
     return dataFetchingEnvironment.getValueFromDataLoader(LimitedUserDataLoaderName, userId)
+  }
+
+  fun groups(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<List<GroupSerializer>> {
+    return dataFetchingEnvironment.getValueFromDataLoader(GroupDataLoaderName, groupIds)
   }
 
   companion object {
