@@ -3,16 +3,34 @@
     <encoder>
       <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
     </encoder>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>DEBUG</level>
+      <onMatch>DENY</onMatch>
+    </filter>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>INFO</level>
+      <onMatch>ACCEPT</onMatch>
+    </filter>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>TRACE</level>
+      <onMatch>DENY</onMatch>
+    </filter>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>WARN</level>
+      <onMatch>ACCEPT</onMatch>
+    </filter>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR</level>
+      <onMatch>ACCEPT</onMatch>
+    </filter>
   </appender>
   <appender name="Sentry" class="io.sentry.logback.SentryAppender">
     <minimumEventLevel>WARN</minimumEventLevel>
     <minimumBreadcrumbLevel>DEBUG</minimumBreadcrumbLevel>
   </appender>
   <root level="trace">
-    <appender-ref ref="Sentry"/>
-  </root>
-  <root level="info">
     <appender-ref ref="STDOUT"/>
+    <appender-ref ref="Sentry"/>
   </root>
   <logger name="io.netty" level="INFO"/>
 </configuration>
