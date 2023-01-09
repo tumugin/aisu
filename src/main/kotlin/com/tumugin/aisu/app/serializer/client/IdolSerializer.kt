@@ -1,6 +1,5 @@
 package com.tumugin.aisu.app.serializer.client
 
-import com.expediagroup.graphql.dataloader.instrumentation.extensions.dispatchIfNeeded
 import com.expediagroup.graphql.generator.scalars.ID
 import com.expediagroup.graphql.server.extensions.getValueFromDataLoader
 import com.tumugin.aisu.app.graphql.dataLoader.GroupDataLoaderName
