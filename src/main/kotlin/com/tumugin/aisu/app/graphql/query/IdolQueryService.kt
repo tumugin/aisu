@@ -21,13 +21,15 @@ class IdolQueryService : Query {
     assertValidationResult(aisuIdsValidator.validate(idolId))
     val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     val idol = getIdol.getIdol(
-      aisuGraphQLContext?.userAuthSession?.castedUserId, IdolId(idolId.value.toLong())
+      aisuGraphQLContext.userAuthSession?.castedUserId, IdolId(idolId.value.toLong())
     ) ?: throw NotFoundException()
+
     return IdolSerializer.from(idol)
   }
 
-  suspend fun getAllIdols(page: Int): IdolPaginationSerializer {
+  suspend fun getAllIdols(dfe: DataFetchingEnvironment, page: Int): IdolPaginationSerializer {
     val idols = getIdol.getAllPublicIdols(PaginatorParam(page.toLong(), 50))
+
     return IdolPaginationSerializer(page,
       idols.pages.toInt(),
       idols.count.toInt(),
@@ -54,6 +56,7 @@ class IdolQueryService : Query {
       val idols = getIdol.getAllUserCreatedIdols(
         aisuGraphQLContext.userAuthSession!!.castedUserId, PaginatorParam(page.toLong(), 50)
       )
+
       return IdolPaginationSerializer(page,
         idols.pages.toInt(),
         idols.count.toInt(),

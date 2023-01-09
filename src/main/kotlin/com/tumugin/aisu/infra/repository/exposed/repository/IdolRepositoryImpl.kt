@@ -85,4 +85,12 @@ class IdolRepositoryImpl : IdolRepository {
       idol.groups.with(GroupModel::user).map { it.toDomain() }
     }
   }
+
+  override suspend fun getGroupIdsOfIdols(idolIds: List<IdolId>): Map<IdolId, List<GroupId>> {
+    return transaction {
+      IdolModel.find { Idols.id inList idolIds.map { it.value } }.with(IdolModel::groups).associate {
+        IdolId(it.id.value) to it.groups.map { group -> GroupId(group.id.value) }.toList()
+      }
+    }
+  }
 }

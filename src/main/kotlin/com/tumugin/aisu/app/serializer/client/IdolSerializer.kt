@@ -2,19 +2,15 @@ package com.tumugin.aisu.app.serializer.client
 
 import com.expediagroup.graphql.generator.scalars.ID
 import com.expediagroup.graphql.server.extensions.getValueFromDataLoader
-import com.tumugin.aisu.app.graphql.dataLoader.IdolDataLoaderName
+import com.tumugin.aisu.app.graphql.dataLoader.GroupDataLoaderName
+import com.tumugin.aisu.app.graphql.dataLoader.IdolGroupIdsDataLoaderName
 import com.tumugin.aisu.app.graphql.dataLoader.LimitedUserDataLoaderName
-import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.idol.*
 import graphql.schema.DataFetchingEnvironment
-import kotlinx.serialization.Serializable
 import java.util.concurrent.CompletableFuture
 
-@Serializable
 class IdolSerializer(
-  @Serializable(with = IDSerializer::class)
   val idolId: ID,
-  @Serializable(with = IDSerializer::class)
   val userId: ID?,
   val idolName: String,
   val idolStatus: IdolStatus,
@@ -23,6 +19,18 @@ class IdolSerializer(
 ) {
   fun user(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<LimitedUserSerializer?> {
     return dataFetchingEnvironment.getValueFromDataLoader(LimitedUserDataLoaderName, userId)
+  }
+
+  fun groups(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<List<GroupSerializer>> {
+    val idolGroupIdsDataLoader = dataFetchingEnvironment.getDataLoader<ID, List<ID>>(IdolGroupIdsDataLoaderName)
+    val groupDataLoader = dataFetchingEnvironment.getDataLoader<ID, GroupSerializer>(GroupDataLoaderName)
+
+    // FIXME: DataFetchingEnvironment.getValueFromDataLoaderとgetValuesFromDataLoaderの処理を模倣してContextを取ってきているがDeprecatedなのでその時が来たら直す
+    return idolGroupIdsDataLoader.load(idolId, dataFetchingEnvironment.getContext()).thenCompose { groupIds ->
+      groupDataLoader.loadMany(groupIds, listOf(dataFetchingEnvironment.getContext()))
+        // NOTE: dispatchIfNeededだと何故か動かない
+        .apply { dataFetchingEnvironment.dataLoaderRegistry.dispatchAll() }
+    }
   }
 
   companion object {
