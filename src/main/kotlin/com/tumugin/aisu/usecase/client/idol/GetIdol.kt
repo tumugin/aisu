@@ -4,6 +4,7 @@ import com.tumugin.aisu.domain.base.PaginatorParam
 import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.exception.HasNoPermissionException
 import com.tumugin.aisu.domain.group.Group
+import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.idol.Idol
 import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.idol.IdolRepository
@@ -43,5 +44,11 @@ class GetIdol : KoinComponent {
   suspend fun getGroupsOfIdol(sessionUserId: UserId?, idolId: IdolId): List<Group> {
     val groups = idolRepository.getGroupsOfIdol(idolId)
     return groups.filter { it.isVisibleToUser(sessionUserId) }
+  }
+
+  suspend fun getGroupIdsOfIdols(sessionUserId: UserId?, idolIds: List<IdolId>): Map<IdolId, List<GroupId>> {
+    val idols = idolRepository.getIdolsByIds(idolIds)
+    val filteredIdols = idols.filter { idol -> idol.isVisibleToUser(sessionUserId) }
+    return idolRepository.getGroupIdsOfIdols(filteredIdols.map { it.idolId })
   }
 }

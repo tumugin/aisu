@@ -21,17 +21,26 @@ class IdolQueryService : Query {
     assertValidationResult(aisuIdsValidator.validate(idolId))
     val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     val idol = getIdol.getIdol(
-      aisuGraphQLContext?.userAuthSession?.castedUserId, IdolId(idolId.value.toLong())
+      aisuGraphQLContext.userAuthSession?.castedUserId, IdolId(idolId.value.toLong())
     ) ?: throw NotFoundException()
-    return IdolSerializer.from(idol)
+    val groupIds = getIdol.getGroupIdsOfIdols(
+      aisuGraphQLContext.userAuthSession?.castedUserId, listOf(idol.idolId)
+    )[idol.idolId] ?: emptyList()
+
+    return IdolSerializer.from(idol, groupIds)
   }
 
-  suspend fun getAllIdols(page: Int): IdolPaginationSerializer {
+  suspend fun getAllIdols(dfe: DataFetchingEnvironment, page: Int): IdolPaginationSerializer {
+    val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
     val idols = getIdol.getAllPublicIdols(PaginatorParam(page.toLong(), 50))
+    val groupIds = getIdol.getGroupIdsOfIdols(
+      aisuGraphQLContext.userAuthSession?.castedUserId,
+      idols.result.map { idol -> idol.idolId })
+
     return IdolPaginationSerializer(page,
       idols.pages.toInt(),
       idols.count.toInt(),
-      idols.result.map { IdolSerializer.from(it) })
+      idols.result.map { IdolSerializer.from(it, groupIds[it.idolId] ?: emptyList()) })
   }
 
   fun currentUserIdols(dfe: DataFetchingEnvironment): CurrentUserIdols {
@@ -54,10 +63,13 @@ class IdolQueryService : Query {
       val idols = getIdol.getAllUserCreatedIdols(
         aisuGraphQLContext.userAuthSession!!.castedUserId, PaginatorParam(page.toLong(), 50)
       )
+      val groupIds = getIdol.getGroupIdsOfIdols(aisuGraphQLContext.userAuthSession.castedUserId,
+        idols.result.map { idol -> idol.idolId })
+
       return IdolPaginationSerializer(page,
         idols.pages.toInt(),
         idols.count.toInt(),
-        idols.result.map { IdolSerializer.from(it) })
+        idols.result.map { IdolSerializer.from(it, groupIds[it.idolId] ?: emptyList()) })
     }
   }
 }

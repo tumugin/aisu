@@ -31,4 +31,6 @@ interface IdolRepository {
   ): PaginatorResult<Idol>
 
   suspend fun getGroupsOfIdol(idolId: IdolId): List<Group>
+
+  suspend fun getGroupIdsOfIdols(idolIds: List<IdolId>): Map<IdolId, List<GroupId>>
 }

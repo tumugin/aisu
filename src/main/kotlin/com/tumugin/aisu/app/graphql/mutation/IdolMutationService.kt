@@ -9,6 +9,7 @@ import com.tumugin.aisu.app.graphql.params.assertValidationResult
 import com.tumugin.aisu.app.serializer.client.IdolSerializer
 import com.tumugin.aisu.domain.exception.NotAuthorizedException
 import com.tumugin.aisu.domain.idol.IdolId
+import com.tumugin.aisu.usecase.client.idol.GetIdol
 import com.tumugin.aisu.usecase.client.idol.WriteIdol
 import graphql.schema.DataFetchingEnvironment
 
@@ -25,6 +26,7 @@ class IdolMutationService : Mutation {
 
   class IdolMutationServices {
     private val writeIdol = WriteIdol()
+    private val getIdol = GetIdol()
 
     suspend fun addIdol(dfe: DataFetchingEnvironment, params: AddOrUpdateIdolParams): IdolSerializer {
       val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
@@ -32,8 +34,11 @@ class IdolMutationService : Mutation {
       val idol = writeIdol.addIdol(
         aisuGraphQLContext.userAuthSession!!.castedUserId, params.castedIdolName, params.idolStatus
       )
+      val groupIds = getIdol.getGroupIdsOfIdols(
+        aisuGraphQLContext.userAuthSession.castedUserId, listOf(idol.idolId)
+      )[idol.idolId] ?: emptyList()
 
-      return IdolSerializer.from(idol)
+      return IdolSerializer.from(idol, groupIds)
     }
 
     suspend fun updateIdol(dfe: DataFetchingEnvironment, idolId: ID, params: AddOrUpdateIdolParams): IdolSerializer {
@@ -46,8 +51,11 @@ class IdolMutationService : Mutation {
         params.castedIdolName,
         params.idolStatus
       )
+      val groupIds = getIdol.getGroupIdsOfIdols(
+        aisuGraphQLContext.userAuthSession.castedUserId, listOf(idol.idolId)
+      )[idol.idolId] ?: emptyList()
 
-      return IdolSerializer.from(idol)
+      return IdolSerializer.from(idol, groupIds)
     }
 
     suspend fun deleteIdol(dfe: DataFetchingEnvironment, idolId: ID): String {

@@ -18,15 +18,14 @@ class IdolDataLoader : KotlinDataLoader<ID, IdolSerializer> {
   override val dataLoaderName = IdolDataLoaderName
   private val getIdol = GetIdol()
 
-  override fun getDataLoader(): DataLoader<ID, IdolSerializer> =
-    DataLoaderFactory.newDataLoader { ids, dfe ->
-      val aisuGraphQLContext = dfe.keyContextsList[0] as AisuGraphQLContext
-      GlobalScope.future {
-        val idols = getIdol.getIdolsByIds(
-          aisuGraphQLContext.userAuthSession?.castedUserId,
-          ids.map { IdolId(it.value.toLong()) }
-        )
-        idols.map { IdolSerializer.from(it) }
-      }
+  override fun getDataLoader(): DataLoader<ID, IdolSerializer> = DataLoaderFactory.newDataLoader { ids, dfe ->
+    val aisuGraphQLContext = dfe.keyContextsList[0] as AisuGraphQLContext
+    GlobalScope.future {
+      val groupIds = getIdol.getGroupIdsOfIdols(aisuGraphQLContext.userAuthSession?.castedUserId,
+        ids.map { IdolId(it.value.toLong()) })
+      val idols =
+        getIdol.getIdolsByIds(aisuGraphQLContext.userAuthSession?.castedUserId, ids.map { IdolId(it.value.toLong()) })
+      idols.map { IdolSerializer.from(it, groupIds[it.idolId] ?: emptyList()) }
     }
+  }
 }
