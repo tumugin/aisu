@@ -2,6 +2,8 @@ package com.tumugin.aisu.testing.app.graphql.query.idolQueryService
 
 import com.tumugin.aisu.testing.BaseKtorTest
 import com.tumugin.aisu.testing.graphql.client.GetIdolQuery
+import com.tumugin.aisu.testing.seeder.GroupIdolSeeder
+import com.tumugin.aisu.testing.seeder.GroupSeeder
 import com.tumugin.aisu.testing.seeder.IdolSeeder
 import io.ktor.client.request.*
 import org.junit.jupiter.api.Assertions
@@ -13,6 +15,8 @@ class GetIdolTest : BaseKtorTest() {
     val seededUserAndLoginInfo = seedUserAndLoginAndGetCookieValue(this)
     val user = seededUserAndLoginInfo.user
     val idol = IdolSeeder().seedIdol(user.userId)
+    val group = GroupSeeder().seedGroup(user.userId)
+    GroupIdolSeeder().seedGroupIdol(group.groupId, idol.idolId)
 
     val graphQLClient = createGraphQLKtorClient(client)
     val result = graphQLClient.execute(
