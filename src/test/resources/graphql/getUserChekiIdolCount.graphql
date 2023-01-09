@@ -13,6 +13,18 @@ query GetUserChekiIdolCount($chekiShotAtStart: String!, $chekiShotAtEnd: String!
           userName
         }
         userId
+        groups {
+          groupCreatedAt
+          groupId
+          groupName
+          groupStatus
+          groupUpdatedAt
+          user {
+            userId
+            userName
+          }
+          userId
+        }
       }
       idolId
     }

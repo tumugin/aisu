@@ -11,6 +11,18 @@ mutation AddIdolMutation($params: AddOrUpdateIdolParamsInput!) {
         userId
         userName
       }
+      groups {
+        groupCreatedAt
+        groupId
+        groupName
+        groupStatus
+        groupUpdatedAt
+        user {
+          userId
+          userName
+        }
+        userId
+      }
     }
   }
 }

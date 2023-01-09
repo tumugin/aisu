@@ -13,6 +13,18 @@ query GetIdolsCreatedByUser($page:Int!) {
           userName
         }
         userId
+        groups {
+          groupCreatedAt
+          groupId
+          groupName
+          groupStatus
+          groupUpdatedAt
+          user {
+            userId
+            userName
+          }
+          userId
+        }
       }
       pageCount
     }
