@@ -7,6 +7,8 @@ import com.tumugin.aisu.app.plugins.UserAuthSession
 import graphql.schema.DataFetchingEnvironment
 import io.ktor.server.request.*
 import io.ktor.server.sessions.*
+import kotlinx.coroutines.currentCoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 class KtorGraphQLContextFactory : GraphQLContextFactory<GraphQLContext, ApplicationRequest> {
   override suspend fun generateContext(request: ApplicationRequest): GraphQLContext {
@@ -17,7 +19,8 @@ class KtorGraphQLContextFactory : GraphQLContextFactory<GraphQLContext, Applicat
   override suspend fun generateContextMap(request: ApplicationRequest): Map<*, Any> {
     return mapOf(
       AisuGraphQLContext::class to AisuGraphQLContext(request.call.sessions.get(), request.call.sessions.get()),
-      ApplicationRequest::class to request
+      ApplicationRequest::class to request,
+      CoroutineContext::class to currentCoroutineContext()
     )
   }
 }

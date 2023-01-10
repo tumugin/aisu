@@ -7,11 +7,11 @@ import com.tumugin.aisu.app.serializer.client.ChekiSerializer
 import com.tumugin.aisu.domain.cheki.ChekiId
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.usecase.client.cheki.GetCheki
-import graphql.GraphQLContext
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.future.future
 import org.dataloader.DataLoader
 import org.dataloader.DataLoaderFactory
+import kotlin.coroutines.CoroutineContext
 
 const val ChekiDataLoaderName = "ChekiDataLoader"
 
@@ -21,12 +21,15 @@ class ChekiDataLoader : KotlinDataLoader<ID, ChekiSerializer> {
 
   override fun getDataLoader(): DataLoader<ID, ChekiSerializer> = DataLoaderFactory.newDataLoader { ids, dfe ->
     val aisuGraphQLContext = dfe.keyContextsList[0] as AisuGraphQLContext
-    GlobalScope.future {
+    val coroutineContext = dfe.keyContexts[CoroutineContext::class] as CoroutineContext
+    CoroutineScope(coroutineContext).future {
       val chekis =
         getCheki.getChekisByIds(
           aisuGraphQLContext.userAuthSession?.userId?.let { UserId(it) },
           ids.map { ChekiId(it.value.toLong()) })
-      chekis.map { ChekiSerializer.from(it) }
+      ids.map{ chekiId ->
+        chekis.find { it.chekiId.value == chekiId.value.toLong() }?.let { ChekiSerializer.from(it) }
+      }
     }
   }
 }
