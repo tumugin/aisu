@@ -21,9 +21,9 @@ class IdolSerializer(
     return dataFetchingEnvironment.getValueFromDataLoader(LimitedUserDataLoaderName, userId)
   }
 
-  fun groups(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<List<GroupSerializer>> {
+  fun groups(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<List<GroupSerializer?>> {
     val idolGroupIdsDataLoader = dataFetchingEnvironment.getDataLoader<ID, List<ID>>(IdolGroupIdsDataLoaderName)
-    val groupDataLoader = dataFetchingEnvironment.getDataLoader<ID, GroupSerializer>(GroupDataLoaderName)
+    val groupDataLoader = dataFetchingEnvironment.getDataLoader<ID, GroupSerializer?>(GroupDataLoaderName)
 
     // FIXME: DataFetchingEnvironment.getValueFromDataLoaderとgetValuesFromDataLoaderの処理を模倣してContextを取ってきているがDeprecatedなのでその時が来たら直す
     return idolGroupIdsDataLoader.load(idolId, dataFetchingEnvironment.getContext()).thenCompose { groupIds ->

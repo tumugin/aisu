@@ -11,18 +11,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.future.future
 import org.dataloader.DataLoader
 import org.dataloader.DataLoaderFactory
-import kotlin.coroutines.CoroutineContext
 
 const val ChekiDataLoaderName = "ChekiDataLoader"
 
-class ChekiDataLoader : KotlinDataLoader<ID, ChekiSerializer> {
+class ChekiDataLoader : KotlinDataLoader<ID, ChekiSerializer?> {
   override val dataLoaderName = ChekiDataLoaderName
   private val getCheki = GetCheki()
 
-  override fun getDataLoader(): DataLoader<ID, ChekiSerializer> = DataLoaderFactory.newDataLoader { ids, dfe ->
+  override fun getDataLoader(): DataLoader<ID, ChekiSerializer?> = DataLoaderFactory.newDataLoader { ids, dfe ->
     val aisuGraphQLContext = dfe.keyContextsList[0] as AisuGraphQLContext
-    val coroutineContext = dfe.keyContexts[CoroutineContext::class] as CoroutineContext
-    CoroutineScope(coroutineContext).future {
+    CoroutineScope(aisuGraphQLContext.coroutineContext).future {
       val chekis =
         getCheki.getChekisByIds(
           aisuGraphQLContext.userAuthSession?.userId?.let { UserId(it) },
