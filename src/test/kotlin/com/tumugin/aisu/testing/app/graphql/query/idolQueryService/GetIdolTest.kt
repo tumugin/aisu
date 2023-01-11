@@ -27,6 +27,6 @@ class GetIdolTest : BaseKtorTest() {
 
     Assertions.assertNull(result.errors)
     Assertions.assertNotNull(result.data)
-    Assertions.assertEquals("群青の世界", result.data!!.getIdol.groups.first().groupName)
+    Assertions.assertEquals("群青の世界", result.data!!.getIdol.groups.first()?.groupName)
   }
 }
