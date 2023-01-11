@@ -20,7 +20,7 @@ plugins {
   id("org.flywaydb.flyway") version "9.11.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
-  id("com.expediagroup.graphql") version "6.3.3"
+  id("com.expediagroup.graphql") version "6.3.4"
   id("org.jetbrains.kotlinx.kover") version "0.6.1"
   id("io.ktor.plugin") version "2.2.2"
 }
@@ -38,7 +38,7 @@ val koinVersion = "3.3.2"
 val ktorVersion = "2.2.2"
 val logbackVersion = "1.4.5"
 val coroutineVersion = "1.6.4"
-val graphQLKotlinVersion = "6.3.3"
+val graphQLKotlinVersion = "6.3.4"
 val flywayVersion = "9.11.0"
 val sentryVersion = "6.11.0"
 
@@ -99,9 +99,9 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
   // test libs
   testImplementation("io.mockk:mockk:1.13.3")
   testImplementation("io.insert-koin:koin-test:$koinVersion")
