@@ -14,7 +14,7 @@ class LimitedUserSerializer(
   companion object {
     fun from(limitedUser: LimitedUser): LimitedUserSerializer {
       return LimitedUserSerializer(
-        userId = ID(limitedUser.userId.toString()),
+        userId = ID(limitedUser.userId.value.toString()),
         userName = limitedUser.userName.value
       )
     }
