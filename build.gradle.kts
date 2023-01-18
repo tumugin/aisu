@@ -7,7 +7,7 @@ import org.flywaydb.gradle.task.FlywayMigrateTask
 
 buildscript {
   dependencies {
-    classpath("io.github.cdimascio:dotenv-kotlin:6.4.0")
+    classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
     classpath("mysql:mysql-connector-java:8.0.31")
     classpath("org.flywaydb:flyway-mysql:9.11.0")
   }
@@ -20,7 +20,7 @@ plugins {
   id("org.flywaydb.flyway") version "9.11.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
-  id("com.expediagroup.graphql") version "6.3.4"
+  id("com.expediagroup.graphql") version "6.3.5"
   id("org.jetbrains.kotlinx.kover") version "0.6.1"
   id("io.ktor.plugin") version "2.2.2"
 }
@@ -35,12 +35,12 @@ repositories {
 
 val exposedVersion = "0.41.1"
 val koinVersion = "3.3.2"
-val ktorVersion = "2.3.0-eap-591"
+val ktorVersion = "2.3.0-eap-594"
 val logbackVersion = "1.4.5"
 val coroutineVersion = "1.6.4"
-val graphQLKotlinVersion = "6.3.4"
+val graphQLKotlinVersion = "6.3.5"
 val flywayVersion = "9.11.0"
-val sentryVersion = "6.11.0"
+val sentryVersion = "6.12.1"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
@@ -84,7 +84,7 @@ dependencies {
   implementation("com.zaxxer:HikariCP:5.0.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-  implementation("io.github.cdimascio:dotenv-kotlin:6.4.0")
+  implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.4.0")
   implementation("redis.clients:jedis:4.3.1")
