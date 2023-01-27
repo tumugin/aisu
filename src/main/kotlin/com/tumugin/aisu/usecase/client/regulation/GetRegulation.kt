@@ -50,4 +50,15 @@ class GetRegulation : KoinComponent {
       regulationStatues.filter { it != RegulationStatus.OPERATION_DELETED }
     )
   }
+
+  suspend fun getRegulationsByGroupIds(
+    sessionUserId: UserId?,
+    groupIds: List<GroupId>,
+    regulationStatues: List<RegulationStatus>
+  ): Map<GroupId, List<Regulation>> {
+    val regulations = regulationRepository.getRegulationsByGroupIds(groupIds, regulationStatues)
+    return regulations.flatMap { regulation ->
+      regulation.value.filter { r -> r.isVisibleToUser(sessionUserId) }
+    }.groupBy { it.groupId }
+  }
 }
