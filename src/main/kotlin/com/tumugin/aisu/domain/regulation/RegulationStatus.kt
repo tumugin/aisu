@@ -18,5 +18,6 @@ enum class RegulationStatus(s: String) {
 
   companion object {
     val allUserCanSpecifyStatus = listOf(NOT_ACTIVE, ACTIVE)
+    val allStatuses = listOf(NOT_ACTIVE, ACTIVE, OPERATION_DELETED)
   }
 }

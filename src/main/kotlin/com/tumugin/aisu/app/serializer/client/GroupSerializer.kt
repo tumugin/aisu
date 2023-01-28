@@ -3,6 +3,7 @@ package com.tumugin.aisu.app.serializer.client
 import com.expediagroup.graphql.generator.scalars.ID
 import com.expediagroup.graphql.server.extensions.getValueFromDataLoader
 import com.tumugin.aisu.app.graphql.dataLoader.LimitedUserDataLoaderName
+import com.tumugin.aisu.app.graphql.dataLoader.RegulationOfGroupDataLoaderName
 import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.group.Group
 import graphql.schema.DataFetchingEnvironment
@@ -11,10 +12,8 @@ import java.util.concurrent.CompletableFuture
 
 @Serializable
 data class GroupSerializer(
-  @Serializable(with = IDSerializer::class)
-  val groupId: ID,
-  @Serializable(with = IDSerializer::class)
-  val userId: ID?,
+  @Serializable(with = IDSerializer::class) val groupId: ID,
+  @Serializable(with = IDSerializer::class) val userId: ID?,
   val groupName: String,
   val groupStatus: String,
   val groupCreatedAt: String,
@@ -22,6 +21,10 @@ data class GroupSerializer(
 ) {
   fun user(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<LimitedUserSerializer?> {
     return dataFetchingEnvironment.getValueFromDataLoader(LimitedUserDataLoaderName, userId)
+  }
+
+  fun regulations(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<List<RegulationSerializer>> {
+    return dataFetchingEnvironment.getValueFromDataLoader(RegulationOfGroupDataLoaderName, groupId)
   }
 
   companion object {
