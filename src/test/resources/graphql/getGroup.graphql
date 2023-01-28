@@ -9,6 +9,15 @@ query GetGroupQuery($groupId: ID!) {
       userId
       userName
     }
+    regulations {
+      regulationComment
+      regulationCreatedAt
+      regulationId
+      regulationName
+      regulationStatus
+      regulationUnitPrice
+      regulationUpdatedAt
+    }
     userId
   }
 }
