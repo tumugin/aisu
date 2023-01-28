@@ -21,7 +21,8 @@ class KtorGraphQLServer(
           RegulationDataLoader(),
           GroupDataLoader(),
           ChekiDataLoader(),
-          IdolGroupIdsDataLoader()
+          IdolGroupIdsDataLoader(),
+          RegulationOfGroupDataLoader()
         )
       )
       val requestParser = KtorGraphQLRequestParser(mapper)

@@ -30,4 +30,8 @@ interface RegulationRepository {
   ): Regulation
 
   suspend fun getRegulationsByGroupId(groupId: GroupId, regulationStatues: List<RegulationStatus>): List<Regulation>
+
+  suspend fun getRegulationsByGroupIds(
+    groupIds: List<GroupId>, regulationStatues: List<RegulationStatus>
+  ): Map<GroupId, List<Regulation>>
 }

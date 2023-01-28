@@ -166,6 +166,7 @@ type GroupSerializer {
   groupName: String!
   groupStatus: String!
   groupUpdatedAt: String!
+  regulations: [RegulationSerializer!]!
   user: LimitedUserSerializer
   userId: ID
 }

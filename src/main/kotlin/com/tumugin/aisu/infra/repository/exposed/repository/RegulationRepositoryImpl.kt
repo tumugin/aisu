@@ -87,4 +87,16 @@ class RegulationRepositoryImpl : RegulationRepository {
       ).with(*withModel).map { it.toDomain() }
     }
   }
+
+  override suspend fun getRegulationsByGroupIds(
+    groupIds: List<GroupId>, regulationStatues: List<RegulationStatus>
+  ): Map<GroupId, List<Regulation>> {
+    return transaction {
+      val regulation =
+        RegulationModel.find(Regulations.group inList groupIds.map { g -> g.value } and Regulations.status.inList(
+          regulationStatues.map { it.name })
+        ).with(*withModel).map { it.toDomain() }
+      regulation.groupBy { it.groupId }
+    }
+  }
 }
