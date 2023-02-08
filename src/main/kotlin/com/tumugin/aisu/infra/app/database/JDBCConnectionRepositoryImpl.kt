@@ -13,9 +13,8 @@ class JDBCConnectionRepositoryImpl(private val appConfigRepository: AppConfigRep
 
   private var hikariConnection: HikariDataSource? = null
 
-  override val dataSource by lazy {
-    HikariDataSource(this.createHikariConfig())
-  }
+  override val dataSource
+    get() = this.hikariConnection ?: throw IllegalStateException("Hikari connection is not initialized.")
 
   private fun prepareHikari() {
     if (hikariConnection == null) {
