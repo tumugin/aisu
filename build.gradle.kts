@@ -34,13 +34,13 @@ repositories {
 }
 
 val exposedVersion = "0.41.1"
-val koinVersion = "3.3.2"
-val ktorVersion = "2.3.0-eap-602"
+val koinVersion = "3.3.3"
+val ktorVersion = "2.3.0-eap-603"
 val logbackVersion = "1.4.5"
 val coroutineVersion = "1.6.4"
 val graphQLKotlinVersion = "6.3.5"
 val flywayVersion = "9.14.1"
-val sentryVersion = "6.13.0"
+val sentryVersion = "6.13.1"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
