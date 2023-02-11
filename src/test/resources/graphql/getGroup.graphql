@@ -18,6 +18,18 @@ query GetGroupQuery($groupId: ID!) {
       regulationUnitPrice
       regulationUpdatedAt
     }
+    idols {
+      idolCreatedAt
+      idolId
+      idolName
+      idolStatus
+      idolUpdatedAt
+      user {
+        userId
+        userName
+      }
+      userId
+    }
     userId
   }
 }

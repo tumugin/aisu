@@ -90,6 +90,14 @@ class GroupRepositoryImpl : GroupRepository {
     }
   }
 
+  override suspend fun getIdolIdsOfGroups(groupIds: List<GroupId>): Map<GroupId, List<IdolId>> {
+    return transaction {
+      GroupIdolModel.find { GroupIdols.group inList groupIds.map { it.value } }
+        .groupBy { GroupId(it.group.id.value) }
+        .mapValues { it.value.map { IdolId(it.idol.id.value) } }
+    }
+  }
+
   override suspend fun addIdolToGroup(groupId: GroupId, idolId: IdolId) {
     return transaction {
       val idolModel = IdolModel[idolId.value]

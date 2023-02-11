@@ -22,6 +22,18 @@ query GetGroupsCreatedByUserQuery($page: Int!) {
           regulationUnitPrice
           regulationUpdatedAt
         }
+        idols {
+          idolCreatedAt
+          idolId
+          idolName
+          idolStatus
+          idolUpdatedAt
+          user {
+            userId
+            userName
+          }
+          userId
+        }
         userId
       }
     }

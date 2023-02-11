@@ -2,7 +2,9 @@ package com.tumugin.aisu.testing.app.graphql.query.groupQueryService
 
 import com.tumugin.aisu.testing.BaseKtorTest
 import com.tumugin.aisu.testing.graphql.client.GetGroupQuery
+import com.tumugin.aisu.testing.seeder.GroupIdolSeeder
 import com.tumugin.aisu.testing.seeder.GroupSeeder
+import com.tumugin.aisu.testing.seeder.IdolSeeder
 import com.tumugin.aisu.testing.seeder.RegulationSeeder
 import io.ktor.client.request.*
 import org.junit.jupiter.api.Assertions
@@ -14,6 +16,8 @@ class GetGroupTest : BaseKtorTest() {
     val seededUserAndLoginInfo = seedUserAndLoginAndGetCookieValue(this)
     val group = GroupSeeder().seedGroup(seededUserAndLoginInfo.user.userId)
     RegulationSeeder().seedRegulation(group.groupId, seededUserAndLoginInfo.user.userId)
+    val idol = IdolSeeder().seedIdol(seededUserAndLoginInfo.user.userId)
+    GroupIdolSeeder().seedGroupIdol(group.groupId, idol.idolId)
 
     val graphQLClient = createGraphQLKtorClient(client)
     val result = graphQLClient.execute(
@@ -25,5 +29,6 @@ class GetGroupTest : BaseKtorTest() {
     Assertions.assertNull(result.errors)
     Assertions.assertNotNull(result.data?.getGroup)
     Assertions.assertEquals(1, result.data?.getGroup?.regulations?.size)
+    Assertions.assertEquals(1, result.data?.getGroup?.idols?.size)
   }
 }
