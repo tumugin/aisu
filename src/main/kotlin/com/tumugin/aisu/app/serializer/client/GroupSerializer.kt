@@ -2,6 +2,8 @@ package com.tumugin.aisu.app.serializer.client
 
 import com.expediagroup.graphql.generator.scalars.ID
 import com.expediagroup.graphql.server.extensions.getValueFromDataLoader
+import com.tumugin.aisu.app.graphql.dataLoader.IdolDataLoaderName
+import com.tumugin.aisu.app.graphql.dataLoader.IdolGroupIdsDataLoaderName
 import com.tumugin.aisu.app.graphql.dataLoader.LimitedUserDataLoaderName
 import com.tumugin.aisu.app.graphql.dataLoader.RegulationOfGroupDataLoaderName
 import com.tumugin.aisu.app.serializer.IDSerializer
@@ -25,6 +27,17 @@ data class GroupSerializer(
 
   fun regulations(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<List<RegulationSerializer>> {
     return dataFetchingEnvironment.getValueFromDataLoader(RegulationOfGroupDataLoaderName, groupId)
+  }
+
+  fun idols(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<List<IdolSerializer?>> {
+    val groupIdolIdsDataLoader = dataFetchingEnvironment.getDataLoader<ID, List<ID>>(IdolGroupIdsDataLoaderName)
+    val idolDataLoader = dataFetchingEnvironment.getDataLoader<ID, IdolSerializer?>(IdolDataLoaderName)
+
+    return groupIdolIdsDataLoader.load(groupId, dataFetchingEnvironment.getContext()).thenCompose { idolIds ->
+      idolDataLoader.loadMany(idolIds, listOf(dataFetchingEnvironment.getContext()))
+        // NOTE: dispatchIfNeededだと何故か動かない
+        .apply { dataFetchingEnvironment.dataLoaderRegistry.dispatchAll() }
+    }
   }
 
   companion object {
