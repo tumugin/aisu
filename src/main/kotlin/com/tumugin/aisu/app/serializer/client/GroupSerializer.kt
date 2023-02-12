@@ -8,6 +8,7 @@ import com.tumugin.aisu.app.graphql.dataLoader.LimitedUserDataLoaderName
 import com.tumugin.aisu.app.graphql.dataLoader.RegulationOfGroupDataLoaderName
 import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.group.Group
+import com.tumugin.aisu.domain.group.GroupStatus
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.serialization.Serializable
 import java.util.concurrent.CompletableFuture
@@ -17,7 +18,7 @@ data class GroupSerializer(
   @Serializable(with = IDSerializer::class) val groupId: ID,
   @Serializable(with = IDSerializer::class) val userId: ID?,
   val groupName: String,
-  val groupStatus: String,
+  val groupStatus: GroupStatus,
   val groupCreatedAt: String,
   val groupUpdatedAt: String
 ) {
@@ -46,7 +47,7 @@ data class GroupSerializer(
         groupId = ID(group.groupId.value.toString()),
         userId = group.userId?.let { ID(it.value.toString()) },
         groupName = group.groupName.value,
-        groupStatus = group.groupStatus.toString(),
+        groupStatus = group.groupStatus,
         groupCreatedAt = group.groupCreatedAt.toString(),
         groupUpdatedAt = group.groupUpdatedAt.toString()
       )
