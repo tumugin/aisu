@@ -164,7 +164,7 @@ type GroupSerializer {
   groupCreatedAt: String!
   groupId: ID!
   groupName: String!
-  groupStatus: String!
+  groupStatus: GroupStatus!
   groupUpdatedAt: String!
   idols: [IdolSerializer]!
   regulations: [RegulationSerializer!]!
