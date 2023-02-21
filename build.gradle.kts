@@ -49,8 +49,8 @@ application {
   applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
-java {
-  targetCompatibility = JavaVersion.VERSION_17
+kotlin {
+  jvmToolchain(19)
 }
 
 dependencies {

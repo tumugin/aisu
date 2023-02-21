@@ -42,7 +42,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '18'
+          java-version: '19'
           cache: 'gradle'
       - run: ./gradlew build -x test --no-daemon
       - run: ./gradlew migrateTestingDatabase --no-daemon
