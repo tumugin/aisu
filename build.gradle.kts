@@ -50,7 +50,7 @@ application {
 }
 
 java {
-  targetCompatibility = JavaVersion.VERSION_18
+  targetCompatibility = JavaVersion.VERSION_19
 }
 
 dependencies {
