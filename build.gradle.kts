@@ -8,21 +8,21 @@ import org.flywaydb.gradle.task.FlywayMigrateTask
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
-    classpath("mysql:mysql-connector-java:8.0.32")
-    classpath("org.flywaydb:flyway-mysql:9.16.3")
+    classpath("mysql:mysql-connector-java:8.0.33")
+    classpath("org.flywaydb:flyway-mysql:9.17.0")
   }
 }
 
 plugins {
-  val kotlinVersion = "1.8.20"
+  val kotlinVersion = "1.8.21"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "9.16.3"
+  id("org.flywaydb.flyway") version "9.17.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
   id("com.expediagroup.graphql") version "6.4.0"
   id("org.jetbrains.kotlinx.kover") version "0.6.1"
-  id("io.ktor.plugin") version "2.2.4"
+  id("io.ktor.plugin") version "2.3.0"
 }
 
 group = "com.tumugin"
@@ -35,12 +35,12 @@ repositories {
 
 val exposedVersion = "0.41.1"
 val koinVersion = "3.4.0"
-val ktorVersion = "2.3.0-eap-638"
-val logbackVersion = "1.4.6"
+val ktorVersion = "2.3.1-eap-667"
+val logbackVersion = "1.4.7"
 val coroutineVersion = "1.6.4"
 val graphQLKotlinVersion = "6.4.0"
-val flywayVersion = "9.16.3"
-val sentryVersion = "6.17.0"
+val flywayVersion = "9.17.0"
+val sentryVersion = "6.18.1"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
@@ -80,7 +80,7 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
-  implementation("mysql:mysql-connector-java:8.0.32")
+  implementation("mysql:mysql-connector-java:8.0.33")
   implementation("com.zaxxer:HikariCP:5.0.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
@@ -99,11 +99,11 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
   // test libs
-  testImplementation("io.mockk:mockk:1.13.4")
+  testImplementation("io.mockk:mockk:1.13.5")
   testImplementation("io.insert-koin:koin-test:$koinVersion")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.1.214")
