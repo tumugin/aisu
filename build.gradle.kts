@@ -9,7 +9,7 @@ buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
     classpath("mysql:mysql-connector-java:8.0.33")
-    classpath("org.flywaydb:flyway-mysql:9.17.0")
+    classpath("org.flywaydb:flyway-mysql:9.19.1")
   }
 }
 
@@ -17,12 +17,12 @@ plugins {
   val kotlinVersion = "1.8.21"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "9.17.0"
+  id("org.flywaydb.flyway") version "9.19.1"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
-  id("com.expediagroup.graphql") version "6.4.1"
-  id("org.jetbrains.kotlinx.kover") version "0.6.1"
-  id("io.ktor.plugin") version "2.3.0"
+  id("com.expediagroup.graphql") version "6.5.0"
+  id("org.jetbrains.kotlinx.kover") version "0.7.1"
+  id("io.ktor.plugin") version "2.3.1"
 }
 
 group = "com.tumugin"
@@ -34,13 +34,13 @@ repositories {
 }
 
 val exposedVersion = "0.41.1"
-val koinVersion = "3.4.0"
-val ktorVersion = "2.3.1-eap-670"
+val koinVersion = "3.4.1"
+val ktorVersion = "2.3.1"
 val logbackVersion = "1.4.7"
-val coroutineVersion = "1.7.0"
-val graphQLKotlinVersion = "6.4.1"
-val flywayVersion = "9.17.0"
-val sentryVersion = "6.18.1"
+val coroutineVersion = "1.7.1"
+val graphQLKotlinVersion = "6.5.0"
+val flywayVersion = "9.19.1"
+val sentryVersion = "6.21.0"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
@@ -87,7 +87,7 @@ dependencies {
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.4.0")
-  implementation("redis.clients:jedis:4.3.2")
+  implementation("redis.clients:jedis:4.4.1")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   implementation("io.sentry:sentry:$sentryVersion")
