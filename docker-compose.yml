@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   mysql:
-    image: mariadb:10.11.3
+    image: mariadb:10.11.4
     ports:
       - "3306:3306"
     volumes:
@@ -12,7 +12,7 @@ services:
       - MYSQL_USER=aisu
       - MYSQL_PASSWORD=4ab4008b362142c391cc9e1ab98addc6b25f00f5
   redis:
-    image: redis:7.0.11
+    image: redis:7.0.12
     ports:
       - "6379:6379"
     volumes:

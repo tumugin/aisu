@@ -9,20 +9,20 @@ buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
     classpath("mysql:mysql-connector-java:8.0.33")
-    classpath("org.flywaydb:flyway-mysql:9.19.1")
+    classpath("org.flywaydb:flyway-mysql:9.20.1")
   }
 }
 
 plugins {
-  val kotlinVersion = "1.8.21"
+  val kotlinVersion = "1.9.0"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "9.19.1"
+  id("org.flywaydb.flyway") version "9.20.1"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
-  id("com.expediagroup.graphql") version "6.5.0"
-  id("org.jetbrains.kotlinx.kover") version "0.7.1"
-  id("io.ktor.plugin") version "2.3.1"
+  id("com.expediagroup.graphql") version "6.5.3"
+  id("org.jetbrains.kotlinx.kover") version "0.7.2"
+  id("io.ktor.plugin") version "2.3.2"
 }
 
 group = "com.tumugin"
@@ -34,13 +34,13 @@ repositories {
 }
 
 val exposedVersion = "0.41.1"
-val koinVersion = "3.4.1"
-val ktorVersion = "2.3.1"
-val logbackVersion = "1.4.7"
-val coroutineVersion = "1.7.1"
-val graphQLKotlinVersion = "6.5.0"
-val flywayVersion = "9.19.1"
-val sentryVersion = "6.21.0"
+val koinVersion = "3.4.2"
+val ktorVersion = "2.3.3-eap-734"
+val logbackVersion = "1.4.8"
+val coroutineVersion = "1.7.2"
+val graphQLKotlinVersion = "6.5.3"
+val flywayVersion = "9.20.1"
+val sentryVersion = "6.25.2"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
@@ -87,7 +87,7 @@ dependencies {
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.4.0")
-  implementation("redis.clients:jedis:4.4.1")
+  implementation("redis.clients:jedis:4.4.3")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   implementation("io.sentry:sentry:$sentryVersion")
@@ -106,7 +106,7 @@ dependencies {
   testImplementation("io.mockk:mockk:1.13.5")
   testImplementation("io.insert-koin:koin-test:$koinVersion")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-  testImplementation("com.h2database:h2:2.1.214")
+  testImplementation("com.h2database:h2:2.2.220")
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 }
 
