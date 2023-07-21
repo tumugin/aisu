@@ -9,7 +9,7 @@ buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
     classpath("mysql:mysql-connector-java:8.0.33")
-    classpath("org.flywaydb:flyway-mysql:9.20.1")
+    classpath("org.flywaydb:flyway-mysql:9.21.0")
   }
 }
 
@@ -17,7 +17,7 @@ plugins {
   val kotlinVersion = "1.9.0"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "9.20.1"
+  id("org.flywaydb.flyway") version "9.21.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
   id("com.expediagroup.graphql") version "6.5.3"
@@ -31,16 +31,17 @@ version = "1.0.0-SNAPSHOT"
 repositories {
   mavenCentral()
   maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
+  maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
 val exposedVersion = "0.41.1"
 val koinVersion = "3.4.2"
-val ktorVersion = "2.3.3-eap-734"
+val ktorVersion = "2.3.2"
 val logbackVersion = "1.4.8"
 val coroutineVersion = "1.7.2"
 val graphQLKotlinVersion = "6.5.3"
-val flywayVersion = "9.20.1"
-val sentryVersion = "6.25.2"
+val flywayVersion = "9.21.0"
+val sentryVersion = "6.26.0"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
