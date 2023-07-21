@@ -52,6 +52,13 @@ application {
 
 kotlin {
   jvmToolchain(19)
+
+  // Enable K2 compiler
+  sourceSets.all {
+    languageSettings {
+      languageVersion = "2.0"
+    }
+  }
 }
 
 dependencies {
