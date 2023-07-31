@@ -9,7 +9,7 @@ buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
     classpath("mysql:mysql-connector-java:8.0.33")
-    classpath("org.flywaydb:flyway-mysql:9.21.0")
+    classpath("org.flywaydb:flyway-mysql:9.21.1")
   }
 }
 
@@ -17,11 +17,11 @@ plugins {
   val kotlinVersion = "1.9.0"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "9.21.0"
+  id("org.flywaydb.flyway") version "9.21.1"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
   id("com.expediagroup.graphql") version "6.5.3"
-  id("org.jetbrains.kotlinx.kover") version "0.7.2"
+  id("org.jetbrains.kotlinx.kover") version "0.7.3"
   id("io.ktor.plugin") version "2.3.2"
 }
 
@@ -34,14 +34,14 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.41.1"
-val koinVersion = "3.4.2"
+val exposedVersion = "0.42.0"
+val koinVersion = "3.4.3"
 val ktorVersion = "2.3.2"
 val logbackVersion = "1.4.8"
-val coroutineVersion = "1.7.2"
+val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "6.5.3"
-val flywayVersion = "9.21.0"
-val sentryVersion = "6.26.0"
+val flywayVersion = "9.21.1"
+val sentryVersion = "6.27.0"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
@@ -107,12 +107,12 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
   // test libs
   testImplementation("io.mockk:mockk:1.13.5")
-  testImplementation("io.insert-koin:koin-test:3.4.1")
+  testImplementation("io.insert-koin:koin-test:3.4.3")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.2.220")
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
