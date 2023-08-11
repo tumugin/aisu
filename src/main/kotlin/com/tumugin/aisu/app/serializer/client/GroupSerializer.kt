@@ -2,10 +2,7 @@ package com.tumugin.aisu.app.serializer.client
 
 import com.expediagroup.graphql.generator.scalars.ID
 import com.expediagroup.graphql.server.extensions.getValueFromDataLoader
-import com.tumugin.aisu.app.graphql.dataLoader.IdolDataLoaderName
-import com.tumugin.aisu.app.graphql.dataLoader.IdolGroupIdsDataLoaderName
-import com.tumugin.aisu.app.graphql.dataLoader.LimitedUserDataLoaderName
-import com.tumugin.aisu.app.graphql.dataLoader.RegulationOfGroupDataLoaderName
+import com.tumugin.aisu.app.graphql.dataLoader.*
 import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.group.Group
 import com.tumugin.aisu.domain.group.GroupStatus
@@ -31,7 +28,7 @@ data class GroupSerializer(
   }
 
   fun idols(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<List<IdolSerializer?>> {
-    val groupIdolIdsDataLoader = dataFetchingEnvironment.getDataLoader<ID, List<ID>>(IdolGroupIdsDataLoaderName)
+    val groupIdolIdsDataLoader = dataFetchingEnvironment.getDataLoader<ID, List<ID>>(GroupIdolIdsDataLoaderName)
     val idolDataLoader = dataFetchingEnvironment.getDataLoader<ID, IdolSerializer?>(IdolDataLoaderName)
 
     return groupIdolIdsDataLoader.load(groupId, dataFetchingEnvironment.getContext()).thenCompose { idolIds ->

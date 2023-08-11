@@ -47,6 +47,12 @@ class WriteGroup : KoinComponent {
     if (!(group.isEditableByUser(sessionUserId) && idol.isEditableByUser(sessionUserId))) {
       throw HasNoPermissionException()
     }
+
+    val isExisting = groupRepository.getIdolsOfGroup(group.groupId).firstOrNull { it.idolId == idol.idolId } != null
+    if (isExisting) {
+      return
+    }
+
     return groupRepository.addIdolToGroup(
       group.groupId, idol.idolId
     )
