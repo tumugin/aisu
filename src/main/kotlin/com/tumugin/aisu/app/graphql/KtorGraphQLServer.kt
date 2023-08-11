@@ -20,6 +20,7 @@ class KtorGraphQLServer(
           LimitedUserDataLoader(),
           RegulationDataLoader(),
           GroupDataLoader(),
+          GroupIdolIdsDataLoader(),
           ChekiDataLoader(),
           IdolGroupIdsDataLoader(),
           RegulationOfGroupDataLoader()
