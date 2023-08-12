@@ -6,6 +6,7 @@ import com.tumugin.aisu.app.graphql.dataLoader.GroupDataLoaderName
 import com.tumugin.aisu.app.graphql.dataLoader.LimitedUserDataLoaderName
 import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.regulation.Regulation
+import com.tumugin.aisu.domain.regulation.RegulationStatus
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.serialization.Serializable
 import java.util.concurrent.CompletableFuture
@@ -21,7 +22,7 @@ data class RegulationSerializer(
   val regulationName: String,
   val regulationComment: String,
   val regulationUnitPrice: Int,
-  val regulationStatus: String,
+  val regulationStatus: RegulationStatus,
   val regulationCreatedAt: String,
   val regulationUpdatedAt: String
 ) {
@@ -42,7 +43,7 @@ data class RegulationSerializer(
         regulationName = regulation.regulationName.value,
         regulationComment = regulation.regulationComment.value,
         regulationUnitPrice = regulation.regulationUnitPrice.value,
-        regulationStatus = regulation.regulationStatus.toString(),
+        regulationStatus = regulation.regulationStatus,
         regulationCreatedAt = regulation.regulationCreatedAt.value.toString(),
         regulationUpdatedAt = regulation.regulationUpdatedAt.value.toString()
       )
