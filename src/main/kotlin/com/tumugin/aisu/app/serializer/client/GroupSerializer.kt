@@ -1,7 +1,9 @@
 package com.tumugin.aisu.app.serializer.client
 
+import com.expediagroup.graphql.generator.extensions.get
 import com.expediagroup.graphql.generator.scalars.ID
 import com.expediagroup.graphql.server.extensions.getValueFromDataLoader
+import com.tumugin.aisu.app.graphql.AisuGraphQLContext
 import com.tumugin.aisu.app.graphql.dataLoader.*
 import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.group.Group
@@ -31,8 +33,9 @@ data class GroupSerializer(
     val groupIdolIdsDataLoader = dataFetchingEnvironment.getDataLoader<ID, List<ID>>(GroupIdolIdsDataLoaderName)
     val idolDataLoader = dataFetchingEnvironment.getDataLoader<ID, IdolSerializer?>(IdolDataLoaderName)
 
-    return groupIdolIdsDataLoader.load(groupId, dataFetchingEnvironment.getContext()).thenCompose { idolIds ->
-      idolDataLoader.loadMany(idolIds, listOf(dataFetchingEnvironment.getContext()))
+    val context = dataFetchingEnvironment.graphQlContext.get<AisuGraphQLContext>()
+    return groupIdolIdsDataLoader.load(groupId, context).thenCompose { idolIds ->
+      idolDataLoader.loadMany(idolIds, Array(idolIds.size) { context }.toList())
         // NOTE: dispatchIfNeededだと何故か動かない
         .apply { dataFetchingEnvironment.dataLoaderRegistry.dispatchAll() }
     }
