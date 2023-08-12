@@ -23,9 +23,12 @@ class RegulationDataLoader : KotlinDataLoader<ID, RegulationSerializer?> {
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
         val regulations = getRegulation.getRegulationsByIds(
           aisuGraphQLContext.userAuthSession?.castedUserId,
-          ids.map { RegulationId(it.value.toLong()) }
+          ids.filterNotNull().map { RegulationId(it.value.toLong()) }
         )
         ids.map { regulationId ->
+          if (regulationId == null) {
+            return@map null
+          }
           regulations.find { it.regulationId.value == regulationId.value.toLong() }?.let {
             RegulationSerializer.from(it)
           }

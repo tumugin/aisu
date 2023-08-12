@@ -35,7 +35,7 @@ data class ChekiSerializer(
   }
 
   fun regulation(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<RegulationSerializer?> {
-    return dataFetchingEnvironment.getValueFromDataLoader(RegulationDataLoaderName, userId)
+    return dataFetchingEnvironment.getValueFromDataLoader(RegulationDataLoaderName, regulationId)
   }
 
   companion object {
