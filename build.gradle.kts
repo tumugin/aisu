@@ -111,7 +111,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
   // test libs
-  testImplementation("io.mockk:mockk:1.13.5")
+  testImplementation("io.mockk:mockk:1.13.7")
   testImplementation("io.insert-koin:koin-test:3.4.3")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.2.220")
