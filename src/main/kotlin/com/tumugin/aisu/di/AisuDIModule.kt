@@ -10,6 +10,7 @@ import com.tumugin.aisu.domain.app.csrf.CSRFRepository
 import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
 import com.tumugin.aisu.domain.app.database.RedisPoolRepository
 import com.tumugin.aisu.domain.app.session.SessionKVSRepository
+import com.tumugin.aisu.domain.auth0.Auth0Repository
 import com.tumugin.aisu.domain.auth0.Auth0UserInfoRepository
 import com.tumugin.aisu.domain.auth0.Auth0UserRepository
 import com.tumugin.aisu.domain.cheki.ChekiRepository
@@ -24,6 +25,7 @@ import com.tumugin.aisu.infra.app.database.JDBCConnectionRepositoryImpl
 import com.tumugin.aisu.infra.app.database.RedisPoolRepositoryImpl
 import com.tumugin.aisu.infra.app.session.SessionKVSRepositoryImpl
 import com.tumugin.aisu.infra.auth0.AdminAuth0RepositoryImpl
+import com.tumugin.aisu.infra.auth0.Auth0RepositoryImpl
 import com.tumugin.aisu.infra.auth0.Auth0UserInfoRepositoryImpl
 import com.tumugin.aisu.infra.repository.exposed.repository.*
 import org.koin.core.context.startKoin
@@ -58,6 +60,7 @@ object AisuDIModule {
     factory<AdminUserRepository> { AdminUserRepositoryImpl() }
     factory<Auth0UserInfoRepository> { Auth0UserInfoRepositoryImpl() }
     factory<Auth0UserRepository> { Auth0UserRepositoryImpl() }
+    factory<Auth0Repository> { Auth0RepositoryImpl() }
     factory<AdminAuth0Repository> { AdminAuth0RepositoryImpl() }
     factory { AisuHTTPClient() }
     single { jacksonObjectMapper() }
