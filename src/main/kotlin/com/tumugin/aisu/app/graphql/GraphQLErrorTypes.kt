@@ -6,6 +6,7 @@ import com.tumugin.aisu.domain.exception.NotAuthorizedException
 import com.tumugin.aisu.domain.user.UserAlreadyExistException
 import graphql.ErrorClassification
 import io.ktor.server.plugins.*
+import java.lang.reflect.InvocationTargetException
 
 enum class GraphQLErrorTypes(v: String) : ErrorClassification {
   BadRequest("BAD_REQUEST"),
@@ -19,6 +20,7 @@ enum class GraphQLErrorTypes(v: String) : ErrorClassification {
   companion object {
     fun fromException(exception: Throwable): GraphQLErrorTypes {
       return when (exception) {
+        is InvocationTargetException -> fromException(exception.targetException)
         is BadRequestException -> BadRequest
         is NotFoundException -> NotFound
         is com.tumugin.aisu.domain.exception.NotFoundException -> NotFound

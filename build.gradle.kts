@@ -101,6 +101,7 @@ dependencies {
   implementation("io.sentry:sentry:$sentryVersion")
   implementation("io.sentry:sentry-kotlin-extensions:$sentryVersion")
   implementation("io.sentry:sentry-logback:$sentryVersion")
+  implementation("io.sentry:sentry-jdbc:$sentryVersion")
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
