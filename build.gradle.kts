@@ -9,7 +9,7 @@ buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
     classpath("mysql:mysql-connector-java:8.0.33")
-    classpath("org.flywaydb:flyway-mysql:9.21.2")
+    classpath("org.flywaydb:flyway-mysql:9.22.0")
   }
 }
 
@@ -17,7 +17,7 @@ plugins {
   val kotlinVersion = "1.9.10"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "9.21.2"
+  id("org.flywaydb.flyway") version "9.22.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
   id("com.expediagroup.graphql") version "6.5.3"
@@ -34,13 +34,13 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.42.1"
+val exposedVersion = "0.43.0"
 val koinVersion = "3.4.3"
-val ktorVersion = "2.3.3"
+val ktorVersion = "2.3.4"
 val logbackVersion = "1.4.11"
 val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "6.5.3"
-val flywayVersion = "9.21.2"
+val flywayVersion = "9.22.0"
 val sentryVersion = "6.28.0"
 
 application {
