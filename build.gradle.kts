@@ -22,7 +22,7 @@ plugins {
   id("com.adarshr.test-logger") version "3.2.0"
   id("com.expediagroup.graphql") version "6.5.3"
   id("org.jetbrains.kotlinx.kover") version "0.7.3"
-  id("io.ktor.plugin") version "2.3.3"
+  id("io.ktor.plugin") version "2.3.4"
 }
 
 group = "com.tumugin"
@@ -41,7 +41,7 @@ val logbackVersion = "1.4.11"
 val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "6.5.3"
 val flywayVersion = "9.22.0"
-val sentryVersion = "6.28.0"
+val sentryVersion = "6.29.0"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
@@ -91,7 +91,7 @@ dependencies {
   implementation("mysql:mysql-connector-java:8.0.33")
   implementation("com.zaxxer:HikariCP:5.0.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.4.0")
@@ -115,7 +115,7 @@ dependencies {
   testImplementation("io.mockk:mockk:1.13.7")
   testImplementation("io.insert-koin:koin-test:3.4.3")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-  testImplementation("com.h2database:h2:2.2.220")
+  testImplementation("com.h2database:h2:2.2.222")
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 }
 
