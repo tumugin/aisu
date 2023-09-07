@@ -1,7 +1,16 @@
 package com.tumugin.aisu.usecase.app
 
-class ApplicationBootstrap {
+import org.koin.core.component.KoinComponent
+import org.slf4j.LoggerFactory
+
+class ApplicationBootstrap : KoinComponent {
+  private val logger = LoggerFactory.getLogger(ApplicationBootstrap::class.java)
+
   fun bootstrap() {
+    logger.info("Application bootstrap started")
+
+    logger.info("Database preparation started")
     Database().prepareDatabase()
+    logger.info("Database prepared")
   }
 }

@@ -35,19 +35,19 @@ import redis.clients.jedis.JedisPool
 object AisuDIModule {
   private val aisuDatabaseModule = module {
     // NOTE: DBへのコネクションはアプリケーション全体で常に同じものを参照したいのでsingleにする
-    single<JDBCConnectionRepository> { JDBCConnectionRepositoryImpl(get()) }
-    single<RedisPoolRepository<JedisPool>> { RedisPoolRepositoryImpl(get()) }
-    single<SessionKVSRepository> { SessionKVSRepositoryImpl(get()) }
-    single<CSRFRepository> { CSRFRepositoryImpl(get()) }
+    single<JDBCConnectionRepository>(createdAtStart = true) { JDBCConnectionRepositoryImpl(get()) }
+    single<RedisPoolRepository<JedisPool>>(createdAtStart = true) { RedisPoolRepositoryImpl(get()) }
+    single<SessionKVSRepository>(createdAtStart = true) { SessionKVSRepositoryImpl(get()) }
+    single<CSRFRepository>(createdAtStart = true) { CSRFRepositoryImpl(get()) }
   }
 
   private val aisuConfigModule = module {
     // NOTE: コンフィグは起動後に変化することはないのでsingleにする
-    single<AppConfigRepository> { AppConfigRepositoryImpl() }
+    single<AppConfigRepository>(createdAtStart = true) { AppConfigRepositoryImpl() }
   }
 
   private val aisuTestingConfigModule = module {
-    single<AppConfigRepository> { AppConfigRepositoryImpl(isTesting = true) }
+    single<AppConfigRepository>(createdAtStart = true) { AppConfigRepositoryImpl(isTesting = true) }
   }
 
   private val aisuModule = module {
@@ -63,8 +63,8 @@ object AisuDIModule {
     factory<Auth0Repository> { Auth0RepositoryImpl() }
     factory<AdminAuth0Repository> { AdminAuth0RepositoryImpl() }
     factory { AisuHTTPClient() }
-    single { jacksonObjectMapper() }
-    single { KtorGraphQLServer.getGraphQLServer(get()) }
+    single(createdAtStart = true) { jacksonObjectMapper() }
+    single(createdAtStart = true) { KtorGraphQLServer.getGraphQLServer(get()) }
   }
 
   fun start() {
