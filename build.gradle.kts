@@ -155,6 +155,6 @@ task<FlywayCleanTask>("cleanTestingDatabase", flywayTestingDatabaseConfig)
 
 ktor {
   docker {
-    jreVersion.set(io.ktor.plugin.features.JreVersion.JRE_17)
+    jreVersion.set(JavaVersion.VERSION_19)
   }
 }
