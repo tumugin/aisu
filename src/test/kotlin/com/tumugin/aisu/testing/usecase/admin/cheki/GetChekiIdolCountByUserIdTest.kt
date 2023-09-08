@@ -55,8 +55,8 @@ class GetChekiIdolCountByUserIdTest : BaseDatabaseTest() {
     )
     Assertions.assertEquals(
       listOf(
-        ChekiIdolCount(idol, idol.idolId, ChekiCount(1), TotalPriceOfCheki(0)),
-        ChekiIdolCount(idolTwo, idolTwo.idolId, ChekiCount(1), TotalPriceOfCheki(0))
+        ChekiIdolCount(idol, idol.idolId, ChekiCount(1), TotalPriceOfCheki(1500)),
+        ChekiIdolCount(idolTwo, idolTwo.idolId, ChekiCount(1), TotalPriceOfCheki(1500))
       ),
       chekiIdolCounts
     )
