@@ -13,7 +13,8 @@ import java.util.concurrent.CompletableFuture
 class ChekiIdolCountSerializer(
   @Serializable(with = IDSerializer::class)
   val idolId: ID,
-  val chekiCount: Int
+  val chekiCount: Int,
+  val totalPrice: Int
 ) {
   fun idol(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<IdolSerializer?> {
     return dataFetchingEnvironment.getValueFromDataLoader(IdolDataLoaderName, idolId)
@@ -23,7 +24,8 @@ class ChekiIdolCountSerializer(
     fun from(chekiIdolCount: ChekiIdolCount): ChekiIdolCountSerializer {
       return ChekiIdolCountSerializer(
         ID(chekiIdolCount.idolId.value.toString()),
-        chekiIdolCount.chekiCount.value
+        chekiIdolCount.chekiCount.value,
+        chekiIdolCount.totalPrice.value
       )
     }
   }

@@ -6,6 +6,7 @@ import com.tumugin.aisu.domain.regulation.RegulationId
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.DateFormatWithTZFunction
 import com.tumugin.aisu.infra.repository.exposed.models.Chekis
+import com.tumugin.aisu.infra.repository.exposed.models.Regulations
 import com.tumugin.aisu.infra.repository.exposed.models.Regulation as RegulationModel
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
@@ -14,6 +15,7 @@ import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.between
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.times
 import org.jetbrains.exposed.sql.transactions.transaction
 import com.tumugin.aisu.infra.repository.exposed.models.Cheki as ChekiModel
 
@@ -75,7 +77,8 @@ class ChekiRepositoryImpl : ChekiRepository {
   ): List<ChekiIdolCount> {
     return transaction {
       val countResults = Chekis
-        .slice(Chekis.idol, Chekis.quantity.sum())
+        .join(Regulations, JoinType.LEFT, Chekis.regulation, Regulations.id)
+        .slice(Chekis.idol, Chekis.quantity.sum(), Chekis.quantity.times(Regulations.unitPrice).sum())
         .select {
           Chekis.user.eq(userId.value) and Chekis.shotAt.between(
             chekiShotAtStart.value,
@@ -90,7 +93,8 @@ class ChekiRepositoryImpl : ChekiRepository {
           idol = idols.find { idol -> idol.id.value === row[Chekis.idol]?.value }
             ?.let { v -> v.toDomain() },
           idolId = IdolId(row[Chekis.idol]!!.value),
-          chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0)
+          chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0),
+          totalPrice = TotalPriceOfCheki(row[Chekis.quantity.times(Regulations.unitPrice).sum()] ?: 0)
         )
       }
     }
