@@ -3,6 +3,7 @@ package com.tumugin.aisu.testing.usecase.admin.cheki
 import com.tumugin.aisu.domain.cheki.ChekiCount
 import com.tumugin.aisu.domain.cheki.ChekiIdolCount
 import com.tumugin.aisu.domain.cheki.ChekiShotAt
+import com.tumugin.aisu.domain.cheki.TotalPriceOfCheki
 import com.tumugin.aisu.domain.group.Group
 import com.tumugin.aisu.domain.idol.Idol
 import com.tumugin.aisu.domain.regulation.Regulation
@@ -54,8 +55,8 @@ class GetChekiIdolCountByUserIdTest : BaseDatabaseTest() {
     )
     Assertions.assertEquals(
       listOf(
-        ChekiIdolCount(idol, idol.idolId, ChekiCount(1)),
-        ChekiIdolCount(idolTwo, idolTwo.idolId, ChekiCount(1))
+        ChekiIdolCount(idol, idol.idolId, ChekiCount(1), TotalPriceOfCheki(0)),
+        ChekiIdolCount(idolTwo, idolTwo.idolId, ChekiCount(1), TotalPriceOfCheki(0))
       ),
       chekiIdolCounts
     )
