@@ -9,7 +9,7 @@ buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
     classpath("mysql:mysql-connector-java:8.0.33")
-    classpath("org.flywaydb:flyway-mysql:9.22.0")
+    classpath("org.flywaydb:flyway-mysql:9.22.1")
   }
 }
 
@@ -17,10 +17,10 @@ plugins {
   val kotlinVersion = "1.9.10"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "9.22.0"
+  id("org.flywaydb.flyway") version "9.22.1"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "3.2.0"
-  id("com.expediagroup.graphql") version "6.5.3"
+  id("com.expediagroup.graphql") version "6.5.5"
   id("org.jetbrains.kotlinx.kover") version "0.7.3"
   id("io.ktor.plugin") version "2.3.4"
 }
@@ -35,12 +35,12 @@ repositories {
 }
 
 val exposedVersion = "0.43.0"
-val koinVersion = "3.4.3"
+val koinVersion = "3.5.0"
 val ktorVersion = "2.3.4"
 val logbackVersion = "1.4.11"
 val coroutineVersion = "1.7.3"
-val graphQLKotlinVersion = "6.5.3"
-val flywayVersion = "9.22.0"
+val graphQLKotlinVersion = "6.5.5"
+val flywayVersion = "9.22.1"
 val sentryVersion = "6.29.0"
 
 application {
@@ -113,7 +113,7 @@ dependencies {
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
   // test libs
   testImplementation("io.mockk:mockk:1.13.7")
-  testImplementation("io.insert-koin:koin-test:3.4.3")
+  testImplementation("io.insert-koin:koin-test:3.5.0")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.2.222")
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
