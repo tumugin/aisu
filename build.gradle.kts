@@ -9,7 +9,7 @@ buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
     classpath("mysql:mysql-connector-java:8.0.33")
-    classpath("org.flywaydb:flyway-mysql:9.22.1")
+    classpath("org.flywaydb:flyway-mysql:9.22.2")
   }
 }
 
@@ -40,7 +40,7 @@ val ktorVersion = "2.3.4"
 val logbackVersion = "1.4.11"
 val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "6.5.6"
-val flywayVersion = "9.22.1"
+val flywayVersion = "9.22.2"
 val sentryVersion = "6.29.0"
 
 application {
@@ -112,10 +112,10 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
   // test libs
-  testImplementation("io.mockk:mockk:1.13.7")
+  testImplementation("io.mockk:mockk:1.13.8")
   testImplementation("io.insert-koin:koin-test:3.5.0")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-  testImplementation("com.h2database:h2:2.2.222")
+  testImplementation("com.h2database:h2:2.2.224")
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 }
 
