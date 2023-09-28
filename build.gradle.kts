@@ -41,7 +41,7 @@ val logbackVersion = "1.4.11"
 val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "6.5.6"
 val flywayVersion = "9.22.2"
-val sentryVersion = "6.29.0"
+val sentryVersion = "6.30.0"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
@@ -95,7 +95,7 @@ dependencies {
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.4.0")
-  implementation("redis.clients:jedis:5.0.0")
+  implementation("redis.clients:jedis:5.0.1")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   implementation("io.sentry:sentry:$sentryVersion")
