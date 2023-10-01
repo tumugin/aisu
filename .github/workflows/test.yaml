@@ -15,16 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     services:
       db:
-        image: mariadb:10.11.5
+        image: postgres:16.0
         ports:
-          - 3306:3306
+          - 5432:5432
         env:
-          MYSQL_ROOT_PASSWORD: 4ab4008b362142c391cc9e1ab98addc6b25f00f5
-          MYSQL_DATABASE: aisu
-          MYSQL_USER: aisu
-          MYSQL_PASSWORD: 4ab4008b362142c391cc9e1ab98addc6b25f00f5
+          POSTGRES_DB: aisu
+          POSTGRES_USER: aisu
+          POSTGRES_PASSWORD: 4ab4008b362142c391cc9e1ab98addc6b25f00f5
         options: >-
-          --health-cmd "mysqladmin ping"
+          --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
