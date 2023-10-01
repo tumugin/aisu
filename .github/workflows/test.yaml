@@ -19,7 +19,7 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_DB: aisu
+          POSTGRES_DB: aisu_test
           POSTGRES_USER: aisu
           POSTGRES_PASSWORD: 4ab4008b362142c391cc9e1ab98addc6b25f00f5
         options: >-
