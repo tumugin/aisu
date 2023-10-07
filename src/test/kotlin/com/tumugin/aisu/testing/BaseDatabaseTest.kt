@@ -42,7 +42,7 @@ abstract class BaseDatabaseTest : KoinTest {
       db.dialect.allTablesNames().filterNot {
         it.contains("flyway_schema_history") || it.contains("FLYWAY_SCHEMA_HISTORY")
       }.forEach {
-        TransactionManager.current().exec("TRUNCATE TABLE $it CASCADE")
+        TransactionManager.current().exec("TRUNCATE TABLE $it RESTART IDENTITY CASCADE")
       }
     }
   }
