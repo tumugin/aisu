@@ -21,7 +21,7 @@ class DateFormatWithTZFunction<T : ExpressionWithColumnType<Instant>>(
         append(
           "TO_CHAR(",
           exp,
-          " AT TIME ZONE INTERVAL '${toOffsetString(fromTZ)}'",
+          " AT TIME ZONE INTERVAL '${toOffsetString(toTZ)}'",
           ", '${format}')"
         )
       }
