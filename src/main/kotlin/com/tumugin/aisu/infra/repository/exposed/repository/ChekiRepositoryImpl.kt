@@ -107,13 +107,13 @@ class ChekiRepositoryImpl : ChekiRepository {
     return transaction {
       val yearConvertFunc = DateFormatWithTZFunction(
         Chekis.shotAt,
-        "%Y",
+        "yyyy",
         TimeZone.of("UTC"),
         baseTimezone
       )
       val monthConvertFunc = DateFormatWithTZFunction(
         Chekis.shotAt,
-        "%c",
+        "mm",
         TimeZone.of("UTC"),
         baseTimezone
       )
