@@ -25,5 +25,5 @@ services:
     environment:
       SWAGGER_JSON: /oas3/openapi.yaml
 volumes:
-  mysql_data:
+  postgres_data:
   redis_data:
