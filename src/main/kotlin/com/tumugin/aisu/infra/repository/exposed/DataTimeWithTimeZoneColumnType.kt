@@ -3,6 +3,9 @@ package com.tumugin.aisu.infra.repository.exposed
 import kotlinx.datetime.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.vendors.*
+import java.sql.ResultSet
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 class DataTimeWithTimeZoneColumnType : ColumnType(), IDateColumnType {
@@ -19,11 +22,8 @@ class DataTimeWithTimeZoneColumnType : ColumnType(), IDateColumnType {
     return when (value) {
       is Instant -> value
       is java.time.Instant -> value.toKotlinInstant()
-      // タイムゾーン情報を付けられないMySQLのようなDBの場合には強制的にタイムゾーンをUTCとして扱う
-      is LocalDateTime -> value.toInstant(UtcOffset.ZERO)
-      is java.time.LocalDateTime -> value.toKotlinLocalDateTime().toInstant(UtcOffset.ZERO)
-      is java.sql.Timestamp -> value.toLocalDateTime().toKotlinLocalDateTime().toInstant(UtcOffset.ZERO)
-      else -> error("$value is not Instant or LocalDateTime!")
+      is OffsetDateTime -> value.toInstant().toKotlinInstant()
+      else -> error("$value is not Instant or OffsetDateTime!")
     }
   }
 
@@ -35,7 +35,13 @@ class DataTimeWithTimeZoneColumnType : ColumnType(), IDateColumnType {
       // タイムゾーン情報を付けられないMySQLのようなDBの場合には強制的にタイムゾーンをUTCとして扱う
       return value.toLocalDateTime(TimeZone.UTC).toJavaLocalDateTime()
     }
-    return value.toJavaInstant()
+
+    // see here for pgsql: https://jdbc.postgresql.org/documentation/query/#table51-supportedjava-8-date-and-time-classes
+    return value.toJavaInstant().atOffset(ZoneOffset.UTC)
+  }
+
+  override fun readObject(rs: ResultSet, index: Int): Any? {
+    return rs.getObject(index, OffsetDateTime::class.java)
   }
 
   private fun currentDBSupportsTimeZone(): Boolean {

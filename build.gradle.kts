@@ -89,6 +89,7 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
   implementation("mysql:mysql-connector-java:8.0.33")
+  implementation("org.postgresql:postgresql:42.6.0")
   implementation("com.zaxxer:HikariCP:5.0.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
