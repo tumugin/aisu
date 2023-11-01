@@ -12,7 +12,7 @@ buildscript {
 }
 
 plugins {
-  val kotlinVersion = "1.9.10"
+  val kotlinVersion = "1.9.20"
   kotlin("jvm") version kotlinVersion
   application
   id("org.flywaydb.flyway") version "9.22.3"
@@ -32,7 +32,7 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.44.0"
+val exposedVersion = "0.44.1"
 val koinVersion = "3.5.0"
 val ktorVersion = "2.3.5"
 val logbackVersion = "1.4.11"
