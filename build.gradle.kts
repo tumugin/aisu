@@ -20,7 +20,7 @@ plugins {
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "6.5.6"
   id("org.jetbrains.kotlinx.kover") version "0.7.4"
-  id("io.ktor.plugin") version "2.3.5"
+  id("io.ktor.plugin") version "2.3.6"
 }
 
 group = "com.tumugin"
@@ -34,12 +34,12 @@ repositories {
 
 val exposedVersion = "0.44.1"
 val koinVersion = "3.5.0"
-val ktorVersion = "2.3.5"
+val ktorVersion = "2.3.6"
 val logbackVersion = "1.4.11"
 val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "6.5.6"
 val flywayVersion = "9.22.3"
-val sentryVersion = "6.32.0"
+val sentryVersion = "6.33.1"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
@@ -89,7 +89,7 @@ dependencies {
   implementation("mysql:mysql-connector-java:8.0.33")
   implementation("org.postgresql:postgresql:42.6.0")
   implementation("p6spy:p6spy:3.9.1")
-  implementation("com.zaxxer:HikariCP:5.0.1")
+  implementation("com.zaxxer:HikariCP:5.1.0")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
@@ -108,9 +108,9 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.1")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
   // test libs
   testImplementation("io.mockk:mockk:1.13.8")
   testImplementation("io.insert-koin:koin-test:3.5.0")
