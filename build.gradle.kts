@@ -12,7 +12,7 @@ buildscript {
 }
 
 plugins {
-  val kotlinVersion = "1.9.20"
+  val kotlinVersion = "1.9.21"
   kotlin("jvm") version kotlinVersion
   application
   id("org.flywaydb.flyway") version "9.22.3"
@@ -39,7 +39,7 @@ val logbackVersion = "1.4.11"
 val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "6.5.6"
 val flywayVersion = "9.22.3"
-val sentryVersion = "6.33.1"
+val sentryVersion = "6.34.0"
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
@@ -87,7 +87,7 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
   implementation("mysql:mysql-connector-java:8.0.33")
-  implementation("org.postgresql:postgresql:42.6.0")
+  implementation("org.postgresql:postgresql:42.7.0")
   implementation("p6spy:p6spy:3.9.1")
   implementation("com.zaxxer:HikariCP:5.1.0")
   implementation("io.insert-koin:koin-core:$koinVersion")
@@ -95,7 +95,7 @@ dependencies {
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.4.0")
-  implementation("redis.clients:jedis:5.0.2")
+  implementation("redis.clients:jedis:5.1.0")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   implementation("io.sentry:sentry:$sentryVersion")
