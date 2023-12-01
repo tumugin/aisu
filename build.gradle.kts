@@ -19,7 +19,7 @@ plugins {
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "6.5.6"
-  id("org.jetbrains.kotlinx.kover") version "0.7.4"
+  id("org.jetbrains.kotlinx.kover") version "0.7.5"
   id("io.ktor.plugin") version "2.3.6"
 }
 
@@ -32,10 +32,10 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.44.1"
+val exposedVersion = "0.45.0"
 val koinVersion = "3.5.0"
 val ktorVersion = "2.3.6"
-val logbackVersion = "1.4.11"
+val logbackVersion = "1.4.14"
 val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "6.5.6"
 val flywayVersion = "9.22.3"
@@ -91,7 +91,7 @@ dependencies {
   implementation("p6spy:p6spy:3.9.1")
   implementation("com.zaxxer:HikariCP:5.1.0")
   implementation("io.insert-koin:koin-core:$koinVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.4.0")
