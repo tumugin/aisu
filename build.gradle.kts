@@ -20,7 +20,7 @@ plugins {
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "6.5.6"
   id("org.jetbrains.kotlinx.kover") version "0.7.5"
-  id("io.ktor.plugin") version "2.3.6"
+  id("io.ktor.plugin") version "2.3.7"
 }
 
 group = "com.tumugin"
@@ -34,7 +34,7 @@ repositories {
 
 val exposedVersion = "0.45.0"
 val koinVersion = "3.5.0"
-val ktorVersion = "2.3.6"
+val ktorVersion = "2.3.7"
 val logbackVersion = "1.4.14"
 val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "6.5.6"
@@ -87,7 +87,7 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
   implementation("mysql:mysql-connector-java:8.0.33")
-  implementation("org.postgresql:postgresql:42.7.0")
+  implementation("org.postgresql:postgresql:42.7.1")
   implementation("p6spy:p6spy:3.9.1")
   implementation("com.zaxxer:HikariCP:5.1.0")
   implementation("io.insert-koin:koin-core:$koinVersion")
