@@ -18,7 +18,7 @@ plugins {
   id("org.flywaydb.flyway") version "9.22.3"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
-  id("com.expediagroup.graphql") version "6.5.6"
+  id("com.expediagroup.graphql") version "7.0.2"
   id("org.jetbrains.kotlinx.kover") version "0.7.5"
   id("io.ktor.plugin") version "2.3.7"
 }
@@ -37,7 +37,7 @@ val koinVersion = "3.5.0"
 val ktorVersion = "2.3.7"
 val logbackVersion = "1.4.14"
 val coroutineVersion = "1.7.3"
-val graphQLKotlinVersion = "6.5.6"
+val graphQLKotlinVersion = "7.0.2"
 val flywayVersion = "9.22.3"
 val sentryVersion = "6.34.0"
 
