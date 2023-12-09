@@ -13,9 +13,13 @@ class KtorGraphQLContextFactory : GraphQLContextFactory<ApplicationRequest> {
   override suspend fun generateContext(request: ApplicationRequest): graphql.GraphQLContext {
     val aisuGraphQLContext =
       AisuGraphQLContext(request.call.sessions.get(), request.call.sessions.get(), currentCoroutineContext())
+
     val graphQLContext = graphql.GraphQLContext.newContext()
       .of(AisuGraphQLContext::class, aisuGraphQLContext)
+      .of(ApplicationRequest::class, request)
+      .of(CoroutineContext::class, currentCoroutineContext())
       .build()
+
     return graphQLContext
   }
 }
