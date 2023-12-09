@@ -8,6 +8,7 @@ import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.regulation.RegulationStatus
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.usecase.client.regulation.GetRegulation
+import graphql.GraphQLContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.future.future
 import org.dataloader.DataLoader
@@ -19,9 +20,10 @@ class RegulationOfGroupDataLoader : KotlinDataLoader<ID, List<RegulationSerializ
   private val getRegulation = GetRegulation()
   override val dataLoaderName = RegulationOfGroupDataLoaderName
 
-  override fun getDataLoader(): DataLoader<ID, List<RegulationSerializer>> =
+  override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, List<RegulationSerializer>> =
     DataLoaderFactory.newDataLoader { ids, dfe ->
-      val aisuGraphQLContext = dfe.keyContextsList[0] as AisuGraphQLContext
+      val aisuGraphQLContext = graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
         val regulations = getRegulation.getRegulationsByGroupIds(
           aisuGraphQLContext.userAuthSession?.userId?.let { UserId(it) },
