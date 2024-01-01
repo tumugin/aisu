@@ -15,7 +15,7 @@ plugins {
   val kotlinVersion = "1.9.22"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "9.22.3"
+  id("org.flywaydb.flyway") version "10.4.1"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "7.0.2"
