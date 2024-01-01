@@ -38,7 +38,7 @@ val ktorVersion = "2.3.7"
 val logbackVersion = "1.4.14"
 val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "7.0.2"
-val flywayVersion = "9.22.3"
+val flywayVersion = "10.4.1"
 val sentryVersion = "7.1.0"
 
 application {
