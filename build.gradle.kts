@@ -5,12 +5,6 @@ import org.flywaydb.gradle.task.AbstractFlywayTask
 import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 
-buildscript {
-  dependencies {
-    classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
-  }
-}
-
 plugins {
   val kotlinVersion = "1.9.22"
   kotlin("jvm") version kotlinVersion
@@ -40,6 +34,13 @@ val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "7.0.2"
 val flywayVersion = "10.4.1"
 val sentryVersion = "7.1.0"
+
+buildscript {
+  dependencies {
+    classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
+    classpath("org.flywaydb:flyway-database-postgresql:10.4.1")
+  }
+}
 
 application {
   val dotEnvSetting = dotenv { ignoreIfMissing = true }
@@ -98,6 +99,7 @@ dependencies {
   implementation("redis.clients:jedis:5.1.0")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
+  implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
   implementation("io.sentry:sentry:$sentryVersion")
   implementation("io.sentry:sentry-kotlin-extensions:$sentryVersion")
   implementation("io.sentry:sentry-logback:$sentryVersion")
