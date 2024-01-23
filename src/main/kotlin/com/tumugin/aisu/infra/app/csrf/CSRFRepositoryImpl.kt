@@ -3,11 +3,12 @@ package com.tumugin.aisu.infra.app.csrf
 import com.tumugin.aisu.domain.app.csrf.CSRFRepository
 import com.tumugin.aisu.domain.app.csrf.CSRFToken
 import com.tumugin.aisu.domain.app.database.RedisPoolRepository
-import redis.clients.jedis.JedisPool
+import redis.clients.jedis.Jedis
+import redis.clients.jedis.util.Pool
 import java.util.*
 import kotlin.time.Duration.Companion.hours
 
-class CSRFRepositoryImpl(redisPoolRepository: RedisPoolRepository<JedisPool>) : CSRFRepository {
+class CSRFRepositoryImpl(redisPoolRepository: RedisPoolRepository<Pool<Jedis>>) : CSRFRepository {
   private val jedisPool = redisPoolRepository.redisPool
   private val keySuffix = "csrf:"
   private val sessionExpireDuration = 12.hours

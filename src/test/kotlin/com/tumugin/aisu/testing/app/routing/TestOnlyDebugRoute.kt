@@ -23,6 +23,8 @@ class TestOnlyDebugRoute : BaseKtorTest() {
       originalRepository.appConfig.appConfigDatabaseUserName,
       originalRepository.appConfig.appConfigDatabasePassword,
       originalRepository.appConfig.appConfigRedisConnectionUrl,
+      originalRepository.appConfig.appConfigEnableRedisSentinel,
+      originalRepository.appConfig.appConfigRedisSentinelMasterName,
       AppEnvironment.PRODUCTION,
       originalRepository.appConfig.appConfigCookieSecretSignKey,
       originalRepository.appConfig.appConfigAuth0ClientId,

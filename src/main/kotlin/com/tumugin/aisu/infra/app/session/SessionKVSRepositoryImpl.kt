@@ -4,10 +4,11 @@ import com.tumugin.aisu.domain.app.database.RedisPoolRepository
 import com.tumugin.aisu.domain.app.session.SessionContent
 import com.tumugin.aisu.domain.app.session.SessionId
 import com.tumugin.aisu.domain.app.session.SessionKVSRepository
-import redis.clients.jedis.JedisPool
+import redis.clients.jedis.Jedis
+import redis.clients.jedis.util.Pool
 import kotlin.time.Duration.Companion.days
 
-class SessionKVSRepositoryImpl(redisPoolRepository: RedisPoolRepository<JedisPool>) : SessionKVSRepository {
+class SessionKVSRepositoryImpl(redisPoolRepository: RedisPoolRepository<Pool<Jedis>>) : SessionKVSRepository {
   private val jedisPool = redisPoolRepository.redisPool
   private val keySuffix = "ss:"
   private val sessionExpireDuration = 30.days
