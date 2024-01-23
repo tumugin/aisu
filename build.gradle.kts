@@ -96,7 +96,7 @@ dependencies {
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.4.0")
-  implementation("redis.clients:jedis:5.1.0")
+  implementation("io.lettuce:lettuce-core:6.3.1.RELEASE")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
