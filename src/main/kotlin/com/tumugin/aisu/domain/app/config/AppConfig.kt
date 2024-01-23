@@ -5,8 +5,6 @@ data class AppConfig(
   val appConfigDatabaseUserName: AppConfigDatabaseUserName,
   val appConfigDatabasePassword: AppConfigDatabasePassword,
   val appConfigRedisConnectionUrl: AppConfigRedisConnectionUrl,
-  val appConfigEnableRedisSentinel: AppConfigEnableRedisSentinel,
-  val appConfigRedisSentinelMasterName: AppConfigRedisSentinelMasterName,
   val appEnvironment: AppEnvironment,
   val appConfigCookieSecretSignKey: AppConfigCookieSecretSignKey,
   val appConfigAuth0ClientId: AppConfigAuth0ClientId,

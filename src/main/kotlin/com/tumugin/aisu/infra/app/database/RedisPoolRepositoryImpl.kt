@@ -11,23 +11,11 @@ import kotlinx.coroutines.future.await
 class RedisPoolRepositoryImpl(appConfigRepository: AppConfigRepository) :
   RedisPoolRepository<StatefulRedisConnection<String, String>> {
   private val baseConnectionUri = RedisURI.create(appConfigRepository.appConfig.appConfigRedisConnectionUrl.value)
-  private val sentinelEnabled = appConfigRepository.appConfig.appConfigEnableRedisSentinel.value
-  private val masterName = appConfigRepository.appConfig.appConfigRedisSentinelMasterName.value
-
   private val cachedConnection: StatefulRedisConnection<String, String>? = null
 
   private suspend fun createConnection(): StatefulRedisConnection<String, String> {
-    val uri = if (sentinelEnabled) {
-      RedisURI.builder()
-        .withSentinel(baseConnectionUri)
-        .withSentinelMasterId(masterName)
-        .build()
-    } else {
-      baseConnectionUri
-    }
-
-    return RedisClient.create(uri)
-      .connectAsync(StringCodec.UTF8, uri)
+    return RedisClient.create(baseConnectionUri)
+      .connectAsync(StringCodec.UTF8, baseConnectionUri)
       .await()
   }
 

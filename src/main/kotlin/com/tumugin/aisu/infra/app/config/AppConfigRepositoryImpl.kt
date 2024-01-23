@@ -18,15 +18,6 @@ class AppConfigRepositoryImpl(private val isTesting: Boolean = false) : AppConfi
       appConfigDatabaseUserName = AppConfigDatabaseUserName(env["DB_USERNAME"]),
       appConfigDatabasePassword = AppConfigDatabasePassword(env["DB_PASSWORD"]),
       appConfigRedisConnectionUrl = AppConfigRedisConnectionUrl(env["REDIS_CONNECTION_URL"]),
-      appConfigEnableRedisSentinel = AppConfigEnableRedisSentinel(
-        env.get("REDIS_ENABLE_SENTINEL", "false").toBoolean()
-      ),
-      appConfigRedisSentinelMasterName = AppConfigRedisSentinelMasterName(
-        env.get(
-          "REDIS_SENTINEL_MASTER_NAME",
-          "mymaster"
-        )
-      ),
       appEnvironment = AppEnvironment.valueOf(env["APP_ENV"].uppercase()),
       appConfigCookieSecretSignKey = AppConfigCookieSecretSignKey(env["COOKIE_SECRET_SIGN_KEY"]),
       appConfigAuth0ClientId = AppConfigAuth0ClientId(env["AUTH0_CLIENT_ID"]),
