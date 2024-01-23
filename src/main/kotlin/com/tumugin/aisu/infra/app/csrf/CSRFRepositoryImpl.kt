@@ -3,30 +3,28 @@ package com.tumugin.aisu.infra.app.csrf
 import com.tumugin.aisu.domain.app.csrf.CSRFRepository
 import com.tumugin.aisu.domain.app.csrf.CSRFToken
 import com.tumugin.aisu.domain.app.database.RedisPoolRepository
-import redis.clients.jedis.Jedis
-import redis.clients.jedis.util.Pool
+import io.lettuce.core.api.StatefulRedisConnection
+import kotlinx.coroutines.future.await
 import java.util.*
 import kotlin.time.Duration.Companion.hours
 
-class CSRFRepositoryImpl(redisPoolRepository: RedisPoolRepository<Pool<Jedis>>) : CSRFRepository {
-  private val jedisPool = redisPoolRepository.redisPool
+class CSRFRepositoryImpl(private val redisPoolRepository: RedisPoolRepository<StatefulRedisConnection<String, String>>) :
+  CSRFRepository {
   private val keySuffix = "csrf:"
   private val sessionExpireDuration = 12.hours
 
-  override fun generateToken(): CSRFToken {
+  override suspend fun generateToken(): CSRFToken {
+    val connection = redisPoolRepository.getConnection().async()
     val token = CSRFToken(UUID.randomUUID().toString())
-    jedisPool.resource.use { jedis ->
-      jedis[getKey(token)] = ""
-      jedis.expire(getKey(token), sessionExpireDuration.inWholeSeconds)
-    }
+    connection.set(getKey(token), "").await()
+    connection.expire(getKey(token), sessionExpireDuration.inWholeSeconds).await()
+
     return token
   }
 
-  override fun validateTokenExists(token: CSRFToken): Boolean {
-    return jedisPool.resource.use { jedis ->
-      jedis.expire(getKey(token), sessionExpireDuration.inWholeSeconds)
-      return@use jedis.exists(getKey(token))
-    }
+  override suspend fun validateTokenExists(token: CSRFToken): Boolean {
+    val connection = redisPoolRepository.getConnection().async()
+    return connection.exists(getKey(token)).await() > 0
   }
 
   private fun getKey(id: CSRFToken): String {
