@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory
 class ApplicationBootstrap : KoinComponent {
   private val logger = LoggerFactory.getLogger(ApplicationBootstrap::class.java)
 
-  fun bootstrap() {
+  suspend fun bootstrap() {
     logger.info("Application bootstrap started")
 
     logger.info("Database preparation started")

@@ -19,7 +19,7 @@ class RedisPoolRepositoryImpl(appConfigRepository: AppConfigRepository) :
       var sentinelConnectionUriBuilder = RedisURI.builder()
       baseConnectionUri.sentinels.forEach {
         sentinelConnectionUriBuilder =
-          sentinelConnectionUriBuilder.withSentinel(it.host, it.port, baseConnectionUri.password.toString())
+          sentinelConnectionUriBuilder.withSentinel(it.host, it.port, String(baseConnectionUri.password))
       }
       sentinelConnectionUriBuilder =
         sentinelConnectionUriBuilder
