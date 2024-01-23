@@ -33,7 +33,7 @@ abstract class BaseKtorTest : BaseDatabaseTest() {
     return result!!
   }
 
-  fun addCSRFTokenHeader(builder: HttpRequestBuilder) {
+  suspend fun addCSRFTokenHeader(builder: HttpRequestBuilder) {
     builder.header("X-CSRF-Token", csrfRepository.generateToken().value)
   }
 
