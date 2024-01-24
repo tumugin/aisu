@@ -11,7 +11,7 @@ import org.koin.core.Koin
 import org.koin.core.context.GlobalContext
 import org.slf4j.LoggerFactory
 
-fun main() {
+suspend fun main() {
   val logger = LoggerFactory.getLogger("Startup")
   try {
     AisuDIModule.start()
