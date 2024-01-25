@@ -11,28 +11,28 @@ import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import com.tumugin.aisu.infra.repository.exposed.models.Group as GroupModel
-import org.jetbrains.exposed.sql.transactions.transaction
 import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
 
 class IdolRepositoryImpl : IdolRepository {
   private val withModels = listOf(IdolModel::user).toTypedArray()
 
   override suspend fun getIdol(idolId: IdolId): Idol? {
-    return transaction {
+    return newSuspendedTransaction {
       IdolModel.findById(idolId.value)?.toDomain()
     }
   }
 
   override suspend fun getIdolsByIds(idolIds: List<IdolId>): List<Idol> {
-    return transaction {
+    return newSuspendedTransaction {
       IdolModel.find { Idols.id inList idolIds.map { it.value } }.with(*withModels).map { it.toDomain() }
     }
   }
 
   override suspend fun addIdol(userId: UserId, idolName: IdolName, idolStatus: IdolStatus): Idol {
-    return transaction {
+    return newSuspendedTransaction {
       IdolModel.new {
         this.user = UserModel[userId.value]
         this.name = idolName.value
@@ -44,7 +44,7 @@ class IdolRepositoryImpl : IdolRepository {
   override suspend fun updateIdol(
     idolId: IdolId, userId: UserId, idolName: IdolName, idolStatus: IdolStatus
   ): Idol {
-    return transaction {
+    return newSuspendedTransaction {
       val model = IdolModel[idolId.value]
       model.user = UserModel[userId.value]
       model.name = idolName.value
@@ -54,7 +54,7 @@ class IdolRepositoryImpl : IdolRepository {
   }
 
   override suspend fun deleteIdol(idolId: IdolId) {
-    transaction {
+    newSuspendedTransaction {
       val model = IdolModel[idolId.value]
       model.delete()
     }
@@ -63,7 +63,7 @@ class IdolRepositoryImpl : IdolRepository {
   override suspend fun getAllIdolsByStatues(
     paginatorParam: PaginatorParam, statues: List<IdolStatus>, userId: UserId?
   ): PaginatorResult<Idol> {
-    return transaction {
+    return newSuspendedTransaction {
       val query = IdolModel.find(Idols.status.inList(statues.map { it.name }).let {
         if (userId != null) {
           it.and(Idols.user.eq(userId.value))
@@ -80,14 +80,14 @@ class IdolRepositoryImpl : IdolRepository {
   }
 
   override suspend fun getGroupsOfIdol(idolId: IdolId): List<Group> {
-    return transaction {
+    return newSuspendedTransaction {
       val idol = IdolModel[idolId.value]
       idol.groups.with(GroupModel::user).map { it.toDomain() }
     }
   }
 
   override suspend fun getGroupIdsOfIdols(idolIds: List<IdolId>): Map<IdolId, List<GroupId>> {
-    return transaction {
+    return newSuspendedTransaction {
       IdolModel.find { Idols.id inList idolIds.map { it.value } }.with(IdolModel::groups).associate {
         IdolId(it.id.value) to it.groups.map { group -> GroupId(group.id.value) }.toList()
       }

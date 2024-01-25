@@ -13,6 +13,7 @@ import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import org.jetbrains.exposed.sql.transactions.transaction
 import com.tumugin.aisu.infra.repository.exposed.models.Group as GroupModel
@@ -22,20 +23,20 @@ class GroupRepositoryImpl : GroupRepository {
   private val withModels = listOf(GroupModel::user).toTypedArray()
 
   override suspend fun getGroup(groupId: GroupId): Group? {
-    return transaction {
+    return newSuspendedTransaction {
       GroupModel.findById(groupId.value)?.toDomain()
     }
   }
 
   override suspend fun getGroupsByIds(groupIds: List<GroupId>): List<Group> {
-    return transaction {
+    return newSuspendedTransaction {
       GroupModel.find { Groups.id inList groupIds.map { it.value } }
         .map { it.toDomain() }
     }
   }
 
   override suspend fun addGroup(userId: UserId?, groupName: GroupName, groupStatus: GroupStatus): Group {
-    return transaction {
+    return newSuspendedTransaction {
       GroupModel.new {
         this.user = userId?.value?.let { UserModel[it] }
         this.name = groupName.value
@@ -47,7 +48,7 @@ class GroupRepositoryImpl : GroupRepository {
   override suspend fun updateGroup(
     groupId: GroupId, userId: UserId?, groupName: GroupName, groupStatus: GroupStatus
   ): Group {
-    return transaction {
+    return newSuspendedTransaction {
       val model = GroupModel[groupId.value]
       model.apply {
         this.user = userId?.value?.let { UserModel[it] }
@@ -58,7 +59,7 @@ class GroupRepositoryImpl : GroupRepository {
   }
 
   override suspend fun deleteGroup(groupId: GroupId) {
-    transaction {
+    newSuspendedTransaction {
       val model = GroupModel[groupId.value]
       model.delete()
     }
@@ -67,7 +68,7 @@ class GroupRepositoryImpl : GroupRepository {
   override suspend fun getAllGroupsByStatuses(
     paginatorParam: PaginatorParam, statues: List<GroupStatus>, userId: UserId?
   ): PaginatorResult<Group> {
-    return transaction {
+    return newSuspendedTransaction {
       val query = GroupModel.find(Groups.status.inList(statues.map { it.name }).let {
         if (userId != null) {
           it.and(Groups.user.eq(userId.value))
@@ -85,13 +86,13 @@ class GroupRepositoryImpl : GroupRepository {
   }
 
   override suspend fun getIdolsOfGroup(groupId: GroupId): List<Idol> {
-    return transaction {
+    return newSuspendedTransaction {
       GroupModel[groupId.value].idols.with(IdolModel::user).map { it.toDomain() }
     }
   }
 
   override suspend fun getIdolIdsOfGroups(groupIds: List<GroupId>): Map<GroupId, List<IdolId>> {
-    return transaction {
+    return newSuspendedTransaction {
       GroupIdolModel.find { GroupIdols.group inList groupIds.map { it.value } }
         .groupBy { GroupId(it.group.id.value) }
         .mapValues { it.value.map { IdolId(it.idol.id.value) } }
@@ -99,7 +100,7 @@ class GroupRepositoryImpl : GroupRepository {
   }
 
   override suspend fun addIdolToGroup(groupId: GroupId, idolId: IdolId) {
-    return transaction {
+    return newSuspendedTransaction {
       val idolModel = IdolModel[idolId.value]
       val groupModel = GroupModel[groupId.value]
       GroupIdolModel.new {
@@ -110,7 +111,7 @@ class GroupRepositoryImpl : GroupRepository {
   }
 
   override suspend fun removeIdolFromGroup(groupId: GroupId, idolId: IdolId) {
-    transaction {
+    newSuspendedTransaction {
       val idolModel = IdolModel[idolId.value]
       val groupModel = GroupModel[groupId.value]
       GroupIdolModel
