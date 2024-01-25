@@ -29,6 +29,8 @@ import com.tumugin.aisu.infra.auth0.Auth0RepositoryImpl
 import com.tumugin.aisu.infra.auth0.Auth0UserInfoRepositoryImpl
 import com.tumugin.aisu.infra.repository.exposed.repository.*
 import io.lettuce.core.api.StatefulRedisConnection
+import io.lettuce.core.api.coroutines.RedisCoroutinesCommands
+import io.lettuce.core.support.BoundedAsyncPool
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -36,7 +38,11 @@ object AisuDIModule {
   private val aisuDatabaseModule = module {
     // NOTE: DBへのコネクションはアプリケーション全体で常に同じものを参照したいのでsingleにする
     single<JDBCConnectionRepository> { JDBCConnectionRepositoryImpl(get()) }
-    single<RedisPoolRepository<StatefulRedisConnection<String, String>>> { RedisPoolRepositoryImpl(get()) }
+    single<RedisPoolRepository<RedisCoroutinesCommands<String, String>, BoundedAsyncPool<StatefulRedisConnection<String, String>>>> {
+      RedisPoolRepositoryImpl(
+        get()
+      )
+    }
   }
 
   private val aisuConfigModule = module {
