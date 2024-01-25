@@ -7,6 +7,7 @@ import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.idol.*
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.models.Idols
+import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
@@ -20,19 +21,19 @@ class IdolRepositoryImpl : IdolRepository {
   private val withModels = listOf(IdolModel::user).toTypedArray()
 
   override suspend fun getIdol(idolId: IdolId): Idol? {
-    return newSuspendedTransaction {
+    return newSuspendedTransaction(Dispatchers.IO) {
       IdolModel.findById(idolId.value)?.toDomain()
     }
   }
 
   override suspend fun getIdolsByIds(idolIds: List<IdolId>): List<Idol> {
-    return newSuspendedTransaction {
+    return newSuspendedTransaction(Dispatchers.IO) {
       IdolModel.find { Idols.id inList idolIds.map { it.value } }.with(*withModels).map { it.toDomain() }
     }
   }
 
   override suspend fun addIdol(userId: UserId, idolName: IdolName, idolStatus: IdolStatus): Idol {
-    return newSuspendedTransaction {
+    return newSuspendedTransaction(Dispatchers.IO) {
       IdolModel.new {
         this.user = UserModel[userId.value]
         this.name = idolName.value
@@ -44,7 +45,7 @@ class IdolRepositoryImpl : IdolRepository {
   override suspend fun updateIdol(
     idolId: IdolId, userId: UserId, idolName: IdolName, idolStatus: IdolStatus
   ): Idol {
-    return newSuspendedTransaction {
+    return newSuspendedTransaction(Dispatchers.IO) {
       val model = IdolModel[idolId.value]
       model.user = UserModel[userId.value]
       model.name = idolName.value
@@ -54,7 +55,7 @@ class IdolRepositoryImpl : IdolRepository {
   }
 
   override suspend fun deleteIdol(idolId: IdolId) {
-    newSuspendedTransaction {
+    newSuspendedTransaction(Dispatchers.IO) {
       val model = IdolModel[idolId.value]
       model.delete()
     }
@@ -63,7 +64,7 @@ class IdolRepositoryImpl : IdolRepository {
   override suspend fun getAllIdolsByStatues(
     paginatorParam: PaginatorParam, statues: List<IdolStatus>, userId: UserId?
   ): PaginatorResult<Idol> {
-    return newSuspendedTransaction {
+    return newSuspendedTransaction(Dispatchers.IO) {
       val query = IdolModel.find(Idols.status.inList(statues.map { it.name }).let {
         if (userId != null) {
           it.and(Idols.user.eq(userId.value))
@@ -80,14 +81,14 @@ class IdolRepositoryImpl : IdolRepository {
   }
 
   override suspend fun getGroupsOfIdol(idolId: IdolId): List<Group> {
-    return newSuspendedTransaction {
+    return newSuspendedTransaction(Dispatchers.IO) {
       val idol = IdolModel[idolId.value]
       idol.groups.with(GroupModel::user).map { it.toDomain() }
     }
   }
 
   override suspend fun getGroupIdsOfIdols(idolIds: List<IdolId>): Map<IdolId, List<GroupId>> {
-    return newSuspendedTransaction {
+    return newSuspendedTransaction(Dispatchers.IO) {
       IdolModel.find { Idols.id inList idolIds.map { it.value } }.with(IdolModel::groups).associate {
         IdolId(it.id.value) to it.groups.map { group -> GroupId(group.id.value) }.toList()
       }
