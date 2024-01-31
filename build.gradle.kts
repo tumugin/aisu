@@ -9,12 +9,12 @@ plugins {
   val kotlinVersion = "1.9.22"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "10.6.0"
+  id("org.flywaydb.flyway") version "10.7.1"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "7.0.2"
   id("org.jetbrains.kotlinx.kover") version "0.7.5"
-  id("io.ktor.plugin") version "2.3.7"
+  id("io.ktor.plugin") version "2.3.8"
 }
 
 group = "com.tumugin"
@@ -26,19 +26,19 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.46.0"
+val exposedVersion = "0.47.0"
 val koinVersion = "3.5.3"
-val ktorVersion = "2.3.7"
+val ktorVersion = "2.3.8"
 val logbackVersion = "1.4.14"
 val coroutineVersion = "1.7.3"
 val graphQLKotlinVersion = "7.0.2"
-val flywayVersion = "10.6.0"
-val sentryVersion = "7.2.0"
+val flywayVersion = "10.7.1"
+val sentryVersion = "7.3.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
-    classpath("org.flywaydb:flyway-database-postgresql:10.6.0")
+    classpath("org.flywaydb:flyway-database-postgresql:10.7.1")
   }
 }
 
