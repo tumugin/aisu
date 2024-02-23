@@ -9,11 +9,11 @@ plugins {
   val kotlinVersion = "1.9.22"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "10.7.2"
+  id("org.flywaydb.flyway") version "10.8.1"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "7.0.2"
-  id("org.jetbrains.kotlinx.kover") version "0.7.5"
+  id("org.jetbrains.kotlinx.kover") version "0.7.6"
   id("io.ktor.plugin") version "2.3.8"
 }
 
@@ -29,16 +29,16 @@ repositories {
 val exposedVersion = "0.47.0"
 val koinVersion = "3.5.3"
 val ktorVersion = "2.3.8"
-val logbackVersion = "1.4.14"
-val coroutineVersion = "1.7.3"
+val logbackVersion = "1.5.0"
+val coroutineVersion = "1.8.0"
 val graphQLKotlinVersion = "7.0.2"
-val flywayVersion = "10.7.2"
-val sentryVersion = "7.3.0"
+val flywayVersion = "10.8.1"
+val sentryVersion = "7.4.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
-    classpath("org.flywaydb:flyway-database-postgresql:10.7.2")
+    classpath("org.flywaydb:flyway-database-postgresql:10.8.1")
   }
 }
 
@@ -88,7 +88,7 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
   implementation("mysql:mysql-connector-java:8.0.33")
-  implementation("org.postgresql:postgresql:42.7.1")
+  implementation("org.postgresql:postgresql:42.7.2")
   implementation("p6spy:p6spy:3.9.1")
   implementation("com.zaxxer:HikariCP:5.1.0")
   implementation("io.insert-koin:koin-core:$koinVersion")
