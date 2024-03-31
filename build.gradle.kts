@@ -50,7 +50,7 @@ application {
 }
 
 kotlin {
-  jvmToolchain(19)
+  jvmToolchain(21)
 
   // Enable K2 compiler
   sourceSets.all {
