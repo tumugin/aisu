@@ -41,7 +41,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: '19'
+          java-version: '21'
           cache: 'gradle'
       - run: ./gradlew build -x test --no-daemon
       - run: ./gradlew migrateTestingDatabase --no-daemon
