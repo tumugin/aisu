@@ -30,7 +30,7 @@ class LoginController {
     call.sessions.set(
       UserAuthSession(
         userId = user.userId.value,
-        validThroughTimestamp = Clock.System.now().plus(30.days).toString(),
+        validThroughTimestamp = Clock.System.now().plus(UserAuthSession.defaultValidDays).toString(),
         forceLogoutGeneration = user.userForceLogoutGeneration.value
       )
     )

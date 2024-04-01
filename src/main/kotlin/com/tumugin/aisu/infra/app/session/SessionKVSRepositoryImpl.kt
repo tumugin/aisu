@@ -16,7 +16,7 @@ class SessionKVSRepositoryImpl(
 ) :
   SessionKVSRepository {
   private val keySuffix = "ss:"
-  private val sessionExpireDuration = 30.days
+  private val sessionExpireDuration = 30.days // どんなに長くても30日以上のセッションは保持しない
 
   override suspend fun writeSession(id: SessionId, content: SessionContent) {
     redisPoolRepository.borrow { c ->

@@ -19,7 +19,7 @@ class AdminAuth0CallbackController {
     call.sessions.set(
       AdminUserAuthSession(
         adminUserId = adminUser.adminUserId.value,
-        validThroughTimestamp = Clock.System.now().plus(1.days).toString(),
+        validThroughTimestamp = Clock.System.now().plus(AdminUserAuthSession.defaultValidDays).toString(),
         forceLogoutGeneration = adminUser.adminUserForceLogoutGeneration.value
       )
     )

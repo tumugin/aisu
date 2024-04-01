@@ -35,6 +35,8 @@ fun createKtorModule(koin: Koin): Application.() -> Unit {
     configureSerialization()
     configureHTTP(koin)
     configureSecurity(koin)
+    configureRefreshToken()
+    configureAdminRefreshToken()
     configureSentry(koin)
   }
   return ktorModule
