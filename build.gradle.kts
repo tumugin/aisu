@@ -12,9 +12,9 @@ plugins {
   id("org.flywaydb.flyway") version "10.11.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
-  id("com.expediagroup.graphql") version "7.0.2"
+  id("com.expediagroup.graphql") version "7.1.0"
   id("org.jetbrains.kotlinx.kover") version "0.7.6"
-  id("io.ktor.plugin") version "2.3.9"
+  id("io.ktor.plugin") version "2.3.10"
 }
 
 group = "com.tumugin"
@@ -27,13 +27,13 @@ repositories {
 }
 
 val exposedVersion = "0.49.0"
-val koinVersion = "3.5.3"
-val ktorVersion = "2.3.9"
-val logbackVersion = "1.5.3"
+val koinVersion = "3.5.6"
+val ktorVersion = "2.3.10"
+val logbackVersion = "1.5.5"
 val coroutineVersion = "1.8.0"
-val graphQLKotlinVersion = "7.0.2"
+val graphQLKotlinVersion = "7.1.0"
 val flywayVersion = "10.11.0"
-val sentryVersion = "7.6.0"
+val sentryVersion = "7.8.0"
 
 buildscript {
   dependencies {
@@ -115,7 +115,7 @@ dependencies {
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
   // test libs
   testImplementation("io.mockk:mockk:1.13.10")
-  testImplementation("io.insert-koin:koin-test:3.5.3")
+  testImplementation("io.insert-koin:koin-test:3.5.6")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.2.224")
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
