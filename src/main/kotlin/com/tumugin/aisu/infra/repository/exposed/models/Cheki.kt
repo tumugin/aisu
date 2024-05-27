@@ -7,18 +7,17 @@ import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
-import com.tumugin.aisu.infra.repository.exposed.datetimeWithTZ
-import com.tumugin.aisu.infra.repository.exposed.repository.IdolRepositoryImpl
-import com.tumugin.aisu.infra.repository.exposed.repository.RegulationRepositoryImpl
+import kotlinx.datetime.toKotlinInstant
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.ReferenceOption
+import org.jetbrains.exposed.sql.kotlin.datetime.timestampWithTimeZone
 
 object Chekis : ExposedTimestampIdTable("chekis") {
   val user = reference("user_id", Users, onDelete = ReferenceOption.CASCADE)
   val idol = reference("idol_id", Idols, onDelete = ReferenceOption.SET_NULL).nullable()
   val regulation = reference("regulation_id", Regulations, onDelete = ReferenceOption.SET_NULL).nullable()
   val quantity = integer("quantity")
-  val shotAt = datetimeWithTZ("shot_at")
+  val shotAt = timestampWithTimeZone("shot_at")
 }
 
 class Cheki(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Chekis) {
@@ -38,9 +37,9 @@ class Cheki(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Chekis) {
       regulationId = this.regulation?.id?.value?.let { RegulationId(it) },
       regulation = this.regulation?.toDomain(),
       chekiQuantity = ChekiQuantity(this.quantity),
-      chekiShotAt = ChekiShotAt(this.shotAt),
-      chekiCreatedAt = ChekiCreatedAt(this.createdAt),
-      chekiUpdatedAt = ChekiUpdatedAt(this.updatedAt)
+      chekiShotAt = ChekiShotAt(this.shotAt.toInstant().toKotlinInstant()),
+      chekiCreatedAt = ChekiCreatedAt(this.createdAt.toInstant().toKotlinInstant()),
+      chekiUpdatedAt = ChekiUpdatedAt(this.updatedAt.toInstant().toKotlinInstant())
     )
   }
 }

@@ -12,12 +12,14 @@ import com.tumugin.aisu.infra.repository.exposed.models.Regulation as Regulation
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toJavaInstant
 import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.between
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.times
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import java.time.ZoneOffset
 import com.tumugin.aisu.infra.repository.exposed.models.Cheki as ChekiModel
 
 class ChekiRepositoryImpl : ChekiRepository {
@@ -149,7 +151,7 @@ class ChekiRepositoryImpl : ChekiRepository {
         this.idol = IdolModel[idolId.value]
         this.regulation = regulationId?.value?.let { RegulationModel[it] }
         this.quantity = chekiQuantity.value
-        this.shotAt = chekiShotAt.value
+        this.shotAt = chekiShotAt.value.toJavaInstant().atOffset(ZoneOffset.UTC)
       }.toDomain()
     }
   }
@@ -168,7 +170,7 @@ class ChekiRepositoryImpl : ChekiRepository {
       model.idol = IdolModel[idolId.value]
       model.regulation = regulationId?.value?.let { RegulationModel[it] }
       model.quantity = chekiQuantity.value
-      model.shotAt = chekiShotAt.value
+      model.shotAt = chekiShotAt.value.toJavaInstant().atOffset(ZoneOffset.UTC)
       model.toDomain()
     }
   }

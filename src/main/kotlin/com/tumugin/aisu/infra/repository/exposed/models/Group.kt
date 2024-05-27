@@ -5,6 +5,7 @@ import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
+import kotlinx.datetime.toKotlinInstant
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.ReferenceOption
 
@@ -28,8 +29,8 @@ class Group(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Groups) {
       userId = this.user?.let { UserId(it.id.value) },
       groupName = GroupName(this.name),
       groupStatus = GroupStatus.valueOf(this.status),
-      groupCreatedAt = GroupCreatedAt(this.createdAt),
-      groupUpdatedAt = GroupUpdatedAt(this.updatedAt)
+      groupCreatedAt = GroupCreatedAt(this.createdAt.toInstant().toKotlinInstant()),
+      groupUpdatedAt = GroupUpdatedAt(this.updatedAt.toInstant().toKotlinInstant())
     )
   }
 }

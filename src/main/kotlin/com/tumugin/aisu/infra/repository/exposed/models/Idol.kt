@@ -5,6 +5,7 @@ import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
+import kotlinx.datetime.toKotlinInstant
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.ReferenceOption
 
@@ -28,8 +29,8 @@ class Idol(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Idols) {
       userId = this.user?.id?.value?.let { UserId(it) },
       idolName = IdolName(this.name),
       idolStatus = IdolStatus.valueOf(this.status),
-      idolCreatedAt = IdolCreatedAt(this.createdAt),
-      idolUpdatedAt = IdolUpdatedAt(this.updatedAt)
+      idolCreatedAt = IdolCreatedAt(this.createdAt.toInstant().toKotlinInstant()),
+      idolUpdatedAt = IdolUpdatedAt(this.updatedAt.toInstant().toKotlinInstant())
     )
   }
 }

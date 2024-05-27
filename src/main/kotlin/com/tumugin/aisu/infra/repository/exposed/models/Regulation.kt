@@ -6,6 +6,7 @@ import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
+import kotlinx.datetime.toKotlinInstant
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.ReferenceOption
 
@@ -38,8 +39,8 @@ class Regulation(id: EntityID<Long>) : ExposedTimestampIdEntity(id, Regulations)
       regulationComment = RegulationComment(this.comment),
       regulationUnitPrice = RegulationUnitPrice(this.unitPrice),
       regulationStatus = RegulationStatus.valueOf(this.status),
-      regulationCreatedAt = RegulationCreatedAt(this.createdAt),
-      regulationUpdatedAt = RegulationUpdatedAt(this.updatedAt)
+      regulationCreatedAt = RegulationCreatedAt(this.createdAt.toInstant().toKotlinInstant()),
+      regulationUpdatedAt = RegulationUpdatedAt(this.updatedAt.toInstant().toKotlinInstant())
     )
   }
 }

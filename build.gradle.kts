@@ -86,7 +86,7 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
-  implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
+  implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposedVersion")
   implementation("mysql:mysql-connector-java:8.0.33")
   implementation("org.postgresql:postgresql:42.7.3")
   implementation("p6spy:p6spy:3.9.1")
