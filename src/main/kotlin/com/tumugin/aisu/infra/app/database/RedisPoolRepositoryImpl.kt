@@ -4,6 +4,7 @@ import com.tumugin.aisu.domain.app.config.AppConfigRepository
 import com.tumugin.aisu.domain.app.database.RedisPoolRepository
 import io.lettuce.core.ExperimentalLettuceCoroutinesApi
 import io.lettuce.core.RedisClient
+import io.lettuce.core.RedisReadOnlyException
 import io.lettuce.core.RedisURI
 import io.lettuce.core.api.StatefulRedisConnection
 import io.lettuce.core.api.coroutines
@@ -68,6 +69,9 @@ class RedisPoolRepositoryImpl(appConfigRepository: AppConfigRepository) :
       val connection = pool.acquire().await()
       try {
         return proc(connection.coroutines())
+      } catch (e: RedisReadOnlyException) {
+        createPool()
+        throw e
       } finally {
         pool.release(connection).await()
       }
