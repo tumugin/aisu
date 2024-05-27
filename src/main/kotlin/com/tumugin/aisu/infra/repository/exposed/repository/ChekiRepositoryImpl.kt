@@ -13,6 +13,7 @@ import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toJavaInstant
+import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.between
@@ -48,8 +49,8 @@ class ChekiRepositoryImpl : ChekiRepository {
     return newSuspendedTransaction(Dispatchers.IO) {
       ChekiModel.find(
         Chekis.user.eq(userId.value) and Chekis.shotAt.between(
-          chekiShotAtStart.value,
-          chekiShotEnd.value
+          chekiShotAtStart.value.toJavaInstant().atOffset(ZoneOffset.UTC),
+          chekiShotEnd.value.toJavaInstant().atOffset(ZoneOffset.UTC)
         )
       )
         .with(*withModels)
@@ -66,8 +67,8 @@ class ChekiRepositoryImpl : ChekiRepository {
     return newSuspendedTransaction(Dispatchers.IO) {
       ChekiModel.find(
         Chekis.user.eq(userId.value) and Chekis.shotAt.between(
-          chekiShotAtStart.value,
-          chekiShotEnd.value
+          chekiShotAtStart.value.toJavaInstant().atOffset(ZoneOffset.UTC),
+          chekiShotEnd.value.toJavaInstant().atOffset(ZoneOffset.UTC)
         ) and Chekis.idol.eq(idolId.value)
       ).with(*withModels).map { it.toDomain() }
     }
@@ -84,8 +85,8 @@ class ChekiRepositoryImpl : ChekiRepository {
         .slice(Chekis.idol, Chekis.quantity.sum(), Chekis.quantity.times(Regulations.unitPrice).sum())
         .select {
           Chekis.user.eq(userId.value) and Chekis.shotAt.between(
-            chekiShotAtStart.value,
-            chekiShotEnd.value
+            chekiShotAtStart.value.toJavaInstant().atOffset(ZoneOffset.UTC),
+            chekiShotEnd.value.toJavaInstant().atOffset(ZoneOffset.UTC)
           )
         }
         .groupBy(Chekis.idol)
