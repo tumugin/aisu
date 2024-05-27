@@ -4,6 +4,7 @@ import com.tumugin.aisu.domain.adminUser.*
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
+import kotlinx.datetime.toKotlinInstant
 import org.jetbrains.exposed.dao.id.EntityID
 
 object AdminUsers : ExposedTimestampIdTable("admin_users") {
@@ -28,8 +29,8 @@ class AdminUser(id: EntityID<Long>) : ExposedTimestampIdEntity(id, AdminUsers) {
       AdminUserEmail(this.email),
       this.password?.let { AdminUserPassword(it) },
       AdminUserForceLogoutGeneration(this.forceLogoutGeneration),
-      AdminUserCreatedAt(this.createdAt),
-      AdminUserUpdatedAt(this.updatedAt)
+      AdminUserCreatedAt(this.createdAt.toInstant().toKotlinInstant()),
+      AdminUserUpdatedAt(this.updatedAt.toInstant().toKotlinInstant())
     )
   }
 }

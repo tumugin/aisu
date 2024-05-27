@@ -5,7 +5,9 @@ import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.user.*
 import com.tumugin.aisu.infra.repository.exposed.models.Users
 import kotlinx.coroutines.Dispatchers
+import kotlinx.datetime.toJavaInstant
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import java.time.ZoneOffset
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 
 class UserRepositoryImpl : UserRepository {
@@ -40,7 +42,7 @@ class UserRepositoryImpl : UserRepository {
           password = userPassword.value
         }
         if (userEmailVerifiedAt != null) {
-          emailVerifiedAt = userEmailVerifiedAt.value
+          emailVerifiedAt = userEmailVerifiedAt.value.toJavaInstant().atOffset(ZoneOffset.UTC)
         }
         this.forceLogoutGeneration = userForceLogoutGeneration.value
       }.toDomain()
@@ -60,7 +62,7 @@ class UserRepositoryImpl : UserRepository {
       user.name = userName.value
       user.email = userEmail?.value
       user.password = userPassword?.value
-      user.emailVerifiedAt = userEmailVerifiedAt?.value
+      user.emailVerifiedAt = userEmailVerifiedAt?.value?.toJavaInstant()?.atOffset(ZoneOffset.UTC)
       user.forceLogoutGeneration = userForceLogoutGeneration.value
       user.toDomain()
     }
