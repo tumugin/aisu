@@ -9,11 +9,11 @@ plugins {
   val kotlinVersion = "2.0.0"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "10.13.0"
+  id("org.flywaydb.flyway") version "10.15.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "7.1.1"
-  id("org.jetbrains.kotlinx.kover") version "0.8.0"
+  id("org.jetbrains.kotlinx.kover") version "0.8.1"
   id("io.ktor.plugin") version "2.3.11"
 }
 
@@ -26,19 +26,19 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.50.1"
+val exposedVersion = "0.51.1"
 val koinVersion = "3.5.6"
-val ktorVersion = "2.3.11"
+val ktorVersion = "2.3.12"
 val logbackVersion = "1.5.6"
 val coroutineVersion = "1.8.1"
 val graphQLKotlinVersion = "7.1.1"
-val flywayVersion = "10.13.0"
-val sentryVersion = "7.9.0"
+val flywayVersion = "10.15.0"
+val sentryVersion = "7.10.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
-    classpath("org.flywaydb:flyway-database-postgresql:10.13.0")
+    classpath("org.flywaydb:flyway-database-postgresql:10.15.0")
   }
 }
 
@@ -95,7 +95,7 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
-  implementation("io.konform:konform:0.5.0")
+  implementation("io.konform:konform:0.6.0")
   implementation("io.lettuce:lettuce-core:6.3.2.RELEASE")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
