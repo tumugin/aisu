@@ -9,11 +9,11 @@ plugins {
   val kotlinVersion = "2.0.0"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "10.15.0"
+  id("org.flywaydb.flyway") version "10.15.2"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "7.1.1"
-  id("org.jetbrains.kotlinx.kover") version "0.8.1"
+  id("org.jetbrains.kotlinx.kover") version "0.8.2"
   id("io.ktor.plugin") version "2.3.12"
 }
 
@@ -26,13 +26,13 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.51.1"
+val exposedVersion = "0.52.0"
 val koinVersion = "3.5.6"
 val ktorVersion = "2.3.12"
 val logbackVersion = "1.5.6"
 val coroutineVersion = "1.8.1"
 val graphQLKotlinVersion = "7.1.1"
-val flywayVersion = "10.15.0"
+val flywayVersion = "10.15.2"
 val sentryVersion = "7.10.0"
 
 buildscript {
@@ -110,9 +110,9 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.2")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.3")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.3")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.3")
   // test libs
   testImplementation("io.mockk:mockk:1.13.11")
   testImplementation("io.insert-koin:koin-test:3.5.6")
