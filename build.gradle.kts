@@ -33,12 +33,12 @@ val logbackVersion = "1.5.6"
 val coroutineVersion = "1.8.1"
 val graphQLKotlinVersion = "7.1.1"
 val flywayVersion = "10.15.2"
-val sentryVersion = "7.10.0"
+val sentryVersion = "7.11.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
-    classpath("org.flywaydb:flyway-database-postgresql:10.15.0")
+    classpath("org.flywaydb:flyway-database-postgresql:10.15.2")
   }
 }
 
