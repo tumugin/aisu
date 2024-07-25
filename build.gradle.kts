@@ -33,7 +33,7 @@ val logbackVersion = "1.5.6"
 val coroutineVersion = "1.8.1"
 val graphQLKotlinVersion = "7.1.4"
 val flywayVersion = "10.16.0"
-val sentryVersion = "7.12.0"
+val sentryVersion = "7.12.1"
 
 buildscript {
   dependencies {
