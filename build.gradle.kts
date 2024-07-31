@@ -26,14 +26,14 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.52.0"
+val exposedVersion = "0.53.0"
 val koinVersion = "3.5.6"
 val ktorVersion = "2.3.12"
 val logbackVersion = "1.5.6"
 val coroutineVersion = "1.8.1"
 val graphQLKotlinVersion = "7.1.4"
 val flywayVersion = "10.17.0"
-val sentryVersion = "7.12.1"
+val sentryVersion = "7.13.0"
 
 buildscript {
   dependencies {
