@@ -201,8 +201,7 @@ class ChekiRepositoryImpl : ChekiRepository {
       )
       val countResults = Chekis
         .select(yearConvertFunc, monthConvertFunc, Chekis.quantity.sum())
-        .where(Chekis.user.eq(sessionUserId.value))
-        .where(Chekis.idol.eq(idolId.value))
+        .where(Chekis.user.eq(sessionUserId.value) and Chekis.idol.eq(idolId.value))
         .groupBy(yearConvertFunc, monthConvertFunc)
       countResults.map { row ->
         ChekiMonthCount(
