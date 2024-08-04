@@ -82,8 +82,8 @@ class ChekiRepositoryImpl : ChekiRepository {
     return newSuspendedTransaction(Dispatchers.IO) {
       val countResults = Chekis
         .join(Regulations, JoinType.LEFT, Chekis.regulation, Regulations.id)
-        .slice(Chekis.idol, Chekis.quantity.sum(), Chekis.quantity.times(Regulations.unitPrice).sum())
-        .select {
+        .select(Chekis.idol, Chekis.quantity.sum(), Chekis.quantity.times(Regulations.unitPrice).sum())
+        .where {
           Chekis.user.eq(userId.value) and Chekis.shotAt.between(
             chekiShotAtStart.value.toJavaInstant().atOffset(ZoneOffset.UTC),
             chekiShotEnd.value.toJavaInstant().atOffset(ZoneOffset.UTC)
@@ -94,8 +94,7 @@ class ChekiRepositoryImpl : ChekiRepository {
       val idols = IdolModel.forEntityIds(idolIds).with(*idolWithModels)
       countResults.map { row ->
         ChekiIdolCount(
-          idol = idols.find { idol -> idol.id.value === row[Chekis.idol]?.value }
-            ?.let { v -> v.toDomain() },
+          idol = idols.find { idol -> idol.id.value == row[Chekis.idol]?.value }?.toDomain(),
           idolId = IdolId(row[Chekis.idol]!!.value),
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0),
           totalPrice = TotalPriceOfCheki(row[Chekis.quantity.times(Regulations.unitPrice).sum()] ?: 0)
@@ -122,15 +121,14 @@ class ChekiRepositoryImpl : ChekiRepository {
         baseTimezone
       )
       val countResults = Chekis
-        .slice(Chekis.idol, yearConvertFunc, monthConvertFunc, Chekis.quantity.sum())
-        .select(Chekis.user.eq(userId.value))
+        .select(Chekis.idol, yearConvertFunc, monthConvertFunc, Chekis.quantity.sum())
+        .where(Chekis.user.eq(userId.value))
         .groupBy(Chekis.idol, yearConvertFunc, monthConvertFunc)
       val idolIds = countResults.mapNotNull { it[Chekis.idol] }
       val idols = IdolModel.forEntityIds(idolIds).with(*idolWithModels)
       countResults.map { row ->
         ChekiMonthIdolCount(
-          idol = idols.find { idol -> idol.id.value === row[Chekis.idol]?.value }
-            ?.let { v -> v.toDomain() },
+          idol = idols.find { idol -> idol.id.value == row[Chekis.idol]?.value }?.toDomain(),
           idolId = IdolId(row[Chekis.idol]!!.value),
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0),
           chekiShotAtMonth = ChekiShotAtMonth.fromString(row[yearConvertFunc], row[monthConvertFunc], baseTimezone)
