@@ -3,10 +3,12 @@ package com.tumugin.aisu.app.graphql.query
 import com.expediagroup.graphql.generator.scalars.ID
 import com.expediagroup.graphql.server.operations.Query
 import com.tumugin.aisu.app.graphql.AisuGraphQLContext
+import com.tumugin.aisu.app.graphql.params.GetChekiMonthCountByIdolParams
 import com.tumugin.aisu.app.graphql.params.GetChekiMonthIdolCountParams
 import com.tumugin.aisu.app.graphql.params.GetUserChekiIdolCountParams
 import com.tumugin.aisu.app.graphql.params.GetUserChekisParams
 import com.tumugin.aisu.app.serializer.client.ChekiIdolCountSerializer
+import com.tumugin.aisu.app.serializer.client.ChekiMonthCountSerializer
 import com.tumugin.aisu.app.serializer.client.ChekiMonthIdolCountSerializer
 import com.tumugin.aisu.app.serializer.client.ChekiSerializer
 import com.tumugin.aisu.domain.cheki.ChekiId
@@ -78,6 +80,20 @@ class ChekiQueryService : Query {
         userId,
         params.castedBaseTimezone
       ).map { ChekiMonthIdolCountSerializer.from(it) }
+    }
+
+    suspend fun getChekiMonthCountByIdol(
+      dfe: DataFetchingEnvironment,
+      params: GetChekiMonthCountByIdolParams
+    ): List<ChekiMonthCountSerializer> {
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
+      val userId = aisuGraphQLContext.userAuthSession?.castedUserId ?: throw NotAuthorizedException()
+
+      return getCheki.getChekiMonthCountByUserIdAndIdolId(
+        userId,
+        params.castedIdolId,
+        params.castedBaseTimezone
+      ).map { ChekiMonthCountSerializer.from(it) }
     }
   }
 }

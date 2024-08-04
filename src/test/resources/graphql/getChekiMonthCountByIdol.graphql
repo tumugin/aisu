@@ -1,0 +1,12 @@
+query getChekiMonthCountByIdol($params: GetChekiMonthCountByIdolParamsInput!) {
+  currentUserChekis {
+    getChekiMonthCountByIdol(params: $params) {
+      count
+      month {
+        baseTimezone
+        month
+        year
+      }
+    }
+  }
+}

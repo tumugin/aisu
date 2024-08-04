@@ -46,4 +46,10 @@ interface ChekiRepository {
   suspend fun deleteCheki(
     chekiId: ChekiId
   )
+
+  suspend fun getChekiMonthIdolCountByUserIdAndIdolId(
+    sessionUserId: UserId,
+    idolId: IdolId,
+    baseTimezone: TimeZone
+  ): List<ChekiMonthCount>
 }
