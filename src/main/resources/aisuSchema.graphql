@@ -15,6 +15,9 @@ directive @include(
   if: Boolean!
 ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 
+"Indicates an Input Object is a OneOf Input Object."
+directive @oneOf on INPUT_OBJECT
+
 "Directs the executor to skip this field or fragment when the `if` argument is true."
 directive @skip(
   "Skipped when true."
@@ -81,6 +84,12 @@ type ChekiIdolCountSerializer {
   chekiCount: Int!
   idol: IdolSerializer
   idolId: ID!
+  totalPrice: Int!
+}
+
+type ChekiMonthCountSerializer {
+  count: Int!
+  month: ChekiShotAtMonthSerializer!
 }
 
 type ChekiMonthIdolCountSerializer {
@@ -240,7 +249,7 @@ type RegulationSerializer {
   regulationCreatedAt: String!
   regulationId: ID!
   regulationName: String!
-  regulationStatus: String!
+  regulationStatus: RegulationStatus!
   regulationUnitPrice: Int!
   regulationUpdatedAt: String!
   user: LimitedUserSerializer
@@ -248,6 +257,7 @@ type RegulationSerializer {
 }
 
 type UserChekis {
+  getChekiMonthCountByIdol(params: GetChekiMonthCountByIdolParamsInput!): [ChekiMonthCountSerializer!]!
   getChekiMonthIdolCount(params: GetChekiMonthIdolCountParamsInput!): [ChekiMonthIdolCountSerializer!]!
   getUserChekiIdolCount(params: GetUserChekiIdolCountParamsInput!): [ChekiIdolCountSerializer!]!
   getUserChekis(params: GetUserChekisParamsInput!): [ChekiSerializer!]!
@@ -258,6 +268,8 @@ type UserFavoriteGroup {
 }
 
 type UserMutationServices {
+  sendAuth0PasswordResetEmail(params: SendAuth0PasswordResetEmailParamsInput!): String!
+  updateUserName(params: UpdateUserNameParamsInput!): String!
   userCreate(params: UserCreateParamsInput!): UserSerializer!
   userLogin(params: UserLoginParamsInput!): UserSerializer!
   userLogout: String!
@@ -330,6 +342,11 @@ input AdminUserLoginParamsInput {
   password: String!
 }
 
+input GetChekiMonthCountByIdolParamsInput {
+  baseTimezone: String!
+  idolId: ID!
+}
+
 input GetChekiMonthIdolCountParamsInput {
   baseTimezone: String!
 }
@@ -345,6 +362,10 @@ input GetUserChekisParamsInput {
   idolId: ID
 }
 
+input SendAuth0PasswordResetEmailParamsInput {
+  auth0EmailAddress: String!
+}
+
 input UpdateAdminUserParamsInput {
   email: String!
   name: String!
@@ -352,6 +373,10 @@ input UpdateAdminUserParamsInput {
 
 input UpdateAdminUserPasswordParamsInput {
   password: String!
+}
+
+input UpdateUserNameParamsInput {
+  userName: String!
 }
 
 input UserCreateParamsInput {

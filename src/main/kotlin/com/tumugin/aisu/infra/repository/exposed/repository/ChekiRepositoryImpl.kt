@@ -180,4 +180,36 @@ class ChekiRepositoryImpl : ChekiRepository {
       model.delete()
     }
   }
+
+  override suspend fun getChekiMonthIdolCountByUserIdAndIdolId(
+    sessionUserId: UserId,
+    idolId: IdolId,
+    baseTimezone: TimeZone
+  ): List<ChekiMonthCount> {
+    return newSuspendedTransaction(Dispatchers.IO) {
+      val yearConvertFunc = DateFormatWithTZFunction(
+        Chekis.shotAt,
+        "yyyy",
+        TimeZone.of("UTC"),
+        baseTimezone
+      )
+      val monthConvertFunc = DateFormatWithTZFunction(
+        Chekis.shotAt,
+        "mm",
+        TimeZone.of("UTC"),
+        baseTimezone
+      )
+      val countResults = Chekis
+        .select(yearConvertFunc, monthConvertFunc, Chekis.quantity.sum())
+        .where(Chekis.user.eq(sessionUserId.value))
+        .where(Chekis.idol.eq(idolId.value))
+        .groupBy(yearConvertFunc, monthConvertFunc)
+      countResults.map { row ->
+        ChekiMonthCount(
+          count = ChekiCount(row[Chekis.quantity.sum()] ?: 0),
+          month = ChekiShotAtMonth.fromString(row[yearConvertFunc], row[monthConvertFunc], baseTimezone)
+        )
+      }
+    }
+  }
 }
