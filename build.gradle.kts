@@ -6,7 +6,7 @@ import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 
 plugins {
-  val kotlinVersion = "2.0.0"
+  val kotlinVersion = "2.0.10"
   kotlin("jvm") version kotlinVersion
   application
   id("org.flywaydb.flyway") version "10.17.0"
