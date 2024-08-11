@@ -8,6 +8,12 @@ import kotlinx.datetime.toInstant
 fun Application.configureRefreshToken() {
   intercept(ApplicationCallPipeline.Plugins) {
     val userAuthSession = call.sessions.get<UserAuthSession>()
+
+    if (call.request.headers.get("user-agent") == "node") {
+      // SSRからのリクエストの場合はクライアント側に持っているCookieの有効期限と内部で持っている有効期限が食い違ってしまうのでセットしない
+      return@intercept
+    }
+
     if (userAuthSession != null) {
       val parsedValidTime = userAuthSession.validThroughTimestamp.toInstant()
       // デフォルトの有効期限の半分を過ぎていたら、新しいセッションをセットする
@@ -26,6 +32,12 @@ fun Application.configureRefreshToken() {
 fun Application.configureAdminRefreshToken() {
   intercept(ApplicationCallPipeline.Plugins) {
     val adminUserAuthSession = call.sessions.get<AdminUserAuthSession>()
+
+    if (call.request.headers.get("user-agent") == "node") {
+      // SSRからのリクエストの場合はクライアント側に持っているCookieの有効期限と内部で持っている有効期限が食い違ってしまうのでセットしない
+      return@intercept
+    }
+
     if (adminUserAuthSession != null) {
       val parsedValidTime = adminUserAuthSession.validThroughTimestamp.toInstant()
       // デフォルトの有効期限の半分を過ぎていたら、新しいセッションをセットする
