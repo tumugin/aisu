@@ -9,7 +9,7 @@ plugins {
   val kotlinVersion = "2.0.10"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "10.17.0"
+  id("org.flywaydb.flyway") version "10.17.1"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "7.1.4"
@@ -32,13 +32,13 @@ val ktorVersion = "2.3.12"
 val logbackVersion = "1.5.6"
 val coroutineVersion = "1.8.1"
 val graphQLKotlinVersion = "7.1.4"
-val flywayVersion = "10.17.0"
-val sentryVersion = "7.13.0"
+val flywayVersion = "10.17.1"
+val sentryVersion = "7.14.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
-    classpath("org.flywaydb:flyway-database-postgresql:10.17.0")
+    classpath("org.flywaydb:flyway-database-postgresql:10.17.1")
   }
 }
 
@@ -110,14 +110,14 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.3")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.3")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.3")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.0")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.0")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.0")
   // test libs
   testImplementation("io.mockk:mockk:1.13.12")
   testImplementation("io.insert-koin:koin-test:3.5.6")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-  testImplementation("com.h2database:h2:2.3.230")
+  testImplementation("com.h2database:h2:2.3.232")
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 }
 
