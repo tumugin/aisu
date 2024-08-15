@@ -13,7 +13,6 @@ import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toJavaInstant
-import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.between
@@ -53,6 +52,7 @@ class ChekiRepositoryImpl : ChekiRepository {
           chekiShotEnd.value.toJavaInstant().atOffset(ZoneOffset.UTC)
         )
       )
+        .sortedByDescending { it.shotAt }
         .with(*withModels)
         .map { it.toDomain() }
     }
@@ -70,7 +70,10 @@ class ChekiRepositoryImpl : ChekiRepository {
           chekiShotAtStart.value.toJavaInstant().atOffset(ZoneOffset.UTC),
           chekiShotEnd.value.toJavaInstant().atOffset(ZoneOffset.UTC)
         ) and Chekis.idol.eq(idolId.value)
-      ).with(*withModels).map { it.toDomain() }
+      )
+        .sortedByDescending { it.shotAt }
+        .with(*withModels)
+        .map { it.toDomain() }
     }
   }
 
