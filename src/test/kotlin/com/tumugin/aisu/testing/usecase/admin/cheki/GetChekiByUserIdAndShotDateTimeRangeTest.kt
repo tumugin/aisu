@@ -51,7 +51,7 @@ class GetChekiByUserIdAndShotDateTimeRangeTest : BaseDatabaseTest() {
       ChekiShotAt(Instant.parse("2022-01-01T00:00:00+09:00")),
     )
     Assertions.assertEquals(
-      listOf(chekiA, chekiB),
+      listOf(chekiB, chekiA),
       chekis
     )
   }
