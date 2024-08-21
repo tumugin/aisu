@@ -29,7 +29,7 @@ repositories {
 val exposedVersion = "0.53.0"
 val koinVersion = "3.5.6"
 val ktorVersion = "2.3.12"
-val logbackVersion = "1.5.6"
+val logbackVersion = "1.5.7"
 val coroutineVersion = "1.8.1"
 val graphQLKotlinVersion = "7.1.4"
 val flywayVersion = "10.17.1"
@@ -92,7 +92,7 @@ dependencies {
   implementation("p6spy:p6spy:3.9.1")
   implementation("com.zaxxer:HikariCP:5.1.0")
   implementation("io.insert-koin:koin-core:$koinVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
+  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.6.1")
