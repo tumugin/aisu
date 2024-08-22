@@ -6,10 +6,10 @@ import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 
 plugins {
-  val kotlinVersion = "2.0.10"
+  val kotlinVersion = "2.0.20"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "10.17.1"
+  id("org.flywaydb.flyway") version "10.17.2"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "7.1.4"
@@ -32,13 +32,13 @@ val ktorVersion = "2.3.12"
 val logbackVersion = "1.5.7"
 val coroutineVersion = "1.8.1"
 val graphQLKotlinVersion = "7.1.4"
-val flywayVersion = "10.17.1"
+val flywayVersion = "10.17.2"
 val sentryVersion = "7.14.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.1")
-    classpath("org.flywaydb:flyway-database-postgresql:10.17.1")
+    classpath("org.flywaydb:flyway-database-postgresql:10.17.2")
   }
 }
 
@@ -88,7 +88,7 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposedVersion")
   implementation("mysql:mysql-connector-java:8.0.33")
-  implementation("org.postgresql:postgresql:42.7.3")
+  implementation("org.postgresql:postgresql:42.7.4")
   implementation("p6spy:p6spy:3.9.1")
   implementation("com.zaxxer:HikariCP:5.1.0")
   implementation("io.insert-koin:koin-core:$koinVersion")
