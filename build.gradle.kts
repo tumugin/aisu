@@ -29,7 +29,7 @@ repositories {
 val exposedVersion = "0.54.0"
 val koinVersion = "3.5.6"
 val ktorVersion = "2.3.12"
-val logbackVersion = "1.5.7"
+val logbackVersion = "1.5.8"
 val coroutineVersion = "1.8.1"
 val graphQLKotlinVersion = "7.1.5"
 val flywayVersion = "10.17.3"
