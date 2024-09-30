@@ -9,7 +9,7 @@ plugins {
   val kotlinVersion = "2.0.20"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "10.17.3"
+  id("org.flywaydb.flyway") version "10.18.2"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "8.0.0"
@@ -26,19 +26,19 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.54.0"
+val exposedVersion = "0.55.0"
 val koinVersion = "3.5.6"
 val ktorVersion = "2.3.12"
 val logbackVersion = "1.5.8"
-val coroutineVersion = "1.8.1"
+val coroutineVersion = "1.9.0"
 val graphQLKotlinVersion = "7.1.5"
-val flywayVersion = "10.17.3"
+val flywayVersion = "10.18.2"
 val sentryVersion = "7.14.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.2")
-    classpath("org.flywaydb:flyway-database-postgresql:10.17.3")
+    classpath("org.flywaydb:flyway-database-postgresql:10.18.2")
   }
 }
 
@@ -95,7 +95,7 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.2")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
-  implementation("io.konform:konform:0.6.2")
+  implementation("io.konform:konform:0.7.0")
   implementation("io.lettuce:lettuce-core:6.4.0.RELEASE")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
@@ -110,9 +110,9 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.0")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.0")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.0")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.1")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.1")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.1")
   // test libs
   testImplementation("io.mockk:mockk:1.13.12")
   testImplementation("io.insert-koin:koin-test:3.5.6")
