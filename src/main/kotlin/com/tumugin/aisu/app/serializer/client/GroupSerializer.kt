@@ -31,7 +31,9 @@ data class GroupSerializer(
 
   fun idols(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<List<IdolSerializer?>> {
     val groupIdolIdsDataLoader = dataFetchingEnvironment.getDataLoader<ID, List<ID>>(GroupIdolIdsDataLoaderName)
+      ?: throw IllegalStateException("DataLoader not found")
     val idolDataLoader = dataFetchingEnvironment.getDataLoader<ID, IdolSerializer?>(IdolDataLoaderName)
+      ?: throw IllegalStateException("DataLoader not found")
 
     val context = dataFetchingEnvironment.graphQlContext.get<AisuGraphQLContext>()
     return groupIdolIdsDataLoader.load(groupId, context).thenCompose { idolIds ->
