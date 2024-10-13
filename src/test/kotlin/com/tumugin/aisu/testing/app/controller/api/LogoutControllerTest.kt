@@ -28,7 +28,7 @@ class LogoutControllerTest : BaseKtorTest() {
     }.apply {
       assertEquals(HttpStatusCode.OK, status)
       assertEquals(
-        "USER_AUTH=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/; HttpOnly; SameSite=lax; \$x-enc=URI_ENCODING",
+        "USER_AUTH=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/; HttpOnly; SameSite=lax; \$x-enc=URI_ENCODING",
         headers["Set-Cookie"]
       )
     }

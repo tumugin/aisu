@@ -14,7 +14,7 @@ plugins {
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "8.1.0"
   id("org.jetbrains.kotlinx.kover") version "0.8.3"
-  id("io.ktor.plugin") version "2.3.12"
+  id("io.ktor.plugin") version "3.0.0"
 }
 
 group = "com.tumugin"
@@ -28,7 +28,7 @@ repositories {
 
 val exposedVersion = "0.55.0"
 val koinVersion = "4.0.0"
-val ktorVersion = "2.3.12"
+val ktorVersion = "3.0.0"
 val logbackVersion = "1.5.10"
 val coroutineVersion = "1.9.0"
 val graphQLKotlinVersion = "8.1.0"
@@ -63,7 +63,7 @@ kotlin {
 dependencies {
   // ktor
   implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
-  implementation("io.ktor:ktor-server-locations-jvm:$ktorVersion")
+  implementation("io.ktor:ktor-server-resources:$ktorVersion")
   implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
   implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
   implementation("io.ktor:ktor-server-default-headers-jvm:$ktorVersion")
@@ -109,7 +109,6 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
-  testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.2")
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.2")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.2")
