@@ -34,7 +34,7 @@ fun Application.configureRouting(koin: Koin) {
       GraphQLServerController().handle(this.call)
     }
 
-    routing {
+    route("/debug") {
       install(OnlyDebugRoute) {}
 
       get("sdl") {
@@ -47,57 +47,62 @@ fun Application.configureRouting(koin: Koin) {
       }
     }
 
-    routing {
+    route("api") {
+      install(CsrfProtection) {
+      }
+      authenticate("user_session") {}
+      post("login") {
+        LoginController().post(call)
+      }
+      post("logout") {
+        LogoutController().post(call)
+      }
+      get("metadata") {
+        MetadataController().get(call)
+      }
+    }
+
+    // Auth0
+    authenticate("auth-oauth-auth0") {
+      route("auth0") {
+        get("/login") {
+          // Redirects to 'authorizeUrl' automatically
+          call.respondRedirect("/")
+        }
+
+        get("/callback") {
+          Auth0CallbackController().get(call)
+        }
+      }
+    }
+
+    route("/auth0/logout") {
       install(CsrfProtection) {
       }
 
-      route("api") {
-        install(CsrfProtection) {
-        }
-        authenticate("user_session") {}
-        post("login") {
-          LoginController().post(call)
-        }
-        post("logout") {
-          LogoutController().post(call)
-        }
-        get("metadata") {
-          MetadataController().get(call)
-        }
-      }
-
-      // Auth0
-      authenticate("auth-oauth-auth0") {
-        route("auth0") {
-          get("/login") {
-            // Redirects to 'authorizeUrl' automatically
-            call.respondRedirect("/")
-          }
-
-          get("/callback") {
-            Auth0CallbackController().get(call)
-          }
-        }
-      }
-
-      post("/auth0/logout") {
+      post {
         Auth0LogoutController().post(call)
       }
+    }
 
-      authenticate("admin-auth-oauth-auth0") {
-        route("admin/auth0") {
-          get("/login") {
-            // Redirects to 'authorizeUrl' automatically
-            call.respondRedirect("/")
-          }
-          get("/callback") {
-            AdminAuth0CallbackController().get(call)
-          }
-        }
+    route("/admin/auth0/logout") {
+      install(CsrfProtection) {
       }
 
-      post("/admin/auth0/logout") {
+      post {
         AdminAuth0LogoutController().post(call)
+      }
+    }
+
+    authenticate("admin-auth-oauth-auth0") {
+      route("admin/auth0") {
+        get("/login") {
+          // Redirects to 'authorizeUrl' automatically
+          call.respondRedirect("/")
+        }
+        get("/callback") {
+          AdminAuth0CallbackController().get(call)
+        }
       }
     }
   }
