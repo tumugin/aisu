@@ -109,7 +109,6 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
-  testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.2")
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.2")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.2")
