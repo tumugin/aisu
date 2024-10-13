@@ -21,7 +21,7 @@ class AdminAuth0LogoutControllerTest : BaseKtorTest() {
         headers["Location"]
       )
       Assertions.assertEquals(
-        "ADMIN_USER_AUTH=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/; HttpOnly; SameSite=lax; \$x-enc=URI_ENCODING",
+        "ADMIN_USER_AUTH=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/; HttpOnly; SameSite=lax; \$x-enc=URI_ENCODING",
         headers["Set-Cookie"]
       )
     }

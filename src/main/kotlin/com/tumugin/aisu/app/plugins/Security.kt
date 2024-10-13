@@ -10,9 +10,11 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.sessions.*
 import io.ktor.util.*
+import kotlinx.serialization.Serializable
 import org.koin.core.Koin
 import kotlin.time.Duration.Companion.days
 
+@Serializable
 data class UserAuthSession(val userId: Long, val validThroughTimestamp: String, val forceLogoutGeneration: Int) {
   companion object {
     val defaultValidDays = 7.days
@@ -22,6 +24,7 @@ data class UserAuthSession(val userId: Long, val validThroughTimestamp: String, 
     get() = UserId(userId)
 }
 
+@Serializable
 data class AdminUserAuthSession(
   val adminUserId: Long, val validThroughTimestamp: String, val forceLogoutGeneration: Int
 ) {
