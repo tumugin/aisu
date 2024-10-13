@@ -14,7 +14,7 @@ plugins {
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "8.1.0"
   id("org.jetbrains.kotlinx.kover") version "0.8.3"
-  id("io.ktor.plugin") version "2.3.12"
+  id("io.ktor.plugin") version "3.0.0"
 }
 
 group = "com.tumugin"
