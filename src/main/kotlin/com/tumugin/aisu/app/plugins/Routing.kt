@@ -12,49 +12,31 @@ import com.tumugin.aisu.app.controller.auth0.Auth0LogoutController
 import com.tumugin.aisu.app.graphql.GraphQLSchema
 import com.tumugin.aisu.app.plugins.security.CsrfProtection
 import com.tumugin.aisu.app.plugins.security.OnlyDebugRoute
-import com.tumugin.aisu.app.plugins.security.noCsrfProtection
-import com.tumugin.aisu.app.plugins.security.onlyDebugRoute
 import io.ktor.http.*
+import io.ktor.resources.Resource
+import io.ktor.server.resources.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
-import io.ktor.server.locations.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.sessions.*
 import org.koin.core.Koin
 
 fun Application.configureRouting(koin: Koin) {
-  install(Locations) {}
-
-  install(CsrfProtection) {
-    applyToAllRoutesWithSideEffects()
-  }
-  install(OnlyDebugRoute)
+  install(Resources) {}
 
   routing {
-    route("api") {
-      authenticate("user_session") {}
-      post("login") {
-        LoginController().post(call)
-      }
-      post("logout") {
-        LogoutController().post(call)
-      }
-      get("metadata") {
-        MetadataController().get(call)
-      }
-    }
     get("/") {
       call.respondText("aisu")
     }
 
     // graphql
-    noCsrfProtection {
-      post("graphql") {
-        GraphQLServerController().handle(this.call)
-      }
+    post("graphql") {
+      GraphQLServerController().handle(this.call)
     }
-    onlyDebugRoute {
+
+    routing {
+      install(OnlyDebugRoute) {}
+
       get("sdl") {
         call.respondText(GraphQLSchema().graphQLSchema.print())
       }
@@ -65,41 +47,63 @@ fun Application.configureRouting(koin: Koin) {
       }
     }
 
-    // Auth0
-    authenticate("auth-oauth-auth0") {
-      route("auth0") {
-        get("/login") {
-          // Redirects to 'authorizeUrl' automatically
-          call.respondRedirect("/")
-        }
+    routing {
+      install(CsrfProtection) {
+      }
 
-        get("/callback") {
-          Auth0CallbackController().get(call)
+      route("api") {
+        install(CsrfProtection) {
+        }
+        authenticate("user_session") {}
+        post("login") {
+          LoginController().post(call)
+        }
+        post("logout") {
+          LogoutController().post(call)
+        }
+        get("metadata") {
+          MetadataController().get(call)
         }
       }
-    }
-    post("/auth0/logout") {
-      Auth0LogoutController().post(call)
-    }
 
-    authenticate("admin-auth-oauth-auth0") {
-      route("admin/auth0") {
-        get("/login") {
-          // Redirects to 'authorizeUrl' automatically
-          call.respondRedirect("/")
-        }
-        get("/callback") {
-          AdminAuth0CallbackController().get(call)
+      // Auth0
+      authenticate("auth-oauth-auth0") {
+        route("auth0") {
+          get("/login") {
+            // Redirects to 'authorizeUrl' automatically
+            call.respondRedirect("/")
+          }
+
+          get("/callback") {
+            Auth0CallbackController().get(call)
+          }
         }
       }
-    }
-    post("/admin/auth0/logout") {
-      AdminAuth0LogoutController().post(call)
+
+      post("/auth0/logout") {
+        Auth0LogoutController().post(call)
+      }
+
+      authenticate("admin-auth-oauth-auth0") {
+        route("admin/auth0") {
+          get("/login") {
+            // Redirects to 'authorizeUrl' automatically
+            call.respondRedirect("/")
+          }
+          get("/callback") {
+            AdminAuth0CallbackController().get(call)
+          }
+        }
+      }
+
+      post("/admin/auth0/logout") {
+        AdminAuth0LogoutController().post(call)
+      }
     }
   }
 }
 
-@Location("{id}")
+@Resource("{id}")
 class ResourceIdGetRequest(val id: Long)
 
 private fun buildPlaygroundHtml(graphQLEndpoint: String, subscriptionsEndpoint: String) =
