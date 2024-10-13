@@ -6,13 +6,13 @@ import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 
 plugins {
-  val kotlinVersion = "2.0.20"
+  val kotlinVersion = "2.0.21"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "10.18.2"
+  id("org.flywaydb.flyway") version "10.19.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
-  id("com.expediagroup.graphql") version "8.0.0"
+  id("com.expediagroup.graphql") version "8.1.0"
   id("org.jetbrains.kotlinx.kover") version "0.8.3"
   id("io.ktor.plugin") version "2.3.12"
 }
@@ -29,16 +29,16 @@ repositories {
 val exposedVersion = "0.55.0"
 val koinVersion = "4.0.0"
 val ktorVersion = "2.3.12"
-val logbackVersion = "1.5.8"
+val logbackVersion = "1.5.10"
 val coroutineVersion = "1.9.0"
-val graphQLKotlinVersion = "8.0.0"
-val flywayVersion = "10.18.2"
-val sentryVersion = "7.14.0"
+val graphQLKotlinVersion = "8.1.0"
+val flywayVersion = "10.19.0"
+val sentryVersion = "7.15.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.2")
-    classpath("org.flywaydb:flyway-database-postgresql:10.18.2")
+    classpath("org.flywaydb:flyway-database-postgresql:10.19.0")
   }
 }
 
@@ -110,11 +110,11 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.1")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.1")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.1")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.2")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.2")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.2")
   // test libs
-  testImplementation("io.mockk:mockk:1.13.12")
+  testImplementation("io.mockk:mockk:1.13.13")
   testImplementation("io.insert-koin:koin-test:4.0.0")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.3.232")
