@@ -12,7 +12,7 @@ plugins {
   id("org.flywaydb.flyway") version "10.20.1"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
-  id("com.expediagroup.graphql") version "8.2.0"
+  id("com.expediagroup.graphql") version "8.2.1"
   id("org.jetbrains.kotlinx.kover") version "0.8.3"
   id("io.ktor.plugin") version "3.0.0"
 }
@@ -28,10 +28,10 @@ repositories {
 
 val exposedVersion = "0.55.0"
 val koinVersion = "4.0.0"
-val ktorVersion = "3.0.1-eap-1122"
-val logbackVersion = "1.5.11"
+val ktorVersion = "3.0.1-eap-1125"
+val logbackVersion = "1.5.12"
 val coroutineVersion = "1.9.0"
-val graphQLKotlinVersion = "8.2.0"
+val graphQLKotlinVersion = "8.2.1"
 val flywayVersion = "10.20.1"
 val sentryVersion = "7.16.0"
 
