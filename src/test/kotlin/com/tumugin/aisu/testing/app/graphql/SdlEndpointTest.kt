@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class SdlEndpointTest : BaseKtorTest() {
   @Test
   fun testSdlEndpoint(): Unit = testAisuApplication {
-    client.get("/sdl").apply {
+    client.get("/debug/sdl").apply {
       Assertions.assertEquals(HttpStatusCode.OK, status)
     }
   }
