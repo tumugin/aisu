@@ -41,7 +41,7 @@ class TestOnlyDebugRoute : BaseKtorTest() {
       mockedRepository
     }
     testAisuApplication {
-      client.get("/sdl").apply {
+      client.get("/debug/sdl").apply {
         Assertions.assertEquals(HttpStatusCode.NotFound, status)
       }
     }
@@ -50,7 +50,7 @@ class TestOnlyDebugRoute : BaseKtorTest() {
   @Test
   fun testTestingMode() {
     testAisuApplication {
-      client.get("/sdl").apply {
+      client.get("/debug/sdl").apply {
         Assertions.assertEquals(HttpStatusCode.OK, status)
       }
     }
