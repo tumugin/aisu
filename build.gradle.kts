@@ -22,13 +22,12 @@ version = "1.0.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
-  maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
 val exposedVersion = "0.55.0"
 val koinVersion = "4.0.0"
-val ktorVersion = "3.0.1-eap-1125"
+val ktorVersion = "3.0.0"
 val logbackVersion = "1.5.12"
 val coroutineVersion = "1.9.0"
 val graphQLKotlinVersion = "8.2.1"
