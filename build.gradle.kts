@@ -27,7 +27,7 @@ repositories {
 
 val exposedVersion = "0.55.0"
 val koinVersion = "4.0.0"
-val ktorVersion = "3.0.0"
+val ktorVersion = "3.0.1"
 val logbackVersion = "1.5.12"
 val coroutineVersion = "1.9.0"
 val graphQLKotlinVersion = "8.2.1"
