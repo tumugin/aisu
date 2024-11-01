@@ -14,7 +14,7 @@ plugins {
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "8.2.1"
   id("org.jetbrains.kotlinx.kover") version "0.8.3"
-  id("io.ktor.plugin") version "3.0.0"
+  id("io.ktor.plugin") version "3.0.1"
 }
 
 group = "com.tumugin"
@@ -25,7 +25,7 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.55.0"
+val exposedVersion = "0.56.0"
 val koinVersion = "4.0.0"
 val ktorVersion = "3.0.1"
 val logbackVersion = "1.5.12"
@@ -94,8 +94,8 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.2")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
-  implementation("io.konform:konform:0.7.0")
-  implementation("io.lettuce:lettuce-core:6.4.0.RELEASE")
+  implementation("io.konform:konform:0.8.0")
+  implementation("io.lettuce:lettuce-core:6.5.0.RELEASE")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
