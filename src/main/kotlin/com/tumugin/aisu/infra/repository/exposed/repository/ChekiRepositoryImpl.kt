@@ -1,5 +1,7 @@
 package com.tumugin.aisu.infra.repository.exposed.repository
 
+import com.tumugin.aisu.domain.base.PaginatorParam
+import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.cheki.*
 import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.regulation.RegulationId
@@ -212,6 +214,18 @@ class ChekiRepositoryImpl : ChekiRepository {
           month = ChekiShotAtMonth.fromString(row[yearConvertFunc], row[monthConvertFunc], baseTimezone)
         )
       }
+    }
+  }
+
+  override suspend fun getChekiByUserIdAndPage(sessionUserId: UserId, page: PaginatorParam): PaginatorResult<Cheki> {
+    return newSuspendedTransaction(Dispatchers.IO) {
+      val count = ChekiModel.find { Chekis.user eq sessionUserId.value }.count()
+      val chekis = ChekiModel.find { Chekis.user eq sessionUserId.value }
+        .orderBy(Chekis.createdAt to SortOrder.DESC)
+        .limit(page.limit.toInt())
+        .offset(page.offset)
+        .map { it.toDomain() }
+      PaginatorResult(count = count, limit = page.limit, page = page.page, result = chekis)
     }
   }
 }

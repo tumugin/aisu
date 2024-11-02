@@ -1,5 +1,7 @@
 package com.tumugin.aisu.usecase.client.cheki
 
+import com.tumugin.aisu.domain.base.PaginatorParam
+import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.cheki.*
 import com.tumugin.aisu.domain.exception.HasNoPermissionException
 import com.tumugin.aisu.domain.idol.IdolId
@@ -28,6 +30,12 @@ class GetCheki : KoinComponent {
     sessionUserId: UserId, chekiShotAtStart: ChekiShotAt, chekiShotEnd: ChekiShotAt
   ): List<Cheki> {
     return chekiRepository.getChekiByUserIdAndShotDateTimeRange(sessionUserId, chekiShotAtStart, chekiShotEnd)
+  }
+
+  suspend fun getChekisByUserIdAndPage(
+    sessionUserId: UserId, page: PaginatorParam
+  ): PaginatorResult<Cheki> {
+    return chekiRepository.getChekiByUserIdAndPage(sessionUserId, page)
   }
 
   suspend fun getChekiByUserIdAndShotDateTimeRangeAndIdolId(
