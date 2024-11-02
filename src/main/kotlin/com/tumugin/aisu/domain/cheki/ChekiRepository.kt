@@ -1,5 +1,7 @@
 package com.tumugin.aisu.domain.cheki
 
+import com.tumugin.aisu.domain.base.PaginatorParam
+import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.regulation.RegulationId
 import com.tumugin.aisu.domain.user.UserId
@@ -52,4 +54,9 @@ interface ChekiRepository {
     idolId: IdolId,
     baseTimezone: TimeZone
   ): List<ChekiMonthCount>
+
+  suspend fun getChekiByUserIdAndPage(
+    sessionUserId: UserId,
+    page: PaginatorParam
+  ): PaginatorResult<Cheki>
 }

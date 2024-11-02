@@ -7,10 +7,8 @@ import com.tumugin.aisu.app.graphql.params.GetChekiMonthCountByIdolParams
 import com.tumugin.aisu.app.graphql.params.GetChekiMonthIdolCountParams
 import com.tumugin.aisu.app.graphql.params.GetUserChekiIdolCountParams
 import com.tumugin.aisu.app.graphql.params.GetUserChekisParams
-import com.tumugin.aisu.app.serializer.client.ChekiIdolCountSerializer
-import com.tumugin.aisu.app.serializer.client.ChekiMonthCountSerializer
-import com.tumugin.aisu.app.serializer.client.ChekiMonthIdolCountSerializer
-import com.tumugin.aisu.app.serializer.client.ChekiSerializer
+import com.tumugin.aisu.app.serializer.client.*
+import com.tumugin.aisu.domain.base.PaginatorParam
 import com.tumugin.aisu.domain.cheki.ChekiId
 import com.tumugin.aisu.domain.exception.NotAuthorizedException
 import com.tumugin.aisu.domain.exception.NotFoundException
@@ -58,6 +56,21 @@ class ChekiQueryService : Query {
           params.chekiShotAtEndCasted
         ).map { ChekiSerializer.from(it) }
       }
+    }
+
+    suspend fun getUserAllChekis(dfe: DataFetchingEnvironment, page: Int): ChekiPaginationSerializer {
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
+      val userId = aisuGraphQLContext.userAuthSession?.castedUserId ?: throw NotAuthorizedException()
+      val result = getCheki.getChekisByUserIdAndPage(
+        userId,
+        PaginatorParam(page.toLong(), 50)
+      )
+      return ChekiPaginationSerializer(
+        page,
+        result.pages.toInt(),
+        result.count.toInt(),
+        result.result.map { ChekiSerializer.from(it) }
+      )
     }
 
     suspend fun getUserChekiIdolCount(
