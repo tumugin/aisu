@@ -32,7 +32,7 @@ val logbackVersion = "1.5.12"
 val coroutineVersion = "1.9.0"
 val graphQLKotlinVersion = "8.2.1"
 val flywayVersion = "11.0.0"
-val sentryVersion = "7.16.0"
+val sentryVersion = "7.18.0"
 
 buildscript {
   dependencies {
@@ -89,12 +89,12 @@ dependencies {
   implementation("mysql:mysql-connector-java:8.0.33")
   implementation("org.postgresql:postgresql:42.7.4")
   implementation("p6spy:p6spy:3.9.1")
-  implementation("com.zaxxer:HikariCP:6.1.0")
+  implementation("com.zaxxer:HikariCP:6.2.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
   implementation("io.github.cdimascio:dotenv-kotlin:6.4.2")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
-  implementation("io.konform:konform:0.8.0")
+  implementation("io.konform:konform:0.10.0")
   implementation("io.lettuce:lettuce-core:6.5.0.RELEASE")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
