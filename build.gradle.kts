@@ -25,7 +25,7 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.56.0"
+val exposedVersion = "0.57.0"
 val koinVersion = "4.0.0"
 val ktorVersion = "3.0.2"
 val logbackVersion = "1.5.12"
