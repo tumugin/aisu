@@ -38,8 +38,20 @@ abstract class BaseDatabaseTest : KoinTest {
 
   private fun truncateDatabase() {
     transaction {
+      // FIXME: db.dialect.allTablesNames() is broken for now
+      val conn = TransactionManager.current().connection
+      val statement = conn.prepareStatement(
+        "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'",
+        arrayOf()
+      )
+      var allTablesResultSet = statement.executeQuery()
+      val allTableNames = mutableListOf<String>()
+      while (allTablesResultSet.next()) {
+        allTableNames.add(allTablesResultSet.getString("table_name"))
+      }
+
       // flywayのテーブルを除いて全てのテーブルをTRUNCATEする
-      db.dialect.allTablesNames().filterNot {
+      allTableNames.filterNot {
         it.contains("flyway_schema_history") || it.contains("FLYWAY_SCHEMA_HISTORY")
       }.forEach {
         TransactionManager.current().exec("TRUNCATE TABLE $it RESTART IDENTITY CASCADE")
