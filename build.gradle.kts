@@ -9,11 +9,11 @@ plugins {
   val kotlinVersion = "2.1.0"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "11.0.1"
+  id("org.flywaydb.flyway") version "11.1.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "8.2.1"
-  id("org.jetbrains.kotlinx.kover") version "0.8.3"
+  id("org.jetbrains.kotlinx.kover") version "0.9.0"
   id("io.ktor.plugin") version "3.0.2"
 }
 
@@ -31,13 +31,13 @@ val ktorVersion = "3.0.2"
 val logbackVersion = "1.5.12"
 val coroutineVersion = "1.9.0"
 val graphQLKotlinVersion = "8.2.1"
-val flywayVersion = "11.0.1"
-val sentryVersion = "7.18.1"
+val flywayVersion = "11.1.0"
+val sentryVersion = "7.19.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.4.2")
-    classpath("org.flywaydb:flyway-database-postgresql:11.0.1")
+    classpath("org.flywaydb:flyway-database-postgresql:11.1.0")
   }
 }
 
