@@ -14,7 +14,7 @@ plugins {
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "8.2.1"
   id("org.jetbrains.kotlinx.kover") version "0.9.0"
-  id("io.ktor.plugin") version "3.0.2"
+  id("io.ktor.plugin") version "3.0.3"
 }
 
 group = "com.tumugin"
@@ -26,17 +26,17 @@ repositories {
 }
 
 val exposedVersion = "0.57.0"
-val koinVersion = "4.0.0"
-val ktorVersion = "3.0.2"
-val logbackVersion = "1.5.12"
-val coroutineVersion = "1.9.0"
+val koinVersion = "4.0.1"
+val ktorVersion = "3.0.3"
+val logbackVersion = "1.5.15"
+val coroutineVersion = "1.10.1"
 val graphQLKotlinVersion = "8.2.1"
 val flywayVersion = "11.1.0"
-val sentryVersion = "7.19.0"
+val sentryVersion = "7.19.1"
 
 buildscript {
   dependencies {
-    classpath("io.github.cdimascio:dotenv-kotlin:6.4.2")
+    classpath("io.github.cdimascio:dotenv-kotlin:6.5.0")
     classpath("org.flywaydb:flyway-database-postgresql:11.1.0")
   }
 }
@@ -92,7 +92,7 @@ dependencies {
   implementation("com.zaxxer:HikariCP:6.2.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
-  implementation("io.github.cdimascio:dotenv-kotlin:6.4.2")
+  implementation("io.github.cdimascio:dotenv-kotlin:6.5.0")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.10.0")
   implementation("io.lettuce:lettuce-core:6.5.1.RELEASE")
@@ -108,12 +108,12 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.3")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.3")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.3")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.4")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
   // test libs
-  testImplementation("io.mockk:mockk:1.13.13")
-  testImplementation("io.insert-koin:koin-test:4.0.0")
+  testImplementation("io.mockk:mockk:1.13.14")
+  testImplementation("io.insert-koin:koin-test:4.0.1")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.3.232")
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
