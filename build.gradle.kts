@@ -25,7 +25,7 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.57.0"
+val exposedVersion = "0.58.0"
 val koinVersion = "4.0.1"
 val ktorVersion = "3.0.3"
 val logbackVersion = "1.5.16"
@@ -112,7 +112,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.4")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
   // test libs
-  testImplementation("io.mockk:mockk:1.13.14")
+  testImplementation("io.mockk:mockk:1.13.16")
   testImplementation("io.insert-koin:koin-test:4.0.1")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.3.232")
