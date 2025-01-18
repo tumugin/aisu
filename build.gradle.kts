@@ -9,10 +9,10 @@ plugins {
   val kotlinVersion = "2.1.0"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "11.1.1"
+  id("org.flywaydb.flyway") version "11.2.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
-  id("com.expediagroup.graphql") version "8.2.1"
+  id("com.expediagroup.graphql") version "8.3.0"
   id("org.jetbrains.kotlinx.kover") version "0.9.1"
   id("io.ktor.plugin") version "3.0.3"
 }
@@ -25,19 +25,19 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.57.0"
+val exposedVersion = "0.58.0"
 val koinVersion = "4.0.1"
 val ktorVersion = "3.0.3"
 val logbackVersion = "1.5.16"
 val coroutineVersion = "1.10.1"
-val graphQLKotlinVersion = "8.2.1"
-val flywayVersion = "11.1.1"
+val graphQLKotlinVersion = "8.3.0"
+val flywayVersion = "11.2.0"
 val sentryVersion = "7.20.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.5.0")
-    classpath("org.flywaydb:flyway-database-postgresql:11.1.1")
+    classpath("org.flywaydb:flyway-database-postgresql:11.2.0")
   }
 }
 
@@ -87,7 +87,7 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposedVersion")
   implementation("mysql:mysql-connector-java:8.0.33")
-  implementation("org.postgresql:postgresql:42.7.4")
+  implementation("org.postgresql:postgresql:42.7.5")
   implementation("p6spy:p6spy:3.9.1")
   implementation("com.zaxxer:HikariCP:6.2.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
@@ -112,7 +112,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.4")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
   // test libs
-  testImplementation("io.mockk:mockk:1.13.14")
+  testImplementation("io.mockk:mockk:1.13.16")
   testImplementation("io.insert-koin:koin-test:4.0.1")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.3.232")
