@@ -6,15 +6,15 @@ import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 
 plugins {
-  val kotlinVersion = "2.1.0"
+  val kotlinVersion = "2.1.10"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "11.2.0"
+  id("org.flywaydb.flyway") version "11.3.3"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "8.3.0"
   id("org.jetbrains.kotlinx.kover") version "0.9.1"
-  id("io.ktor.plugin") version "3.0.3"
+  id("io.ktor.plugin") version "3.1.0"
 }
 
 group = "com.tumugin"
@@ -25,19 +25,19 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "0.58.0"
-val koinVersion = "4.0.1"
-val ktorVersion = "3.0.3"
+val exposedVersion = "0.59.0"
+val koinVersion = "4.0.2"
+val ktorVersion = "3.1.0"
 val logbackVersion = "1.5.16"
 val coroutineVersion = "1.10.1"
 val graphQLKotlinVersion = "8.3.0"
-val flywayVersion = "11.2.0"
-val sentryVersion = "8.0.0"
+val flywayVersion = "11.3.3"
+val sentryVersion = "8.2.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.5.0")
-    classpath("org.flywaydb:flyway-database-postgresql:11.2.0")
+    classpath("org.flywaydb:flyway-database-postgresql:11.3.3")
   }
 }
 
@@ -91,11 +91,11 @@ dependencies {
   implementation("p6spy:p6spy:3.9.1")
   implementation("com.zaxxer:HikariCP:6.2.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
+  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
   implementation("io.github.cdimascio:dotenv-kotlin:6.5.0")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.10.0")
-  implementation("io.lettuce:lettuce-core:6.5.2.RELEASE")
+  implementation("io.lettuce:lettuce-core:6.5.4.RELEASE")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
@@ -113,7 +113,7 @@ dependencies {
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
   // test libs
   testImplementation("io.mockk:mockk:1.13.16")
-  testImplementation("io.insert-koin:koin-test:4.0.1")
+  testImplementation("io.insert-koin:koin-test:4.0.2")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.3.232")
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
