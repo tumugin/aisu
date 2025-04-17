@@ -108,9 +108,9 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.12.2")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.12.2")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.12.2")
+  testImplementation(platform("org.junit:junit-bom:5.12.2"))
+  testImplementation("org.junit.jupiter:junit-jupiter")
+  testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   // test libs
   testImplementation("io.mockk:mockk:1.14.0")
   testImplementation("io.insert-koin:koin-test:4.0.4")
