@@ -22,7 +22,9 @@ class UserRepositoryImpl : UserRepository {
   }
 
   override suspend fun getUserByEmail(userEmail: UserEmail): User? {
-    return newSuspendedTransaction(Dispatchers.IO) { UserModel.find { Users.email eq userEmail.value }.firstOrNull()?.toDomain() }
+    return newSuspendedTransaction(Dispatchers.IO) {
+      UserModel.find { Users.email eq userEmail.value }.firstOrNull()?.toDomain()
+    }
   }
 
   override suspend fun addUser(
@@ -79,7 +81,9 @@ class UserRepositoryImpl : UserRepository {
     return newSuspendedTransaction(Dispatchers.IO) {
       val query = UserModel.all()
       val count = query.count()
-      val results = query.limit(paginatorParam.limit.toInt(), paginatorParam.offset).map { it.toDomain() }
+      val results = query.limit(paginatorParam.limit.toInt())
+        .offset(paginatorParam.offset)
+        .map { it.toDomain() }
       paginatorParam.createPaginatorResult(
         count,
         results

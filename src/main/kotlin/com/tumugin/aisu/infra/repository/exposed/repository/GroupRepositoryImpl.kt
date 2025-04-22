@@ -78,7 +78,10 @@ class GroupRepositoryImpl : GroupRepository {
         }
       })
       val results =
-        query.limit(paginatorParam.limit.toInt(), paginatorParam.offset).with(*withModels).map { it.toDomain() }
+        query.limit(paginatorParam.limit.toInt())
+          .offset(paginatorParam.offset)
+          .with(*withModels)
+          .map { it.toDomain() }
       val count = query.count()
       paginatorParam.createPaginatorResult(
         count, results

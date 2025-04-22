@@ -64,7 +64,9 @@ class AdminUserRepositoryImpl : AdminUserRepository {
     return newSuspendedTransaction(Dispatchers.IO) {
       val query = AdminUserModel.all()
       val count = query.count()
-      val results = query.limit(paginatorParam.limit.toInt(), paginatorParam.offset).map { it.toDomain() }
+      val results = query.limit(paginatorParam.limit.toInt())
+        .offset(paginatorParam.offset)
+        .map { it.toDomain() }
       paginatorParam.createPaginatorResult(
         count, results
       )

@@ -73,7 +73,10 @@ class IdolRepositoryImpl : IdolRepository {
         }
       })
       val results =
-        query.limit(paginatorParam.limit.toInt(), paginatorParam.offset).with(*withModels).map { it.toDomain() }
+        query.limit(paginatorParam.limit.toInt())
+          .offset(paginatorParam.offset)
+          .with(*withModels)
+          .map { it.toDomain() }
       paginatorParam.createPaginatorResult(
         query.count(), results
       )
