@@ -95,6 +95,7 @@ class ChekiRepositoryImpl : ChekiRepository {
           )
         }
         .groupBy(Chekis.idol)
+        .orderBy(Chekis.idol)
       val idolIds = countResults.mapNotNull { it[Chekis.idol] }
       val idols = IdolModel.forEntityIds(idolIds).with(*idolWithModels)
       countResults.map { row ->
