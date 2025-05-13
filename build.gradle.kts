@@ -6,15 +6,15 @@ import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 
 plugins {
-  val kotlinVersion = "2.1.20"
+  val kotlinVersion = "2.1.21"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "11.8.0"
+  id("org.flywaydb.flyway") version "11.8.2"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "8.7.0"
   id("org.jetbrains.kotlinx.kover") version "0.9.1"
-  id("io.ktor.plugin") version "3.1.2"
+  id("io.ktor.plugin") version "3.1.3"
 }
 
 group = "com.tumugin"
@@ -27,17 +27,17 @@ repositories {
 
 val exposedVersion = "0.61.0"
 val koinVersion = "4.0.4"
-val ktorVersion = "3.1.2"
+val ktorVersion = "3.1.3"
 val logbackVersion = "1.5.18"
 val coroutineVersion = "1.10.2"
 val graphQLKotlinVersion = "8.7.0"
-val flywayVersion = "11.8.0"
-val sentryVersion = "8.11.1"
+val flywayVersion = "11.8.2"
+val sentryVersion = "8.12.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.5.1")
-    classpath("org.flywaydb:flyway-database-postgresql:11.8.0")
+    classpath("org.flywaydb:flyway-database-postgresql:11.8.2")
   }
 }
 
