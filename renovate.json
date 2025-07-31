@@ -5,13 +5,10 @@
     "enabled": true,
     "automerge": true
   },
-  "ignoreDeps": [],
-  "ignoreVersions": [
-    "/-eap$/",
-    "/-eap\\./",
-    "/\\.eap/",
-    "/-EAP$/",
-    "/-EAP\\./",
-    "/\\.EAP/"
+  "packageRules": [
+    {
+      "matchPackageNames": ["*"],
+      "allowedVersions": "!/[Ee][Aa][Pp]/"
+    }
   ]
 }
