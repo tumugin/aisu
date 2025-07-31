@@ -89,7 +89,7 @@ dependencies {
   implementation("mysql:mysql-connector-java:8.0.33")
   implementation("org.postgresql:postgresql:42.7.7")
   implementation("p6spy:p6spy:3.9.1")
-  implementation("com.zaxxer:HikariCP:6.3.2")
+  implementation("com.zaxxer:HikariCP:7.0.0")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1-0.6.x-compat")
   implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
