@@ -6,15 +6,15 @@ import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 
 plugins {
-  val kotlinVersion = "2.1.21"
+  val kotlinVersion = "2.2.0"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "11.9.1"
+  id("org.flywaydb.flyway") version "11.10.5"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
-  id("com.expediagroup.graphql") version "8.8.0"
+  id("com.expediagroup.graphql") version "8.8.1"
   id("org.jetbrains.kotlinx.kover") version "0.9.1"
-  id("io.ktor.plugin") version "3.2.0"
+  id("io.ktor.plugin") version "3.2.3"
 }
 
 group = "com.tumugin"
@@ -27,17 +27,17 @@ repositories {
 
 val exposedVersion = "0.61.0"
 val koinVersion = "4.1.0"
-val ktorVersion = "3.2.0"
+val ktorVersion = "3.2.3"
 val logbackVersion = "1.5.18"
 val coroutineVersion = "1.10.2"
-val graphQLKotlinVersion = "8.8.0"
-val flywayVersion = "11.9.1"
-val sentryVersion = "8.13.3"
+val graphQLKotlinVersion = "8.8.1"
+val flywayVersion = "11.10.5"
+val sentryVersion = "8.18.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.5.1")
-    classpath("org.flywaydb:flyway-database-postgresql:11.9.1")
+    classpath("org.flywaydb:flyway-database-postgresql:11.10.5")
   }
 }
 
@@ -89,9 +89,9 @@ dependencies {
   implementation("mysql:mysql-connector-java:8.0.33")
   implementation("org.postgresql:postgresql:42.7.7")
   implementation("p6spy:p6spy:3.9.1")
-  implementation("com.zaxxer:HikariCP:6.3.0")
+  implementation("com.zaxxer:HikariCP:6.3.2")
   implementation("io.insert-koin:koin-core:$koinVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
+  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1-0.6.x-compat")
   implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.11.1")
@@ -108,11 +108,11 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
-  testImplementation(platform("org.junit:junit-bom:5.13.1"))
+  testImplementation(platform("org.junit:junit-bom:5.13.4"))
   testImplementation("org.junit.jupiter:junit-jupiter")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   // test libs
-  testImplementation("io.mockk:mockk:1.14.2")
+  testImplementation("io.mockk:mockk:1.14.5")
   testImplementation("io.insert-koin:koin-test:4.1.0")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
   testImplementation("com.h2database:h2:2.3.232")
