@@ -14,6 +14,7 @@ import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.testing.seeder.*
 import kotlinx.coroutines.test.runTest
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import kotlinx.datetime.TimeZone
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -43,7 +44,7 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
         idolUna.idolId,
         regulation.regulationId,
         ChekiQuantity(10),
-        ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00"))
+        ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
       )
     }
     // 2021/12/31の23:59:59(JST)ぴったりに10枚のチェキを10回登録
@@ -53,7 +54,7 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
         idolMika.idolId,
         regulation.regulationId,
         ChekiQuantity(10),
-        ChekiShotAt(kotlin.time.Instant.parse("2021-12-31T23:59:59+09:00"))
+        ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
       )
     }
     // 2022/01/01の00:00:00(JST)ぴったりに10枚のチェキを10回登録
@@ -63,7 +64,7 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
         idolMika.idolId,
         regulation.regulationId,
         ChekiQuantity(10),
-        ChekiShotAt(kotlin.time.Instant.parse("2022-01-01T00:00:00+09:00"))
+        ChekiShotAt(Instant.parse("2022-01-01T00:00:00+09:00"))
       )
     }
   }
@@ -78,8 +79,8 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
   fun testGetChekiByUserIdAndShotDateTimeRange() = runTest {
     val chekis = chekiRepository.getChekiByUserIdAndShotDateTimeRange(
       UserId(1),
-      ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00")),
-      ChekiShotAt(kotlin.time.Instant.parse("2021-12-31T23:59:59+09:00"))
+      ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00")),
+      ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
     )
     assertEquals(20, chekis.size)
   }
@@ -89,8 +90,8 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
     val chekis = chekiRepository.getChekiByUserIdAndShotDateTimeRangeAndIdolId(
       UserId(1),
       IdolId(1),
-      ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00")),
-      ChekiShotAt(kotlin.time.Instant.parse("2021-12-31T23:59:59+09:00"))
+      ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00")),
+      ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
     )
     assertEquals(10, chekis.size)
   }
@@ -99,8 +100,8 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
   fun testGetChekiIdolCountByUserId() = runTest {
     val chekiIdolCounts = chekiRepository.getChekiIdolCountByUserId(
       UserId(1),
-      ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00")),
-      ChekiShotAt(kotlin.time.Instant.parse("2021-12-31T23:59:59+09:00"))
+      ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00")),
+      ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
     )
     assertEquals(2, chekiIdolCounts.size)
     assertNotNull(chekiIdolCounts[0].idol)
@@ -128,7 +129,7 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
       IdolId(1),
       RegulationId(1),
       ChekiQuantity(10),
-      ChekiShotAt(kotlin.time.Instant.parse("2021-12-31T23:59:59+09:00"))
+      ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
     )
     val addedResult = chekiRepository.getCheki(cheki.chekiId)!!
     assertEquals(
@@ -137,7 +138,7 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
         "idolId" to 1L,
         "regulationId" to 1L,
         "chekiQuantity" to 10,
-        "chekiShotAt" to kotlin.time.Instant.parse("2021-12-31T23:59:59+09:00").toString()
+        "chekiShotAt" to Instant.parse("2021-12-31T23:59:59+09:00").toString()
       ), mutableMapOf<String, Any?>(
         "userId" to addedResult.userId.value,
         "idolId" to addedResult.idolId?.value,
@@ -156,7 +157,7 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
       IdolId(1),
       RegulationId(1),
       ChekiQuantity(99),
-      ChekiShotAt(kotlin.time.Instant.parse("2021-12-15T20:10:30+09:00"))
+      ChekiShotAt(Instant.parse("2021-12-15T20:10:30+09:00"))
     )
     val addedResult = chekiRepository.getCheki(cheki.chekiId)!!
     assertEquals(
@@ -165,7 +166,7 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
         "idolId" to 1L,
         "regulationId" to 1L,
         "chekiQuantity" to 99,
-        "chekiShotAt" to kotlin.time.Instant.parse("2021-12-15T20:10:30+09:00").toString()
+        "chekiShotAt" to Instant.parse("2021-12-15T20:10:30+09:00").toString()
       ), mutableMapOf<String, Any?>(
         "userId" to addedResult.userId.value,
         "idolId" to addedResult.idolId?.value,

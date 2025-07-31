@@ -15,6 +15,7 @@ import io.konform.validation.Validation
 import io.konform.validation.jsonschema.minimum
 import io.konform.validation.jsonschema.pattern
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -54,7 +55,7 @@ class AddOrUpdateChekiParams(
 
   @GraphQLIgnore
   val castedChekiShotAt
-    get() = ChekiShotAt(kotlin.time.Instant.parse(chekiShotAt))
+    get() = ChekiShotAt(Instant.parse(chekiShotAt))
 
   init {
     validate(this)

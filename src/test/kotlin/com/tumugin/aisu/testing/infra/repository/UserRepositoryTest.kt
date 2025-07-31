@@ -5,6 +5,7 @@ import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.domain.user.*
 import kotlinx.coroutines.test.runTest
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,7 +32,7 @@ class UserRepositoryTest : BaseDatabaseTest() {
       UserName("橋本あみ"),
       UserEmail("ami@example.com"),
       UserRawPassword("amichi").toHashedPassword(),
-      UserEmailVerifiedAt(kotlin.time.Instant.parse("2022-12-07T12:00:00+09:00")),
+      UserEmailVerifiedAt(Instant.parse("2022-12-07T12:00:00+09:00")),
       UserForceLogoutGeneration(100)
     )
 
@@ -42,7 +43,7 @@ class UserRepositoryTest : BaseDatabaseTest() {
         "userId" to 2L,
         "userName" to "橋本あみ",
         "userEmail" to "ami@example.com",
-        "userEmailVerifiedAt" to kotlin.time.Instant.parse("2022-12-07T12:00:00+09:00"),
+        "userEmailVerifiedAt" to Instant.parse("2022-12-07T12:00:00+09:00"),
         "userForceLogoutGeneration" to 100
       ), mutableMapOf<String, Any?>(
         "userId" to ami.userId.value,
@@ -63,7 +64,7 @@ class UserRepositoryTest : BaseDatabaseTest() {
       UserName("めーぽむ"),
       UserEmail("maypomu@example.com"),
       UserRawPassword("maypomupomu").toHashedPassword(),
-      UserEmailVerifiedAt(kotlin.time.Instant.parse("2022-12-10T12:00:00+09:00")),
+      UserEmailVerifiedAt(Instant.parse("2022-12-10T12:00:00+09:00")),
       UserForceLogoutGeneration(110)
     )
 
@@ -74,7 +75,7 @@ class UserRepositoryTest : BaseDatabaseTest() {
         "userId" to 1L,
         "userName" to "めーぽむ",
         "userEmail" to "maypomu@example.com",
-        "userEmailVerifiedAt" to kotlin.time.Instant.parse("2022-12-10T12:00:00+09:00"),
+        "userEmailVerifiedAt" to Instant.parse("2022-12-10T12:00:00+09:00"),
         "userForceLogoutGeneration" to 110
       ), mutableMapOf<String, Any?>(
         "userId" to updatedUser.userId.value,
@@ -101,7 +102,7 @@ class UserRepositoryTest : BaseDatabaseTest() {
       UserName("藤宮めい"),
       UserEmail("may@example.com"),
       UserRawPassword("maypomu").toHashedPassword(),
-      UserEmailVerifiedAt(kotlin.time.Instant.parse("2022-12-07T12:00:00+09:00")),
+      UserEmailVerifiedAt(Instant.parse("2022-12-07T12:00:00+09:00")),
       UserForceLogoutGeneration(100)
     )
   }
@@ -112,7 +113,7 @@ class UserRepositoryTest : BaseDatabaseTest() {
         "userId" to 1L,
         "userName" to "藤宮めい",
         "userEmail" to "may@example.com",
-        "userEmailVerifiedAt" to kotlin.time.Instant.parse("2022-12-07T12:00:00+09:00"),
+        "userEmailVerifiedAt" to Instant.parse("2022-12-07T12:00:00+09:00"),
         "userForceLogoutGeneration" to 100
       ), mutableMapOf<String, Any?>(
         "userId" to maypomu.userId.value,

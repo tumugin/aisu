@@ -13,6 +13,7 @@ import com.tumugin.aisu.usecase.client.cheki.WriteCheki
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -34,7 +35,7 @@ class DeleteChekiTest : BaseDatabaseTest() {
       user.userId,
       idol.idolId,
       RegulationSeeder().seedRegulation(GroupSeeder().seedGroup(user.userId).groupId, user.userId).regulationId,
-      chekiShotAt = ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00"))
+      chekiShotAt = ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
     )
   }
 

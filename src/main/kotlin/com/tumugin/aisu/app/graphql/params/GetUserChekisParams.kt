@@ -12,6 +12,7 @@ import com.tumugin.aisu.domain.idol.IdolId
 import io.konform.validation.Validation
 import io.konform.validation.jsonschema.pattern
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -25,11 +26,11 @@ class GetUserChekisParams(
 
   @GraphQLIgnore
   val chekiShotAtStartCasted: ChekiShotAt
-    get() = ChekiShotAt(kotlin.time.Instant.parse(chekiShotAtStart))
+    get() = ChekiShotAt(Instant.parse(chekiShotAtStart))
 
   @GraphQLIgnore
   val chekiShotAtEndCasted: ChekiShotAt
-    get() = ChekiShotAt(kotlin.time.Instant.parse(chekiShotAtEnd))
+    get() = ChekiShotAt(Instant.parse(chekiShotAtEnd))
 
   @GraphQLIgnore
   val idolIdCasted: IdolId?

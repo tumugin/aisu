@@ -9,6 +9,7 @@ import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.regulation.RegulationId
 import com.tumugin.aisu.domain.user.UserId
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -20,7 +21,7 @@ class ChekiSeeder : KoinComponent {
     idolId: IdolId,
     regulationId: RegulationId?,
     chekiQuantity: ChekiQuantity = ChekiQuantity(1),
-    chekiShotAt: ChekiShotAt = ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:10:30+09:00"))
+    chekiShotAt: ChekiShotAt = ChekiShotAt(Instant.parse("2021-12-01T00:10:30+09:00"))
   ): Cheki {
     return chekiRepository.getCheki(
       chekiRepository.addCheki(
