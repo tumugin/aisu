@@ -5,9 +5,9 @@ import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.user.*
 import com.tumugin.aisu.infra.repository.exposed.models.Users
 import kotlinx.coroutines.Dispatchers
-import kotlinx.datetime.toJavaInstant
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import java.time.ZoneOffset
+import kotlin.time.toJavaInstant
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 
 class UserRepositoryImpl : UserRepository {

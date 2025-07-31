@@ -5,9 +5,9 @@ import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
-import kotlinx.datetime.toKotlinInstant
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.ReferenceOption
+import kotlin.time.toKotlinInstant
 
 object Groups : ExposedTimestampIdTable("groups") {
   val user = reference("user_id", Users, onDelete = ReferenceOption.SET_NULL).nullable()
