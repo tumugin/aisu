@@ -16,6 +16,7 @@ import com.tumugin.aisu.usecase.admin.cheki.WriteChekiAdmin
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -43,13 +44,13 @@ class UpdateChekiTest : BaseDatabaseTest() {
       user.userId,
       idol.idolId,
       regulation.regulationId,
-      chekiShotAt = ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00"))
+      chekiShotAt = ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
     )
     chekiTwo = ChekiSeeder().seedCheki(
       userTwo.userId,
       idol.idolId,
       regulation.regulationId,
-      chekiShotAt = ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00"))
+      chekiShotAt = ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
     )
   }
 
@@ -62,14 +63,14 @@ class UpdateChekiTest : BaseDatabaseTest() {
       newIdol.idolId,
       newRegulation.regulationId,
       ChekiQuantity(100),
-      ChekiShotAt(kotlin.time.Instant.parse("2021-12-02T00:00:00+09:00"))
+      ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00"))
     )
 
     Assertions.assertEquals(user.userId, updatedCheki.userId)
     Assertions.assertEquals(newIdol.idolId, updatedCheki.idolId)
     Assertions.assertEquals(newRegulation.regulationId, updatedCheki.regulationId)
     Assertions.assertEquals(ChekiQuantity(100), updatedCheki.chekiQuantity)
-    Assertions.assertEquals(ChekiShotAt(kotlin.time.Instant.parse("2021-12-02T00:00:00+09:00")), updatedCheki.chekiShotAt)
+    Assertions.assertEquals(ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00")), updatedCheki.chekiShotAt)
   }
 
   @Test
@@ -81,7 +82,7 @@ class UpdateChekiTest : BaseDatabaseTest() {
           idol.idolId,
           regulation.regulationId,
           ChekiQuantity(100),
-          ChekiShotAt(kotlin.time.Instant.parse("2021-12-02T00:00:00+09:00"))
+          ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00"))
         )
       }
     }
@@ -96,7 +97,7 @@ class UpdateChekiTest : BaseDatabaseTest() {
           IdolId(1000),
           regulation.regulationId,
           ChekiQuantity(100),
-          ChekiShotAt(kotlin.time.Instant.parse("2021-12-02T00:00:00+09:00"))
+          ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00"))
         )
       }
     }
@@ -111,7 +112,7 @@ class UpdateChekiTest : BaseDatabaseTest() {
           idolTwo.idolId,
           regulation.regulationId,
           ChekiQuantity(100),
-          ChekiShotAt(kotlin.time.Instant.parse("2021-12-02T00:00:00+09:00"))
+          ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00"))
         )
       }
     }
@@ -126,7 +127,7 @@ class UpdateChekiTest : BaseDatabaseTest() {
           idol.idolId,
           regulationTwo.regulationId,
           ChekiQuantity(100),
-          ChekiShotAt(kotlin.time.Instant.parse("2021-12-02T00:00:00+09:00"))
+          ChekiShotAt(Instant.parse("2021-12-02T00:00:00+09:00"))
         )
       }
     }
