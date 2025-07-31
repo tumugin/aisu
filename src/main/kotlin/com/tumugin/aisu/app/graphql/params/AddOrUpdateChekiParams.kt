@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.tumugin.aisu.app.graphql.params
 
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
@@ -12,7 +14,7 @@ import com.tumugin.aisu.domain.regulation.RegulationId
 import io.konform.validation.Validation
 import io.konform.validation.jsonschema.minimum
 import io.konform.validation.jsonschema.pattern
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -52,7 +54,7 @@ class AddOrUpdateChekiParams(
 
   @GraphQLIgnore
   val castedChekiShotAt
-    get() = ChekiShotAt(Instant.parse(chekiShotAt))
+    get() = ChekiShotAt(kotlin.time.Instant.parse(chekiShotAt))
 
   init {
     validate(this)

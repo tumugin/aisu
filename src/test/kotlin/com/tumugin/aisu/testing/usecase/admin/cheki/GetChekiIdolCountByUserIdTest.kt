@@ -1,3 +1,4 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
 package com.tumugin.aisu.testing.usecase.admin.cheki
 
 import com.tumugin.aisu.domain.cheki.ChekiCount
@@ -12,7 +13,7 @@ import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.testing.seeder.*
 import com.tumugin.aisu.usecase.admin.cheki.GetChekiAdmin
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -40,18 +41,18 @@ class GetChekiIdolCountByUserIdTest : BaseDatabaseTest() {
       user.userId,
       idol.idolId,
       regulation.regulationId,
-      chekiShotAt = ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
+      chekiShotAt = ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00"))
     )
     ChekiSeeder().seedCheki(
       user.userId,
       idolTwo.idolId,
       regulation.regulationId,
-      chekiShotAt = ChekiShotAt(Instant.parse("2022-01-01T00:00:00+09:00"))
+      chekiShotAt = ChekiShotAt(kotlin.time.Instant.parse("2022-01-01T00:00:00+09:00"))
     )
     val chekiIdolCounts = getChekiAdmin.getChekiIdolCountByUserId(
       user.userId,
-      ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00")),
-      ChekiShotAt(Instant.parse("2022-01-01T00:00:00+09:00"))
+      ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00")),
+      ChekiShotAt(kotlin.time.Instant.parse("2022-01-01T00:00:00+09:00"))
     )
     Assertions.assertEquals(
       listOf(

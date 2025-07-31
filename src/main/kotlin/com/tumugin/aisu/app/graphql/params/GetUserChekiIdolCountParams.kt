@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.tumugin.aisu.app.graphql.params
 
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
@@ -6,7 +8,7 @@ import com.tumugin.aisu.app.request.ValidatorPatterns
 import com.tumugin.aisu.domain.cheki.ChekiShotAt
 import io.konform.validation.Validation
 import io.konform.validation.jsonschema.pattern
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
 
 @kotlinx.serialization.Serializable
 class GetUserChekiIdolCountParams(
@@ -15,11 +17,11 @@ class GetUserChekiIdolCountParams(
 ) : BaseRequest<GetUserChekiIdolCountParams> {
   @GraphQLIgnore
   val chekiShotAtStartCasted: ChekiShotAt
-    get() = ChekiShotAt(Instant.parse(chekiShotAtStart))
+    get() = ChekiShotAt(kotlin.time.Instant.parse(chekiShotAtStart))
 
   @GraphQLIgnore
   val chekiShotAtEndCasted: ChekiShotAt
-    get() = ChekiShotAt(Instant.parse(chekiShotAtEnd))
+    get() = ChekiShotAt(kotlin.time.Instant.parse(chekiShotAtEnd))
 
   @GraphQLIgnore
   override val validator = Validation {

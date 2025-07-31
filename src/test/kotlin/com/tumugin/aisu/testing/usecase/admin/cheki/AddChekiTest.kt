@@ -1,3 +1,4 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
 package com.tumugin.aisu.testing.usecase.admin.cheki
 
 import com.tumugin.aisu.domain.cheki.ChekiQuantity
@@ -16,7 +17,7 @@ import com.tumugin.aisu.testing.seeder.UserSeeder
 import com.tumugin.aisu.usecase.admin.cheki.WriteChekiAdmin
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -47,13 +48,13 @@ class AddChekiTest : BaseDatabaseTest() {
       idol.idolId,
       regulation.regulationId,
       ChekiQuantity(10),
-      ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
+      ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00"))
     )
     Assertions.assertEquals(user.userId, cheki.userId)
     Assertions.assertEquals(idol.idolId, cheki.idolId)
     Assertions.assertEquals(regulation.regulationId, cheki.regulationId)
     Assertions.assertEquals(ChekiQuantity(10), cheki.chekiQuantity)
-    Assertions.assertEquals(ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00")), cheki.chekiShotAt)
+    Assertions.assertEquals(ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00")), cheki.chekiShotAt)
   }
 
   @Test
@@ -65,7 +66,7 @@ class AddChekiTest : BaseDatabaseTest() {
           IdolId(10000),
           regulation.regulationId,
           ChekiQuantity(10),
-          ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
+          ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00"))
         )
       }
     }
@@ -80,7 +81,7 @@ class AddChekiTest : BaseDatabaseTest() {
           idolTwo.idolId,
           regulation.regulationId,
           ChekiQuantity(10),
-          ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
+          ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00"))
         )
       }
     }
@@ -95,7 +96,7 @@ class AddChekiTest : BaseDatabaseTest() {
           idolTwo.idolId,
           regulationTwo.regulationId,
           ChekiQuantity(10),
-          ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00"))
+          ChekiShotAt(kotlin.time.Instant.parse("2021-12-01T00:00:00+09:00"))
         )
       }
     }

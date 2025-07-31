@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.tumugin.aisu.testing.usecase.admin.user
 
 import com.tumugin.aisu.testing.BaseDatabaseTest

@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.tumugin.aisu.app.serializer.admin
 
 import com.expediagroup.graphql.generator.scalars.ID

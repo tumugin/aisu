@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.tumugin.aisu.infra.repository.exposed.repository
 
 import com.tumugin.aisu.domain.base.PaginatorParam

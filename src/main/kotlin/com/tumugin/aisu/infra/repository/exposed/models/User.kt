@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.tumugin.aisu.infra.repository.exposed.models
 
 import com.tumugin.aisu.domain.user.*
