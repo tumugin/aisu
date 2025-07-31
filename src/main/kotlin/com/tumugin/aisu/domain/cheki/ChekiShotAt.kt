@@ -1,6 +1,8 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.tumugin.aisu.domain.cheki
 
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
 
 @JvmInline
-value class ChekiShotAt(val value: Instant) {}
+value class ChekiShotAt(val value: kotlin.time.Instant) {}

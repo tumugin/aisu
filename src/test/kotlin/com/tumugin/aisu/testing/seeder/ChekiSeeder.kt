@@ -1,3 +1,4 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
 package com.tumugin.aisu.testing.seeder
 
 import com.tumugin.aisu.domain.cheki.Cheki
@@ -7,7 +8,8 @@ import com.tumugin.aisu.domain.cheki.ChekiShotAt
 import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.regulation.RegulationId
 import com.tumugin.aisu.domain.user.UserId
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

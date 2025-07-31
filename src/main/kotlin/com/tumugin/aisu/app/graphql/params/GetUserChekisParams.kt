@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.tumugin.aisu.app.graphql.params
 
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
@@ -9,7 +11,8 @@ import com.tumugin.aisu.domain.cheki.ChekiShotAt
 import com.tumugin.aisu.domain.idol.IdolId
 import io.konform.validation.Validation
 import io.konform.validation.jsonschema.pattern
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable

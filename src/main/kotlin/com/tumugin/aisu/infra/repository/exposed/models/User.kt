@@ -1,12 +1,14 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.tumugin.aisu.infra.repository.exposed.models
 
 import com.tumugin.aisu.domain.user.*
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
-import kotlinx.datetime.toKotlinInstant
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.kotlin.datetime.timestampWithTimeZone
+import kotlin.time.toKotlinInstant
 
 object Users : ExposedTimestampIdTable("users") {
   val name = varchar("name", 255)

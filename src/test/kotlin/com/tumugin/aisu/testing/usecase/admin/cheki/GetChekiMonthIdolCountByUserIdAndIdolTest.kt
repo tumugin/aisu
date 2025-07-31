@@ -1,3 +1,4 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
 package com.tumugin.aisu.testing.usecase.admin.cheki
 
 import com.tumugin.aisu.domain.cheki.*
@@ -9,7 +10,8 @@ import com.tumugin.aisu.testing.BaseDatabaseTest
 import com.tumugin.aisu.testing.seeder.*
 import com.tumugin.aisu.usecase.admin.cheki.GetChekiAdmin
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import kotlinx.datetime.TimeZone
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
