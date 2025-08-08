@@ -9,7 +9,7 @@ plugins {
   val kotlinVersion = "2.2.0"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "11.10.5"
+  id("org.flywaydb.flyway") version "11.11.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "8.8.1"
@@ -31,13 +31,13 @@ val ktorVersion = "3.2.3"
 val logbackVersion = "1.5.18"
 val coroutineVersion = "1.10.2"
 val graphQLKotlinVersion = "8.8.1"
-val flywayVersion = "11.10.5"
+val flywayVersion = "11.11.0"
 val sentryVersion = "8.18.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.5.1")
-    classpath("org.flywaydb:flyway-database-postgresql:11.10.5")
+    classpath("org.flywaydb:flyway-database-postgresql:11.11.0")
   }
 }
 
@@ -89,13 +89,13 @@ dependencies {
   implementation("mysql:mysql-connector-java:8.0.33")
   implementation("org.postgresql:postgresql:42.7.7")
   implementation("p6spy:p6spy:3.9.1")
-  implementation("com.zaxxer:HikariCP:7.0.0")
+  implementation("com.zaxxer:HikariCP:7.0.1")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1-0.6.x-compat")
   implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.11.1")
-  implementation("io.lettuce:lettuce-core:6.7.1.RELEASE")
+  implementation("io.lettuce:lettuce-core:6.8.0.RELEASE")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
