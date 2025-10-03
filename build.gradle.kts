@@ -6,15 +6,15 @@ import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 
 plugins {
-  val kotlinVersion = "2.2.10"
+  val kotlinVersion = "2.2.20"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "11.11.1"
+  id("org.flywaydb.flyway") version "11.13.2"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.expediagroup.graphql") version "8.8.1"
-  id("org.jetbrains.kotlinx.kover") version "0.9.1"
-  id("io.ktor.plugin") version "3.2.3"
+  id("org.jetbrains.kotlinx.kover") version "0.9.2"
+  id("io.ktor.plugin") version "3.3.0"
 }
 
 group = "com.tumugin"
@@ -26,18 +26,18 @@ repositories {
 }
 
 val exposedVersion = "0.61.0"
-val koinVersion = "4.1.0"
-val ktorVersion = "3.2.3"
-val logbackVersion = "1.5.18"
+val koinVersion = "4.1.1"
+val ktorVersion = "3.3.0"
+val logbackVersion = "1.5.19"
 val coroutineVersion = "1.10.2"
 val graphQLKotlinVersion = "8.8.1"
-val flywayVersion = "11.11.1"
-val sentryVersion = "8.19.1"
+val flywayVersion = "11.13.2"
+val sentryVersion = "8.23.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.5.1")
-    classpath("org.flywaydb:flyway-database-postgresql:11.11.1")
+    classpath("org.flywaydb:flyway-database-postgresql:11.13.2")
   }
 }
 
@@ -87,15 +87,15 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposedVersion")
   implementation("mysql:mysql-connector-java:8.0.33")
-  implementation("org.postgresql:postgresql:42.7.7")
+  implementation("org.postgresql:postgresql:42.7.8")
   implementation("p6spy:p6spy:3.9.1")
-  implementation("com.zaxxer:HikariCP:7.0.1")
+  implementation("com.zaxxer:HikariCP:7.0.2")
   implementation("io.insert-koin:koin-core:$koinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1-0.6.x-compat")
   implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.11.1")
-  implementation("io.lettuce:lettuce-core:6.8.0.RELEASE")
+  implementation("io.lettuce:lettuce-core:6.8.1.RELEASE")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
@@ -108,14 +108,14 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
   implementation(kotlin("stdlib-jdk8"))
   // test(junit)
-  testImplementation(platform("org.junit:junit-bom:5.13.4"))
+  testImplementation(platform("org.junit:junit-bom:5.14.0"))
   testImplementation("org.junit.jupiter:junit-jupiter")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   // test libs
-  testImplementation("io.mockk:mockk:1.14.5")
-  testImplementation("io.insert-koin:koin-test:4.1.0")
+  testImplementation("io.mockk:mockk:1.14.6")
+  testImplementation("io.insert-koin:koin-test:4.1.1")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-  testImplementation("com.h2database:h2:2.3.232")
+  testImplementation("com.h2database:h2:2.4.240")
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 }
 
