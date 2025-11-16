@@ -51,7 +51,8 @@ class JDBCConnectionRepositoryImpl(private val appConfigRepository: AppConfigRep
     config.jdbcUrl = appConfigRepository.appConfig.appConfigDatabaseJdbcUrl.value
     config.username = appConfigRepository.appConfig.appConfigDatabaseUserName.value
     config.password = appConfigRepository.appConfig.appConfigDatabasePassword.value
-    config.maximumPoolSize = 2
+    config.minimumIdle = 1
+    config.maximumPoolSize = 20
     return config
   }
 }
