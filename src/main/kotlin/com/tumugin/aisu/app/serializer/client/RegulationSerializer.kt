@@ -29,7 +29,8 @@ data class RegulationSerializer(
   val regulationUpdatedAt: String
 ) {
   fun user(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<LimitedUserSerializer?> {
-    return dataFetchingEnvironment.getValueFromDataLoader(LimitedUserDataLoaderName, userId)
+    val targetId = userId ?: return CompletableFuture.completedFuture(null)
+    return dataFetchingEnvironment.getValueFromDataLoader(LimitedUserDataLoaderName, targetId)
   }
 
   fun group(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<GroupSerializer?> {

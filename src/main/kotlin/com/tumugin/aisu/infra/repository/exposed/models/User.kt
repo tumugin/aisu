@@ -6,8 +6,8 @@ import com.tumugin.aisu.domain.user.*
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.kotlin.datetime.timestampWithTimeZone
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.datetime.timestampWithTimeZone
 import kotlin.time.toKotlinInstant
 
 object Users : ExposedTimestampIdTable("users") {

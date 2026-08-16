@@ -7,8 +7,8 @@ import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.ReferenceOption
+import org.jetbrains.exposed.v1.core.ReferenceOption
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import kotlin.time.toKotlinInstant
 
 object Groups : ExposedTimestampIdTable("groups") {

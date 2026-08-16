@@ -1,6 +1,5 @@
 package com.tumugin.aisu.di
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.tumugin.aisu.app.client.AisuHTTPClient
 import com.tumugin.aisu.app.graphql.KtorGraphQLServer
 import com.tumugin.aisu.domain.adminAuth0.AdminAuth0Repository
@@ -33,6 +32,7 @@ import io.lettuce.core.api.coroutines.RedisCoroutinesCommands
 import io.lettuce.core.support.BoundedAsyncPool
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
+import tools.jackson.module.kotlin.jacksonObjectMapper
 
 object AisuDIModule {
   private val aisuDatabaseModule = module {

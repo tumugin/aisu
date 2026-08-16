@@ -6,8 +6,9 @@ import com.tumugin.aisu.domain.auth0.Auth0UserRepository
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.models.Auth0Users
 import kotlinx.coroutines.Dispatchers
-import org.jetbrains.exposed.dao.with
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.core.*
+import org.jetbrains.exposed.v1.dao.with
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.koin.core.component.KoinComponent
 import com.tumugin.aisu.infra.repository.exposed.models.Auth0User as Auth0UserModel
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel

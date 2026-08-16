@@ -26,16 +26,16 @@ class RedisPoolRepositoryImpl(appConfigRepository: AppConfigRepository) :
 
   private suspend fun createPool(): BoundedAsyncPool<StatefulRedisConnection<String, String>> {
     // Sentinelの認証を上手く扱えないためworkaroundをあてる
-    val connectionUri = if (baseConnectionUri.sentinels.isNotEmpty() && baseConnectionUri.password.isNotEmpty()) {
+    val password = baseConnectionUri.credentialsProvider.resolveCredentials().toFuture().await()?.password
+    val connectionUri = if (baseConnectionUri.sentinels.isNotEmpty() && password != null && password.isNotEmpty()) {
       var sentinelConnectionUriBuilder = RedisURI.builder()
       baseConnectionUri.sentinels.forEach {
-        sentinelConnectionUriBuilder =
-          sentinelConnectionUriBuilder.withSentinel(it.host, it.port, String(baseConnectionUri.password))
+        sentinelConnectionUriBuilder = sentinelConnectionUriBuilder.withSentinel(it.host, it.port, String(password))
       }
       sentinelConnectionUriBuilder =
         sentinelConnectionUriBuilder
           .withSentinelMasterId(baseConnectionUri.sentinelMasterId)
-          .withPassword(baseConnectionUri.password)
+          .withPassword(password)
       sentinelConnectionUriBuilder.build()
     } else {
       baseConnectionUri

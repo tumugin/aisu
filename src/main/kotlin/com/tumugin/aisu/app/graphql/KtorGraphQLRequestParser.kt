@@ -2,8 +2,8 @@ package com.tumugin.aisu.app.graphql
 
 import com.expediagroup.graphql.server.execution.GraphQLRequestParser
 import com.expediagroup.graphql.server.types.GraphQLServerRequest
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.ktor.server.request.*
+import tools.jackson.databind.ObjectMapper
 import java.io.IOException
 
 class KtorGraphQLRequestParser(

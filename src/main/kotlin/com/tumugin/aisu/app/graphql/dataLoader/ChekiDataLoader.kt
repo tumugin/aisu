@@ -15,12 +15,12 @@ import org.dataloader.DataLoaderFactory
 
 const val ChekiDataLoaderName = "ChekiDataLoader"
 
-class ChekiDataLoader : KotlinDataLoader<ID, ChekiSerializer?> {
+class ChekiDataLoader : KotlinDataLoader<ID, ChekiSerializer> {
   override val dataLoaderName = ChekiDataLoaderName
   private val getCheki = GetCheki()
 
-  override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, ChekiSerializer?> =
-    DataLoaderFactory.newDataLoader { ids, dfe ->
+  override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, ChekiSerializer> =
+    DataLoaderFactory.newMappedDataLoader<ID, ChekiSerializer> { ids, _ ->
       val aisuGraphQLContext = graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
 
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
@@ -29,9 +29,10 @@ class ChekiDataLoader : KotlinDataLoader<ID, ChekiSerializer?> {
             aisuGraphQLContext.userAuthSession?.userId?.let { UserId(it) },
             ids.map { ChekiId(it.value.toLong()) }
           )
-        ids.map { chekiId ->
-          chekis.find { it.chekiId.value == chekiId.value.toLong() }?.let { ChekiSerializer.from(it) }
-        }
+        ids.mapNotNull { chekiId ->
+          chekis.find { it.chekiId.value == chekiId.value.toLong() }
+            ?.let { chekiId to ChekiSerializer.from(it) }
+        }.toMap()
       }
     }
 }

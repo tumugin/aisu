@@ -8,8 +8,8 @@ import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
 import com.tumugin.aisu.infra.repository.exposed.models.Regulations.nullable
 import com.tumugin.aisu.infra.repository.exposed.repository.GroupRepositoryImpl
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.ReferenceOption
+import org.jetbrains.exposed.v1.core.ReferenceOption
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
 
 object FavoriteGroups : ExposedTimestampIdTable("favorite_groups") {
   val user = reference("user_id", Users, onDelete = ReferenceOption.CASCADE)

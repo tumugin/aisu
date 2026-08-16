@@ -5,7 +5,7 @@ import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.flywaydb.core.Flyway
-import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.v1.jdbc.Database
 
 class JDBCConnectionRepositoryImpl(private val appConfigRepository: AppConfigRepository) : JDBCConnectionRepository {
   var isConnected: Boolean = false

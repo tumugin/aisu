@@ -1,9 +1,9 @@
 package com.tumugin.aisu.infra.repository.exposed
 
-import org.jetbrains.exposed.dao.*
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.LongIdTable
-import org.jetbrains.exposed.sql.kotlin.datetime.timestampWithTimeZone
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
+import org.jetbrains.exposed.v1.dao.*
+import org.jetbrains.exposed.v1.datetime.timestampWithTimeZone
 import java.time.OffsetDateTime
 
 abstract class ExposedTimestampIdTable(name: String = "", columnName: String = "id") : LongIdTable(name, columnName) {
