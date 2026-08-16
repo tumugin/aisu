@@ -14,12 +14,12 @@ import org.dataloader.DataLoaderFactory
 
 const val IdolDataLoaderName = "idolDataLoader"
 
-class IdolDataLoader : KotlinDataLoader<ID, IdolSerializer?> {
+class IdolDataLoader : KotlinDataLoader<ID, IdolSerializer> {
   override val dataLoaderName = IdolDataLoaderName
   private val getIdol = GetIdol()
 
-  override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, IdolSerializer?> =
-    DataLoaderFactory.newDataLoader { ids, dfe ->
+  override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, IdolSerializer> =
+    DataLoaderFactory.newMappedDataLoader<ID, IdolSerializer> { ids, _ ->
       val aisuGraphQLContext = graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
 
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
@@ -28,9 +28,10 @@ class IdolDataLoader : KotlinDataLoader<ID, IdolSerializer?> {
             aisuGraphQLContext.userAuthSession?.castedUserId,
             ids.map { IdolId(it.value.toLong()) }
           )
-        ids.map { idolId ->
-          idols.find { it.idolId.value == idolId.value.toLong() }?.let { IdolSerializer.from(it) }
-        }
+        ids.mapNotNull { idolId ->
+          idols.find { it.idolId.value == idolId.value.toLong() }
+            ?.let { idolId to IdolSerializer.from(it) }
+        }.toMap()
       }
     }
 }

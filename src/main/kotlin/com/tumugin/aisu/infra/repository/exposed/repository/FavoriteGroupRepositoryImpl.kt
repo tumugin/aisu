@@ -7,10 +7,10 @@ import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.models.FavoriteGroups
 import kotlinx.coroutines.Dispatchers
+import org.jetbrains.exposed.v1.core.*
 import com.tumugin.aisu.infra.repository.exposed.models.Group as GroupModel
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import com.tumugin.aisu.infra.repository.exposed.models.FavoriteGroup as FavoriteGroupModel
 
 class FavoriteGroupRepositoryImpl : FavoriteGroupRepository {

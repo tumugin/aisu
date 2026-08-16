@@ -3,18 +3,18 @@ package com.tumugin.aisu.infra.repository.exposed
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.offsetAt
-import org.jetbrains.exposed.sql.CharColumnType
-import org.jetbrains.exposed.sql.ExpressionWithColumnType
-import org.jetbrains.exposed.sql.QueryBuilder
-import org.jetbrains.exposed.sql.append
-import org.jetbrains.exposed.sql.vendors.MysqlDialect
-import org.jetbrains.exposed.sql.vendors.PostgreSQLDialect
-import org.jetbrains.exposed.sql.vendors.currentDialect
+import org.jetbrains.exposed.v1.core.CharColumnType
+import org.jetbrains.exposed.v1.core.ExpressionWithColumnType
+import org.jetbrains.exposed.v1.core.QueryBuilder
+import org.jetbrains.exposed.v1.core.append
+import org.jetbrains.exposed.v1.core.vendors.MysqlDialect
+import org.jetbrains.exposed.v1.core.vendors.PostgreSQLDialect
+import org.jetbrains.exposed.v1.core.vendors.currentDialect
 import java.time.OffsetDateTime
 
 class DateFormatWithTZFunction<T : ExpressionWithColumnType<OffsetDateTime>>(
   private val exp: T, private val format: String, private val fromTZ: TimeZone, private val toTZ: TimeZone
-) : org.jetbrains.exposed.sql.Function<String>(CharColumnType()) {
+) : org.jetbrains.exposed.v1.core.Function<String>(CharColumnType()) {
   override fun toQueryBuilder(queryBuilder: QueryBuilder) = queryBuilder {
     when (currentDialect.name) {
       PostgreSQLDialect.dialectName -> {

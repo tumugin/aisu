@@ -14,12 +14,12 @@ import org.dataloader.DataLoaderFactory
 
 const val GroupDataLoaderName = "GroupDataLoader"
 
-class GroupDataLoader : KotlinDataLoader<ID, GroupSerializer?> {
+class GroupDataLoader : KotlinDataLoader<ID, GroupSerializer> {
   override val dataLoaderName = GroupDataLoaderName
   private val getGroup = GetGroup()
 
-  override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, GroupSerializer?> =
-    DataLoaderFactory.newDataLoader { ids, dfe ->
+  override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, GroupSerializer> =
+    DataLoaderFactory.newMappedDataLoader<ID, GroupSerializer> { ids, _ ->
       val aisuGraphQLContext = graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
 
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
@@ -27,9 +27,10 @@ class GroupDataLoader : KotlinDataLoader<ID, GroupSerializer?> {
           aisuGraphQLContext.userAuthSession?.castedUserId,
           ids.map { GroupId(it.value.toLong()) }
         )
-        ids.map { groupId ->
-          groups.find { it.groupId.value == groupId.value.toLong() }?.let { GroupSerializer.from(it) }
-        }
+        ids.mapNotNull { groupId ->
+          groups.find { it.groupId.value == groupId.value.toLong() }
+            ?.let { groupId to GroupSerializer.from(it) }
+        }.toMap()
       }
     }
 }

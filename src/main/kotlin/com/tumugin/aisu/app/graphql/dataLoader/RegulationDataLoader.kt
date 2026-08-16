@@ -14,27 +14,24 @@ import org.dataloader.DataLoaderFactory
 
 const val RegulationDataLoaderName = "RegulationDataLoader"
 
-class RegulationDataLoader : KotlinDataLoader<ID, RegulationSerializer?> {
+class RegulationDataLoader : KotlinDataLoader<ID, RegulationSerializer> {
   override val dataLoaderName = RegulationDataLoaderName
   private val getRegulation = GetRegulation()
 
-  override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, RegulationSerializer?> =
-    DataLoaderFactory.newDataLoader { ids, dfe ->
+  override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, RegulationSerializer> =
+    DataLoaderFactory.newMappedDataLoader<ID, RegulationSerializer> { ids, _ ->
       val aisuGraphQLContext = graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
 
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
         val regulations = getRegulation.getRegulationsByIds(
           aisuGraphQLContext.userAuthSession?.castedUserId,
-          ids.filterNotNull().map { RegulationId(it.value.toLong()) }
+          ids.map { RegulationId(it.value.toLong()) }
         )
-        ids.map { regulationId ->
-          if (regulationId == null) {
-            return@map null
-          }
+        ids.mapNotNull { regulationId ->
           regulations.find { it.regulationId.value == regulationId.value.toLong() }?.let {
-            RegulationSerializer.from(it)
+            regulationId to RegulationSerializer.from(it)
           }
-        }
+        }.toMap()
       }
     }
 }

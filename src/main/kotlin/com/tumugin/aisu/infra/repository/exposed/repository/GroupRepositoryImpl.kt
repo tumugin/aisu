@@ -10,13 +10,11 @@ import com.tumugin.aisu.infra.repository.exposed.models.GroupIdols
 import com.tumugin.aisu.infra.repository.exposed.models.GroupIdol as GroupIdolModel
 import com.tumugin.aisu.infra.repository.exposed.models.Groups
 import kotlinx.coroutines.Dispatchers
-import org.jetbrains.exposed.dao.with
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.core.*
+import org.jetbrains.exposed.v1.dao.with
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import com.tumugin.aisu.infra.repository.exposed.models.Group as GroupModel
 import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
 

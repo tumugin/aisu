@@ -4,8 +4,8 @@ import com.tumugin.aisu.domain.auth0.Auth0UserId
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntity
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdEntityClass
 import com.tumugin.aisu.infra.repository.exposed.ExposedTimestampIdTable
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.ReferenceOption
+import org.jetbrains.exposed.v1.core.ReferenceOption
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
 
 object Auth0Users : ExposedTimestampIdTable("auth0_users") {
   val user = reference("user_id", Users, onDelete = ReferenceOption.CASCADE)

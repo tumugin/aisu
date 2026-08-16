@@ -9,16 +9,17 @@ import com.tumugin.aisu.usecase.client.user.GetUser
 import graphql.GraphQLContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.future.future
+import org.dataloader.DataLoader
 import org.dataloader.DataLoaderFactory
 
 const val LimitedUserDataLoaderName = "LimitedUserDataLoader"
 
-class LimitedUserDataLoader : KotlinDataLoader<ID, LimitedUserSerializer?> {
+class LimitedUserDataLoader : KotlinDataLoader<ID, LimitedUserSerializer> {
   override val dataLoaderName = LimitedUserDataLoaderName
   private val getUser = GetUser()
 
-  override fun getDataLoader(graphQLContext: GraphQLContext) =
-    DataLoaderFactory.newDataLoader<ID, LimitedUserSerializer?> { ids, dfe ->
+  override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, LimitedUserSerializer> =
+    DataLoaderFactory.newMappedDataLoader<ID, LimitedUserSerializer> { ids, _ ->
       val aisuGraphQLContext = graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
 
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
@@ -27,9 +28,10 @@ class LimitedUserDataLoader : KotlinDataLoader<ID, LimitedUserSerializer?> {
             aisuGraphQLContext.userAuthSession?.castedUserId,
             ids.map { UserId(it.value.toLong()) }
           )
-        ids.map { userId ->
-          users.find { it.userId.value == userId.value.toLong() }?.let { LimitedUserSerializer.from(it) }
-        }
+        ids.mapNotNull { userId ->
+          users.find { it.userId.value == userId.value.toLong() }
+            ?.let { userId to LimitedUserSerializer.from(it) }
+        }.toMap()
       }
     }
 }

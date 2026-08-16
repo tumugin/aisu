@@ -3,9 +3,9 @@ package com.tumugin.aisu.app.graphql
 import com.expediagroup.graphql.dataloader.KotlinDataLoaderRegistryFactory
 import com.expediagroup.graphql.server.execution.GraphQLRequestHandler
 import com.expediagroup.graphql.server.execution.GraphQLServer
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.tumugin.aisu.app.graphql.dataLoader.*
 import io.ktor.server.request.*
+import tools.jackson.databind.ObjectMapper
 
 class KtorGraphQLServer(
   requestParser: KtorGraphQLRequestParser,

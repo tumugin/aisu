@@ -22,22 +22,24 @@ data class GroupSerializer(
   val groupUpdatedAt: String
 ) {
   fun user(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<LimitedUserSerializer?> {
-    return dataFetchingEnvironment.getValueFromDataLoader(LimitedUserDataLoaderName, userId)
+    val targetId = userId ?: return CompletableFuture.completedFuture(null)
+    return dataFetchingEnvironment.getValueFromDataLoader(LimitedUserDataLoaderName, targetId)
   }
 
   fun regulations(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<List<RegulationSerializer>> {
     return dataFetchingEnvironment.getValueFromDataLoader(RegulationOfGroupDataLoaderName, groupId)
   }
 
+  @Suppress("UNCHECKED_CAST")
   fun idols(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<List<IdolSerializer?>> {
     val groupIdolIdsDataLoader = dataFetchingEnvironment.getDataLoader<ID, List<ID>>(GroupIdolIdsDataLoaderName)
       ?: throw IllegalStateException("DataLoader not found")
-    val idolDataLoader = dataFetchingEnvironment.getDataLoader<ID, IdolSerializer?>(IdolDataLoaderName)
+    val idolDataLoader = dataFetchingEnvironment.getDataLoader<ID, IdolSerializer>(IdolDataLoaderName)
       ?: throw IllegalStateException("DataLoader not found")
 
-    val context = dataFetchingEnvironment.graphQlContext.get<AisuGraphQLContext>()
+    val context = checkNotNull(dataFetchingEnvironment.graphQlContext.get<AisuGraphQLContext>())
     return groupIdolIdsDataLoader.load(groupId, context).thenCompose { idolIds ->
-      idolDataLoader.loadMany(idolIds, Array(idolIds.size) { context }.toList())
+      (idolDataLoader.loadMany(idolIds, Array(idolIds.size) { context }.toList()) as CompletableFuture<List<IdolSerializer?>>)
         // NOTE: dispatchIfNeededだと何故か動かない
         .apply { dataFetchingEnvironment.dataLoaderRegistry.dispatchAll() }
     }

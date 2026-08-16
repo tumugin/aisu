@@ -7,7 +7,8 @@ import com.tumugin.aisu.domain.base.PaginatorParam
 import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.infra.repository.exposed.models.AdminUsers
 import kotlinx.coroutines.Dispatchers
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.core.*
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import com.tumugin.aisu.infra.repository.exposed.models.AdminUser as AdminUserModel
 
 class AdminUserRepositoryImpl : AdminUserRepository {

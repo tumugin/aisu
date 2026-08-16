@@ -16,12 +16,10 @@ import com.tumugin.aisu.infra.repository.exposed.models.Regulation as Regulation
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
 import kotlinx.datetime.TimeZone
-import org.jetbrains.exposed.dao.with
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.between
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.times
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.core.*
+import org.jetbrains.exposed.v1.dao.with
+import org.jetbrains.exposed.v1.jdbc.*
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import java.time.ZoneOffset
 import kotlin.time.toJavaInstant
 import com.tumugin.aisu.infra.repository.exposed.models.Cheki as ChekiModel

@@ -1,12 +1,12 @@
 package com.tumugin.aisu.app.controller
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.tumugin.aisu.app.graphql.KtorGraphQLServer
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import tools.jackson.databind.ObjectMapper
 
 class GraphQLServerController : KoinComponent {
   private val mapper by inject<ObjectMapper>()

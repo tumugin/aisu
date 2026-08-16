@@ -2,8 +2,8 @@ package com.tumugin.aisu.testing
 
 import com.tumugin.aisu.di.AisuDIModule
 import com.tumugin.aisu.domain.app.database.JDBCConnectionRepository
-import org.jetbrains.exposed.sql.transactions.TransactionManager
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.koin.core.context.GlobalContext
@@ -47,7 +47,7 @@ abstract class BaseDatabaseTest : KoinTest {
       var allTablesResultSet = statement.executeQuery()
       val allTableNames = mutableListOf<String>()
       while (allTablesResultSet.next()) {
-        allTableNames.add(allTablesResultSet.getString("table_name"))
+        allTableNames.add(allTablesResultSet.getString(1)!!)
       }
 
       // flywayのテーブルを除いて全てのテーブルをTRUNCATEする

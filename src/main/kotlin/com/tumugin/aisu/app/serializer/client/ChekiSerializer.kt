@@ -29,7 +29,8 @@ data class ChekiSerializer(
   val chekiUpdatedAt: String
 ) {
   fun idol(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<IdolSerializer?> {
-    return dataFetchingEnvironment.getValueFromDataLoader(IdolDataLoaderName, idolId)
+    val targetId = idolId ?: return CompletableFuture.completedFuture(null)
+    return dataFetchingEnvironment.getValueFromDataLoader(IdolDataLoaderName, targetId)
   }
 
   fun user(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<LimitedUserSerializer?> {
@@ -37,7 +38,8 @@ data class ChekiSerializer(
   }
 
   fun regulation(dataFetchingEnvironment: DataFetchingEnvironment): CompletableFuture<RegulationSerializer?> {
-    return dataFetchingEnvironment.getValueFromDataLoader(RegulationDataLoaderName, regulationId)
+    val targetId = regulationId ?: return CompletableFuture.completedFuture(null)
+    return dataFetchingEnvironment.getValueFromDataLoader(RegulationDataLoaderName, targetId)
   }
 
   companion object {
