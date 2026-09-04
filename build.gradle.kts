@@ -9,10 +9,10 @@ plugins {
   val kotlinVersion = "2.4.10"
   kotlin("jvm") version kotlinVersion
   application
-  id("org.flywaydb.flyway") version "13.3.0"
+  id("org.flywaydb.flyway") version "13.5.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
-  id("com.expediagroup.graphql") version "10.2.1"
+  id("com.expediagroup.graphql") version "10.2.2"
   id("org.jetbrains.kotlinx.kover") version "0.9.9"
   id("io.ktor.plugin") version "3.5.2"
 }
@@ -25,19 +25,19 @@ repositories {
   maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
-val exposedVersion = "1.4.0"
+val exposedVersion = "1.5.0"
 val koinVersion = "4.2.2"
 val ktorVersion = "3.5.2"
 val logbackVersion = "1.6.3"
 val coroutineVersion = "1.11.0"
-val graphQLKotlinVersion = "10.2.1"
-val flywayVersion = "13.3.0"
-val sentryVersion = "8.53.0"
+val graphQLKotlinVersion = "10.2.2"
+val flywayVersion = "13.5.0"
+val sentryVersion = "8.55.0"
 
 buildscript {
   dependencies {
     classpath("io.github.cdimascio:dotenv-kotlin:6.5.1")
-    classpath("org.flywaydb:flyway-database-postgresql:13.3.0")
+    classpath("org.flywaydb:flyway-database-postgresql:13.5.0")
   }
 }
 
@@ -95,7 +95,7 @@ dependencies {
   implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.11.1")
-  implementation("io.lettuce:lettuce-core:7.6.0.RELEASE")
+  implementation("io.lettuce:lettuce-core:7.7.0.RELEASE")
   implementation("org.flywaydb:flyway-core:$flywayVersion")
   implementation("org.flywaydb:flyway-mysql:$flywayVersion")
   implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
@@ -115,7 +115,7 @@ dependencies {
   testImplementation("io.mockk:mockk:1.14.11")
   testImplementation("io.insert-koin:koin-test:4.2.2")
   testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-  testImplementation("com.h2database:h2:2.4.240")
+  testImplementation("com.h2database:h2:2.5.250")
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 }
 
