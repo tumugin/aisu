@@ -12,7 +12,7 @@ plugins {
   id("org.flywaydb.flyway") version "13.3.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
-  id("com.expediagroup.graphql") version "10.2.1"
+  id("com.expediagroup.graphql") version "11.0.0"
   id("org.jetbrains.kotlinx.kover") version "0.9.9"
   id("io.ktor.plugin") version "3.5.2"
 }
