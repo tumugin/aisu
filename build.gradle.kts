@@ -30,7 +30,7 @@ val koinVersion = "4.2.2"
 val ktorVersion = "3.5.2"
 val logbackVersion = "1.6.3"
 val coroutineVersion = "1.11.0"
-val graphQLKotlinVersion = "10.2.1"
+val graphQLKotlinVersion = "11.0.0"
 val flywayVersion = "13.3.0"
 val sentryVersion = "8.53.0"
 
