@@ -68,6 +68,16 @@ kotlin {
 }
 
 dependencies {
+  // Keep the code generator's HTTP transport current. Its legacy codec constraint
+  // otherwise triggers an invalid dependency edge when resolving on Gradle 9.9.
+  constraints {
+    add("graphqlClient", "org.apache.httpcomponents:httpclient:4.5.14")
+    add("graphqlClient", "org.apache.httpcomponents:httpcore:4.4.16")
+    add("graphqlClient", "org.apache.httpcomponents:httpcore-nio:4.4.16")
+    add("graphqlClient", "commons-codec:commons-codec:1.23.0")
+    add("graphqlClient", "commons-logging:commons-logging:1.4.0")
+  }
+
   // ktor
   implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
   implementation("io.ktor:ktor-server-resources:$ktorVersion")
