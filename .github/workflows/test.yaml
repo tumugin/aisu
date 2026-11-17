@@ -45,4 +45,4 @@ jobs:
           cache: 'gradle'
       - run: ./gradlew build -x test --no-daemon
       - run: ./gradlew migrateTestingDatabase --no-daemon
-      - run: ./gradlew test --no-daemon
+      - run: ./gradlew test --stacktrace --no-daemon
