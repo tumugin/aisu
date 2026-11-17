@@ -23,7 +23,6 @@ version = "1.0.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
-  maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev") }
 }
 
 val exposedVersion = "1.6.1"
@@ -68,8 +67,7 @@ kotlin {
 }
 
 dependencies {
-  // Keep the code generator's HTTP transport current. Its legacy codec constraint
-  // otherwise triggers an invalid dependency edge when resolving on Gradle 9.9.
+  // Keep the code generator's legacy HTTP dependencies on current compatible releases.
   constraints {
     add("graphqlClient", "org.apache.httpcomponents:httpclient:4.5.14")
     add("graphqlClient", "org.apache.httpcomponents:httpcore:4.4.16")
