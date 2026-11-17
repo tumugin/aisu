@@ -1,7 +1,7 @@
 package com.tumugin.aisu.domain.adminUser
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 data class AdminUser(
   val adminUserId: AdminUserId,

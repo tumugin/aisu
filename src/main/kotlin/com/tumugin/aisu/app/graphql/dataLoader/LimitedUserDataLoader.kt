@@ -20,7 +20,7 @@ class LimitedUserDataLoader : KotlinDataLoader<ID, LimitedUserSerializer> {
 
   override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, LimitedUserSerializer> =
     DataLoaderFactory.newMappedDataLoader<ID, LimitedUserSerializer> { ids, _ ->
-      val aisuGraphQLContext = graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = requireNotNull(graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)) { "AisuGraphQLContext missing from GraphQL context" }
 
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
         val users =

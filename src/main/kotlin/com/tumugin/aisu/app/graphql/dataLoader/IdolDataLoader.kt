@@ -20,7 +20,7 @@ class IdolDataLoader : KotlinDataLoader<ID, IdolSerializer> {
 
   override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, IdolSerializer> =
     DataLoaderFactory.newMappedDataLoader<ID, IdolSerializer> { ids, _ ->
-      val aisuGraphQLContext = graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = requireNotNull(graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)) { "AisuGraphQLContext missing from GraphQL context" }
 
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
         val idols =

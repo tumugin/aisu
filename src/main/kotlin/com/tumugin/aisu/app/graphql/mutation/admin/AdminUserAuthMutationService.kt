@@ -11,14 +11,14 @@ import com.tumugin.aisu.usecase.admin.adminUser.AuthAdminUser
 import graphql.schema.DataFetchingEnvironment
 import io.ktor.server.request.*
 import io.ktor.server.sessions.*
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlin.time.Duration.Companion.days
 
 class AdminUserAuthMutationService : Mutation {
   private val authAdminUser = AuthAdminUser()
 
   suspend fun adminUserLogin(dfe: DataFetchingEnvironment, params: AdminUserLoginParams): AdminUserSerializer {
-    val request = dfe.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)
+    val request = requireNotNull(dfe.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)) { "ApplicationRequest missing from GraphQL context" }
 
     val adminUser = authAdminUser.authAndGetAdminUser(
       AdminUserEmail(params.email), AdminUserRawPassword(params.password)
@@ -36,7 +36,7 @@ class AdminUserAuthMutationService : Mutation {
   }
 
   suspend fun adminUserLogout(dfe: DataFetchingEnvironment): String {
-    val request = dfe.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)
+    val request = requireNotNull(dfe.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)) { "ApplicationRequest missing from GraphQL context" }
     request.call.sessions.clear<AdminUserAuthSession>()
     return "Logout success."
   }

@@ -16,7 +16,7 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import io.ktor.server.testing.*
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import org.koin.core.component.inject
 import java.net.URL
 import kotlin.time.Duration.Companion.days

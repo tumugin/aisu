@@ -21,7 +21,7 @@ class ChekiDataLoader : KotlinDataLoader<ID, ChekiSerializer> {
 
   override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, ChekiSerializer> =
     DataLoaderFactory.newMappedDataLoader<ID, ChekiSerializer> { ids, _ ->
-      val aisuGraphQLContext = graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = requireNotNull(graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)) { "AisuGraphQLContext missing from GraphQL context" }
 
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
         val chekis =

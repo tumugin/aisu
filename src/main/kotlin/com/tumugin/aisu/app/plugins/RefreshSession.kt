@@ -2,8 +2,8 @@ package com.tumugin.aisu.app.plugins
 
 import io.ktor.server.application.*
 import io.ktor.server.sessions.*
-import kotlinx.datetime.Clock
-import kotlinx.datetime.toInstant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 fun Application.configureRefreshToken() {
   intercept(ApplicationCallPipeline.Plugins) {
@@ -15,7 +15,7 @@ fun Application.configureRefreshToken() {
     }
 
     if (userAuthSession != null) {
-      val parsedValidTime = userAuthSession.validThroughTimestamp.toInstant()
+      val parsedValidTime = Instant.parse(userAuthSession.validThroughTimestamp)
       // デフォルトの有効期限の半分を過ぎていたら、新しいセッションをセットする
       if (parsedValidTime - Clock.System.now() < UserAuthSession.defaultValidDays / 2) {
         val newSession = UserAuthSession(
@@ -39,7 +39,7 @@ fun Application.configureAdminRefreshToken() {
     }
 
     if (adminUserAuthSession != null) {
-      val parsedValidTime = adminUserAuthSession.validThroughTimestamp.toInstant()
+      val parsedValidTime = Instant.parse(adminUserAuthSession.validThroughTimestamp)
       // デフォルトの有効期限の半分を過ぎていたら、新しいセッションをセットする
       if (parsedValidTime - Clock.System.now() < AdminUserAuthSession.defaultValidDays / 2) {
         val newSession = AdminUserAuthSession(

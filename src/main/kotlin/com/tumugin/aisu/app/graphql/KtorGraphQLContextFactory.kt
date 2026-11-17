@@ -31,7 +31,9 @@ class AisuGraphQLContext(
 ) {
   companion object {
     fun createFromDataFetchingEnvironment(dfe: DataFetchingEnvironment): AisuGraphQLContext {
-      return dfe.graphQlContext.get(AisuGraphQLContext::class)
+      return requireNotNull(dfe.graphQlContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)) {
+        "AisuGraphQLContext missing from GraphQL context"
+      }
     }
   }
 }

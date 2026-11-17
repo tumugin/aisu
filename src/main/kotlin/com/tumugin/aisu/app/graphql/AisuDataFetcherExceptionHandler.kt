@@ -18,7 +18,7 @@ class AisuDataFetcherExceptionHandler : DataFetcherExceptionHandler {
     val request =
       handlerParameters.dataFetchingEnvironment.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)
     if (!isSupportedError) {
-      request.call.application.environment.log.error(handlerParameters.exception)
+      request?.call?.application?.environment?.log?.error(handlerParameters.exception)
     }
 
     val error = AisuGraphQLException(
@@ -37,7 +37,7 @@ class AisuDataFetcherExceptionHandler : DataFetcherExceptionHandler {
 
   class AisuGraphQLException(
     private val baseMessage: String,
-    private val baseLocation: SourceLocation,
+    private val baseLocation: SourceLocation?,
     private val baseErrorClassification: GraphQLErrorTypes,
     private val basePath: ResultPath
   ) : GraphQLError {
@@ -46,7 +46,7 @@ class AisuDataFetcherExceptionHandler : DataFetcherExceptionHandler {
     }
 
     override fun getLocations(): MutableList<SourceLocation> {
-      return mutableListOf(this.baseLocation)
+      return listOfNotNull(this.baseLocation).toMutableList()
     }
 
     override fun getErrorType(): ErrorClassification {
