@@ -1,7 +1,7 @@
 package com.tumugin.aisu.domain.user
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 data class User(
   val userId: UserId,

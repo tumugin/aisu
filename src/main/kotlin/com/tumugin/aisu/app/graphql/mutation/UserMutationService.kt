@@ -20,7 +20,7 @@ import com.tumugin.aisu.usecase.client.user.UpdateUserName
 import graphql.schema.DataFetchingEnvironment
 import io.ktor.server.request.*
 import io.ktor.server.sessions.*
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlin.time.Duration.Companion.days
 
 class UserMutationService : Mutation {
@@ -33,7 +33,7 @@ class UserMutationService : Mutation {
     private val updateUserName = UpdateUserName()
 
     suspend fun userLogin(dfe: DataFetchingEnvironment, params: UserLoginParams): UserSerializer {
-      val request = dfe.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)
+      val request = requireNotNull(dfe.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)) { "ApplicationRequest missing from GraphQL context" }
       val userLoginRequest = params.toLoginRequest()
 
       val user = authUserUseCase.authAndGetUser(
@@ -52,7 +52,7 @@ class UserMutationService : Mutation {
     }
 
     suspend fun userLogout(dfe: DataFetchingEnvironment): String {
-      val request = dfe.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)
+      val request = requireNotNull(dfe.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)) { "ApplicationRequest missing from GraphQL context" }
       request.call.sessions.clear<UserAuthSession>()
       return "Logout success."
     }
@@ -83,7 +83,7 @@ class UserMutationService : Mutation {
     }
 
     suspend fun userCreate(dfe: DataFetchingEnvironment, params: UserCreateParams): UserSerializer {
-      val request = dfe.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)
+      val request = requireNotNull(dfe.graphQlContext.get<ApplicationRequest>(ApplicationRequest::class)) { "ApplicationRequest missing from GraphQL context" }
       val userCreateRequest = params.toCreateUserRequest()
       val user = createUser.createUser(
         userCreateRequest.castedName,

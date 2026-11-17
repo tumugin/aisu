@@ -7,7 +7,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.plugins.*
 import io.ktor.server.response.*
 import io.ktor.server.sessions.*
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlin.time.Duration.Companion.days
 
 class AdminAuth0CallbackController {

@@ -22,7 +22,7 @@ class RegulationOfGroupDataLoader : KotlinDataLoader<ID, List<RegulationSerializ
 
   override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, List<RegulationSerializer>> =
     DataLoaderFactory.newDataLoader { ids, dfe ->
-      val aisuGraphQLContext = graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = requireNotNull(graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)) { "AisuGraphQLContext missing from GraphQL context" }
 
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
         val regulations = getRegulation.getRegulationsByGroupIds(

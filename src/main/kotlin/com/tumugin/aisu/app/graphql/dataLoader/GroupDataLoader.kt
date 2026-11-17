@@ -20,7 +20,7 @@ class GroupDataLoader : KotlinDataLoader<ID, GroupSerializer> {
 
   override fun getDataLoader(graphQLContext: GraphQLContext): DataLoader<ID, GroupSerializer> =
     DataLoaderFactory.newMappedDataLoader<ID, GroupSerializer> { ids, _ ->
-      val aisuGraphQLContext = graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)
+      val aisuGraphQLContext = requireNotNull(graphQLContext.get<AisuGraphQLContext>(AisuGraphQLContext::class)) { "AisuGraphQLContext missing from GraphQL context" }
 
       CoroutineScope(aisuGraphQLContext.coroutineContext).future {
         val groups = getGroup.getGroupsById(
