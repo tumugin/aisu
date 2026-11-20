@@ -17,7 +17,7 @@ services:
     volumes:
       - redis_data:/data
   swagger-ui:
-    image: swaggerapi/swagger-ui:v5.35.0
+    image: swaggerapi/swagger-ui:v5.35.1
     ports:
       - "8002:8080"
     volumes:
