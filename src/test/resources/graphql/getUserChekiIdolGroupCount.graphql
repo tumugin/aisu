@@ -1,0 +1,16 @@
+query GetUserChekiIdolGroupCount($chekiShotAtStart: String!, $chekiShotAtEnd: String!) {
+  currentUserChekis {
+    getUserChekiIdolGroupCount(params: {chekiShotAtStart: $chekiShotAtStart, chekiShotAtEnd: $chekiShotAtEnd}) {
+      chekiCount
+      group {
+        groupId
+      }
+      groupId
+      idol {
+        idolId
+      }
+      idolId
+      totalPrice
+    }
+  }
+}

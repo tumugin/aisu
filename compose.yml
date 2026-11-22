@@ -16,14 +16,6 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
-  swagger-ui:
-    image: swaggerapi/swagger-ui:v5.35.0
-    ports:
-      - "8002:8080"
-    volumes:
-      - ./oas3/:/oas3
-    environment:
-      SWAGGER_JSON: /oas3/openapi.yaml
 volumes:
   postgres_data:
   redis_data:

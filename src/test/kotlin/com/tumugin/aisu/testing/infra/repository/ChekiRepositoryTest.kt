@@ -6,6 +6,7 @@ import com.tumugin.aisu.domain.cheki.ChekiId
 import com.tumugin.aisu.domain.cheki.ChekiQuantity
 import com.tumugin.aisu.domain.cheki.ChekiRepository
 import com.tumugin.aisu.domain.cheki.ChekiShotAt
+import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.idol.IdolName
 import com.tumugin.aisu.domain.regulation.RegulationId
@@ -108,6 +109,30 @@ class ChekiRepositoryTest : BaseDatabaseTest() {
     assertEquals(100, chekiIdolCounts[0].chekiCount.value)
     assertNotNull(chekiIdolCounts[1].idol)
     assertEquals(100, chekiIdolCounts[1].chekiCount.value)
+  }
+
+  @Test
+  fun testGetChekiIdolGroupCountByUserIdIncludesChekisWithoutGroup() = runTest {
+    val userId = UserId(1)
+    val idolId = IdolId(1)
+    ChekiSeeder().seedCheki(userId, idolId, regulationId = null, chekiQuantity = ChekiQuantity(3))
+
+    val counts = chekiRepository.getChekiIdolGroupCountByUserId(
+      userId,
+      ChekiShotAt(Instant.parse("2021-12-01T00:00:00+09:00")),
+      ChekiShotAt(Instant.parse("2021-12-31T23:59:59+09:00"))
+    ).filter { it.idolId == idolId }
+
+    assertEquals(2, counts.size)
+    val withGroup = counts.single { it.groupId == GroupId(1) }
+    assertEquals(GroupId(1), withGroup.group?.groupId)
+    assertEquals(100, withGroup.chekiCount.value)
+    assertEquals(150_000, withGroup.totalPrice.value)
+
+    val withoutGroup = counts.single { it.groupId == null }
+    assertNull(withoutGroup.group)
+    assertEquals(3, withoutGroup.chekiCount.value)
+    assertEquals(0, withoutGroup.totalPrice.value)
   }
 
   @Test

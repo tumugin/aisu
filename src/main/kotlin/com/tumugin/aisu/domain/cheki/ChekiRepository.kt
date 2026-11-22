@@ -24,6 +24,10 @@ interface ChekiRepository {
     userId: UserId, chekiShotAtStart: ChekiShotAt, chekiShotEnd: ChekiShotAt
   ): List<ChekiIdolCount>
 
+  suspend fun getChekiIdolGroupCountByUserId(
+    userId: UserId, chekiShotAtStart: ChekiShotAt, chekiShotEnd: ChekiShotAt
+  ): List<ChekiIdolGroupCount>
+
   suspend fun getChekiMonthIdolCountByUserIdAndIdol(
     userId: UserId, baseTimezone: TimeZone
   ): List<ChekiMonthIdolCount>

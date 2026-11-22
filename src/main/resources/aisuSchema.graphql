@@ -87,6 +87,15 @@ type ChekiIdolCountSerializer {
   totalPrice: Int!
 }
 
+type ChekiIdolGroupCountSerializer {
+  chekiCount: Int!
+  group: GroupSerializer
+  groupId: ID
+  idol: IdolSerializer
+  idolId: ID!
+  totalPrice: Int!
+}
+
 type ChekiMonthCountSerializer {
   count: Int!
   month: ChekiShotAtMonthSerializer!
@@ -268,6 +277,7 @@ type UserChekis {
   getChekiMonthIdolCount(params: GetChekiMonthIdolCountParamsInput!): [ChekiMonthIdolCountSerializer!]!
   getUserAllChekis(page: Int!): ChekiPaginationSerializer!
   getUserChekiIdolCount(params: GetUserChekiIdolCountParamsInput!): [ChekiIdolCountSerializer!]!
+  getUserChekiIdolGroupCount(params: GetUserChekiIdolCountParamsInput!): [ChekiIdolGroupCountSerializer!]!
   getUserChekis(params: GetUserChekisParamsInput!): [ChekiSerializer!]!
 }
 
