@@ -83,6 +83,16 @@ class ChekiQueryService : Query {
         .map { ChekiIdolCountSerializer.from(it) }
     }
 
+    suspend fun getUserChekiIdolGroupCount(
+      dfe: DataFetchingEnvironment,
+      params: GetUserChekiIdolCountParams
+    ): List<ChekiIdolGroupCountSerializer> {
+      val aisuGraphQLContext = AisuGraphQLContext.createFromDataFetchingEnvironment(dfe)
+      val userId = aisuGraphQLContext.userAuthSession?.castedUserId ?: throw NotAuthorizedException()
+      return getCheki.getChekiIdolGroupCountByUserId(userId, params.chekiShotAtStartCasted, params.chekiShotAtEndCasted)
+        .map { ChekiIdolGroupCountSerializer.from(it) }
+    }
+
     suspend fun getChekiMonthIdolCount(
       dfe: DataFetchingEnvironment,
       params: GetChekiMonthIdolCountParams

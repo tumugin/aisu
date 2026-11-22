@@ -1,15 +1,16 @@
-@file:OptIn(kotlin.time.ExperimentalTime::class)
-
 package com.tumugin.aisu.infra.repository.exposed.repository
 
 import com.tumugin.aisu.domain.base.PaginatorParam
 import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.cheki.*
+import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.regulation.RegulationId
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.DateFormatWithTZFunction
 import com.tumugin.aisu.infra.repository.exposed.models.Chekis
+import com.tumugin.aisu.infra.repository.exposed.models.Group
+import com.tumugin.aisu.infra.repository.exposed.models.Groups
 import com.tumugin.aisu.infra.repository.exposed.models.Regulations
 import kotlinx.coroutines.Dispatchers
 import com.tumugin.aisu.infra.repository.exposed.models.Regulation as RegulationModel
@@ -29,6 +30,7 @@ class ChekiRepositoryImpl : ChekiRepository {
     listOf(ChekiModel::user, ChekiModel::idol, ChekiModel::regulation).toTypedArray()
   private val idolWithModels =
     listOf(IdolModel::user).toTypedArray()
+  private val groupWithModels = listOf(Group::user).toTypedArray()
 
   override suspend fun getCheki(chekiId: ChekiId): Cheki? {
     return newSuspendedTransaction(Dispatchers.IO) {
@@ -86,7 +88,7 @@ class ChekiRepositoryImpl : ChekiRepository {
   ): List<ChekiIdolCount> {
     return newSuspendedTransaction(Dispatchers.IO) {
       val countResults = Chekis
-        .join(Regulations, JoinType.LEFT, Chekis.regulation, Regulations.id)
+        .join(Regulations, JoinType.RIGHT, Chekis.regulation, Regulations.id)
         .select(Chekis.idol, Chekis.quantity.sum(), Chekis.quantity.times(Regulations.unitPrice).sum())
         .where {
           Chekis.user.eq(userId.value) and Chekis.shotAt.between(
@@ -104,6 +106,50 @@ class ChekiRepositoryImpl : ChekiRepository {
           idolId = IdolId(row[Chekis.idol]!!.value),
           chekiCount = ChekiCount(row[Chekis.quantity.sum()] ?: 0),
           totalPrice = TotalPriceOfCheki(row[Chekis.quantity.times(Regulations.unitPrice).sum()] ?: 0)
+        )
+      }
+    }
+  }
+
+  override suspend fun getChekiIdolGroupCountByUserId(
+    userId: UserId,
+    chekiShotAtStart: ChekiShotAt,
+    chekiShotEnd: ChekiShotAt
+  ): List<ChekiIdolGroupCount> {
+    return newSuspendedTransaction(Dispatchers.IO) {
+      val quantitySum = Chekis.quantity.sum()
+      val priceSum = Chekis.quantity.times(Regulations.unitPrice).sum()
+      val countResults = Chekis
+        .join(Regulations, JoinType.LEFT, Chekis.regulation, Regulations.id)
+        .join(Groups, JoinType.LEFT, Regulations.group, Groups.id)
+        .select(Chekis.idol, Groups.id, quantitySum, priceSum)
+        .where {
+          Chekis.user.eq(userId.value) and Chekis.idol.isNotNull() and Chekis.shotAt.between(
+            chekiShotAtStart.value.toJavaInstant().atOffset(ZoneOffset.UTC),
+            chekiShotEnd.value.toJavaInstant().atOffset(ZoneOffset.UTC)
+          )
+        }
+        .groupBy(Chekis.idol, Groups.id)
+        .orderBy(Chekis.idol)
+        .toList()
+
+      val idolIds = countResults.mapNotNull { it[Chekis.idol] }
+      val groupIds = countResults.mapNotNull { it.getOrNull(Groups.id) }
+      val idols = IdolModel.forEntityIds(idolIds).with(*idolWithModels).associateBy { it.id }
+      val groups = Group.forEntityIds(groupIds).with(*groupWithModels).associateBy { it.id }
+
+      countResults.map { row ->
+        val idolId = checkNotNull(row[Chekis.idol])
+        // Groups.idは本来nullableであるため、getOrNullで正しい型にしている
+        val groupId = row.getOrNull(Groups.id)
+
+        ChekiIdolGroupCount(
+          idol = idols[idolId]?.toDomain(),
+          idolId = IdolId(idolId.value),
+          groupId = groupId?.let { GroupId(it.value) },
+          group = groupId?.let { groups[it]?.toDomain() },
+          chekiCount = ChekiCount(row[quantitySum] ?: 0),
+          totalPrice = TotalPriceOfCheki(row[priceSum] ?: 0)
         )
       }
     }
