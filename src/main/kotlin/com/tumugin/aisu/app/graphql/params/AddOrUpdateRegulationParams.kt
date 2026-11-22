@@ -10,9 +10,9 @@ import com.tumugin.aisu.domain.regulation.RegulationName
 import com.tumugin.aisu.domain.regulation.RegulationStatus
 import com.tumugin.aisu.domain.regulation.RegulationUnitPrice
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.enum
-import io.konform.validation.jsonschema.minLength
-import io.konform.validation.jsonschema.minimum
+import io.konform.validation.constraints.enum
+import io.konform.validation.constraints.minLength
+import io.konform.validation.constraints.minimum
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -25,23 +25,23 @@ class AddOrUpdateRegulationParams(
 ) : BaseRequest<AddOrUpdateRegulationParams> {
   @GraphQLIgnore
   override val validator = Validation<AddOrUpdateRegulationParams> {
-    AddOrUpdateRegulationParams::groupId required {
+    AddOrUpdateRegulationParams::groupId {
       run(aisuIdsValidator)
     }
 
-    AddOrUpdateRegulationParams::regulationComment required {
+    AddOrUpdateRegulationParams::regulationComment {
       minLength(0)
     }
 
-    AddOrUpdateRegulationParams::regulationName required {
+    AddOrUpdateRegulationParams::regulationName {
       minLength(1)
     }
 
-    AddOrUpdateRegulationParams::regulationUnitPrice required {
+    AddOrUpdateRegulationParams::regulationUnitPrice {
       minimum(0)
     }
 
-    AddOrUpdateRegulationParams::regulationStatus required {
+    AddOrUpdateRegulationParams::regulationStatus {
       enum(*RegulationStatus.allUserCanSpecifyStatus.toTypedArray())
     }
   }

@@ -7,8 +7,7 @@ import com.tumugin.aisu.domain.adminUser.AdminUserEmail
 import com.tumugin.aisu.domain.adminUser.AdminUserName
 import com.tumugin.aisu.domain.adminUser.AdminUserRawPassword
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.minLength
-import io.konform.validation.jsonschema.pattern
+import io.konform.validation.constraints.minLength
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,7 +16,7 @@ class UpdateAdminUserPasswordParams(
 ) : BaseRequest<UpdateAdminUserPasswordParams> {
   @GraphQLIgnore
   override val validator = Validation {
-    UpdateAdminUserPasswordParams::password required {
+    UpdateAdminUserPasswordParams::password {
       minLength(10)
     }
   }

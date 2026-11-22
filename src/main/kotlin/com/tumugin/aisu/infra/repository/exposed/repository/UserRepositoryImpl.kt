@@ -6,26 +6,24 @@ import com.tumugin.aisu.domain.base.PaginatorParam
 import com.tumugin.aisu.domain.base.PaginatorResult
 import com.tumugin.aisu.domain.user.*
 import com.tumugin.aisu.infra.repository.exposed.models.Users
-import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.v1.core.*
-import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import java.time.ZoneOffset
 import kotlin.time.toJavaInstant
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 
 class UserRepositoryImpl : UserRepository {
   override suspend fun getUserById(userId: UserId): User? {
-    return newSuspendedTransaction(Dispatchers.IO) { UserModel.findById(userId.value)?.toDomain() }
+    return withJdbcTransaction { UserModel.findById(userId.value)?.toDomain() }
   }
 
   override suspend fun getUserByIds(userIds: List<UserId>): List<User> {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       UserModel.find { Users.id.inList(userIds.map { it.value }) }.map { it.toDomain() }
     }
   }
 
   override suspend fun getUserByEmail(userEmail: UserEmail): User? {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       UserModel.find { Users.email eq userEmail.value }.firstOrNull()?.toDomain()
     }
   }
@@ -37,7 +35,7 @@ class UserRepositoryImpl : UserRepository {
     userEmailVerifiedAt: UserEmailVerifiedAt?,
     userForceLogoutGeneration: UserForceLogoutGeneration,
   ): User {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       UserModel.new {
         name = userName.value
         if (userEmail != null) {
@@ -62,7 +60,7 @@ class UserRepositoryImpl : UserRepository {
     userEmailVerifiedAt: UserEmailVerifiedAt?,
     userForceLogoutGeneration: UserForceLogoutGeneration
   ): User {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       val user = UserModel[userId.value]
       user.name = userName.value
       user.email = userEmail?.value
@@ -74,14 +72,14 @@ class UserRepositoryImpl : UserRepository {
   }
 
   override suspend fun deleteUser(userId: UserId) {
-    newSuspendedTransaction(Dispatchers.IO) {
+    withJdbcTransaction {
       val user = UserModel[userId.value]
       user.delete()
     }
   }
 
   override suspend fun getAllUsers(paginatorParam: PaginatorParam): PaginatorResult<User> {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       val query = UserModel.all()
       val count = query.count()
       val results = query.limit(paginatorParam.limit.toInt())

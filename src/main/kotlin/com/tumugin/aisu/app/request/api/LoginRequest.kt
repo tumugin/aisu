@@ -3,8 +3,8 @@ package com.tumugin.aisu.app.request.api
 import com.tumugin.aisu.app.request.BaseRequest
 import com.tumugin.aisu.app.request.ValidatorPatterns.RFC5322EmailPattern
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.minLength
-import io.konform.validation.jsonschema.pattern
+import io.konform.validation.constraints.minLength
+import io.konform.validation.constraints.pattern
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -12,10 +12,10 @@ import kotlinx.serialization.Transient
 data class LoginRequest(val email: String, val password: String) : BaseRequest<LoginRequest> {
   @Transient
   override val validator = Validation<LoginRequest> {
-    LoginRequest::email required {
+    LoginRequest::email {
       pattern(RFC5322EmailPattern)
     }
-    LoginRequest::password required {
+    LoginRequest::password {
       minLength(1)
     }
   }

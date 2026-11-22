@@ -4,11 +4,11 @@ import com.expediagroup.graphql.generator.scalars.ID
 import com.tumugin.aisu.app.request.ValidatorPatterns.NumberPattern
 import io.konform.validation.Validation
 import io.konform.validation.ValidationResult
-import io.konform.validation.jsonschema.pattern
+import io.konform.validation.constraints.pattern
 import io.ktor.server.plugins.*
 
 val aisuIdsValidator = Validation {
-  ID::value required {
+  ID::value {
     pattern(NumberPattern) hint "ID must be number like value"
   }
 }

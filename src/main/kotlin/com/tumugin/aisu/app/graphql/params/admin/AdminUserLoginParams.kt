@@ -4,8 +4,8 @@ import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.tumugin.aisu.app.request.BaseRequest
 import com.tumugin.aisu.app.request.ValidatorPatterns
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.minLength
-import io.konform.validation.jsonschema.pattern
+import io.konform.validation.constraints.minLength
+import io.konform.validation.constraints.pattern
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,10 +14,10 @@ class AdminUserLoginParams(
 ) : BaseRequest<AdminUserLoginParams> {
   @GraphQLIgnore
   override val validator = Validation {
-    AdminUserLoginParams::email required {
+    AdminUserLoginParams::email {
       pattern(ValidatorPatterns.RFC5322EmailPattern)
     }
-    AdminUserLoginParams::password required {
+    AdminUserLoginParams::password {
       minLength(1)
     }
   }

@@ -4,8 +4,8 @@ import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.tumugin.aisu.app.request.BaseRequest
 import com.tumugin.aisu.domain.user.UserName
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.maxLength
-import io.konform.validation.jsonschema.minLength
+import io.konform.validation.constraints.maxLength
+import io.konform.validation.constraints.minLength
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,7 +14,7 @@ class UpdateUserNameParams(
 ) : BaseRequest<UpdateUserNameParams> {
   @GraphQLIgnore
   override val validator = Validation {
-    UpdateUserNameParams::userName required {
+    UpdateUserNameParams::userName {
       minLength(1)
       maxLength(255)
     }

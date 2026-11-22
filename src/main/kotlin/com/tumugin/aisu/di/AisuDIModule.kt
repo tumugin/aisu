@@ -27,6 +27,7 @@ import com.tumugin.aisu.infra.auth0.AdminAuth0RepositoryImpl
 import com.tumugin.aisu.infra.auth0.Auth0RepositoryImpl
 import com.tumugin.aisu.infra.auth0.Auth0UserInfoRepositoryImpl
 import com.tumugin.aisu.infra.repository.exposed.repository.*
+import io.lettuce.core.ExperimentalLettuceCoroutinesApi
 import io.lettuce.core.api.StatefulRedisConnection
 import io.lettuce.core.api.coroutines.RedisCoroutinesCommands
 import io.lettuce.core.support.BoundedAsyncPool
@@ -34,6 +35,7 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import tools.jackson.module.kotlin.jacksonObjectMapper
 
+@OptIn(ExperimentalLettuceCoroutinesApi::class)
 object AisuDIModule {
   private val aisuDatabaseModule = module {
     // NOTE: DBへのコネクションはアプリケーション全体で常に同じものを参照したいのでsingleにする

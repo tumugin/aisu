@@ -6,35 +6,33 @@ import com.tumugin.aisu.domain.favoritegroup.FavoriteGroupRepository
 import com.tumugin.aisu.domain.group.GroupId
 import com.tumugin.aisu.domain.user.UserId
 import com.tumugin.aisu.infra.repository.exposed.models.FavoriteGroups
-import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.v1.core.*
 import com.tumugin.aisu.infra.repository.exposed.models.Group as GroupModel
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
-import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import com.tumugin.aisu.infra.repository.exposed.models.FavoriteGroup as FavoriteGroupModel
 
 class FavoriteGroupRepositoryImpl : FavoriteGroupRepository {
   override suspend fun getFavoriteGroupsByUserId(userId: UserId): List<FavoriteGroup> {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       FavoriteGroupModel.find(FavoriteGroups.user.eq(userId.value)).map { it.toDomain() }
     }
   }
 
   override suspend fun getFavoriteGroup(favoriteGroupId: FavoriteGroupId): FavoriteGroup? {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       FavoriteGroupModel.findById(favoriteGroupId.value)?.toDomain()
     }
   }
 
   override suspend fun deleteFavoriteGroup(favoriteGroupId: FavoriteGroupId) {
-    newSuspendedTransaction(Dispatchers.IO) {
+    withJdbcTransaction {
       val model = FavoriteGroupModel[favoriteGroupId.value]
       model.delete()
     }
   }
 
   override suspend fun addFavoriteGroup(userId: UserId, groupId: GroupId): FavoriteGroup {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       FavoriteGroupModel.new {
         this.user = UserModel[userId.value]
         this.group = GroupModel[groupId.value]

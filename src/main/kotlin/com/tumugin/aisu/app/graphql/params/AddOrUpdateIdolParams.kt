@@ -5,8 +5,8 @@ import com.tumugin.aisu.app.request.BaseRequest
 import com.tumugin.aisu.domain.idol.IdolName
 import com.tumugin.aisu.domain.idol.IdolStatus
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.enum
-import io.konform.validation.jsonschema.minLength
+import io.konform.validation.constraints.enum
+import io.konform.validation.constraints.minLength
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,10 +16,10 @@ class AddOrUpdateIdolParams(
 ) : BaseRequest<AddOrUpdateIdolParams> {
   @GraphQLIgnore
   override val validator: Validation<AddOrUpdateIdolParams> = Validation {
-    AddOrUpdateIdolParams::idolName required {
+    AddOrUpdateIdolParams::idolName {
       minLength(1)
     }
-    AddOrUpdateIdolParams::idolStatus required {
+    AddOrUpdateIdolParams::idolStatus {
       enum(*IdolStatus.allUserCanSpecifyStatus.toTypedArray())
     }
   }

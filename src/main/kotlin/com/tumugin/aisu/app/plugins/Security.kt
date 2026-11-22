@@ -7,9 +7,7 @@ import com.tumugin.aisu.domain.app.config.AppConfigRepository
 import com.tumugin.aisu.domain.user.User
 import com.tumugin.aisu.domain.user.UserId
 import io.ktor.server.application.*
-import io.ktor.server.auth.*
 import io.ktor.server.sessions.*
-import io.ktor.util.*
 import kotlinx.serialization.Serializable
 import org.koin.core.Koin
 import kotlin.time.Duration.Companion.days
@@ -36,13 +34,13 @@ data class AdminUserAuthSession(
     get() = AdminUserId(adminUserId)
 }
 
-data class UserPrincipal(val user: User) : Principal
+data class UserPrincipal(val user: User)
 
-data class AdminUserPrincipal(val adminUser: AdminUser) : Principal
+data class AdminUserPrincipal(val adminUser: AdminUser)
 
 fun Application.configureSecurity(koin: Koin) {
   val appConfigRepository = koin.get<AppConfigRepository>()
-  val secretSignKey = hex(appConfigRepository.appConfig.appConfigCookieSecretSignKey.value)
+  val secretSignKey = appConfigRepository.appConfig.appConfigCookieSecretSignKey.value.hexToByteArray()
   install(Sessions) {
     cookie<UserAuthSession>("USER_AUTH", KVSSessionStorage()) {
       cookie.maxAge = UserAuthSession.defaultValidDays

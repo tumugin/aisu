@@ -5,8 +5,8 @@ import com.tumugin.aisu.app.request.BaseRequest
 import com.tumugin.aisu.domain.group.GroupName
 import com.tumugin.aisu.domain.group.GroupStatus
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.enum
-import io.konform.validation.jsonschema.minLength
+import io.konform.validation.constraints.enum
+import io.konform.validation.constraints.minLength
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,10 +16,10 @@ class AddOrUpdateGroupParams(
 ) : BaseRequest<AddOrUpdateGroupParams> {
   @GraphQLIgnore
   override val validator: Validation<AddOrUpdateGroupParams> = Validation {
-    AddOrUpdateGroupParams::groupName required {
+    AddOrUpdateGroupParams::groupName {
       minLength(1)
     }
-    AddOrUpdateGroupParams::groupStatus required {
+    AddOrUpdateGroupParams::groupStatus {
       enum(*GroupStatus.allUserCanSpecifyStatus.toTypedArray())
     }
   }

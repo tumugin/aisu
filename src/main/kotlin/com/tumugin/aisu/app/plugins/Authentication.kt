@@ -11,7 +11,7 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
 import org.koin.core.Koin
-import java.net.URL
+import java.net.URI
 
 fun Application.configureAuthentication(koin: Koin) {
   val userRepository = koin.get<UserRepository>()
@@ -66,10 +66,11 @@ fun Application.configureAuthentication(koin: Koin) {
     oauth("auth-oauth-auth0") {
       urlProvider = {
         val returnTo = this.request.call.request.queryParameters["return_to"]
+        val callbackUrl = URI.create(appConfig.appConfigAppUrl.value).resolve("/auth0/callback").toString()
         if (returnTo.isNullOrBlank()) {
-          URL(URL(appConfig.appConfigAppUrl.value), "/auth0/callback").toString()
+          callbackUrl
         } else {
-          URL(URL(appConfig.appConfigAppUrl.value), "/auth0/callback?return_to=${returnTo}").toString()
+          "$callbackUrl?return_to=$returnTo"
         }
       }
       providerLookup = {
@@ -86,7 +87,7 @@ fun Application.configureAuthentication(koin: Koin) {
       client = aisuHTTPClient.httpClient
     }
     oauth("admin-auth-oauth-auth0") {
-      urlProvider = { URL(URL(appConfig.appConfigAdminAppUrl.value), "/admin/auth0/callback").toString() }
+      urlProvider = { URI.create(appConfig.appConfigAdminAppUrl.value).resolve("/admin/auth0/callback").toString() }
       providerLookup = {
         OAuthServerSettings.OAuth2ServerSettings(
           name = "admin-auth0",
