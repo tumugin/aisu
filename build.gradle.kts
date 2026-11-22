@@ -122,7 +122,6 @@ dependencies {
   // kotlin
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
-  implementation(kotlin("stdlib-jdk8"))
   // test(junit)
   testImplementation(platform("org.junit:junit-bom:6.1.3"))
   testImplementation("org.junit.jupiter:junit-jupiter")
@@ -135,7 +134,7 @@ dependencies {
   testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 }
 
-val graphqlGenerateTestClient by tasks.getting(GraphQLGenerateTestClientTask::class) {
+tasks.getByName<GraphQLGenerateTestClientTask>("graphqlGenerateTestClient") {
   packageName.set("com.tumugin.aisu.testing.graphql.client")
   schemaFile.set(file("${project.projectDir}/src/main/resources/aisuSchema.graphql"))
   queryFileDirectory.set(file("${project.projectDir}/src/test/resources/graphql"))
@@ -166,8 +165,8 @@ val flywayTestingDatabaseConfig: AbstractFlywayTask.() -> Unit = {
   cleanDisabled = false
 }
 
-task<FlywayMigrateTask>("migrateTestingDatabase", flywayTestingDatabaseConfig)
-task<FlywayCleanTask>("cleanTestingDatabase", flywayTestingDatabaseConfig)
+tasks.register<FlywayMigrateTask>("migrateTestingDatabase", flywayTestingDatabaseConfig)
+tasks.register<FlywayCleanTask>("cleanTestingDatabase", flywayTestingDatabaseConfig)
 
 ktor {
   docker {

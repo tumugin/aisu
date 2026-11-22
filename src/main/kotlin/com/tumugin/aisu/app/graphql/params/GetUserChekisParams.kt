@@ -10,7 +10,7 @@ import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.cheki.ChekiShotAt
 import com.tumugin.aisu.domain.idol.IdolId
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.pattern
+import io.konform.validation.constraints.pattern
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 import kotlinx.serialization.Serializable
@@ -38,10 +38,10 @@ class GetUserChekisParams(
 
   @GraphQLIgnore
   override val validator: Validation<GetUserChekisParams> = Validation {
-    GetUserChekisParams::chekiShotAtStart required {
+    GetUserChekisParams::chekiShotAtStart {
       pattern(ISO8601Pattern)
     }
-    GetUserChekisParams::chekiShotAtEnd required {
+    GetUserChekisParams::chekiShotAtEnd {
       pattern(ISO8601Pattern)
     }
   }

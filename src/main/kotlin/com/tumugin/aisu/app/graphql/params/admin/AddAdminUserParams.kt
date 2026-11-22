@@ -7,8 +7,8 @@ import com.tumugin.aisu.domain.adminUser.AdminUserEmail
 import com.tumugin.aisu.domain.adminUser.AdminUserName
 import com.tumugin.aisu.domain.adminUser.AdminUserRawPassword
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.minLength
-import io.konform.validation.jsonschema.pattern
+import io.konform.validation.constraints.minLength
+import io.konform.validation.constraints.pattern
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -19,13 +19,13 @@ class AddAdminUserParams(
 ) : BaseRequest<AddAdminUserParams> {
   @GraphQLIgnore
   override val validator = Validation {
-    AddAdminUserParams::email required {
+    AddAdminUserParams::email {
       pattern(ValidatorPatterns.RFC5322EmailPattern)
     }
-    AddAdminUserParams::password required {
+    AddAdminUserParams::password {
       minLength(10)
     }
-    AddAdminUserParams::name required {
+    AddAdminUserParams::name {
       minLength(1)
     }
   }

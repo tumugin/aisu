@@ -6,7 +6,7 @@ import com.tumugin.aisu.app.request.BaseRequest
 import com.tumugin.aisu.app.serializer.IDSerializer
 import com.tumugin.aisu.domain.idol.IdolId
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.enum
+import io.konform.validation.constraints.enum
 import kotlinx.datetime.TimeZone
 import kotlinx.serialization.Serializable
 
@@ -16,7 +16,7 @@ class GetChekiMonthCountByIdolParams(
 ) : BaseRequest<GetChekiMonthCountByIdolParams> {
   @GraphQLIgnore
   override val validator: Validation<GetChekiMonthCountByIdolParams> = Validation {
-    GetChekiMonthCountByIdolParams::baseTimezone required {
+    GetChekiMonthCountByIdolParams::baseTimezone {
       enum(*TimeZone.availableZoneIds.toTypedArray())
     }
   }

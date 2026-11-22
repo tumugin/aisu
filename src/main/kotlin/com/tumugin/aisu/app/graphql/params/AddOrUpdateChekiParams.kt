@@ -12,8 +12,8 @@ import com.tumugin.aisu.domain.cheki.ChekiShotAt
 import com.tumugin.aisu.domain.idol.IdolId
 import com.tumugin.aisu.domain.regulation.RegulationId
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.minimum
-import io.konform.validation.jsonschema.pattern
+import io.konform.validation.constraints.minimum
+import io.konform.validation.constraints.pattern
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 import kotlinx.serialization.Serializable
@@ -27,16 +27,16 @@ class AddOrUpdateChekiParams(
 ) : BaseRequest<AddOrUpdateChekiParams> {
   @GraphQLIgnore
   override val validator: Validation<AddOrUpdateChekiParams> = Validation {
-    AddOrUpdateChekiParams::idolId required {
+    AddOrUpdateChekiParams::idolId {
       run(aisuIdsValidator)
     }
     AddOrUpdateChekiParams::regulationId ifPresent {
       run(aisuIdsValidator)
     }
-    AddOrUpdateChekiParams::chekiQuantity required {
+    AddOrUpdateChekiParams::chekiQuantity {
       minimum(1)
     }
-    AddOrUpdateChekiParams::chekiShotAt required {
+    AddOrUpdateChekiParams::chekiShotAt {
       pattern(ISO8601Pattern)
     }
   }

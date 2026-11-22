@@ -5,8 +5,8 @@ import com.tumugin.aisu.app.request.BaseRequest
 import com.tumugin.aisu.app.request.ValidatorPatterns
 import com.tumugin.aisu.domain.auth0.Auth0MailAddress
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.minLength
-import io.konform.validation.jsonschema.pattern
+import io.konform.validation.constraints.minLength
+import io.konform.validation.constraints.pattern
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,7 +15,7 @@ class SendAuth0PasswordResetEmailParams(
 ) : BaseRequest<SendAuth0PasswordResetEmailParams> {
   @GraphQLIgnore
   override val validator = Validation {
-    SendAuth0PasswordResetEmailParams::auth0EmailAddress required {
+    SendAuth0PasswordResetEmailParams::auth0EmailAddress {
       minLength(1)
       pattern(ValidatorPatterns.RFC5322EmailPattern)
     }

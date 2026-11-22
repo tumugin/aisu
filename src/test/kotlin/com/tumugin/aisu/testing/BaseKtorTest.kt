@@ -18,7 +18,7 @@ import io.ktor.server.sessions.*
 import io.ktor.server.testing.*
 import kotlin.time.Clock
 import org.koin.core.component.inject
-import java.net.URL
+import java.net.URI
 import kotlin.time.Duration.Companion.days
 
 abstract class BaseKtorTest : BaseDatabaseTest() {
@@ -79,7 +79,7 @@ abstract class BaseKtorTest : BaseDatabaseTest() {
   }
 
   fun createGraphQLKtorClient(client: HttpClient): GraphQLKtorClient {
-    return GraphQLKtorClient(URL("http://localhost/graphql"), client)
+    return GraphQLKtorClient(URI.create("http://localhost/graphql").toURL(), client)
   }
 }
 

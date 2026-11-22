@@ -12,7 +12,6 @@ import com.tumugin.aisu.infra.repository.exposed.models.Chekis
 import com.tumugin.aisu.infra.repository.exposed.models.Group
 import com.tumugin.aisu.infra.repository.exposed.models.Groups
 import com.tumugin.aisu.infra.repository.exposed.models.Regulations
-import kotlinx.coroutines.Dispatchers
 import com.tumugin.aisu.infra.repository.exposed.models.Regulation as RegulationModel
 import com.tumugin.aisu.infra.repository.exposed.models.User as UserModel
 import com.tumugin.aisu.infra.repository.exposed.models.Idol as IdolModel
@@ -20,7 +19,6 @@ import kotlinx.datetime.TimeZone
 import org.jetbrains.exposed.v1.core.*
 import org.jetbrains.exposed.v1.dao.with
 import org.jetbrains.exposed.v1.jdbc.*
-import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import java.time.ZoneOffset
 import kotlin.time.toJavaInstant
 import com.tumugin.aisu.infra.repository.exposed.models.Cheki as ChekiModel
@@ -33,13 +31,13 @@ class ChekiRepositoryImpl : ChekiRepository {
   private val groupWithModels = listOf(Group::user).toTypedArray()
 
   override suspend fun getCheki(chekiId: ChekiId): Cheki? {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       ChekiModel.findById(chekiId.value)?.toDomain()
     }
   }
 
   override suspend fun getChekisByIds(chekiIds: List<ChekiId>): List<Cheki> {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       ChekiModel.find { Chekis.id inList chekiIds.map { it.value } }.map { it.toDomain() }
     }
   }
@@ -49,7 +47,7 @@ class ChekiRepositoryImpl : ChekiRepository {
     chekiShotAtStart: ChekiShotAt,
     chekiShotEnd: ChekiShotAt
   ): List<Cheki> {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       ChekiModel.find(
         Chekis.user.eq(userId.value) and Chekis.shotAt.between(
           chekiShotAtStart.value.toJavaInstant().atOffset(ZoneOffset.UTC),
@@ -68,7 +66,7 @@ class ChekiRepositoryImpl : ChekiRepository {
     chekiShotAtStart: ChekiShotAt,
     chekiShotEnd: ChekiShotAt
   ): List<Cheki> {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       ChekiModel.find(
         Chekis.user.eq(userId.value) and Chekis.shotAt.between(
           chekiShotAtStart.value.toJavaInstant().atOffset(ZoneOffset.UTC),
@@ -86,7 +84,7 @@ class ChekiRepositoryImpl : ChekiRepository {
     chekiShotAtStart: ChekiShotAt,
     chekiShotEnd: ChekiShotAt
   ): List<ChekiIdolCount> {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       val countResults = Chekis
         .join(Regulations, JoinType.RIGHT, Chekis.regulation, Regulations.id)
         .select(Chekis.idol, Chekis.quantity.sum(), Chekis.quantity.times(Regulations.unitPrice).sum())
@@ -116,7 +114,7 @@ class ChekiRepositoryImpl : ChekiRepository {
     chekiShotAtStart: ChekiShotAt,
     chekiShotEnd: ChekiShotAt
   ): List<ChekiIdolGroupCount> {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       val quantitySum = Chekis.quantity.sum()
       val priceSum = Chekis.quantity.times(Regulations.unitPrice).sum()
       val countResults = Chekis
@@ -159,7 +157,7 @@ class ChekiRepositoryImpl : ChekiRepository {
     userId: UserId,
     baseTimezone: TimeZone
   ): List<ChekiMonthIdolCount> {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       val yearConvertFunc = DateFormatWithTZFunction(
         Chekis.shotAt,
         "yyyy",
@@ -196,7 +194,7 @@ class ChekiRepositoryImpl : ChekiRepository {
     chekiQuantity: ChekiQuantity,
     chekiShotAt: ChekiShotAt
   ): Cheki {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       ChekiModel.new {
         this.user = UserModel[userId.value]
         this.idol = IdolModel[idolId.value]
@@ -215,7 +213,7 @@ class ChekiRepositoryImpl : ChekiRepository {
     chekiQuantity: ChekiQuantity,
     chekiShotAt: ChekiShotAt
   ): Cheki {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       val model = ChekiModel[chekiId.value]
       model.user = UserModel[userId.value]
       model.idol = IdolModel[idolId.value]
@@ -227,7 +225,7 @@ class ChekiRepositoryImpl : ChekiRepository {
   }
 
   override suspend fun deleteCheki(chekiId: ChekiId) {
-    newSuspendedTransaction(Dispatchers.IO) {
+    withJdbcTransaction {
       val model = ChekiModel[chekiId.value]
       model.delete()
     }
@@ -238,7 +236,7 @@ class ChekiRepositoryImpl : ChekiRepository {
     idolId: IdolId,
     baseTimezone: TimeZone
   ): List<ChekiMonthCount> {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       val yearConvertFunc = DateFormatWithTZFunction(
         Chekis.shotAt,
         "yyyy",
@@ -265,7 +263,7 @@ class ChekiRepositoryImpl : ChekiRepository {
   }
 
   override suspend fun getChekiByUserIdAndPage(sessionUserId: UserId, page: PaginatorParam): PaginatorResult<Cheki> {
-    return newSuspendedTransaction(Dispatchers.IO) {
+    return withJdbcTransaction {
       val count = ChekiModel.find { Chekis.user eq sessionUserId.value }.count()
       val chekis = ChekiModel.find { Chekis.user eq sessionUserId.value }
         .orderBy(Chekis.createdAt to SortOrder.DESC)

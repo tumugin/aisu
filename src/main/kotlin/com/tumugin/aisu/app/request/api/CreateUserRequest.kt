@@ -6,9 +6,9 @@ import com.tumugin.aisu.domain.user.UserEmail
 import com.tumugin.aisu.domain.user.UserName
 import com.tumugin.aisu.domain.user.UserRawPassword
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.maxLength
-import io.konform.validation.jsonschema.minLength
-import io.konform.validation.jsonschema.pattern
+import io.konform.validation.constraints.maxLength
+import io.konform.validation.constraints.minLength
+import io.konform.validation.constraints.pattern
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -17,15 +17,15 @@ data class CreateUserRequest(val email: String, val password: String, val name: 
   BaseRequest<CreateUserRequest> {
   @Transient
   override val validator = Validation {
-    CreateUserRequest::email required {
+    CreateUserRequest::email {
       pattern(ValidatorPatterns.RFC5322EmailPattern)
       maxLength(255)
     }
-    CreateUserRequest::password required {
+    CreateUserRequest::password {
       minLength(7)
       maxLength(1000)
     }
-    CreateUserRequest::name required {
+    CreateUserRequest::name {
       minLength(1)
       maxLength(255)
     }

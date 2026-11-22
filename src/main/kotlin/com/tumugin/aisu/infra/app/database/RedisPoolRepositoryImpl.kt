@@ -17,6 +17,7 @@ import kotlinx.coroutines.future.await
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 
+@OptIn(ExperimentalLettuceCoroutinesApi::class)
 class RedisPoolRepositoryImpl(appConfigRepository: AppConfigRepository) :
   RedisPoolRepository<RedisCoroutinesCommands<String, String>, BoundedAsyncPool<StatefulRedisConnection<String, String>>> {
   private val baseConnectionUri = RedisURI.create(appConfigRepository.appConfig.appConfigRedisConnectionUrl.value)
@@ -26,7 +27,7 @@ class RedisPoolRepositoryImpl(appConfigRepository: AppConfigRepository) :
 
   private suspend fun createPool(): BoundedAsyncPool<StatefulRedisConnection<String, String>> {
     // Sentinelの認証を上手く扱えないためworkaroundをあてる
-    val password = baseConnectionUri.credentialsProvider.resolveCredentials().toFuture().await()?.password
+    val password = baseConnectionUri.credentialsProviderAsync.resolveCredentialsAsync().await()?.password
     val connectionUri = if (baseConnectionUri.sentinels.isNotEmpty() && password != null && password.isNotEmpty()) {
       var sentinelConnectionUriBuilder = RedisURI.builder()
       baseConnectionUri.sentinels.forEach {
@@ -62,7 +63,6 @@ class RedisPoolRepositoryImpl(appConfigRepository: AppConfigRepository) :
     return currentPool
   }
 
-  @OptIn(ExperimentalLettuceCoroutinesApi::class)
   override suspend fun <Z> borrow(proc: suspend (connection: RedisCoroutinesCommands<String, String>) -> Z): Z {
     semaphore.withPermit {
       val pool = getPoolOrCreate()

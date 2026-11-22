@@ -7,7 +7,7 @@ import com.tumugin.aisu.app.request.BaseRequest
 import com.tumugin.aisu.app.request.ValidatorPatterns
 import com.tumugin.aisu.domain.cheki.ChekiShotAt
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.pattern
+import io.konform.validation.constraints.pattern
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
@@ -26,10 +26,10 @@ class GetUserChekiIdolCountParams(
 
   @GraphQLIgnore
   override val validator = Validation {
-    GetUserChekiIdolCountParams::chekiShotAtStart required {
+    GetUserChekiIdolCountParams::chekiShotAtStart {
       pattern(ValidatorPatterns.ISO8601Pattern)
     }
-    GetUserChekiIdolCountParams::chekiShotAtEnd required {
+    GetUserChekiIdolCountParams::chekiShotAtEnd {
       pattern(ValidatorPatterns.ISO8601Pattern)
     }
   }
