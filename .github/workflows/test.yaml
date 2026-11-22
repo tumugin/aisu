@@ -28,7 +28,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
       redis:
-        image: redis:8.10.3
+        image: ghcr.io/redis/docker-library-redis:8.12.0-debian
         ports:
           - 6379:6379
         options: >-
