@@ -40,7 +40,7 @@ data class AdminUserPrincipal(val adminUser: AdminUser)
 
 fun Application.configureSecurity(koin: Koin) {
   val appConfigRepository = koin.get<AppConfigRepository>()
-  val secretSignKey = appConfigRepository.appConfig.appConfigCookieSecretSignKey.value.hexToByteArray()
+  val secretSignKey = appConfigRepository.appConfig.appConfigCookieSecretSignKey.toByteArray()
   install(Sessions) {
     cookie<UserAuthSession>("USER_AUTH", KVSSessionStorage()) {
       cookie.maxAge = UserAuthSession.defaultValidDays
