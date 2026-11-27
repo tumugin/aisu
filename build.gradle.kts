@@ -13,9 +13,9 @@ plugins {
   id("org.flywaydb.flyway") version "13.13.0"
   id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
   id("com.adarshr.test-logger") version "4.0.0"
-  id("com.expediagroup.graphql") version "11.0.0"
+  id("com.expediagroup.graphql") version "11.1.0"
   id("org.jetbrains.kotlinx.kover") version "0.9.11"
-  id("io.ktor.plugin") version "3.6.1"
+  id("io.ktor.plugin") version "3.6.2"
 }
 
 group = "com.tumugin"
@@ -27,12 +27,12 @@ repositories {
 
 val exposedVersion = "1.6.1"
 val koinVersion = "4.2.2"
-val ktorVersion = "3.6.1"
+val ktorVersion = "3.6.2"
 val logbackVersion = "1.6.8"
 val coroutineVersion = "1.11.0"
 val graphQLKotlinVersion = "11.0.0"
 val flywayVersion = "13.13.0"
-val sentryVersion = "8.65.0"
+val sentryVersion = "8.66.0"
 
 buildscript {
   dependencies {
@@ -103,11 +103,11 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposedVersion")
   implementation("com.mysql:mysql-connector-j:26.10.0")
-  implementation("org.postgresql:postgresql:42.7.14")
+  implementation("org.postgresql:postgresql:42.7.15")
   implementation("p6spy:p6spy:3.9.1")
   implementation("com.zaxxer:HikariCP:7.1.0")
   implementation("io.insert-koin:koin-core:$koinVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.8.0")
+  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.8.0-0.6.x-compat")
   implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
   implementation("de.svenkubiak:jBCrypt:0.4.3")
   implementation("io.konform:konform:0.11.1")
